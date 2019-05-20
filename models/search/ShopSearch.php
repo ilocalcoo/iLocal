@@ -17,8 +17,8 @@ class ShopSearch extends Shop
     public function rules()
     {
         return [
-            [['shopId', 'shopCostMin', 'shopCostMax'], 'integer'],
-            [['shopShortName', 'shopFullName', 'shopPhoto', 'shopType', 'shopPhone', 'shopWeb', 'shopAddress', 'shopMiddleCost', 'shopAgregator'], 'safe'],
+            [['shopId', 'shopActive', 'shopTypeId', 'shopAddressId', 'shopCostMin', 'shopCostMax', 'shopStatusId'], 'integer'],
+            [['shopShortName', 'shopFullName', 'shopPhoto', 'shopPhone', 'shopWeb', 'shopMiddleCost', 'shopAgregator'], 'safe'],
         ];
     }
 
@@ -61,20 +61,21 @@ class ShopSearch extends Shop
         // grid filtering conditions
         $query->andFilterWhere([
             'shopId' => $this->shopId,
+            'shopActive' => $this->shopActive,
+            'shopTypeId' => $this->shopTypeId,
+            'shopAddressId' => $this->shopAddressId,
             'shopCostMin' => $this->shopCostMin,
             'shopCostMax' => $this->shopCostMax,
+            'shopStatusId' => $this->shopStatusId,
         ]);
 
         $query->andFilterWhere(['like', 'shopShortName', $this->shopShortName])
             ->andFilterWhere(['like', 'shopFullName', $this->shopFullName])
             ->andFilterWhere(['like', 'shopPhoto', $this->shopPhoto])
-            ->andFilterWhere(['like', 'shopType', $this->shopType])
             ->andFilterWhere(['like', 'shopPhone', $this->shopPhone])
             ->andFilterWhere(['like', 'shopWeb', $this->shopWeb])
-            ->andFilterWhere(['like', 'shopAddress', $this->shopAddress])
             ->andFilterWhere(['like', 'shopMiddleCost', $this->shopMiddleCost])
             ->andFilterWhere(['like', 'shopAgregator', $this->shopAgregator]);
-
 
         return $dataProvider;
     }

@@ -19,26 +19,29 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
     <?php Pjax::begin(); ?>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
+        //'filterModel' => $searchModel,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            //['class' => 'yii\grid\SerialColumn'],
 
-            'shopId',
-            'shopShortName',
-            'shopFullName',
+            //'shopId',
+            //'shopActive',
+            //'shopShortName',
             'shopPhoto',
-            'shopType',
+            'shopFullName',
+            'shopTypeId',
             //'shopPhone',
             //'shopWeb',
-            //'shopAddress',
+            'shopAddressId',
             //'shopCostMin',
             //'shopCostMax',
             //'shopMiddleCost',
+            'shopWorkTime',
             //'shopAgregator',
+            //'shopStatusId',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
