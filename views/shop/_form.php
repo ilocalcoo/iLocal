@@ -12,19 +12,21 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
+    <?= $form->field($model, 'shopActive')->textInput() ?>
+
     <?= $form->field($model, 'shopShortName')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'shopFullName')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'shopPhoto')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'shopType')->dropDownList([ 'food' => 'Food', 'child' => 'Child', 'sport' => 'Sport', 'beauty' => 'Beauty', 'buy' => 'Buy', ], ['prompt' => '']) ?>
+    <?= $form->field($model, 'shopTypeId')->textInput() ?>
 
     <?= $form->field($model, 'shopPhone')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'shopWeb')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'shopAddress')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'shopAddressId')->textInput() ?>
 
     <?= $form->field($model, 'shopCostMin')->textInput() ?>
 
@@ -32,7 +34,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'shopMiddleCost')->dropDownList([ 1 => '1', 2 => '2', 3 => '3', 4 => '4', 5 => '5', ], ['prompt' => '']) ?>
 
+    <?= $form->field($model, 'shopWorkTime')->textInput() ?>
+
     <?= $form->field($model, 'shopAgregator')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'shopStatusId')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

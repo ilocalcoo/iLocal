@@ -104,8 +104,12 @@ class ShopController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
-
+        $model = $this->findModel($id);
+        $model->shopActive = Shop::SHOP_ACTIVE_DISABLE;
+        if ($model->save()) {
+            Yii::$app->session->setFlash('success', 'Статус магазина: "' . $model->shopShortName . '" успешно изменён');
+            return $this->redirect(['view', 'id' => $model->shopId]);
+        }
         return $this->redirect(['index']);
     }
 
