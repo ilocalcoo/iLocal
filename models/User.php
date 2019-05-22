@@ -72,6 +72,14 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return $this->hasOne(UserAddress::className(), ['id' => 'userAddressId']);
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getShops()
+    {
+        return $this->hasMany(Shop::className(), ['creatorId' => 'id']);
+    }
+
 
     /**
      * {@inheritdoc}
