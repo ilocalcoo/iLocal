@@ -9,6 +9,7 @@ use Yii;
  *
  * @property int $shopId
  * @property int $shopActive
+ * @property int $creatorId
  * @property string $shopShortName
  * @property string $shopFullName
  * @property string $shopPhoto
@@ -47,14 +48,18 @@ class Shop extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['shopActive', 'shopTypeId', 'shopAddressId', 'shopCostMin', 'shopCostMax', 'shopStatusId'], 'integer'],
-            [['shopShortName', 'shopFullName', 'shopPhoto', 'shopTypeId', 'shopPhone', 'shopWeb', 'shopAddressId', 'shopCostMin', 'shopCostMax', 'shopAgregator', 'shopStatusId'], 'required'],
+            [['shopActive', 'creatorId', 'shopTypeId', 'shopAddressId', 'shopCostMin', 'shopCostMax', 'shopStatusId'],
+                'integer'],
+            [['creatorId', 'shopShortName', 'shopFullName', 'shopPhoto', 'shopTypeId', 'shopPhone', 'shopWeb',
+                'shopAddressId', 'shopCostMin', 'shopCostMax', 'shopAgregator', 'shopStatusId'], 'required'],
             [['shopMiddleCost', 'shopWorkTime'], 'string'],
             [['shopShortName', 'shopPhone'], 'string', 'max' => 20],
             [['shopFullName', 'shopPhoto', 'shopWeb', 'shopAgregator'], 'string', 'max' => 255],
             [['shopAddressId'], 'exist', 'skipOnError' => true, 'targetClass' => Shopaddress::className(), 'targetAttribute' => ['shopAddressId' => 'id']],
             [['shopStatusId'], 'exist', 'skipOnError' => true, 'targetClass' => Shopstatus::className(), 'targetAttribute' => ['shopStatusId' => 'id']],
             [['shopTypeId'], 'exist', 'skipOnError' => true, 'targetClass' => Shoptype::className(), 'targetAttribute' => ['shopTypeId' => 'id']],
+            [['creatorId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute'
+            => ['creatorId' => 'id']],
         ];
     }
 
@@ -65,6 +70,7 @@ class Shop extends \yii\db\ActiveRecord
     {
         return [
             'shopId' => 'Shop ID',
+            'creatorId' => 'Creator ID',
             'shopActive' => 'Shop Active',
             'shopShortName' => 'Shop Short Name',
             'shopFullName' => 'Shop Full Name',
@@ -104,5 +110,13 @@ class Shop extends \yii\db\ActiveRecord
     public function getShopType()
     {
         return $this->hasOne(Shoptype::className(), ['id' => 'shopTypeId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getCreator()
+    {
+        return $this->hasOne(User::className(), ['id' => 'creatorId']);
     }
 }
