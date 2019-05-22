@@ -12,7 +12,7 @@ use Yii;
  * @property int $creatorId
  * @property string $shopShortName
  * @property string $shopFullName
- * @property string $shopPhoto
+ * @property integer $shopPhotoId
  * @property int $shopTypeId
  * @property string $shopPhone
  * @property string $shopWeb
@@ -48,9 +48,9 @@ class Shop extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['shopActive', 'creatorId', 'shopTypeId', 'shopAddressId', 'shopCostMin', 'shopCostMax', 'shopStatusId'],
+            [['shopActive', 'shopPhotoId', 'creatorId', 'shopTypeId', 'shopAddressId', 'shopCostMin', 'shopCostMax', 'shopStatusId'],
                 'integer'],
-            [['creatorId', 'shopShortName', 'shopFullName', 'shopPhoto', 'shopTypeId', 'shopPhone', 'shopWeb',
+            [['creatorId', 'shopShortName', 'shopFullName', 'shopTypeId', 'shopPhone', 'shopWeb',
                 'shopAddressId', 'shopCostMin', 'shopCostMax', 'shopAgregator', 'shopStatusId'], 'required'],
             [['shopMiddleCost', 'shopWorkTime'], 'string'],
             [['shopShortName', 'shopPhone'], 'string', 'max' => 20],
@@ -60,6 +60,8 @@ class Shop extends \yii\db\ActiveRecord
             [['shopTypeId'], 'exist', 'skipOnError' => true, 'targetClass' => Shoptype::className(), 'targetAttribute' => ['shopTypeId' => 'id']],
             [['creatorId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute'
             => ['creatorId' => 'id']],
+            [['shopPhotoId'], 'exist', 'skipOnError' => true, 'targetClass' => ShopPhoto::className(), 'targetAttribute'
+            => ['shopPhotoId' => 'id']],
         ];
     }
 
@@ -74,7 +76,7 @@ class Shop extends \yii\db\ActiveRecord
             'shopActive' => 'Shop Active',
             'shopShortName' => 'Shop Short Name',
             'shopFullName' => 'Shop Full Name',
-            'shopPhoto' => 'Shop Photo',
+            'shopPhotoId' => 'Shop Photo ID',
             'shopTypeId' => 'Shop Type ID',
             'shopPhone' => 'Shop Phone',
             'shopWeb' => 'Shop Web',
@@ -118,5 +120,13 @@ class Shop extends \yii\db\ActiveRecord
     public function getCreator()
     {
         return $this->hasOne(User::className(), ['id' => 'creatorId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getShopPhoto()
+    {
+        return $this->hasOne(ShopPhoto::className(), ['id' => 'shopPhotoId']);
     }
 }
