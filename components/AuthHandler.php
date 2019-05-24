@@ -28,7 +28,7 @@ class AuthHandler
         $attributes = $this->client->getUserAttributes();
         $email = ArrayHelper::getValue($attributes, 'email');
         $id = ArrayHelper::getValue($attributes, 'id');
-        $nickname = ArrayHelper::getValue($attributes, 'login');
+        $nickname = ArrayHelper::getValue($attributes, 'name');
 
         /* @var Auth $auth */
         $auth = Auth::find()->where([
@@ -52,8 +52,12 @@ class AuthHandler
                     ]);
                 } else {
                     $password = Yii::$app->security->generateRandomString(6);
+                    preg_match('/(\S+)\s(\S*)\s(\S+)/', $nickname, $nicknameArray);
                     $user = new User([
                         'username' => $nickname,
+                        'firstName' => $nicknameArray[1],
+                        'middleName' => $nicknameArray[2],
+                        'lastName' => $nicknameArray[3],
 //                        'github' => $nickname,
                         'email' => $email,
                         'password' => $password,
@@ -130,9 +134,9 @@ class AuthHandler
     private function updateUserInfo(User $user)
     {
         $attributes = $this->client->getUserAttributes();
-        $github = ArrayHelper::getValue($attributes, 'login');
-        if ($user->github === null && $github) {
-            $user->github = $github;
+        $username = ArrayHelper::getValue($attributes, 'name');
+        if ($user->username === null && $username) {
+            $user->username = $username;
             $user->save();
         }
     }

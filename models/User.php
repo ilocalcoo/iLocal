@@ -3,12 +3,14 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\TimestampBehavior;
 
 /**
  * This is the model class for table "user".
  *
  * @property int $id
  * @property int $created_at
+ * @property int $updated_at
  * @property string $lastName
  * @property string $firstName
  * @property string $middleName
@@ -21,6 +23,7 @@ use Yii;
  * @property string $username
  * @property string $auth_key
  * @property string $password_reset_token
+ * @property string $password write-only password
  *
  * @property Auth[] $auths
  * @property Shop[] $shops
@@ -36,15 +39,22 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return 'user';
     }
 
+    public function behaviors()
+    {
+        return [
+            TimestampBehavior::className(),
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
     public function rules()
     {
         return [
-            [['created_at', 'lastName', 'firstName', 'email', 'password_hash', 'userAddressId', 'username', 'auth_key',
+            [['lastName', 'firstName', 'email', 'password_hash', 'username', 'auth_key',
                 'password_reset_token'], 'required'],
-            [['created_at', 'userAddressId'], 'integer'],
+            [['userAddressId'], 'integer'],
             [['lastName', 'firstName', 'middleName', 'email', 'password_hash', 'fb', 'vk', 'accessToken', 'username',
                 'auth_key', 'password_reset_token'], 'string', 'max' => 255],
             [['userAddressId'], 'exist', 'skipOnError' => true, 'targetClass' => UserAddress::className(), 'targetAttribute' => ['userAddressId' => 'id']],
@@ -59,6 +69,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
         return [
             'id' => 'ID',
             'created_at' => 'Created At',
+            'updated_at' => 'Updated At',
             'lastName' => 'Last Name',
             'firstName' => 'First Name',
             'middleName' => 'Middle Name',
@@ -118,14 +129,14 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     }
 
     /**
-     * Finds user by username. (Юзернейм у нас емайл)
+     * Finds user by username.
      *
      * @param string $username
      * @return static|null
      */
     public static function findByUsername($username)
     {
-        return static::findOne(['email' => $username]);
+        return static::findOne(['username' => $username]);
     }
 
     /**
@@ -161,6 +172,16 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function validatePassword($password)
     {
         return Yii::$app->security->validatePassword($password, $this->password_hash);
+    }
+
+    /**
+     * Generates password hash from password and sets it to the model
+     *
+     * @param string $password
+     */
+    public function setPassword($password)
+    {
+        $this->password_hash = Yii::$app->security->generatePasswordHash($password);
     }
 
     /**
