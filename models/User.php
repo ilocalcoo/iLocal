@@ -18,7 +18,12 @@ use Yii;
  * @property string $fb
  * @property string $vk
  * @property string $accessToken
+ * @property string $username
+ * @property string $auth_key
+ * @property string $password_reset_token
  *
+ * @property Auth[] $auths
+ * @property Shop[] $shops
  * @property UserAddress $userAddress
  */
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
@@ -37,9 +42,11 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function rules()
     {
         return [
-            [['created_at', 'lastName', 'firstName', 'email', 'password_hash', 'userAddressId'], 'required'],
+            [['created_at', 'lastName', 'firstName', 'email', 'password_hash', 'userAddressId', 'username', 'auth_key',
+                'password_reset_token'], 'required'],
             [['created_at', 'userAddressId'], 'integer'],
-            [['lastName', 'firstName', 'middleName', 'email', 'password_hash', 'fb', 'vk', 'accessToken'], 'string', 'max' => 255],
+            [['lastName', 'firstName', 'middleName', 'email', 'password_hash', 'fb', 'vk', 'accessToken', 'username',
+                'auth_key', 'password_reset_token'], 'string', 'max' => 255],
             [['userAddressId'], 'exist', 'skipOnError' => true, 'targetClass' => UserAddress::className(), 'targetAttribute' => ['userAddressId' => 'id']],
         ];
     }
@@ -61,6 +68,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'fb' => 'Fb',
             'vk' => 'Vk',
             'accessToken' => 'Access Token',
+            'username' => 'Username',
+            'auth_key' => 'Auth Key',
+            'password_reset_token' => 'Password Reset Token',
         ];
     }
 
@@ -78,6 +88,14 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function getShops()
     {
         return $this->hasMany(Shop::className(), ['creatorId' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAuths()
+    {
+        return $this->hasMany(Auth::className(), ['user_id' => 'id']);
     }
 
 
@@ -123,7 +141,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public function getAuthKey()
     {
-//        return $this->authKey;
+        return $this->auth_key;
     }
 
     /**
@@ -131,7 +149,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
      */
     public function validateAuthKey($authKey)
     {
-//        return $this->authKey === $authKey;
+        return $this->auth_key === $authKey;
     }
 
     /**
@@ -151,5 +169,21 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function generateAccessToken()
     {
         $this->accessToken = Yii::$app->security->generateRandomString();
+    }
+
+    /**
+     * Generates "remember me" authentication key
+     */
+    public function generateAuthKey()
+    {
+        $this->auth_key = Yii::$app->security->generateRandomString();
+    }
+
+    /**
+     * Generates new password reset token
+     */
+    public function generatePasswordResetToken()
+    {
+        $this->password_reset_token = Yii::$app->security->generateRandomString() . '_' . time();
     }
 }

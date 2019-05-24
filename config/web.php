@@ -17,6 +17,23 @@ $config = [
         ],
     ],
     'components' => [
+        // Настройки компонента приложения auth client collection (аутентификация через соцсети)
+        'authClientCollection' => [
+            'class' => 'yii\authclient\Collection',
+            'clients' => [
+                'google' => [
+                    'class' => 'yii\authclient\clients\Google',
+                    'clientId' => 'google_client_id',
+                    'clientSecret' => 'google_client_secret',
+                ],
+                'facebook' => [
+                    'class' => 'yii\authclient\clients\Facebook',
+                    'clientId' => '353139508888425',
+                    'clientSecret' => '37947c11ad826a9a562d6d2a7f3dac89',
+                ],
+                // и т.д. TODO Вконтакте
+            ],
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'asdfasudfhqwbhfdashkashdflashd',
