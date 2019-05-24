@@ -2,12 +2,14 @@
 
 namespace app\controllers;
 
+use app\models\ShopPhoto;
 use Yii;
 use app\models\Shop;
 use app\models\search\ShopSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * ShopController implements the CRUD actions for Shop model.
@@ -67,7 +69,11 @@ class ShopController extends Controller
         $model = new Shop();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->shopId]);
+            $model->uploadedShopPhoto = UploadedFile::getInstances($model, 'uploadedShopPhoto');
+
+            if ($model->uploadShopPhoto()) {
+                return $this->redirect(['view', 'id' => $model->shopId]);
+            }
         }
 
         return $this->render('create', [
@@ -86,10 +92,15 @@ class ShopController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->shopId]);
-        }
+        if (Yii::$app->request->isPost) {
+            $model->uploadedShopPhoto = UploadedFile::getInstances($model, 'uploadedShopPhoto');
 
+            if ($model->uploadShopPhoto()) {
+                if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                    return $this->redirect(['view', 'id' => $model->shopId]);
+                }
+            }
+        }
         return $this->render('update', [
             'model' => $model,
         ]);

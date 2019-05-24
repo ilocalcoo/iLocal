@@ -33,7 +33,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'shopActive',
             'shopShortName',
             'shopFullName',
-            'shopPhoto',
+            //'shopPhoto',
             'shopTypeId',
             'shopPhone',
             'shopWeb',
