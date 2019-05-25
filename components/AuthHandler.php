@@ -72,7 +72,7 @@ class AuthHandler
             if ($auth) { // login (авторизация)
                 /* @var User $user */
                 $user = $auth->user;
-                $this->updateUserInfo($user);
+                $this->updateUserInfo($user, $nickname);
                 Yii::$app->user->login($user, Yii::$app->params['user.rememberMeDuration']);
             } else { // signup (регистрация)
                 if ($email !== null && User::find()->where(['email' => $email])->exists()) {
@@ -135,7 +135,7 @@ class AuthHandler
                 if ($auth->save()) {
                     /** @var User $user */
                     $user = $auth->user;
-                    $this->updateUserInfo($user);
+                    $this->updateUserInfo($user, $nickname);
                     Yii::$app->getSession()->setFlash('success', [
                         Yii::t('app', 'Linked {client} account.', [
                             'client' => $this->client->getTitle()
@@ -162,10 +162,10 @@ class AuthHandler
     /**
      * @param User $user
      */
-    private function updateUserInfo(User $user)
+    private function updateUserInfo(User $user, $username)
     {
-        $attributes = $this->client->getUserAttributes();
-        $username = ArrayHelper::getValue($attributes, 'name');
+//        $attributes = $this->client->getUserAttributes();
+//        $username = ArrayHelper::getValue($attributes, 'name');
         if ($user->username === null && $username) {
             $user->username = $username;
             $user->save();
