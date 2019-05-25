@@ -28,6 +28,14 @@ class AuthHandler
         $attributes = $this->client->getUserAttributes();
 
         switch ($this->client->getName()) {
+            case 'google':
+                $email = ArrayHelper::getValue($attributes, 'email');
+                $id = ArrayHelper::getValue($attributes, 'id');
+                $nickname = ArrayHelper::getValue($attributes, 'name');
+                $firstName = ArrayHelper::getValue($attributes, 'given_name');
+                $middleName = null;
+                $lastName = ArrayHelper::getValue($attributes, 'family_name');
+                break;
             case 'facebook':
                 $email = ArrayHelper::getValue($attributes, 'email');
                 $id = ArrayHelper::getValue($attributes, 'id');
@@ -49,9 +57,9 @@ class AuthHandler
                 $email = ArrayHelper::getValue($attributes, 'email');
                 $id = ArrayHelper::getValue($attributes, 'id');
                 $nickname = ArrayHelper::getValue($attributes, 'name');
-                $firstName = ArrayHelper::getValue($attributes, 'first_name');
-                $middleName = ArrayHelper::getValue($attributes, 'middle_name');;
-                $lastName = ArrayHelper::getValue($attributes, 'last_name');
+                $firstName = ArrayHelper::getValue($attributes, 'given_name');
+                $middleName = null;
+                $lastName = ArrayHelper::getValue($attributes, 'family_name');
         }
 
         /* @var Auth $auth */

@@ -21,11 +21,11 @@ $config = [
         'authClientCollection' => [
             'class' => 'yii\authclient\Collection',
             'clients' => [
-//                'google' => [
-//                    'class' => 'yii\authclient\clients\Google',
-//                    'clientId' => 'google_client_id',
-//                    'clientSecret' => 'google_client_secret',
-//                ],
+                'google' => [
+                    'class' => 'yii\authclient\clients\Google',
+                    'clientId' => '332679075210-j6m3l81a7l7e03k6tesu55a3s7imhq28.apps.googleusercontent.com',
+                    'clientSecret' => 'qx3_MPoNXCEsZkwy-ozaeQKr',
+                ],
                 'facebook' => [
                     'class' => 'yii\authclient\clients\Facebook',
                     'clientId' => '353139508888425',
