@@ -26,9 +26,41 @@ class AuthHandler
     public function handle()
     {
         $attributes = $this->client->getUserAttributes();
-        $email = ArrayHelper::getValue($attributes, 'email');
-        $id = ArrayHelper::getValue($attributes, 'id');
-        $nickname = ArrayHelper::getValue($attributes, 'name');
+
+        switch ($this->client->getName()) {
+            case 'google':
+                $email = ArrayHelper::getValue($attributes, 'email');
+                $id = ArrayHelper::getValue($attributes, 'id');
+                $nickname = ArrayHelper::getValue($attributes, 'name');
+                $firstName = ArrayHelper::getValue($attributes, 'given_name');
+                $middleName = null;
+                $lastName = ArrayHelper::getValue($attributes, 'family_name');
+                break;
+            case 'facebook':
+                $email = ArrayHelper::getValue($attributes, 'email');
+                $id = ArrayHelper::getValue($attributes, 'id');
+                $nickname = ArrayHelper::getValue($attributes, 'name');
+                preg_match('/(\S+)\s(\S*)\s(\S+)/', $nickname, $nicknameArray);
+                $firstName = $nicknameArray[1];
+                $middleName = $nicknameArray[2];
+                $lastName = $nicknameArray[3];
+                break;
+            case 'vkontakte':
+                $email = null;
+                $id = ArrayHelper::getValue($attributes, 'id');
+                $nickname = ArrayHelper::getValue($attributes, 'screen_name');
+                $firstName = ArrayHelper::getValue($attributes, 'first_name');
+                $middleName = null;
+                $lastName = ArrayHelper::getValue($attributes, 'last_name');
+                break;
+            default:
+                $email = ArrayHelper::getValue($attributes, 'email');
+                $id = ArrayHelper::getValue($attributes, 'id');
+                $nickname = ArrayHelper::getValue($attributes, 'name');
+                $firstName = ArrayHelper::getValue($attributes, 'given_name');
+                $middleName = null;
+                $lastName = ArrayHelper::getValue($attributes, 'family_name');
+        }
 
         /* @var Auth $auth */
         $auth = Auth::find()->where([
@@ -40,7 +72,7 @@ class AuthHandler
             if ($auth) { // login (авторизация)
                 /* @var User $user */
                 $user = $auth->user;
-                $this->updateUserInfo($user);
+                $this->updateUserInfo($user, $nickname);
                 Yii::$app->user->login($user, Yii::$app->params['user.rememberMeDuration']);
             } else { // signup (регистрация)
                 if ($email !== null && User::find()->where(['email' => $email])->exists()) {
@@ -52,12 +84,11 @@ class AuthHandler
                     ]);
                 } else {
                     $password = Yii::$app->security->generateRandomString(6);
-                    preg_match('/(\S+)\s(\S*)\s(\S+)/', $nickname, $nicknameArray);
                     $user = new User([
                         'username' => $nickname,
-                        'firstName' => $nicknameArray[1],
-                        'middleName' => $nicknameArray[2],
-                        'lastName' => $nicknameArray[3],
+                        'firstName' => $firstName,
+                        'middleName' => $middleName,
+                        'lastName' => $lastName,
 //                        'github' => $nickname,
                         'email' => $email,
                         'password' => $password,
@@ -104,7 +135,7 @@ class AuthHandler
                 if ($auth->save()) {
                     /** @var User $user */
                     $user = $auth->user;
-                    $this->updateUserInfo($user);
+                    $this->updateUserInfo($user, $nickname);
                     Yii::$app->getSession()->setFlash('success', [
                         Yii::t('app', 'Linked {client} account.', [
                             'client' => $this->client->getTitle()
@@ -131,10 +162,10 @@ class AuthHandler
     /**
      * @param User $user
      */
-    private function updateUserInfo(User $user)
+    private function updateUserInfo(User $user, $username)
     {
-        $attributes = $this->client->getUserAttributes();
-        $username = ArrayHelper::getValue($attributes, 'name');
+//        $attributes = $this->client->getUserAttributes();
+//        $username = ArrayHelper::getValue($attributes, 'name');
         if ($user->username === null && $username) {
             $user->username = $username;
             $user->save();
