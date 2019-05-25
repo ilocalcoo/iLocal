@@ -31,7 +31,11 @@ $config = [
                     'clientId' => '353139508888425',
                     'clientSecret' => '37947c11ad826a9a562d6d2a7f3dac89',
                 ],
-                // и т.д. TODO Вконтакте
+                'vkontakte' => [
+                    'class' => 'yii\authclient\clients\VKontakte',
+                    'clientId' => '6996626',
+                    'clientSecret' => '6OnBqAoUj00nOTScATQy',
+                ],
             ],
         ],
         'request' => [
