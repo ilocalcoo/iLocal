@@ -75,7 +75,7 @@ function actionAuth() {var_dump(Yii::$app->request->getHostInfo());exit;}
      * @return string
      */
     public function actionIndex()
-    {var_dump(Yii::$app->request->getHostInfo());exit;
+    {
         return $this->render('index');
     }
 
