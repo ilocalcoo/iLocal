@@ -53,13 +53,13 @@ class SiteController extends Controller
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
             // Добавляем действие для аутентификации через соцсети.
-            'auth' => [
-                'class' => 'yii\authclient\AuthAction',
-                'successCallback' => [$this, 'onAuthSuccess'],
-            ],
+//            'auth' => [
+//                'class' => 'yii\authclient\AuthAction',
+//                'successCallback' => [$this, 'onAuthSuccess'],
+//            ],
         ];
     }
-
+function actionAuth() {var_dump(Yii::$app->request->getHostInfo());exit;}
     /**
      * Метод вызывается когда пользователь был успешно аутентифицирован через внешний сервис.
      * @param $client - Через экземпляр $client мы можем извлечь полученную информацию.
