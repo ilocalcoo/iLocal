@@ -40,9 +40,15 @@ class ShopController extends Controller
         $searchModel = new ShopSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $shopFullNameData = Shop::find()
+            ->select(['shopFullName as value', 'shopFullName as label', 'shopId as id'])
+            ->asArray()
+            ->all();
+
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'shopFullNameData' => $shopFullNameData,
         ]);
     }
 
