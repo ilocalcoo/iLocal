@@ -9,6 +9,7 @@ use Yii;
  *
  * @property int $id
  * @property int $active
+ * @property int $isEventTop
  * @property int $eventOwnerId
  * @property int $eventTypeId
  * @property string $title
@@ -26,6 +27,8 @@ class Event extends \yii\db\ActiveRecord
 {
     const STATUS_ACTIVE = '1';
     const STATUS_DISABLE = '0';
+    const MARK_AS_TOP = '1';
+    const MARK_AS_NOT_TOP = '0';
     /**
      * {@inheritdoc}
      */
@@ -60,6 +63,7 @@ class Event extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'active' => 'Active',
+            'isEventTop' => 'Show event in feed',
             'eventOwnerId' => 'Event Owner ID',
             'eventTypeId' => 'Event Type ID',
             'title' => 'Title',
@@ -93,5 +97,14 @@ class Event extends \yii\db\ActiveRecord
     public function getEventOwner()
     {
         return $this->hasOne(Shop::className(), ['shopId' => 'eventOwnerId']);
+    }
+
+    /**
+     * {@inheritdoc}
+     * @return \app\models\query\EventQuery the active query used by this AR class.
+     */
+    public static function find()
+    {
+        return new \app\models\query\EventQuery(get_called_class());
     }
 }

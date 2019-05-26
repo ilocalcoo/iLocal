@@ -26,6 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'active',
+            'isEventTop',
             'eventOwnerId',
             'eventTypeId',
             'title',

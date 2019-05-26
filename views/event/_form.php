@@ -14,6 +14,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'active')->textInput() ?>
 
+    <?= $form->field($model, 'isEventTop')->checkbox() ?>
+
     <?= $form->field($model, 'eventOwnerId')->textInput() ?>
 
     <?= $form->field($model, 'eventTypeId')->textInput() ?>
