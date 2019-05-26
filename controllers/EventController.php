@@ -107,9 +107,10 @@ class EventController extends Controller
         $model = $this->findModel($id);
         $model->active = Event::STATUS_DISABLE;
         if ($model->save()) {
-            return $this->redirect(['index']);
+            Yii::$app->session->setFlash('success', 'Статус акции: "' . $model->title . '" успешно изменён');
+            return $this->redirect(['view', 'id' => $model->id]);
         }
-        return $this->redirect(['view'], ['id' => $model->id]);
+        return $this->redirect(['index']);
     }
 
     /**
