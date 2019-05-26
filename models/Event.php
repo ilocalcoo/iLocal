@@ -47,7 +47,8 @@ class Event extends \yii\db\ActiveRecord
             [['title', 'shortDesc'], 'string', 'max' => 255],
             [['eventPhotoId'], 'exist', 'skipOnError' => true, 'targetClass' => EventPhoto::className(), 'targetAttribute' => ['eventPhotoId' => 'id']],
             [['eventTypeId'], 'exist', 'skipOnError' => true, 'targetClass' => EventType::className(), 'targetAttribute' => ['eventTypeId' => 'id']],
-            [['eventOwnerId'], 'exist', 'skipOnError' => true, 'targetClass' => Shop::className(), 'targetAttribute' => ['eventOwnerId' => 'id']],
+            [['eventOwnerId'], 'exist', 'skipOnError' => true, 'targetClass' => Shop::className(), 'targetAttribute'
+            => ['eventOwnerId' => 'shopId']],
         ];
     }
 
@@ -91,6 +92,6 @@ class Event extends \yii\db\ActiveRecord
      */
     public function getEventOwner()
     {
-        return $this->hasOne(Shop::className(), ['id' => 'eventOwnerId']);
+        return $this->hasOne(Shop::className(), ['shopId' => 'eventOwnerId']);
     }
 }

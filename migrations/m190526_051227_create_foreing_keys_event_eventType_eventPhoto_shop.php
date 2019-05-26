@@ -14,7 +14,7 @@ class m190526_051227_create_foreing_keys_event_eventType_eventPhoto_shop extends
     {
         $this->addForeignKey('fx_event_eventType', 'event', ['eventTypeId'], 'eventType', ['id']);
         $this->addForeignKey('fx_event_eventPhoto', 'event', ['eventPhotoId'], 'eventPhoto', ['id']);
-        $this->addForeignKey('fx_event_shop', 'event', ['eventOwnerId'], 'shop', ['id']);
+        $this->addForeignKey('fx_event_shop', 'event', ['eventOwnerId'], 'shop', ['shopId']);
     }
 
     /**
