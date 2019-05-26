@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Event;
 use yii\db\Migration;
 
 /**
@@ -14,9 +15,15 @@ class m190522_122050_create_event_table extends Migration
     {
         $this->createTable('{{%event}}', [
             'id' => $this->primaryKey(),
-            'shopId' => $this->integer()->notNull(),
+            'active' => $this->boolean()->defaultValue(Event::STATUS_ACTIVE),
+            'eventOwnerId' => $this->integer()->notNull(),
             'eventTypeId' => $this->integer()->notNull(),
+            'title' => $this->string()->notNull(),
+            'eventPhotoId' => $this->integer(),
             'shortDesc' => $this->string()->notNull(),
+            'fullDesc' => $this->text()->notNull(),
+            'begin' => $this->date()->notNull(),
+            'end' => $this->date()->notNull(),
         ]);
     }
 
