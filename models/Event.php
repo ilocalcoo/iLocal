@@ -29,6 +29,8 @@ class Event extends \yii\db\ActiveRecord
     const STATUS_DISABLE = '0';
     const MARK_AS_TOP = '1';
     const MARK_AS_NOT_TOP = '0';
+
+    const MAX_SHOW_EVENTS = 3;
     /**
      * {@inheritdoc}
      */
