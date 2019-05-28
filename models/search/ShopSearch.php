@@ -71,7 +71,6 @@ class ShopSearch extends Shop
 
         $query->andFilterWhere(['like', 'shopShortName', $this->shopShortName])
             ->andFilterWhere(['like', 'shopFullName', $this->shopFullName])
-            ->andFilterWhere(['like', 'shopPhoto', $this->shopPhoto])
             ->andFilterWhere(['like', 'shopPhone', $this->shopPhone])
             ->andFilterWhere(['like', 'shopWeb', $this->shopWeb])
             ->andFilterWhere(['like', 'shopMiddleCost', $this->shopMiddleCost])
