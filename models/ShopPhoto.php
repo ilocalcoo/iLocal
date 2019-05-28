@@ -8,18 +8,10 @@ use Yii;
  * This is the model class for table "shopPhoto".
  *
  * @property int $id
- * @property string $shopPhoto1
- * @property string $shopPhoto2
- * @property string $shopPhoto3
- * @property string $shopPhoto4
- * @property string $shopPhoto5
- * @property string $shopPhoto6
- * @property string $shopPhoto7
- * @property string $shopPhoto8
- * @property string $shopPhoto9
- * @property string $shopPhoto10
+ * @property int $shopId
+ * @property string $shopPhoto
  *
- * @property Shop[] $shops
+ * @property Shop $shop
  */
 class ShopPhoto extends \yii\db\ActiveRecord
 {
@@ -37,7 +29,7 @@ class ShopPhoto extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['shopPhoto1', 'shopPhoto2', 'shopPhoto3', 'shopPhoto4', 'shopPhoto5', 'shopPhoto6', 'shopPhoto7', 'shopPhoto8', 'shopPhoto9', 'shopPhoto10'], 'string', 'max' => 255],
+            [['shopPhoto'], 'string', 'max' => 255],
         ];
     }
 
@@ -48,24 +40,16 @@ class ShopPhoto extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'shopPhoto1' => 'Shop Photo1',
-            'shopPhoto2' => 'Shop Photo2',
-            'shopPhoto3' => 'Shop Photo3',
-            'shopPhoto4' => 'Shop Photo4',
-            'shopPhoto5' => 'Shop Photo5',
-            'shopPhoto6' => 'Shop Photo6',
-            'shopPhoto7' => 'Shop Photo7',
-            'shopPhoto8' => 'Shop Photo8',
-            'shopPhoto9' => 'Shop Photo9',
-            'shopPhoto10' => 'Shop Photo10',
+            'shopId' => 'Shop ID',
+            'shopPhoto' => 'Shop Photo',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getShops()
+    public function getShop()
     {
-        return $this->hasMany(Shop::className(), ['shopPhotoId' => 'id']);
+        return $this->hasOne(Shop::className(), ['id' => 'shopId']);
     }
 }
