@@ -63,10 +63,9 @@ class Shop extends \yii\db\ActiveRecord
         return [
             [['shopActive', 'creatorId', 'shopTypeId', 'shopAddressId', 'shopCostMin', 'shopCostMax', 'shopStatusId', 'shopRating'],
                 'integer'],
-            [['creatorId', 'shopShortName', 'shopTypeId', 'shopPhone', 'shopWeb',
-                'shopAddressId', 'shopCostMin', 'shopCostMax', 'shopStatusId'], 'required'],
+            [['creatorId', 'shopShortName', 'shopTypeId', 'shopAddressId', 'shopStatusId'], 'required'],
             [['shopMiddleCost', 'shopWorkTime', 'shopShortDescription', 'shopFullDescription'], 'string'],
-            [['shopShortName', 'shopPhone'], 'string', 'max' => 20],
+            [['shopShortName', 'shopPhone'], 'string', 'max' => 255],
             [['shopFullName', 'shopWeb', 'shopAgregator'], 'string', 'max' => 255],
             [['shopAddressId'], 'exist', 'skipOnError' => true, 'targetClass' => Shopaddress::className(), 'targetAttribute' => ['shopAddressId' => 'id']],
             [['shopStatusId'], 'exist', 'skipOnError' => true, 'targetClass' => Shopstatus::className(), 'targetAttribute' => ['shopStatusId' => 'id']],
@@ -97,7 +96,8 @@ class Shop extends \yii\db\ActiveRecord
             'shopMiddleCost' => 'Shop Middle Cost',
             'shopWorkTime' => 'Shop Work Time',
             'shopAgregator' => 'Shop Agregator',
-            'shopDescription' => 'Shop Description',
+            'shopShortDescription' => 'Shop Short Description',
+            'shopFullDescription' => 'Shop Full Description',
             'shopRating' => 'Shop Rating',
             'shopStatusId' => 'Shop Status ID',
         ];
