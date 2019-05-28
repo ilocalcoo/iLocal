@@ -40,15 +40,15 @@ class ShopController extends Controller
         $searchModel = new ShopSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
-        $shopFullNameData = Shop::find()
-            ->select(['shopFullName as value', 'shopFullName as label', 'shopId as id'])
+        $shopShortNameData = Shop::find()
+            ->select(['shopShortName as value', 'shopShortName as label', 'shopId as id'])
             ->asArray()
             ->all();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'shopFullNameData' => $shopFullNameData,
+            'shopShortNameData' => $shopShortNameData,
         ]);
     }
 
@@ -122,7 +122,7 @@ class ShopController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        $model->shopActive = Shop::SHOP_ACTIVE_DISABLE;
+        $model->shopActive = Shop::SHOP_ACTIVE_FALSE;
         if ($model->save()) {
             Yii::$app->session->setFlash('success', 'Статус магазина: "' . $model->shopShortName . '" успешно изменён');
             return $this->redirect(['view', 'id' => $model->shopId]);

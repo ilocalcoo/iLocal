@@ -7,7 +7,7 @@ use yii\jui\AutoComplete;
 /* @var $this yii\web\View */
 /* @var $model app\models\search\ShopSearch */
 /* @var $form yii\widgets\ActiveForm */
-/* @var $shopFullNameData app\models\Shop */
+/* @var $shopShortNameData app\models\Shop */
 ?>
 
 <div class="shop-search">
@@ -26,10 +26,10 @@ use yii\jui\AutoComplete;
 
     <?php // echo $form->field($model, 'shopShortName') ?>
 
-    <?= $form->field($model, 'shopFullName')->widget(
+    <?= $form->field($model, 'shopShortName')->widget(
         AutoComplete::className(), [
         'clientOptions' => [
-            'source' => $shopFullNameData,
+            'source' => $shopShortNameData,
             'minLength' => '2',
         ],
         'options'=>[

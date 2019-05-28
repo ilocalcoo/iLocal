@@ -22,7 +22,8 @@ use yii\web\UploadedFile;
  * @property string $shopMiddleCost
  * @property string $shopWorkTime
  * @property string $shopAgregator
- * @property string $shopDescription
+ * @property string $shopShortDescription
+ * @property string $shopFullDescription
  * @property int $shopRating
  * @property int $shopStatusId
  *
@@ -38,8 +39,8 @@ class Shop extends \yii\db\ActiveRecord
     const RELATION_SHOP_TYPE = 'shopType';
     const RELATION_SHOP_PHOTOS = 'shopPhotos';
 
-    const SHOP_ACTIVE_ACTIVE = 1;
-    const SHOP_ACTIVE_DISABLE = 0;
+    const SHOP_ACTIVE_TRUE = 1;
+    const SHOP_ACTIVE_FALSE = 0;
 
     /**
      * @var UploadedFile[]
@@ -62,9 +63,9 @@ class Shop extends \yii\db\ActiveRecord
         return [
             [['shopActive', 'creatorId', 'shopTypeId', 'shopAddressId', 'shopCostMin', 'shopCostMax', 'shopStatusId', 'shopRating'],
                 'integer'],
-            [['creatorId', 'shopShortName', 'shopFullName', 'shopTypeId', 'shopPhone', 'shopWeb',
-                'shopAddressId', 'shopCostMin', 'shopCostMax', 'shopAgregator', 'shopStatusId'], 'required'],
-            [['shopMiddleCost', 'shopWorkTime', 'shopDescription'], 'string'],
+            [['creatorId', 'shopShortName', 'shopTypeId', 'shopPhone', 'shopWeb',
+                'shopAddressId', 'shopCostMin', 'shopCostMax', 'shopStatusId'], 'required'],
+            [['shopMiddleCost', 'shopWorkTime', 'shopShortDescription', 'shopFullDescription'], 'string'],
             [['shopShortName', 'shopPhone'], 'string', 'max' => 20],
             [['shopFullName', 'shopWeb', 'shopAgregator'], 'string', 'max' => 255],
             [['shopAddressId'], 'exist', 'skipOnError' => true, 'targetClass' => Shopaddress::className(), 'targetAttribute' => ['shopAddressId' => 'id']],

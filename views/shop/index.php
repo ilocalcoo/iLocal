@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\search\ShopSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-/* @var $shopFullNameData app\models\Shop */
+/* @var $shopShortNameData app\models\Shop */
 
 $this->title = 'Shops';
 $this->params['breadcrumbs'][] = $this->title;
@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
     <?php Pjax::begin(); ?>
-    <?php echo $this->render('_search', ['model' => $searchModel, 'shopFullNameData' => $shopFullNameData]); ?>
+    <?php echo $this->render('_search', ['model' => $searchModel, 'shopShortNameData' => $shopShortNameData]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'format' => 'html'
             ],
-            'shopFullName',
+            'shopShortName',
             [
                 'attribute' => 'shopType',
                 'value' => function (app\models\Shop $model) {
@@ -49,7 +49,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         $model->shopAddress->houseNumber;
                 },
             ],
-            'shopDescription',
+            'shopShortDescription',
             //TODO Рейтинг места
             'shopWorkTime',
 
