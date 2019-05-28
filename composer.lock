@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e546d8f13813271b6a7f52317f0d3fe9",
+    "content-hash": "43c48f338f8bc9130c7ce99092765430",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -745,6 +745,62 @@
             "time": "2019-04-30T17:08:00+00:00"
         },
         {
+            "name": "yiisoft/yii2-authclient",
+            "version": "2.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yiisoft/yii2-authclient.git",
+                "reference": "00ae89f4b82df6380b0113557d1e9b918c243337"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yiisoft/yii2-authclient/zipball/00ae89f4b82df6380b0113557d1e9b918c243337",
+                "reference": "00ae89f4b82df6380b0113557d1e9b918c243337",
+                "shasum": ""
+            },
+            "require": {
+                "yiisoft/yii2": "~2.0.13",
+                "yiisoft/yii2-httpclient": "~2.0.5"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.8.27|~5.7.21|^6.2"
+            },
+            "suggest": {
+                "spomky-labs/jose": "required for JWS,JWT or JWK related flows like OpenIDConnect"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "yii\\authclient\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Paul Klimov",
+                    "email": "klimov.paul@gmail.com"
+                }
+            ],
+            "description": "External authentication via OAuth and OpenID for the Yii framework",
+            "keywords": [
+                "OpenID Connect",
+                "OpenId",
+                "api",
+                "auth",
+                "oauth",
+                "yii2"
+            ],
+            "time": "2019-05-14T19:51:04+00:00"
+        },
+        {
             "name": "yiisoft/yii2-bootstrap",
             "version": "dev-master",
             "source": {
@@ -863,25 +919,24 @@
             "time": "2019-02-18T10:24:42+00:00"
         },
         {
-            "name": "yiisoft/yii2-jui",
+            "name": "yiisoft/yii2-httpclient",
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/yiisoft/yii2-jui.git",
-                "reference": "e9082f800a0877a268e9294934616a56204f4f5e"
+                "url": "https://github.com/yiisoft/yii2-httpclient.git",
+                "reference": "3255a9b57fd2a294607d7ecf3d4a33bd29e9e27c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/yiisoft/yii2-jui/zipball/e9082f800a0877a268e9294934616a56204f4f5e",
-                "reference": "e9082f800a0877a268e9294934616a56204f4f5e",
+                "url": "https://api.github.com/repos/yiisoft/yii2-httpclient/zipball/3255a9b57fd2a294607d7ecf3d4a33bd29e9e27c",
+                "reference": "3255a9b57fd2a294607d7ecf3d4a33bd29e9e27c",
                 "shasum": ""
             },
             "require": {
-                "bower-asset/jquery-ui": "~1.12.1",
-                "yiisoft/yii2": "~2.0.4"
+                "yiisoft/yii2": "~2.0.13"
             },
             "require-dev": {
-                "phpunit/phpunit": "<7"
+                "phpunit/phpunit": "4.8.27|~5.7.21|^6.2"
             },
             "type": "yii2-extension",
             "extra": {
@@ -891,7 +946,7 @@
             },
             "autoload": {
                 "psr-4": {
-                    "yii\\jui\\": "src"
+                    "yii\\httpclient\\": "src"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -900,28 +955,18 @@
             ],
             "authors": [
                 {
-                    "name": "Alexander Kochetov",
-                    "email": "creocoder@gmail.com"
-                },
-                {
-                    "name": "Qiang Xue",
-                    "email": "qiang.xue@gmail.com"
-                },
-                {
-                    "name": "Carsten Brandt",
-                    "email": "mail@cebe.cc"
-                },
-                {
-                    "name": "Alexander Makarov",
-                    "email": "sam@rmcreative.ru"
+                    "name": "Paul Klimov",
+                    "email": "klimov.paul@gmail.com"
                 }
             ],
-            "description": "The Jquery UI extension for the Yii framework",
+            "description": "HTTP client extension for the Yii framework",
             "keywords": [
-                "jQuery UI",
+                "curl",
+                "http",
+                "httpclient",
                 "yii2"
             ],
-            "time": "2019-05-23T16:26:56+00:00"
+            "time": "2019-05-23T15:56:02+00:00"
         },
         {
             "name": "yiisoft/yii2-swiftmailer",
@@ -3723,7 +3768,7 @@
     "aliases": [],
     "minimum-stability": "dev",
     "stability-flags": {
-        "yiisoft/yii2-jui": 20
+        "yiisoft/yii2-authclient": 20
     },
     "prefer-stable": false,
     "prefer-lowest": false,

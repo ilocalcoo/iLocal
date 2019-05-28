@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\components\AuthHandler;
 use Yii;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -51,7 +52,21 @@ class SiteController extends Controller
                 'class' => 'yii\captcha\CaptchaAction',
                 'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
             ],
+            // Добавляем действие для аутентификации через соцсети.
+            'auth' => [
+                'class' => 'yii\authclient\AuthAction',
+                'successCallback' => [$this, 'onAuthSuccess'],
+            ],
         ];
+    }
+
+    /**
+     * Метод вызывается когда пользователь был успешно аутентифицирован через внешний сервис.
+     * @param $client - Через экземпляр $client мы можем извлечь полученную информацию.
+     */
+    public function onAuthSuccess($client)
+    {
+        (new AuthHandler($client))->handle();
     }
 
     /**
