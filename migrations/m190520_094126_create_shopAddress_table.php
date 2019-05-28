@@ -5,7 +5,7 @@ use yii\db\Migration;
 /**
  * Handles the creation of table `{{%shopAddress}}`.
  */
-class m190509_160834_create_shopAddress_table extends Migration
+class m190520_094126_create_shopAddress_table extends Migration
 {
     /**
      * {@inheritdoc}
@@ -14,7 +14,6 @@ class m190509_160834_create_shopAddress_table extends Migration
     {
         $this->createTable('{{%shopAddress}}', [
             'id' => $this->primaryKey(),
-            'shopId' => $this->integer()->notNull(),
             'city' => $this->string()->notNull(),
             'street' => $this->string()->notNull(),
             'houseNumber' => $this->string()->notNull(),

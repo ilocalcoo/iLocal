@@ -30,17 +30,19 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'shopId',
+            'shopActive',
             'shopShortName',
             'shopFullName',
-            'shopPhoto',
-            'shopType',
+            //'shopPhoto',
+            'shopTypeId',
             'shopPhone',
             'shopWeb',
-            'shopAddress',
+            'shopAddressId',
             'shopCostMin',
             'shopCostMax',
             'shopMiddleCost',
             'shopAgregator',
+            'shopStatusId',
         ],
     ]) ?>
 

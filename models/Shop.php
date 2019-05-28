@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "shop".
@@ -12,7 +13,6 @@ use Yii;
  * @property int $creatorId
  * @property string $shopShortName
  * @property string $shopFullName
- * @property integer $shopPhotoId
  * @property int $shopTypeId
  * @property string $shopPhone
  * @property string $shopWeb
@@ -22,17 +22,30 @@ use Yii;
  * @property string $shopMiddleCost
  * @property string $shopWorkTime
  * @property string $shopAgregator
+ * @property string $shopShortDescription
+ * @property string $shopFullDescription
+ * @property int $shopRating
  * @property int $shopStatusId
  *
  * @property Shopaddress $shopAddress
  * @property Shopstatus $shopStatus
  * @property Shoptype $shopType
+ * @property ShopPhoto $shopPhotos
  */
 class Shop extends \yii\db\ActiveRecord
 {
 
-    const SHOP_ACTIVE_ACTIVE = 1;
-    const SHOP_ACTIVE_DISABLE = 0;
+    const RELATION_SHOP_ADDRESS = 'shopAddress';
+    const RELATION_SHOP_TYPE = 'shopType';
+    const RELATION_SHOP_PHOTOS = 'shopPhotos';
+
+    const SHOP_ACTIVE_TRUE = 1;
+    const SHOP_ACTIVE_FALSE = 0;
+
+    /**
+     * @var UploadedFile[]
+     */
+    public $uploadedShopPhoto;
 
     /**
      * {@inheritdoc}
@@ -48,20 +61,18 @@ class Shop extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['shopActive', 'shopPhotoId', 'creatorId', 'shopTypeId', 'shopAddressId', 'shopCostMin', 'shopCostMax', 'shopStatusId'],
+            [['shopActive', 'creatorId', 'shopTypeId', 'shopAddressId', 'shopCostMin', 'shopCostMax', 'shopStatusId', 'shopRating'],
                 'integer'],
-            [['creatorId', 'shopShortName', 'shopFullName', 'shopTypeId', 'shopPhone', 'shopWeb',
-                'shopAddressId', 'shopCostMin', 'shopCostMax', 'shopAgregator', 'shopStatusId'], 'required'],
-            [['shopMiddleCost', 'shopWorkTime'], 'string'],
-            [['shopShortName', 'shopPhone'], 'string', 'max' => 20],
-            [['shopFullName', 'shopPhoto', 'shopWeb', 'shopAgregator'], 'string', 'max' => 255],
+            [['creatorId', 'shopShortName', 'shopTypeId', 'shopAddressId', 'shopStatusId'], 'required'],
+            [['shopMiddleCost', 'shopWorkTime', 'shopShortDescription', 'shopFullDescription'], 'string'],
+            [['shopShortName', 'shopPhone'], 'string', 'max' => 255],
+            [['shopFullName', 'shopWeb', 'shopAgregator'], 'string', 'max' => 255],
             [['shopAddressId'], 'exist', 'skipOnError' => true, 'targetClass' => Shopaddress::className(), 'targetAttribute' => ['shopAddressId' => 'id']],
             [['shopStatusId'], 'exist', 'skipOnError' => true, 'targetClass' => Shopstatus::className(), 'targetAttribute' => ['shopStatusId' => 'id']],
             [['shopTypeId'], 'exist', 'skipOnError' => true, 'targetClass' => Shoptype::className(), 'targetAttribute' => ['shopTypeId' => 'id']],
             [['creatorId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute'
             => ['creatorId' => 'id']],
-            [['shopPhotoId'], 'exist', 'skipOnError' => true, 'targetClass' => ShopPhoto::className(), 'targetAttribute'
-            => ['shopPhotoId' => 'id']],
+            [['uploadedShopPhoto'], 'file', 'extensions' => 'png, jpg, jpeg', 'maxFiles' => 10]
         ];
     }
 
@@ -76,7 +87,6 @@ class Shop extends \yii\db\ActiveRecord
             'shopActive' => 'Shop Active',
             'shopShortName' => 'Shop Short Name',
             'shopFullName' => 'Shop Full Name',
-            'shopPhotoId' => 'Shop Photo ID',
             'shopTypeId' => 'Shop Type ID',
             'shopPhone' => 'Shop Phone',
             'shopWeb' => 'Shop Web',
@@ -86,8 +96,27 @@ class Shop extends \yii\db\ActiveRecord
             'shopMiddleCost' => 'Shop Middle Cost',
             'shopWorkTime' => 'Shop Work Time',
             'shopAgregator' => 'Shop Agregator',
+            'shopShortDescription' => 'Shop Short Description',
+            'shopFullDescription' => 'Shop Full Description',
+            'shopRating' => 'Shop Rating',
             'shopStatusId' => 'Shop Status ID',
         ];
+    }
+
+    public function uploadShopPhoto()
+    {
+        if ($this->validate()) {
+            foreach ($this->uploadedShopPhoto as $file) {
+                $file->saveAs('img/shopPhoto/' . $file->baseName . '.' . $file->extension);
+                $model = new ShopPhoto();
+                $model->shopPhoto = $file->baseName . '.' . $file->extension;
+                $model->shopId = $this->shopId;
+                $model->save();
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
@@ -125,11 +154,6 @@ class Shop extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getShopPhoto()
-    {
-        return $this->hasOne(ShopPhoto::className(), ['id' => 'shopPhotoId']);
-    }
-
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -144,5 +168,9 @@ class Shop extends \yii\db\ActiveRecord
     public function getTopEvents()
     {
         return Event::find()->byTop()->limit(Event::MAX_SHOW_EVENTS);
+    
+    public function getShopPhotos()
+    {
+        return $this->hasOne(ShopPhoto::className(), ['shopId' => 'shopId']);
     }
 }

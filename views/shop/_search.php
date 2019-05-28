@@ -2,10 +2,12 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\jui\AutoComplete;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\search\ShopSearch */
 /* @var $form yii\widgets\ActiveForm */
+/* @var $shopShortNameData app\models\Shop */
 ?>
 
 <div class="shop-search">
@@ -18,21 +20,32 @@ use yii\widgets\ActiveForm;
         ],
     ]); ?>
 
-    <?= $form->field($model, 'shopId') ?>
+    <?php // echo $form->field($model, 'shopId') ?>
 
-    <?= $form->field($model, 'shopShortName') ?>
+    <?php // echo $form->field($model, 'shopActive') ?>
 
-    <?= $form->field($model, 'shopFullName') ?>
+    <?php // echo $form->field($model, 'shopShortName') ?>
 
-    <?= $form->field($model, 'shopPhoto') ?>
+    <?= $form->field($model, 'shopShortName')->widget(
+        AutoComplete::className(), [
+        'clientOptions' => [
+            'source' => $shopShortNameData,
+            'minLength' => '2',
+        ],
+        'options'=>[
+            'class'=>'form-control'
+        ]
+    ])->label('Search'); ?>
 
-    <?= $form->field($model, 'shopType') ?>
+    <?php // echo $form->field($model, 'shopPhoto') ?>
+
+    <?php // echo $form->field($model, 'shopTypeId') ?>
 
     <?php // echo $form->field($model, 'shopPhone') ?>
 
     <?php // echo $form->field($model, 'shopWeb') ?>
 
-    <?php // echo $form->field($model, 'shopAddress') ?>
+    <?php // echo $form->field($model, 'shopAddressId') ?>
 
     <?php // echo $form->field($model, 'shopCostMin') ?>
 
@@ -42,9 +55,11 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'shopAgregator') ?>
 
+    <?php // echo $form->field($model, 'shopStatusId') ?>
+
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-outline-secondary']) ?>
+        <?php // Html::resetButton('Reset', ['class' => 'btn btn-outline-secondary']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

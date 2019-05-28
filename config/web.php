@@ -17,6 +17,28 @@ $config = [
         ],
     ],
     'components' => [
+        // Настройки компонента приложения auth client collection (аутентификация через соцсети)
+        'authClientCollection' => [
+            'class' => 'yii\authclient\Collection',
+            'clients' => [
+                'google' => [
+                    'class' => 'yii\authclient\clients\Google',
+                    'clientId' => '332679075210-j6m3l81a7l7e03k6tesu55a3s7imhq28.apps.googleusercontent.com',
+                    'clientSecret' => 'qx3_MPoNXCEsZkwy-ozaeQKr',
+                ],
+                'facebook' => [
+                    'class' => 'yii\authclient\clients\Facebook',
+                    'clientId' => '353139508888425',
+                    'clientSecret' => '37947c11ad826a9a562d6d2a7f3dac89',
+                ],
+                'vkontakte' => [
+                    'class' => 'yii\authclient\clients\VKontakte',
+                    'clientId' => '6996626',
+                    'clientSecret' => '6OnBqAoUj00nOTScATQy',
+                    'scope' => ['email']
+                ],
+            ],
+        ],
         'request' => [
             // !!! insert a secret key in the following (if it is empty) - this is required by cookie validation
             'cookieValidationKey' => 'asdfasudfhqwbhfdashkashdflashd',
@@ -61,6 +83,7 @@ $config = [
                 '<controller:(shop)>' => '<controller>/index',
                 '<controller:(shop)>/<action:(view|update|delete)>/<id:\d+>' => '<controller>/<action>',
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'api/shop'],
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'api/user'],
             ],
         ],
     ],

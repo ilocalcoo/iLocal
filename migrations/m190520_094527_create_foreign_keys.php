@@ -3,9 +3,9 @@
 use yii\db\Migration;
 
 /**
- * Class m190509_161201_create_foreign_keys
+ * Class m190520_094527_create_foreign_keys
  */
-class m190509_161201_create_foreign_keys extends Migration
+class m190520_094527_create_foreign_keys extends Migration
 {
     /**
      * {@inheritdoc}
@@ -13,7 +13,8 @@ class m190509_161201_create_foreign_keys extends Migration
     public function safeUp()
     {
         $this->addForeignKey('fx_shop_shopType', 'shop', ['shopTypeId'], 'shopType', ['id']);
-        $this->addForeignKey('fx_shopAddress_shop', 'shopAddress', ['shopId'], 'shop', ['shopId']);
+        $this->addForeignKey('fx_shop_shopAddress', 'shop', ['shopAddressId'], 'shopAddress', ['id']);
+        $this->addForeignKey('fx_shop_shopStatus', 'shop', ['shopStatusId'], 'shopStatus', ['id']);
     }
 
     /**
@@ -22,7 +23,8 @@ class m190509_161201_create_foreign_keys extends Migration
     public function safeDown()
     {
         $this->dropForeignKey('fx_shop_shopType', 'shop');
-        $this->dropForeignKey('fx_shopAddress_shop', 'shopAddress');
+        $this->dropForeignKey('fx_shop_shopAddress', 'shop');
+        $this->dropForeignKey('fx_shop_shopStatus', 'shop');
     }
 
     /*
@@ -34,7 +36,7 @@ class m190509_161201_create_foreign_keys extends Migration
 
     public function down()
     {
-        echo "m190509_161201_create_foreign_keys cannot be reverted.\n";
+        echo "m190520_094527_create_foreign_keys cannot be reverted.\n";
 
         return false;
     }
