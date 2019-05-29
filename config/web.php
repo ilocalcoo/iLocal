@@ -35,6 +35,7 @@ $config = [
                     'class' => 'yii\authclient\clients\VKontakte',
                     'clientId' => '6996626',
                     'clientSecret' => '6OnBqAoUj00nOTScATQy',
+                    'scope' => ['email']
                 ],
             ],
         ],

@@ -16,9 +16,11 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'shopShortName')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'creatorId')->textInput() ?>
+
     <?= $form->field($model, 'shopFullName')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'shopPhoto')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'uploadedShopPhoto[]')->fileInput(['multiple' => true]) ?>
 
     <?= $form->field($model, 'shopTypeId')->textInput() ?>
 
@@ -37,6 +39,8 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'shopWorkTime')->textInput() ?>
 
     <?= $form->field($model, 'shopAgregator')->textInput(['maxlength' => true]) ?>
+
+    <?= $form->field($model, 'shopDescription')->textInput() ?>
 
     <?= $form->field($model, 'shopStatusId')->textInput() ?>
 
