@@ -15,9 +15,9 @@ class ShopController extends ActiveController
     {
         $behaviors = parent::behaviors();
         // Добавляем атунтификацию через BasicAuth. Токен доступа отправляется как имя пользователя.
-        $behaviors['authenticator'] = [
-            'class' => HttpBasicAuth::className(),
-        ];
+//        $behaviors['authenticator'] = [
+//            'class' => HttpBasicAuth::className(),
+//        ];
         return $behaviors;
     }
 }

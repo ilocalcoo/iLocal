@@ -17,11 +17,11 @@ class UserController extends ActiveController
     {
         $behaviors = parent::behaviors();
         // Добавляем атунтификацию через BasicAuth. Токен доступа отправляется как имя пользователя.
-        $behaviors['authenticator'] = [
-            'class' => HttpBasicAuth::className(),
-            // Отключаем аутентификацию при запросе токена.
-            'except' => ['token'],
-        ];
+//        $behaviors['authenticator'] = [
+//            'class' => HttpBasicAuth::className(),
+//            // Отключаем аутентификацию при запросе токена.
+//            'except' => ['token'],
+//        ];
         return $behaviors;
     }
 
