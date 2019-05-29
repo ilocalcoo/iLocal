@@ -2,19 +2,17 @@
 
 namespace app\controllers;
 
-use app\models\ShopPhoto;
 use Yii;
-use app\models\Shop;
-use app\models\search\ShopSearch;
+use app\models\Event;
+use yii\data\ActiveDataProvider;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
-use yii\web\UploadedFile;
 
 /**
- * ShopController implements the CRUD actions for Shop model.
+ * EventController implements the CRUD actions for Event model.
  */
-class ShopController extends Controller
+class EventController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -32,28 +30,22 @@ class ShopController extends Controller
     }
 
     /**
-     * Lists all Shop models.
+     * Lists all Event models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new ShopSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        $shopShortNameData = Shop::find()
-            ->select(['shopShortName as value', 'shopShortName as label', 'shopId as id'])
-            ->asArray()
-            ->all();
+        $dataProvider = new ActiveDataProvider([
+            'query' => Event::find(),
+        ]);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
-            'shopShortNameData' => $shopShortNameData,
         ]);
     }
 
     /**
-     * Displays a single Shop model.
+     * Displays a single Event model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -66,20 +58,16 @@ class ShopController extends Controller
     }
 
     /**
-     * Creates a new Shop model.
+     * Creates a new Event model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Shop();
+        $model = new Event();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $model->uploadedShopPhoto = UploadedFile::getInstances($model, 'uploadedShopPhoto');
-
-            if ($model->uploadShopPhoto()) {
-                return $this->redirect(['view', 'id' => $model->shopId]);
-            }
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
@@ -88,7 +76,7 @@ class ShopController extends Controller
     }
 
     /**
-     * Updates an existing Shop model.
+     * Updates an existing Event model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -98,23 +86,18 @@ class ShopController extends Controller
     {
         $model = $this->findModel($id);
 
-        if (Yii::$app->request->isPost) {
-            $model->uploadedShopPhoto = UploadedFile::getInstances($model, 'uploadedShopPhoto');
-
-            if ($model->uploadShopPhoto()) {
-                if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                    return $this->redirect(['view', 'id' => $model->shopId]);
-                }
-            }
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['view', 'id' => $model->id]);
         }
+
         return $this->render('update', [
             'model' => $model,
         ]);
     }
 
     /**
-     * Deletes an existing Shop model.
-     * If deletion is successful, the browser will be redirected to the 'index' page.
+     * Disactivate an existing Event model.
+     * If disactivation is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -122,24 +105,24 @@ class ShopController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
-        $model->shopActive = Shop::SHOP_ACTIVE_FALSE;
+        $model->active = Event::STATUS_DISABLE;
         if ($model->save()) {
-            Yii::$app->session->setFlash('success', 'Статус магазина: "' . $model->shopShortName . '" успешно изменён');
-            return $this->redirect(['view', 'id' => $model->shopId]);
+            Yii::$app->session->setFlash('success', 'Статус акции: "' . $model->title . '" успешно изменён');
+            return $this->redirect(['view', 'id' => $model->id]);
         }
         return $this->redirect(['index']);
     }
 
     /**
-     * Finds the Shop model based on its primary key value.
+     * Finds the Event model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Shop the loaded model
+     * @return Event the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Shop::findOne($id)) !== null) {
+        if (($model = Event::findOne($id)) !== null) {
             return $model;
         }
 

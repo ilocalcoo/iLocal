@@ -46,7 +46,7 @@ class AuthHandler
                 $lastName = $nicknameArray[3];
                 break;
             case 'vkontakte':
-                $email = null;
+                $email = ArrayHelper::getValue($attributes, 'email');
                 $id = ArrayHelper::getValue($attributes, 'id');
                 $nickname = ArrayHelper::getValue($attributes, 'screen_name');
                 $firstName = ArrayHelper::getValue($attributes, 'first_name');
