@@ -140,7 +140,7 @@ class Shop extends \yii\db\ActiveRecord
      */
     public function getShopType()
     {
-        return $this->hasOne(Shoptype::className(), ['id' => 'shopTypeId']);
+        return $this->hasOne(ShopType::className(), ['id' => 'shopTypeId']);
     }
 
     /**
