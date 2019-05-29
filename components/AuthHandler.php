@@ -26,6 +26,7 @@ class AuthHandler
     public function handle()
     {
         $attributes = $this->client->getUserAttributes();
+        $accessToken = $this->client->getAccessToken()->getToken();
 
         switch ($this->client->getName()) {
             case 'google':
@@ -92,6 +93,7 @@ class AuthHandler
 //                        'github' => $nickname,
                         'email' => $email,
                         'password' => $password,
+                        'accessToken' => $accessToken,
                     ]);
                     $user->generateAuthKey();
                     $user->generatePasswordResetToken();
