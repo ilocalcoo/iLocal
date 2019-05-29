@@ -168,6 +168,7 @@ class Shop extends \yii\db\ActiveRecord
     public function getTopEvents()
     {
         return Event::find()->byTop()->limit(Event::MAX_SHOW_EVENTS);
+    }
     
     public function getShopPhotos()
     {
