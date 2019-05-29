@@ -154,6 +154,21 @@ class Shop extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEvents()
+    {
+        return $this->hasMany(Event::className(), ['eventOwnerId' => 'shopId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getTopEvents()
+    {
+        return Event::find()->byTop()->limit(Event::MAX_SHOW_EVENTS);
+    
     public function getShopPhotos()
     {
         return $this->hasOne(ShopPhoto::className(), ['shopId' => 'shopId']);
