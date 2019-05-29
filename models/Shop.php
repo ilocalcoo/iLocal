@@ -67,9 +67,9 @@ class Shop extends \yii\db\ActiveRecord
             [['shopMiddleCost', 'shopWorkTime', 'shopShortDescription', 'shopFullDescription'], 'string'],
             [['shopShortName', 'shopPhone'], 'string', 'max' => 255],
             [['shopFullName', 'shopWeb', 'shopAgregator'], 'string', 'max' => 255],
-            [['shopAddressId'], 'exist', 'skipOnError' => true, 'targetClass' => Shopaddress::className(), 'targetAttribute' => ['shopAddressId' => 'id']],
-            [['shopStatusId'], 'exist', 'skipOnError' => true, 'targetClass' => Shopstatus::className(), 'targetAttribute' => ['shopStatusId' => 'id']],
-            [['shopTypeId'], 'exist', 'skipOnError' => true, 'targetClass' => Shoptype::className(), 'targetAttribute' => ['shopTypeId' => 'id']],
+            [['shopAddressId'], 'exist', 'skipOnError' => true, 'targetClass' => ShopAddress::className(), 'targetAttribute' => ['shopAddressId' => 'id']],
+            [['shopStatusId'], 'exist', 'skipOnError' => true, 'targetClass' => ShopStatus::className(), 'targetAttribute' => ['shopStatusId' => 'id']],
+            [['shopTypeId'], 'exist', 'skipOnError' => true, 'targetClass' => ShopType::className(), 'targetAttribute' => ['shopTypeId' => 'id']],
             [['creatorId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute'
             => ['creatorId' => 'id']],
             [['uploadedShopPhoto'], 'file', 'extensions' => 'png, jpg, jpeg', 'maxFiles' => 10]
@@ -124,7 +124,7 @@ class Shop extends \yii\db\ActiveRecord
      */
     public function getShopAddress()
     {
-        return $this->hasOne(Shopaddress::className(), ['id' => 'shopAddressId']);
+        return $this->hasOne(ShopAddress::className(), ['id' => 'shopAddressId']);
     }
 
     /**
@@ -132,7 +132,7 @@ class Shop extends \yii\db\ActiveRecord
      */
     public function getShopStatus()
     {
-        return $this->hasOne(Shopstatus::className(), ['id' => 'shopStatusId']);
+        return $this->hasOne(ShopStatus::className(), ['id' => 'shopStatusId']);
     }
 
     /**
@@ -140,7 +140,7 @@ class Shop extends \yii\db\ActiveRecord
      */
     public function getShopType()
     {
-        return $this->hasOne(Shoptype::className(), ['id' => 'shopTypeId']);
+        return $this->hasOne(ShopType::className(), ['id' => 'shopTypeId']);
     }
 
     /**
@@ -171,6 +171,6 @@ class Shop extends \yii\db\ActiveRecord
     }
     public function getShopPhotos()
     {
-        return $this->hasOne(ShopPhoto::className(), ['shopId' => 'shopId']);
+        return $this->hasOne(ShopPhoto::className(), ['id' => 'shopId']);
     }
 }
