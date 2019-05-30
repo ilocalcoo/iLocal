@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "shoptype".
+ * This is the model class for table "shopType".
  *
  * @property int $id
  * @property string $type
@@ -19,7 +19,7 @@ class ShopType extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'shoptype';
+        return 'shopType';
     }
 
     /**
