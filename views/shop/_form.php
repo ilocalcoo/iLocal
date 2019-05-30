@@ -40,7 +40,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'shopAgregator')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'shopDescription')->textInput() ?>
+    <?= $form->field($model, 'shopShortDescription')->textInput() ?>
+
+    <?= $form->field($model, 'shopFullDescription')->textInput() ?>
 
     <?= $form->field($model, 'shopStatusId')->textInput() ?>
 
