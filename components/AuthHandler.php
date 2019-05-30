@@ -25,6 +25,12 @@ class AuthHandler
 
     public function handle()
     {
+//        $code = Yii::$app->getRequest()->get('code');
+//        $accessToken = $this->client->fetchAccessToken($code);
+        var_dump($this->client->fetchAccessToken(Yii::$app->getRequest()->get('code'))); exit;
+//        var_dump($this->client->fetchAccessToken(Yii::$app->getRequest()->get('code'))); exit;
+
+
         $attributes = $this->client->getUserAttributes();
         $accessToken = $this->client->getAccessToken()->getToken();
 
