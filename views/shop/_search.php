@@ -2,10 +2,12 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\jui\AutoComplete;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\search\ShopSearch */
 /* @var $form yii\widgets\ActiveForm */
+/* @var $shopShortNameData app\models\Shop */
 ?>
 
 <div class="shop-search">
@@ -24,7 +26,16 @@ use yii\widgets\ActiveForm;
 
     <?php // echo $form->field($model, 'shopShortName') ?>
 
-    <?= $form->field($model, 'shopFullName') ?>
+    <?= $form->field($model, 'shopShortName')->widget(
+        AutoComplete::className(), [
+        'clientOptions' => [
+            'source' => $shopShortNameData,
+            'minLength' => '2',
+        ],
+        'options'=>[
+            'class'=>'form-control'
+        ]
+    ])->label('Search'); ?>
 
     <?php // echo $form->field($model, 'shopPhoto') ?>
 

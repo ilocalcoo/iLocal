@@ -5,22 +5,21 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "shopPhoto".
+ * This is the model class for table "eventType".
  *
  * @property int $id
- * @property int $shopId
- * @property string $shopPhoto
+ * @property string $type
  *
- * @property Shop $shop
+ * @property Event[] $events
  */
-class ShopPhoto extends \yii\db\ActiveRecord
+class EventType extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'shopPhoto';
+        return 'eventType';
     }
 
     /**
@@ -29,7 +28,8 @@ class ShopPhoto extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['shopPhoto'], 'string', 'max' => 255],
+            [['type'], 'required'],
+            [['type'], 'string', 'max' => 255],
         ];
     }
 
@@ -40,16 +40,15 @@ class ShopPhoto extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'shopId' => 'Shop ID',
-            'shopPhoto' => 'Shop Photo',
+            'type' => 'Type',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getShop()
+    public function getEvents()
     {
-        return $this->hasOne(Shop::className(), ['id' => 'shopId']);
+        return $this->hasMany(Event::className(), ['eventTypeId' => 'id']);
     }
 }
