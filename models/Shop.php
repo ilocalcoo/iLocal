@@ -27,9 +27,9 @@ use yii\web\UploadedFile;
  * @property int $shopRating
  * @property int $shopStatusId
  *
- * @property Shopaddress $shopAddress
- * @property Shopstatus $shopStatus
- * @property Shoptype $shopType
+ * @property ShopAddress $shopAddress
+ * @property ShopStatus $shopStatus
+ * @property ShopType $shopType
  * @property ShopPhoto $shopPhotos
  */
 class Shop extends \yii\db\ActiveRecord
@@ -169,9 +169,8 @@ class Shop extends \yii\db\ActiveRecord
     {
         return Event::find()->byTop()->limit(Event::MAX_SHOW_EVENTS);
     }
-    
     public function getShopPhotos()
     {
-        return $this->hasOne(ShopPhoto::className(), ['shopId' => 'shopId']);
+        return $this->hasOne(ShopPhoto::className(), ['id' => 'shopId']);
     }
 }
