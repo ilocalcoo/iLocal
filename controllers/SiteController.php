@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\components\AuthHandler;
 use Yii;
 use yii\filters\AccessControl;
+use yii\helpers\Html;
 use yii\web\Controller;
 use yii\web\Response;
 use yii\filters\VerbFilter;
@@ -86,8 +87,11 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+        $title = 'Login';
+
         if (!Yii::$app->user->isGuest) {
-            return $this->goHome();
+//            return $this->goHome();
+            $title = 'Link another account';
         }
 
         $model = new LoginForm();
@@ -98,6 +102,7 @@ class SiteController extends Controller
         $model->password = '';
         return $this->render('login', [
             'model' => $model,
+            'title' => $title,
         ]);
     }
 
