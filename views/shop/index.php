@@ -1,5 +1,6 @@
 <?php
 
+use kartik\rating\StarRating;
 use yii\helpers\Html;
 use yii\grid\GridView;
 use yii\widgets\Pjax;
@@ -50,7 +51,47 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
             ],
             'shopShortDescription',
-            //TODO Рейтинг места
+            [
+                'attribute' => 'shopRating',
+                'value' => function (app\models\Shop $model) {
+                    return StarRating::widget([
+                        'name' => 'shop_rating',
+                        'value' => $model->shopRating,
+                        'language' => 'ru',
+                        'pluginOptions' => [
+                            'size' => 'md',
+                            'stars' => 5,
+                            'min' => 0,
+                            'max' => 5,
+                            'step' => 1,
+                            'showClear' => false,
+                            'showCaption' => false,
+                            'theme' => 'krajee-svg',
+                            'filledStar' => '<span class="krajee-icon krajee-icon-star"></span>',
+                            'emptyStar' => '<span class="krajee-icon krajee-icon-star"></span>'
+                        ],
+                        'pluginEvents' => [
+                            'rating:change' => "function(event, value, caption){
+                                if (". Yii::$app->user->isGuest .") { alert('guest'); return false; }
+                                $.ajax({
+                                    url:'/shop/rating',
+                                    method:'post',
+                                    data:{
+                                        rating:value,
+                                        shopId:". $model->shopId .",
+                                        userId:". $model->getUserId() .",
+                                    },
+                                    dataType:'json',
+                                    success:function(data){
+                                        location.reload();
+                                    }
+                                });
+                            }"
+                        ],
+                    ]);
+                },
+                'format' => 'raw',
+            ],
             'shopWorkTime',
 
             ['class' => 'yii\grid\ActionColumn'],

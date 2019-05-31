@@ -119,6 +119,29 @@ class Shop extends \yii\db\ActiveRecord
         }
     }
 
+    public function shopRating()
+    {
+        $shopRating = ShopRating::find()->where(['shopId' => $this->shopId])->asArray()->all();
+        $value = null;
+        foreach ($shopRating as $rating) {
+            $value += $rating['rating'];
+        }
+        $this->shopRating = round($value / count($shopRating));
+        if ($this->save()) {
+            return true;
+        }
+        return false;
+    }
+
+    public function getUserId()
+    {
+        if (Yii::$app->user->identity->id) {
+            return Yii::$app->user->identity->id;
+        } else {
+            return 0;
+        }
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -169,6 +192,7 @@ class Shop extends \yii\db\ActiveRecord
     {
         return Event::find()->byTop()->limit(Event::MAX_SHOW_EVENTS);
     }
+
     public function getShopPhotos()
     {
         return $this->hasOne(ShopPhoto::className(), ['id' => 'shopId']);
