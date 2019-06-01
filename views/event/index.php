@@ -5,6 +5,8 @@ use yii\grid\GridView;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var \app\models\search\EventSearch $searchModel */
+/* @var \app\models\Event $shortDescData */
 
 $this->title = 'Events';
 $this->params['breadcrumbs'][] = $this->title;
@@ -18,19 +20,16 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
     <?php Pjax::begin(); ?>
+		<?php echo $this->render('_search', ['model' => $searchModel, 'shortDescData' => $shortDescData]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
             'active',
             'isEventTop',
             'eventOwnerId',
             'eventTypeId',
             'title',
-            //'eventPhotoId',
             //'shortDesc',
             //'fullDesc:ntext',
             //'begin',

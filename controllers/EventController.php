@@ -2,6 +2,7 @@
 
 namespace app\controllers;
 
+use app\models\search\EventSearch;
 use Yii;
 use app\models\Event;
 use yii\data\ActiveDataProvider;
@@ -35,12 +36,18 @@ class EventController extends Controller
      */
     public function actionIndex()
     {
-        $dataProvider = new ActiveDataProvider([
-            'query' => Event::find(),
-        ]);
+        $searchModel = new EventSearch();
+        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+
+        $shortDescData = Event::find()
+            ->select(['shortDesc as value', 'shortDesc as label', 'id as id'])
+            ->asArray()
+            ->all();
 
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'shortDescData' => $shortDescData,
         ]);
     }
 
