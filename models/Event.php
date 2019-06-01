@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\web\UploadedFile;
 
 /**
  * This is the model class for table "event".
@@ -34,6 +35,12 @@ class Event extends \yii\db\ActiveRecord
     const RELATION_EVENT_SHOP = 'eventOwner';
     const RELATION_EVENT_TYPE = 'eventType';
     const RELATION_EVENT_PHOTOS = 'eventPhotos';
+
+    /**
+     * @var UploadedFile[]
+     */
+    public $uploadedEventPhoto;
+
     /**
      * {@inheritdoc}
      */
@@ -76,6 +83,22 @@ class Event extends \yii\db\ActiveRecord
             'begin' => 'Begin',
             'end' => 'End',
         ];
+    }
+
+    public function uploadEventPhoto()
+    {
+        if ($this->validate()) {
+            foreach ($this->uploadedEventPhoto as $file) {
+                $file->saveAs('img/eventPhoto/' . $file->baseName . '.' . $file->extension);
+                $model = new EventPhoto();
+                $model->eventPhoto = $file->baseName . '.' . $file->extension;
+                $model->eventId = $this->id;
+                $model->save();
+            }
+            return true;
+        } else {
+            return false;
+        }
     }
 
     /**
