@@ -13,9 +13,10 @@ class m190531_114748_create_shopRating_table extends Migration
     public function safeUp()
     {
         $this->createTable('{{%shopRating}}', [
-            'userId' => $this->primaryKey(),
-            'shopId' => $this->primaryKey(),
+            'userId' => $this->integer(),
+            'shopId' => $this->integer(),
             'rating' => $this->integer()->notNull()->defaultValue('0'),
+            'PRIMARY KEY(userId, shopId)',
         ]);
         $this->addForeignKey('fk-shopRating_shop', 'shopRating', 'shopId', 'shop', 'shopId');
         $this->addForeignKey('fk-shopRating_user', 'shopRating', 'userId', 'user', 'id');
