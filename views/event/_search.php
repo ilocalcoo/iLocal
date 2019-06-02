@@ -20,41 +20,33 @@ use yii\jui\AutoComplete;
         ],
     ]); ?>
 
-<!--    --><?//= $form->field($model, 'id') ?>
-<!---->
-<!--    --><?//= $form->field($model, 'active') ?>
-<!---->
-<!--    --><?//= $form->field($model, 'isEventTop') ?>
-<!---->
-<!--    --><?//= $form->field($model, 'eventOwnerId') ?>
-<!---->
-<!--    --><?//= $form->field($model, 'eventTypeId') ?>
+    <?= $form->field($model, 'isEventTop')->checkbox() ?>
 
-		<?= $form->field($model, 'shortDesc')->widget(
+    <?= $form->field($model, 'shortDesc')->widget(
         AutoComplete::className(), [
         'clientOptions' => [
             'source' => $shortDescData,
             'minLength' => '2',
         ],
-        'options'=>[
-            'class'=>'form-control'
+        'options' => [
+            'class' => 'form-control'
         ]
     ])->label('Search'); ?>
 
-    <?php // echo $form->field($model, 'title') ?>
+    <?php echo $form->field($model, 'begin')->widget(
+        \yii\jui\DatePicker::class, [
+            'model' => $model,
+        ]) ?>
 
-    <?php // echo $form->field($model, 'shortDesc') ?>
+    <?php echo $form->field($model, 'end')->widget(
+        \yii\jui\DatePicker::class, [
+        'model' => $model,
+    ]) ?>
 
-    <?php // echo $form->field($model, 'fullDesc') ?>
-
-    <?php // echo $form->field($model, 'begin') ?>
-
-    <?php // echo $form->field($model, 'end') ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Reset', ['class' => 'btn btn-outline-secondary']) ?>
-    </div>
+	<div class="form-group">
+      <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
+      <?= Html::resetButton('Reset', ['class' => 'btn btn-outline-secondary']) ?>
+	</div>
 
     <?php ActiveForm::end(); ?>
 

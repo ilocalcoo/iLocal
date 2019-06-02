@@ -25,15 +25,32 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            'active',
+            [
+                'attribute' => \app\models\Event::RELATION_EVENT_PHOTO,
+                'value' => function (app\models\Event $model) {
+                    // Html::img('@web/img/eventPhoto/' . $model->eventPhoto->eventPhoto);
+                    return $model->eventPhoto->eventPhoto;
+                },
+                'format' => 'html'
+            ],
             'isEventTop',
-            'eventOwnerId',
-            'eventTypeId',
+            [
+                'attribute' => \app\models\Event::RELATION_EVENT_TYPE,
+                'value' => function (app\models\Event $model) {
+                    return $model->eventType->type;
+                },
+            ],
+            [
+                'attribute' => \app\models\Event::RELATION_EVENT_SHOP,
+                'value' => function (app\models\Event $model) {
+                    return $model->eventOwner->shopShortName;
+                },
+            ],
             'title',
-            //'shortDesc',
-            //'fullDesc:ntext',
-            //'begin',
-            //'end',
+            'shortDesc',
+            'fullDesc:ntext',
+            'begin:datetime',
+            'end:datetime',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],

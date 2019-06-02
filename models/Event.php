@@ -63,6 +63,7 @@ class Event extends \yii\db\ActiveRecord
             [['eventTypeId'], 'exist', 'skipOnError' => true, 'targetClass' => EventType::className(), 'targetAttribute' => ['eventTypeId' => 'id']],
             [['eventOwnerId'], 'exist', 'skipOnError' => true, 'targetClass' => Shop::className(), 'targetAttribute'
             => ['eventOwnerId' => 'shopId']],
+            [['uploadedEventPhoto'], 'file', 'extensions' => 'png, jpg, jpeg', 'maxFiles' => 3]
         ];
     }
 

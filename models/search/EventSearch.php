@@ -17,7 +17,7 @@ class EventSearch extends Event
     public function rules()
     {
         return [
-            [['id', 'active', 'isEventTop', 'eventOwnerId', 'eventTypeId', 'eventPhotoId'], 'integer'],
+            [['id', 'active', 'isEventTop', 'eventOwnerId', 'eventTypeId'], 'integer'],
             [['title', 'shortDesc', 'fullDesc', 'begin', 'end'], 'safe'],
         ];
     }
@@ -63,7 +63,6 @@ class EventSearch extends Event
             'isEventTop' => $this->isEventTop,
             'eventOwnerId' => $this->eventOwnerId,
             'eventTypeId' => $this->eventTypeId,
-            'eventPhotoId' => $this->eventPhotoId,
             'begin' => $this->begin,
             'end' => $this->end,
         ]);
