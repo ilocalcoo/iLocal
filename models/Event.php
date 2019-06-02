@@ -13,13 +13,12 @@ use Yii;
  * @property int $eventOwnerId
  * @property int $eventTypeId
  * @property string $title
- * @property int $eventPhotoId
  * @property string $shortDesc
  * @property string $fullDesc
  * @property string $begin
  * @property string $end
  *
- * @property EventPhoto $eventPhoto
+ * @property EventPhoto $eventPhotos
  * @property EventType $eventType
  * @property Shop $eventOwner
  */
@@ -31,6 +30,10 @@ class Event extends \yii\db\ActiveRecord
     const MARK_AS_NOT_TOP = '0';
 
     const MAX_SHOW_EVENTS = 3;
+
+    const RELATION_EVENT_SHOP = 'eventOwner';
+    const RELATION_EVENT_TYPE = 'eventType';
+    const RELATION_EVENT_PHOTOS = 'eventPhotos';
     /**
      * {@inheritdoc}
      */
@@ -45,12 +48,11 @@ class Event extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['active', 'eventOwnerId', 'eventTypeId', 'eventPhotoId'], 'integer'],
+            [['active', 'eventOwnerId', 'eventTypeId'], 'integer'],
             [['eventOwnerId', 'eventTypeId', 'title', 'shortDesc', 'fullDesc', 'begin', 'end'], 'required'],
             [['fullDesc'], 'string'],
             [['begin', 'end'], 'safe'],
             [['title', 'shortDesc'], 'string', 'max' => 255],
-            [['eventPhotoId'], 'exist', 'skipOnError' => true, 'targetClass' => EventPhoto::className(), 'targetAttribute' => ['eventPhotoId' => 'id']],
             [['eventTypeId'], 'exist', 'skipOnError' => true, 'targetClass' => EventType::className(), 'targetAttribute' => ['eventTypeId' => 'id']],
             [['eventOwnerId'], 'exist', 'skipOnError' => true, 'targetClass' => Shop::className(), 'targetAttribute'
             => ['eventOwnerId' => 'shopId']],
@@ -69,7 +71,6 @@ class Event extends \yii\db\ActiveRecord
             'eventOwnerId' => 'Event Owner ID',
             'eventTypeId' => 'Event Type ID',
             'title' => 'Title',
-            'eventPhotoId' => 'Event Photo ID',
             'shortDesc' => 'Short Desc',
             'fullDesc' => 'Full Desc',
             'begin' => 'Begin',
@@ -80,9 +81,9 @@ class Event extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getEventPhoto()
+    public function getEventPhotos()
     {
-        return $this->hasOne(EventPhoto::className(), ['id' => 'eventPhotoId']);
+        return $this->hasMany(EventPhoto::className(), ['eventId' => 'id']);
     }
 
     /**

@@ -22,8 +22,6 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'eventPhotoId')->textInput() ?>
-
     <?= $form->field($model, 'shortDesc')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'fullDesc')->textarea(['rows' => 6]) ?>

@@ -8,11 +8,10 @@ use Yii;
  * This is the model class for table "eventPhoto".
  *
  * @property int $id
- * @property string $photo1
- * @property string $photo2
- * @property string $photo3
+ * @property string $eventPhoto
+ * @property int $eventId
  *
- * @property Event[] $events
+ * @property Event $event
  */
 class EventPhoto extends \yii\db\ActiveRecord
 {
@@ -30,7 +29,10 @@ class EventPhoto extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['photo1', 'photo2', 'photo3'], 'string', 'max' => 255],
+            [['eventPhoto', 'eventId'], 'required'],
+            [['eventId'], 'integer'],
+            [['eventPhoto'], 'string', 'max' => 255],
+            [['eventId'], 'exist', 'skipOnError' => true, 'targetClass' => Event::className(), 'targetAttribute' => ['eventId' => 'id']],
         ];
     }
 
@@ -41,17 +43,16 @@ class EventPhoto extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'photo1' => 'Photo1',
-            'photo2' => 'Photo2',
-            'photo3' => 'Photo3',
+            'eventPhoto' => 'Event Photo',
+            'eventId' => 'Event ID',
         ];
     }
 
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getEvents()
+    public function getEvent()
     {
-        return $this->hasMany(Event::className(), ['eventPhotoId' => 'id']);
+        return $this->hasOne(Event::className(), ['id' => 'eventId']);
     }
 }
