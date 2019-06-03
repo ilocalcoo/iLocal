@@ -30,7 +30,7 @@ use yii\web\UploadedFile;
  * @property ShopAddress $shopAddress
  * @property ShopStatus $shopStatus
  * @property ShopType $shopType
- * @property ShopPhoto $shopPhotos
+ * @property ShopPhoto[] $shopPhotos
  */
 class Shop extends \yii\db\ActiveRecord
 {
@@ -177,9 +177,6 @@ class Shop extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    /**
-     * @return \yii\db\ActiveQuery
-     */
     public function getEvents()
     {
         return $this->hasMany(Event::className(), ['eventOwnerId' => 'shopId']);
@@ -193,8 +190,11 @@ class Shop extends \yii\db\ActiveRecord
         return Event::find()->byTop()->limit(Event::MAX_SHOW_EVENTS);
     }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getShopPhotos()
     {
-        return $this->hasOne(ShopPhoto::className(), ['id' => 'shopId']);
+        return $this->hasMany(ShopPhoto::className(), ['shopId' => 'shopId']);
     }
 }

@@ -30,8 +30,12 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'attribute' => 'shopPhoto',
                 'value' => function (app\models\Shop $model) {
-                    // Html::img('@web/img/shopPhoto/' . $model->shopPhotos->shopPhoto);
-                    return $model->shopPhotos->shopPhoto;
+                    $photo = [];
+                    foreach ($model->shopPhotos as $url) {
+                        $photo[] = $url->shopPhoto;
+                    }
+                    $str = implode(',', $photo);
+                    return $str;
                 },
                 'format' => 'html'
             ],
