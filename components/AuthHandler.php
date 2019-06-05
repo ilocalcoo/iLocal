@@ -92,7 +92,8 @@ class AuthHandler
                 // Обновляем username.
                 $this->updateUserInfo($user, $nickname);
                 // Авторизуем пользователя (можно в конфиге задать время сессии)
-                Yii::$app->user->login($user, Yii::$app->params['user.rememberMeDuration']);
+                Yii::$app->user->login($user);
+//                Yii::$app->user->login($user, Yii::$app->params['user.rememberMeDuration']);
             } else { // signup (регистрация)
                 // Если пользователь гость и в таблице auth записи не существует, то создаём нового пользователя и
                 // запись в таблице auth. После проводим аутентификацию пользователя.
@@ -135,7 +136,8 @@ class AuthHandler
                         ]);
                         if ($auth->save()) {
                             $transaction->commit();
-                            Yii::$app->user->login($user, Yii::$app->params['user.rememberMeDuration']);
+                            Yii::$app->user->login($user);
+//                            Yii::$app->user->login($user, Yii::$app->params['user.rememberMeDuration']);
                         } else {
                             Yii::$app->getSession()->setFlash('error', [
                                 Yii::t('app', 'Unable to save {client} account: {errors}', [
