@@ -5,6 +5,8 @@ use yii\grid\GridView;
 use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var \app\models\search\EventSearch $searchModel */
+/* @var \app\models\Event $shortDescData */
 
 $this->title = 'Events';
 $this->params['breadcrumbs'][] = $this->title;
@@ -18,23 +20,37 @@ $this->params['breadcrumbs'][] = $this->title;
     </p>
 
     <?php Pjax::begin(); ?>
+		<?php echo $this->render('_search', ['model' => $searchModel, 'shortDescData' => $shortDescData]); ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
-
-            'id',
-            'active',
+            [
+                'attribute' => \app\models\Event::RELATION_EVENT_PHOTO,
+                'value' => function (app\models\Event $model) {
+                    // Html::img('@web/img/eventPhoto/' . $model->eventPhoto->eventPhoto);
+                    return $model->eventPhoto->eventPhoto;
+                },
+                'format' => 'html'
+            ],
             'isEventTop',
-            'eventOwnerId',
-            'eventTypeId',
+            [
+                'attribute' => \app\models\Event::RELATION_EVENT_TYPE,
+                'value' => function (app\models\Event $model) {
+                    return $model->eventType->type;
+                },
+            ],
+            [
+                'attribute' => \app\models\Event::RELATION_EVENT_SHOP,
+                'value' => function (app\models\Event $model) {
+                    return $model->eventOwner->shopShortName;
+                },
+            ],
             'title',
-            //'eventPhotoId',
-            //'shortDesc',
-            //'fullDesc:ntext',
-            //'begin',
-            //'end',
+            'shortDesc',
+            'fullDesc:ntext',
+            'begin:datetime',
+            'end:datetime',
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
