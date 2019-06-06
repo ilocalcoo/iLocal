@@ -55,7 +55,8 @@ class SiteController extends Controller
             ],
             // Добавляем действие для аутентификации через соцсети.
             'auth' => [
-                'class' => 'yii\authclient\AuthAction',
+                'class' => 'app\components\ExtendedAuthAction',
+//                'class' => 'yii\authclient\AuthAction',
                 'successCallback' => [$this, 'onAuthSuccess'],
             ],
         ];
