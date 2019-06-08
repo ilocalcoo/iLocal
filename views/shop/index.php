@@ -76,7 +76,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         ],
                         'pluginEvents' => [
                             'rating:change' => "function(event, value, caption){
-                                if (". Yii::$app->user->isGuest .") { alert('guest'); return false; }
+                                if (". $model->myIsGuest() .") { alert('guest'); return false; }
                                 $.ajax({
                                     url:'/shop/rating',
                                     method:'post',
