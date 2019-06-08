@@ -135,11 +135,21 @@ class Shop extends \yii\db\ActiveRecord
 
     public function getUserId()
     {
-        if (Yii::$app->user->identity->id) {
-            return Yii::$app->user->identity->id;
+        if (Yii::$app->user->isGuest) {
+            return 0;
+        } else {
+            return Yii::$app->user->id;
+        }
+    }
+
+    public function myIsGuest()
+    {
+        if (Yii::$app->user->isGuest) {
+            return 1;
         } else {
             return 0;
         }
+
     }
 
     /**
