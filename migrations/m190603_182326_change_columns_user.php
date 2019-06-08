@@ -12,8 +12,8 @@ class m190603_182326_change_columns_user extends Migration
      */
     public function safeUp()
     {
-        $this->alterColumn('{{%user}}', 'firstName', 'integer NULL');
-        $this->alterColumn('{{%user}}', 'lastName', 'integer NULL');
+        $this->alterColumn('{{%user}}', 'firstName', 'string NULL');
+        $this->alterColumn('{{%user}}', 'lastName', 'string NULL');
     }
 
     /**
@@ -21,8 +21,8 @@ class m190603_182326_change_columns_user extends Migration
      */
     public function safeDown()
     {
-        $this->alterColumn('{{%user}}', 'firstName', 'integer NOT NULL');
-        $this->alterColumn('{{%user}}', 'lastName', 'integer NOT NULL');
+        $this->alterColumn('{{%user}}', 'firstName', 'string NOT NULL');
+        $this->alterColumn('{{%user}}', 'lastName', 'string NOT NULL');
     }
 
 }
