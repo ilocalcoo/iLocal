@@ -14,6 +14,7 @@ use yii\helpers\ArrayHelper;
 class AuthHandler
 {
     /**
+     * Экземпляр OAuth2 - google, facebook, vkontakte.
      * @var ClientInterface
      */
     private $client;
@@ -23,10 +24,20 @@ class AuthHandler
         $this->client = $client;
     }
 
+    /**
+     * Метод вызывается когда пользователь был успешно аутентифицирован через внешний сервис c помощью
+     * yii\authclient\AuthAction.
+     */
     public function handle()
     {
+        // Через экземпляр $client мы можем извлечь полученную информацию.
         $attributes = $this->client->getUserAttributes();
 
+        // Это для тестов, чтобы получить обновленный токен от соцсети.
+//        $accessToken = $this->client->getAccessToken()->getToken();
+//        var_dump($attributes, $accessToken);exit;
+
+        // У каждой соцсети свои наименования полей.
         switch ($this->client->getName()) {
             case 'google':
                 $email = ArrayHelper::getValue($attributes, 'email');
@@ -63,27 +74,43 @@ class AuthHandler
         }
 
         /* @var Auth $auth */
+        // Таблица auth содержит отношения аккаунта (user) к соцсетям, т.к. один аккаунт может принадлежать нескольким
+        // соцсетям.
         $auth = Auth::find()->where([
+            // наименование соцсети
             'source' => $this->client->getId(),
+            // id пользователя в этой соцсети
             'source_id' => $id,
         ])->one();
 
         if (Yii::$app->user->isGuest) {
+            // Если пользователь гость и в таблице auth существует запись, то проводим аутентификацию этого пользователя.
             if ($auth) { // login (авторизация)
                 /* @var User $user */
+                // Получаем юзера, который относится к соцсети в таблице auth.
                 $user = $auth->user;
-                $this->updateUserInfo($user);
-                Yii::$app->user->login($user, Yii::$app->params['user.rememberMeDuration']);
+                // Обновляем username.
+                $this->updateUserInfo($user, $nickname);
+                // Авторизуем пользователя (можно в конфиге задать время сессии)
+                Yii::$app->user->login($user);
+//                Yii::$app->user->login($user, Yii::$app->params['user.rememberMeDuration']);
             } else { // signup (регистрация)
+                // Если пользователь гость и в таблице auth записи не существует, то создаём нового пользователя и
+                // запись в таблице auth. После проводим аутентификацию пользователя.
                 if ($email !== null && User::find()->where(['email' => $email])->exists()) {
+                    // Если пользователь с таким email уже существует, то отменяем регистрацию и ввыводим сообщение.
                     Yii::$app->getSession()->setFlash('error', [
                         Yii::t(
                             'app',
-                            "Пользователь с такой электронной почтой как в {client} уже существует, но с ним не связан. Для начала войдите на сайт используя электронную почту, для того, что бы связать её.",
+                            "Пользователь с такой электронной почтой как в {client} уже существует, но с ним не 
+                            связан. Для начала войдите на сайт под аккаунтом, зарегистрированным на эту электронную 
+                            почту, для того, что бы связать её.",
                             ['client' => $this->client->getTitle()]),
                     ]);
-                } else {
+                } else { // Если пользователь новый, то регистрируем его.
+                    // Пароли больше не нужны, но оставили для совместимости. password генерируется в password_hash
                     $password = Yii::$app->security->generateRandomString(6);
+                    // Создаем нового пользователя и присваиваем ему полученные значения.
                     $user = new User([
                         'username' => $nickname,
                         'firstName' => $firstName,
@@ -92,13 +119,16 @@ class AuthHandler
 //                        'github' => $nickname,
                         'email' => $email,
                         'password' => $password,
+//                        'accessToken' => $accessToken,
                     ]);
+                    // Тоже старый функционал. AuthKey нужен для галочки "Remember me"
                     $user->generateAuthKey();
                     $user->generatePasswordResetToken();
 
                     $transaction = User::getDb()->beginTransaction();
 
                     if ($user->save()) {
+                        // Создаем запись в таблице auth о том к какой соцсети принадлежит юзер.
                         $auth = new Auth([
                             'user_id' => $user->id,
                             'source' => $this->client->getId(),
@@ -106,7 +136,8 @@ class AuthHandler
                         ]);
                         if ($auth->save()) {
                             $transaction->commit();
-                            Yii::$app->user->login($user, Yii::$app->params['user.rememberMeDuration']);
+                            Yii::$app->user->login($user);
+//                            Yii::$app->user->login($user, Yii::$app->params['user.rememberMeDuration']);
                         } else {
                             Yii::$app->getSession()->setFlash('error', [
                                 Yii::t('app', 'Unable to save {client} account: {errors}', [
@@ -126,6 +157,8 @@ class AuthHandler
                 }
             }
         } else { // user already logged in
+            // Если пользователь прошёл аутентификацию и запись в таблице auth не найдена, то пытаемся подключить
+            // дополнительный аккаунт (сохранить его данные в таблицу auth).
             if (!$auth) { // add auth provider
                 $auth = new Auth([
                     'user_id' => Yii::$app->user->id,
@@ -135,7 +168,7 @@ class AuthHandler
                 if ($auth->save()) {
                     /** @var User $user */
                     $user = $auth->user;
-                    $this->updateUserInfo($user);
+                    $this->updateUserInfo($user, $nickname);
                     Yii::$app->getSession()->setFlash('success', [
                         Yii::t('app', 'Linked {client} account.', [
                             'client' => $this->client->getTitle()
@@ -150,6 +183,8 @@ class AuthHandler
                     ]);
                 }
             } else { // there's existing auth
+                // Если пользователь прошёл аутентификацию и запись в таблице auth уже существует, то значит аккаунт
+                // занят, отменяем привязку аккаунта.
                 Yii::$app->getSession()->setFlash('error', [
                     Yii::t('app',
                         'Unable to link {client} account. There is another user using it.',
@@ -160,13 +195,13 @@ class AuthHandler
     }
 
     /**
+     * Обновляет username если пользователь вошел из другой соцсети.
      * @param User $user
+     * @param string $username
      */
-    private function updateUserInfo(User $user)
+    private function updateUserInfo(User $user, $username)
     {
-        $attributes = $this->client->getUserAttributes();
-        $username = ArrayHelper::getValue($attributes, 'name');
-        if ($user->username === null && $username) {
+        if ($user->username !== $username) {
             $user->username = $username;
             $user->save();
         }
