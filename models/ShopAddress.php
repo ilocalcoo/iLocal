@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "shopaddress".
+ * This is the model class for table "shopAddress".
  *
  * @property int $id
  * @property string $city
@@ -25,7 +25,7 @@ class ShopAddress extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'shopaddress';
+        return 'shopAddress';
     }
 
     /**

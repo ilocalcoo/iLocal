@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\ShopPhoto;
+use app\models\ShopRating;
 use Yii;
 use app\models\Shop;
 use app\models\search\ShopSearch;
@@ -110,6 +111,33 @@ class ShopController extends Controller
         return $this->render('update', [
             'model' => $model,
         ]);
+    }
+
+    /**
+     * @return bool
+     * @throws NotFoundHttpException
+     */
+    public function actionRating()
+    {
+        $findRating = ShopRating::find()->where(['shopId' => $_POST['shopId'], 'userId' => $_POST['userId']])->one();
+
+        if (!empty($findRating)) {
+            $findRating->rating = $_POST['rating'];
+            $findRating->save();
+        } else {
+            $newRating = new ShopRating();
+            $newRating->shopId = $_POST['shopId'];
+            $newRating->userId = $_POST['userId'];
+            $newRating->rating = $_POST['rating'];
+            $newRating->save();
+        }
+
+        $shop = $this->findModel($_POST['shopId']);
+
+        if ($shop->shopRating()) {
+            return true;
+        }
+        return false;
     }
 
     /**
