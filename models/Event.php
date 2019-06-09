@@ -113,6 +113,14 @@ class Event extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getTopEventPhotos()
+    {
+        return $this->hasMany(EventPhoto::className(), ['eventId' => 'id'])->limit(Event::MAX_SHOW_EVENTS);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getEventType()
     {
         return $this->hasOne(EventType::className(), ['id' => 'eventTypeId']);

@@ -50,16 +50,9 @@ class EventController extends Controller
 //            'dataProvider' => $dataProvider,
 //            'shortDescData' => $shortDescData,
 //        ]);
-        $query = Event::find()->where(['active' => 1]);
-        $countQuery = clone $query;
-        $pages = new Pagination(['totalCount' => $countQuery->count()]);
-        $models = $query->offset($pages->offset)
-            ->limit($pages->limit)
-            ->all();
-
+        $models = Event::find()->where(['active' => 1])->all();
         return $this->render('index', [
             'models' => $models,
-            'pages' => $pages,
         ]);
     }
 
