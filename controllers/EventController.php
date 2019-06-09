@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\models\search\EventSearch;
 use Yii;
 use app\models\Event;
+use yii\data\Pagination;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -36,18 +37,29 @@ class EventController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new EventSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        $shortDescData = Event::find()
-            ->select(['shortDesc as value', 'shortDesc as label', 'id as id'])
-            ->asArray()
+//        $searchModel = new EventSearch();
+//        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+//
+//        $shortDescData = Event::find()
+//            ->select(['shortDesc as value', 'shortDesc as label', 'id as id'])
+//            ->asArray()
+//            ->all();
+//
+//        return $this->render('index', [
+//            'searchModel' => $searchModel,
+//            'dataProvider' => $dataProvider,
+//            'shortDescData' => $shortDescData,
+//        ]);
+        $query = Event::find()->where(['active' => 1]);
+        $countQuery = clone $query;
+        $pages = new Pagination(['totalCount' => $countQuery->count()]);
+        $models = $query->offset($pages->offset)
+            ->limit($pages->limit)
             ->all();
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'shortDescData' => $shortDescData,
+            'models' => $models,
+            'pages' => $pages,
         ]);
     }
 

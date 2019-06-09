@@ -2,59 +2,43 @@
 
 use yii\helpers\Html;
 use yii\grid\GridView;
+use yii\widgets\LinkPager;
 use yii\widgets\Pjax;
+
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 /* @var \app\models\search\EventSearch $searchModel */
 /* @var \app\models\Event $shortDescData */
+/* @var \app\models\Event[] $models */
 
 $this->title = 'Events';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="event-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Create Event', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
     <?php Pjax::begin(); ?>
-		<?php echo $this->render('_search', ['model' => $searchModel, 'shortDescData' => $shortDescData]); ?>
+    <?php
+    foreach ($models as $model) { ?>
+		<div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+			<div class="carousel-inner">
+				<div class="carousel-item active">
+					<img class="d-block w-100" src="..." alt="First slide">
+				</div>
+				<div class="carousel-item">
+					<img class="d-block w-100" src="..." alt="Second slide">
+				</div>
+				<div class="carousel-item">
+					<img class="d-block w-100" src="..." alt="Third slide">
+				</div>
+			</div>
+		</div>
+    <?php } ?>
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'columns' => [
-            [
-                'attribute' => \app\models\Event::RELATION_EVENT_PHOTO,
-                'value' => function (app\models\Event $model) {
-                    // Html::img('@web/img/eventPhoto/' . $model->eventPhoto->eventPhoto);
-                    return $model->eventPhoto->eventPhoto;
-                },
-                'format' => 'html'
-            ],
-            'isEventTop',
-            [
-                'attribute' => \app\models\Event::RELATION_EVENT_TYPE,
-                'value' => function (app\models\Event $model) {
-                    return $model->eventType->type;
-                },
-            ],
-            [
-                'attribute' => \app\models\Event::RELATION_EVENT_SHOP,
-                'value' => function (app\models\Event $model) {
-                    return $model->eventOwner->shopShortName;
-                },
-            ],
-            'title',
-            'shortDesc',
-            'fullDesc:ntext',
-            'begin:datetime',
-            'end:datetime',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+	// отображаем ссылки на страницы
+    <?php echo LinkPager::widget([
+        'pagination' => $pages,
+    ]);
+    ?>
 
     <?php Pjax::end(); ?>
 
