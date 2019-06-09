@@ -146,4 +146,14 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+
+    /**
+     * Displays policy page.
+     *
+     * @return string
+     */
+    public function actionPolicy()
+    {
+        return $this->render('policy');
+    }
 }
