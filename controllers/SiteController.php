@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\components\AuthHandler;
+use app\models\User;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\Html;
@@ -88,22 +89,19 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        $title = 'Login';
+        $model = null;
 
         if (!Yii::$app->user->isGuest) {
-//            return $this->goHome();
-            $title = 'Link another account';
+            $model = Yii::$app->user->getIdentity();
+
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                Yii::$app->getSession()->setFlash('success', 'Изменения сохранены');
+                return $this->refresh();
+            }
         }
 
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
-
-        $model->password = '';
         return $this->render('login', [
             'model' => $model,
-            'title' => $title,
         ]);
     }
 
