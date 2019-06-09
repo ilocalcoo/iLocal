@@ -28,6 +28,15 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= Html::endForm() ?>
     <?php endif; ?>
 
+
+    <?php if (!Yii::$app->user->isGuest) : ?>
+
+    <?= '<hr>' ?>
+    <?= '<h1>Избранное</h1>' ?>
+
+    <?php endif; ?>
+
+
 <!--    <p>Please fill out the following fields to login:</p>-->
 <!---->
 <!--    --><?php //$form = ActiveForm::begin([
