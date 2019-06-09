@@ -51,10 +51,13 @@ class AuthHandler
                 $email = ArrayHelper::getValue($attributes, 'email');
                 $id = ArrayHelper::getValue($attributes, 'id');
                 $nickname = ArrayHelper::getValue($attributes, 'name');
-                preg_match('/(\S+)\s(\S*)\s(\S+)/', $nickname, $nicknameArray);
-                $firstName = $nicknameArray[1];
-                $middleName = $nicknameArray[2];
-                $lastName = $nicknameArray[3];
+//                preg_match('/(\S+)\s(\S*)\s(\S+)/', $nickname, $nicknameArray);
+//                $firstName = $nicknameArray[1];
+//                $middleName = $nicknameArray[2];
+//                $lastName = $nicknameArray[3];
+                $firstName = ArrayHelper::getValue($attributes, 'first_name');
+                $middleName = ArrayHelper::getValue($attributes, 'middle_name');
+                $lastName = ArrayHelper::getValue($attributes, 'last_name');
                 break;
             case 'vkontakte':
                 $email = ArrayHelper::getValue($attributes, 'email');
