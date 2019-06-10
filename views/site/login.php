@@ -9,6 +9,8 @@
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
+\app\assets\ProfileMapsAsset::register($this);
+
 $this->title = 'Профиль';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
@@ -37,6 +39,9 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <?php ActiveForm::end() ?>
 
+
+        <p class="header">Кликните по карте, чтобы узнать адрес</p>
+        <div id="map"></div>
 
 
         <hr>
