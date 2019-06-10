@@ -7,6 +7,7 @@
 /* @var $title string */
 
 use yii\helpers\Html;
+use yii\helpers\ArrayHelper;
 use yii\bootstrap\ActiveForm;
 
 \app\assets\ProfileMapsAsset::register($this);
@@ -14,12 +15,12 @@ use yii\bootstrap\ActiveForm;
 $this->title = 'Профиль';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
+
 <div class="site-login">
     <?php if (!Yii::$app->user->isGuest): ?>
 
         <h1><?= Html::encode($this->title) ?></h1>
         <h2>Логин: <?= Yii::$app->user->identity->username ?></h2>
-
 
 
         <?php
@@ -30,18 +31,40 @@ $this->params['breadcrumbs'][] = $this->title;
         <?= $form->field($model, 'firstName') ?>
         <?= $form->field($model, 'middleName') ?>
         <?= $form->field($model, 'lastName') ?>
-<!--        --><?//= $form->field($model, 'userAddress') ?>
-
         <div class="form-group">
             <div class="col-lg-offset-1 col-lg-11">
-                <?= Html::submitButton('Сохранить', ['class' => 'btn btn-primary']) ?>
+                <?= Html::submitButton('Сохранить данные', ['class' => 'btn btn-primary']) ?>
             </div>
         </div>
         <?php ActiveForm::end() ?>
+    <hr>
 
 
-        <p class="header">Кликните по карте, чтобы узнать адрес</p>
-        <div id="map"></div>
+        <b>Адрес:</b>
+        <?
+        $comma = '';
+        foreach (ArrayHelper::toArray($model->userAddress) as $key => $item) {
+            if ($key == 'id' || $item == '') {
+                continue;
+            }
+            echo $comma . $item;
+            $comma = ', ';
+        }
+        ?>
+        <br><br>
+
+        <i>Укажите на карте свой адрес, на основании него будут выдаваться предложения в Вашем микрорайоне</i>
+        <div id="profile_map"></div>
+        <br>
+        <div class="form-group">
+            <div class="col-lg-offset-1 col-lg-11">
+                <?= Html::submitButton('Сохранить адрес', ['class' => 'btn btn-primary']) ?>
+            </div>
+        </div>
+        <br>
+
+
+
 
 
         <hr>

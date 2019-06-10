@@ -89,6 +89,11 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
+        if (Yii::$app->request->post()) {
+            var_dump(Yii::$app->request->post());
+        }
+
+
         $model = null;
 
         if (!Yii::$app->user->isGuest) {
