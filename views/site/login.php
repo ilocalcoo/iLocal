@@ -3,20 +3,30 @@
 /* @var $this yii\web\View */
 /* @var $form yii\bootstrap\ActiveForm */
 /* @var $model app\models\LoginForm */
+/* @var $title string */
 
 use yii\helpers\Html;
 use yii\bootstrap\ActiveForm;
 
-$this->title = 'Login';
+//$this->title = 'Login';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="site-login">
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode($title) ?></h1>
 
     <?= yii\authclient\widgets\AuthChoice::widget([
         'baseAuthUrl' => ['site/auth'],
         'popupMode' => true,
     ]) ?>
+
+    <?php if (!Yii::$app->user->isGuest) : ?>
+    <?= Html::beginForm(['/site/logout'], 'post') ?>
+    <?= Html::submitButton(
+        'Logout (' . Yii::$app->user->identity->username . ')',
+        ['class' => 'btn btn-danger logout']
+    ) ?>
+    <?= Html::endForm() ?>
+    <?php endif; ?>
 
 <!--    <p>Please fill out the following fields to login:</p>-->
 <!---->

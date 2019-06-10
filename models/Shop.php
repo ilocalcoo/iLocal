@@ -149,6 +149,7 @@ class Shop extends \yii\db\ActiveRecord
         } else {
             return 0;
         }
+
     }
 
     /**
