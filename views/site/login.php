@@ -28,16 +28,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'id' => 'user-form',
         'options' => ['class' => 'form-horizontal'],
     ]) ?>
+        <?= $form->field($model, 'lastName') ?>
         <?= $form->field($model, 'firstName') ?>
         <?= $form->field($model, 'middleName') ?>
-        <?= $form->field($model, 'lastName') ?>
         <div class="form-group">
             <div class="col-lg-offset-1 col-lg-11">
                 <?= Html::submitButton('Сохранить данные', ['class' => 'btn btn-primary']) ?>
             </div>
         </div>
         <?php ActiveForm::end() ?>
-    <hr>
+        <hr>
 
 
         <b>Адрес:</b>
@@ -47,7 +47,13 @@ $this->params['breadcrumbs'][] = $this->title;
             if ($key == 'id' || $item == '') {
                 continue;
             }
+            if ($key == 'latitude') {
+                $comma = '. Координаты: <span id="user_coordinates">';
+            }
             echo $comma . $item;
+            if ($key == 'longitude') {
+                echo '</span>';
+            }
             $comma = ', ';
         }
         ?>
@@ -55,19 +61,19 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <i>Укажите на карте свой адрес, на основании него будут выдаваться предложения в Вашем микрорайоне</i>
         <div id="profile_map"></div>
-        <br>
+
+        <?= Html::beginForm(); ?>
+        <?= Html::hiddenInput('address', '', ['id' => 'profile_address'] ); ?>
         <div class="form-group">
             <div class="col-lg-offset-1 col-lg-11">
                 <?= Html::submitButton('Сохранить адрес', ['class' => 'btn btn-primary']) ?>
             </div>
         </div>
+        <?= Html::endForm(); ?>
         <br>
 
 
-
-
-
-        <hr>
+        <br><hr>
         <h2>Привязать другой аккаунт</h2>
     <?php else: ?>
         <h2>Войдите или зарегистрируйтесь</h2>
@@ -85,6 +91,10 @@ $this->params['breadcrumbs'][] = $this->title;
         ) ?>
         <?= Html::endForm() ?>
     <?php endif; ?>
+
+
+
+
 
 
     <!--    <p>Please fill out the following fields to login:</p>-->

@@ -89,20 +89,49 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        if (Yii::$app->request->post()) {
-            var_dump(Yii::$app->request->post());
-        }
-
-
         $model = null;
 
         if (!Yii::$app->user->isGuest) {
+            /** @var User $model */
             $model = Yii::$app->user->getIdentity();
 
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                Yii::$app->getSession()->setFlash('success', 'Изменения сохранены');
-                return $this->refresh();
+            if (Yii::$app->request->post()['address']) {
+                $addressArray = explode(',', Yii::$app->request->post()['address']);
+
+                if (!$addressArray[0]) {
+                    Yii::$app->getSession()->setFlash('error', 'Не выбран город');
+                    return $this->refresh();
+                }
+                if (!$addressArray[1]) {
+                    Yii::$app->getSession()->setFlash('error', 'Не выбрана улица');
+                    return $this->refresh();
+                }
+                if (!$addressArray[2]) {
+                    Yii::$app->getSession()->setFlash('error', 'Не выбран дом');
+                    return $this->refresh();
+                }
+
+                $model->userAddress->city = $addressArray[0];
+                $model->userAddress->street = $addressArray[1];
+                $model->userAddress->houseNumber = $addressArray[2];
+                $model->userAddress->latitude = $addressArray[3];
+                $model->userAddress->longitude = $addressArray[4];
+
+                if ($model->userAddress->save()) {
+                    Yii::$app->getSession()->setFlash('success', 'Адрес сохранен');
+                    return $this->refresh();
+                }
+
             }
+
+
+            if (Yii::$app->request->post()['user']) {
+                if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                    Yii::$app->getSession()->setFlash('success', 'Изменения сохранены');
+                    return $this->refresh();
+                }
+            }
+
         }
 
         return $this->render('login', [
