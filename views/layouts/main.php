@@ -39,6 +39,7 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             //['label' => 'Home', 'url' => ['/site/index']],
+            ['label' => 'Business', 'url' => ['/user/business']],
             ['label' => 'Food', 'url' => ['/shops?shopTypeId=1']],
             ['label' => 'Child', 'url' => ['/shops?shopTypeId=2']],
             ['label' => 'Sport', 'url' => ['/shops?shopTypeId=3']],

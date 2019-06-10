@@ -3,10 +3,11 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
-$this->registerCssFile('/css/shop/create/form.css');
+$this->registerCssFile('/css/event/create/form.css');
 /* @var $this yii\web\View */
-/* @var $model app\models\Shop */
+/* @var $model app\models\Event */
 /* @var $form yii\widgets\ActiveForm */
+/* @var $eventOwner array */
 ?>
 
 <div class="shop-form create-step">
@@ -14,24 +15,17 @@ $this->registerCssFile('/css/shop/create/form.css');
         <div class="step_form-rectangle step_form-rectangle_active"></div>
         <div class="step_form-rectangle"></div>
         <div class="step_form-rectangle"></div>
-        <div class="step_form-rectangle"></div>
     </div>
 
-    <h1 class="step_name">Шаг 1: Введите название, описание и категорию места</h1>
+    <h1 class="step_name">Шаг 1: Выберите владельца и категорию акции</h1>
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'shopShortName', ['options' => ['class' => 'shop-create-form']])->textInput(['maxlength' => true])
-        ->label('Название места <div>Название места не должно превышать 38 знаков</div>') ?>
+    <?= $form->field($model, 'eventOwnerId', ['options' => ['class' => 'shop-create-form']])->dropDownList($eventOwner)
+        ->label('Выберите наименование владельца акции') ?>
 
-    <?= $form->field($model, 'shopShortDescription', ['options' => ['class' => 'shop-create-form']])->textarea()
-        ->label('Краткое описание места <div>Краткое описание места не должно превышать 186 знаков</div>') ?>
-
-    <?= $form->field($model, 'shopFullDescription', ['options' => ['class' => 'shop-create-form']])->textarea()
-        ->label('Полное описание места <div>Напишите подробно обо всем, что выгодно отличает Ваше место от конкурентов</div>') ?>
-
-    <?= $form->field($model, 'shopTypeId', ['options' => ['class' => 'shop-create-form']])->radioList(
-        app\models\ShopType::TYPES_LABELS,
+    <?= $form->field($model, 'eventTypeId', ['options' => ['class' => 'shop-create-form']])->radioList(
+        app\models\EventType::TYPES_LABELS,
         [
             'item' => function ($index, $label, $name, $checked, $value) {
                 $check = $checked ? ' checked="checked"' : '';

@@ -34,6 +34,7 @@ use yii\web\UploadedFile;
  * @property ShopStatus $shopStatus
  * @property ShopType $shopType
  * @property ShopPhoto[] $shopPhotos
+ * @property Event[] $events
  */
 class Shop extends \yii\db\ActiveRecord
 {
@@ -41,6 +42,7 @@ class Shop extends \yii\db\ActiveRecord
     const RELATION_SHOP_ADDRESS = 'shopAddress';
     const RELATION_SHOP_TYPE = 'shopType';
     const RELATION_SHOP_PHOTOS = 'shopPhotos';
+    const RELATION_SHOP_EVENTS = 'events';
 
     const SHOP_ACTIVE_TRUE = 1;
     const SHOP_ACTIVE_FALSE = 0;
@@ -61,6 +63,7 @@ class Shop extends \yii\db\ActiveRecord
     const SCENARIO_STEP2 = 'step2';
     const SCENARIO_STEP3 = 'step3';
     const SCENARIO_STEP4 = 'step4';
+    const SCENARIO_DEFAULT = 'delete';
 
     /**
      * @var UploadedFile[]
@@ -139,6 +142,7 @@ class Shop extends \yii\db\ActiveRecord
     public function scenarios()
     {
         return [
+            self::SCENARIO_DEFAULT => ['*'],
             self::SCENARIO_STEP1 => ['creatorId', 'shopTypeId', 'shopShortName', 'shopShortDescription', 'shopFullDescription'],
             self::SCENARIO_STEP2 => ['uploadedShopPhoto'],
             self::SCENARIO_STEP3 => ['shopAddressId', 'shopPhone', 'shopWeb', 'shopWorkTime'],

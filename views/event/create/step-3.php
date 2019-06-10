@@ -1,11 +1,10 @@
 <?php
 
-use app\widgets\Alert;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-$this->registerCssFile('/css/shop/create/form.css');
+$this->registerCssFile('/css/event/create/form.css');
 /* @var $this yii\web\View */
-/* @var $model app\models\Shop */
+/* @var $model app\models\Event */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -13,23 +12,21 @@ $this->registerCssFile('/css/shop/create/form.css');
     <div class="step_form-rectangle-wrap">
         <div class="step_form-rectangle step_form-rectangle_active"></div>
         <div class="step_form-rectangle step_form-rectangle_active"></div>
-        <div class="step_form-rectangle"></div>
-        <div class="step_form-rectangle"></div>
+        <div class="step_form-rectangle step_form-rectangle_active"></div>
     </div>
-    <?= Alert::widget() ?>
     <h1 class="step_name">Шаг 2: Добавьте изображения</h1>
-    <div class="shop-form_photo-info">Вы можете загрузить до 10 фотографий
+    <div class="shop-form_photo-info">Вы можете загрузить до тех фотографий
         <div class="shop-form_photo-info-main">Основное фото</div>
     </div>
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'uploadedShopPhoto[]')->fileInput(['style' => 'display: none;'])->label(false) ?>
+    <?= $form->field($model, 'uploadedEventPhoto[]')->fileInput(['style' => 'display: none;'])->label(false) ?>
     <div class="shop-form_shop-photos-wrap">
-        <?php foreach ($model->shopPhotos as $photo) { ?>
+        <?php foreach ($model->eventPhotos as $photo) { ?>
             <div class="shop-form_shop-photos">
-                <?= Html::img('/img/shopPhoto/' . ($photo['shopPhoto']), ['class' => 'shop-form_photo']) ?>
-                <?= Html::a(Html::img('/img/shop/photo_delete.svg'), ['/shop-photo/delete', 'id' => $photo['id']], [
+                <?= Html::img('/img/shopPhoto/' . ($photo['eventPhoto']), ['class' => 'shop-form_photo']) ?>
+                <?= Html::a(Html::img('/img/shop/photo_delete.svg'), ['/event-photo/delete', 'id' => $photo['id']], [
                     'class' => 'shop-form_photo-delete',
                     'data' => [
                         'confirm' => 'Вы уверены что хотите удалить фотографию?'
@@ -37,9 +34,9 @@ $this->registerCssFile('/css/shop/create/form.css');
                 ]) ?>
             </div>
         <?php } ?>
-        <?php if (!$model->shopPhotos) { ?>
+        <?php if (!$model->eventPhotos) { ?>
             <div class="shop-form_shop-photos">
-                <label for="shop-uploadedshopphoto">
+                <label for="event-uploadedeventphoto">
                     <?= Html::img('/img/shopPhoto/default.png', ['class' => 'shop-form_photo']) ?>
                     <?= Html::img('/img/shop/photo_icon.svg', ['class' => 'shop-form_photo-icon']) ?>
                     <span class="shop-form_photo-text">Загрузите фотографии jpg, png</span>
@@ -47,7 +44,7 @@ $this->registerCssFile('/css/shop/create/form.css');
             </div>
         <?php } else { ?>
             <div class="shop-form_shop-photos">
-                <label for="shop-uploadedshopphoto">
+                <label for="event-uploadedeventphoto">
                     <?= Html::img('/img/shopPhoto/default.png', ['class' => 'shop-form_photo']) ?>
                     <?= Html::img('/img/shop/photo_icon_ellipse.svg', ['class' => 'shop-form_photo-icon_ellipse']) ?>
                 </label>
@@ -57,10 +54,9 @@ $this->registerCssFile('/css/shop/create/form.css');
     <div class="step_form-line"></div>
 
     <div class="form-group step_form-rectangle_btn-wrap">
-        <a class="step_form-rectangle_btn-back" href="/shop/create?id=<?= $model->shopId ?>">
+        <a class="step_form-rectangle_btn-back" href="/events/<?= $model->id ?>/update/info">
             <span class="keyboard_arrow_left"></span> Назад</a>
-        <a class="step_form-rectangle_btn-next step_form-rectangle_btn-next-a" href="/shops/<?= $model->shopId ?>/update/address">Далее
-            <img src="/img/shop/createShopBtn/keyboard_arrow_right_24px.svg" alt=""></a>
+        <a class="step_form-rectangle_btn-next step_form-rectangle_btn-next-a" href="/user/business">Разместить </a>
     </div>
 
 

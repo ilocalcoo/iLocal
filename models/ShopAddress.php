@@ -35,9 +35,8 @@ class ShopAddress extends \yii\db\ActiveRecord
     {
         return [
             [['city', 'street', 'houseNumber'], 'required'],
-            [['housing', 'building'], 'integer'],
             [['latitude', 'longitude'], 'number'],
-            [['city', 'street', 'houseNumber'], 'string', 'max' => 255],
+            [['city', 'street', 'houseNumber', 'housing', 'building'], 'string', 'max' => 255],
         ];
     }
 

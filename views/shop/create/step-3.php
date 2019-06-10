@@ -2,7 +2,7 @@
 
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-
+$this->registerCssFile('/css/shop/create/form.css');
 /* @var $this yii\web\View */
 /* @var $model app\models\Shop */
 /* @var $shopAddress app\models\ShopAddress */
@@ -42,7 +42,7 @@ use yii\widgets\ActiveForm;
     <div class="step_form-line"></div>
 
     <div class="form-group step_form-rectangle_btn-wrap">
-        <a class="step_form-rectangle_btn-back" href="http://ilocaldev/shops/<?= $model->shopId ?>/update/photo">< Назад</a>
+        <a class="step_form-rectangle_btn-back" href="/shops/<?= $model->shopId ?>/update/photo">< Назад</a>
         <button type="submit" class="step_form-rectangle_btn-next">Далее ></button>
     </div>
 

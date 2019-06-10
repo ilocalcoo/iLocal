@@ -1,7 +1,11 @@
 $(document).ready(function() {
-    const formId = '#shop-uploadedshopphoto';
+    const shopFormId = '#shop-uploadedshopphoto';
+    const eventFormId = '#event-uploadedeventphoto';
 
-    $(formId).change(function () {
-        $(formId).submit();
+    $(shopFormId).change(function () {
+        $(shopFormId).submit();
+    });
+    $(eventFormId).change(function () {
+        $(eventFormId).submit();
     });
 });

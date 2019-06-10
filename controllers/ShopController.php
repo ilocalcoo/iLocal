@@ -156,35 +156,10 @@ class ShopController extends Controller
         $model->setScenario(Shop::SCENARIO_STEP4);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->shopId]);
+            return $this->redirect(['user/business']);
         }
 
         return $this->render('create/step-4', [
-            'model' => $model,
-        ]);
-    }
-
-    /**
-     * Updates an existing Shop model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
-     */
-    public function actionUpdate($id)
-    {
-        $model = $this->findModel($id);
-
-        if (Yii::$app->request->isPost) {
-            $model->uploadedShopPhoto = UploadedFile::getInstances($model, 'uploadedShopPhoto');
-
-            if ($model->uploadShopPhoto()) {
-                if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                    return $this->redirect(['view', 'id' => $model->shopId]);
-                }
-            }
-        }
-        return $this->render('update', [
             'model' => $model,
         ]);
     }
@@ -226,6 +201,7 @@ class ShopController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
+        $model->setScenario(Shop::SCENARIO_DEFAULT);
         $model->shopActive = Shop::SHOP_ACTIVE_FALSE;
         if ($model->save()) {
             Yii::$app->session->setFlash('success', 'Статус магазина: "' . $model->shopShortName . '" успешно изменён');
