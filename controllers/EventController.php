@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\search\EventSearch;
+use app\models\Shop;
 use Yii;
 use app\models\Event;
 use yii\data\Pagination;
@@ -50,9 +51,9 @@ class EventController extends Controller
 //            'dataProvider' => $dataProvider,
 //            'shortDescData' => $shortDescData,
 //        ]);
-        $models = Event::find()->where(['active' => 1])->all();
+        $shops = Shop::find()->where(['shopActive' => 1])->all();
         return $this->render('index', [
-            'models' => $models,
+            'shops' => $shops,
         ]);
     }
 
