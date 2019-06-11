@@ -12,7 +12,7 @@ class m190610_080654_change_columns_event extends Migration
      */
     public function safeUp()
     {
-        $this->addColumn('shop', 'creatorId', $this->integer());
+        $this->addColumn('{{%event}}', 'creatorId', $this->integer());
         $this->alterColumn('{{%event}}', 'title', 'string NULL');
         $this->alterColumn('{{%event}}', 'shortDesc', 'string NULL');
         $this->alterColumn('{{%event}}', 'fullDesc', 'text NULL');
@@ -26,13 +26,13 @@ class m190610_080654_change_columns_event extends Migration
      */
     public function safeDown()
     {
-        $this->dropColumn('shop', 'creatorId');
+        $this->dropForeignKey('fk_event_user', 'event');
+        $this->dropColumn('{{%event}}', 'creatorId');
         $this->alterColumn('{{%event}}', 'title', 'string NOT NULL');
         $this->alterColumn('{{%event}}', 'shortDesc', 'string NOT NULL');
         $this->alterColumn('{{%event}}', 'fullDesc', 'text NOT NULL');
         $this->alterColumn('{{%event}}', 'begin', 'string NOT NULL');
         $this->alterColumn('{{%event}}', 'end', 'string NOT NULL');
-        $this->dropForeignKey('fk_event_user', 'event');
     }
 
     /*
