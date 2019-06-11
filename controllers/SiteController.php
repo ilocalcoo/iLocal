@@ -178,4 +178,14 @@ class SiteController extends Controller
     {
         return $this->render('about');
     }
+
+    /**
+     * Displays favorites page.
+     *
+     * @return string
+     */
+    public function actionFavorites()
+    {
+        return $this->render('favorites');
+    }
 }
