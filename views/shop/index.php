@@ -17,10 +17,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Create Shop', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
     <?php Pjax::begin(); ?>
     <?php echo $this->render('_search', ['model' => $searchModel, 'shopShortNameData' => $shopShortNameData]); ?>
 
@@ -39,7 +35,13 @@ $this->params['breadcrumbs'][] = $this->title;
                 },
                 'format' => 'html'
             ],
-            'shopShortName',
+            [
+                'attribute' => 'shopShortName',
+                'value' => function (app\models\Shop $model) {
+                    return Html::a($model->shopShortName, ['view', 'id' => $model->shopId]);
+                },
+                'format' => 'html'
+            ],
             [
                 'attribute' => 'shopType',
                 'value' => function (app\models\Shop $model) {
@@ -97,8 +99,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'format' => 'raw',
             ],
             'shopWorkTime',
-
-            ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 

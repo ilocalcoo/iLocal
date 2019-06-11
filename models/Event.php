@@ -3,6 +3,7 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\BlameableBehavior;
 use yii\web\UploadedFile;
 
 /**
@@ -10,6 +11,7 @@ use yii\web\UploadedFile;
  *
  * @property int $id
  * @property int $active
+ * @property int $creatorId
  * @property int $isEventTop
  * @property int $eventOwnerId
  * @property int $eventTypeId
@@ -36,6 +38,11 @@ class Event extends \yii\db\ActiveRecord
     const RELATION_EVENT_TYPE = 'eventType';
     const RELATION_EVENT_PHOTOS = 'eventPhotos';
 
+    const SCENARIO_DEFAULT = 'delete';
+    const SCENARIO_STEP1 = 'step1';
+    const SCENARIO_STEP2 = 'step2';
+    const SCENARIO_STEP3 = 'step3';
+
     /**
      * @var UploadedFile[]
      */
@@ -49,6 +56,17 @@ class Event extends \yii\db\ActiveRecord
         return 'event';
     }
 
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => BlameableBehavior::className(),
+                'createdByAttribute' => 'creatorId',
+                'updatedByAttribute' => false,
+            ],
+        ];
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -56,14 +74,13 @@ class Event extends \yii\db\ActiveRecord
     {
         return [
             [['active', 'eventOwnerId', 'eventTypeId'], 'integer'],
-            [['eventOwnerId', 'eventTypeId', 'title', 'shortDesc', 'fullDesc', 'begin', 'end'], 'required'],
-            [['fullDesc'], 'string'],
-            [['begin', 'end'], 'safe'],
+            [['eventOwnerId', 'eventTypeId'], 'required'],
+            [['fullDesc', 'begin', 'end'], 'string'],
             [['title', 'shortDesc'], 'string', 'max' => 255],
             [['eventTypeId'], 'exist', 'skipOnError' => true, 'targetClass' => EventType::className(), 'targetAttribute' => ['eventTypeId' => 'id']],
             [['eventOwnerId'], 'exist', 'skipOnError' => true, 'targetClass' => Shop::className(), 'targetAttribute'
             => ['eventOwnerId' => 'shopId']],
-            [['uploadedEventPhoto'], 'file', 'extensions' => 'png, jpg, jpeg', 'maxFiles' => 3]
+            [['uploadedEventPhoto'], 'file', 'extensions' => 'png, jpg, jpeg', 'maxFiles' => 3],
         ];
     }
 
@@ -76,13 +93,23 @@ class Event extends \yii\db\ActiveRecord
             'id' => 'ID',
             'active' => 'Active',
             'isEventTop' => 'Show event in feed',
-            'eventOwnerId' => 'Event Owner ID',
-            'eventTypeId' => 'Event Type ID',
-            'title' => 'Title',
-            'shortDesc' => 'Short Desc',
-            'fullDesc' => 'Full Desc',
-            'begin' => 'Begin',
-            'end' => 'End',
+            'eventOwnerId' => 'Владелец акции',
+            'eventTypeId' => 'Категория акции',
+            'title' => 'Название акции',
+            'shortDesc' => 'Краткое описание акции',
+            'fullDesc' => 'Полное описание акции',
+            'begin' => 'Начало акции',
+            'end' => 'Окончание акции',
+        ];
+    }
+
+    public function scenarios()
+    {
+        return [
+            self::SCENARIO_DEFAULT => ['*'],
+            self::SCENARIO_STEP1 => ['eventOwnerId', 'eventTypeId'],
+            self::SCENARIO_STEP2 => ['title', 'shortDesc', 'fullDesc', 'begin', 'end'],
+            self::SCENARIO_STEP3 => ['uploadedEventPhoto'],
         ];
     }
 

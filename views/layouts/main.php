@@ -39,16 +39,17 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             //['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'Food', 'url' => ['/shop?shopTypeId=1']],
-            ['label' => 'Child', 'url' => ['/shop?shopTypeId=2']],
-            ['label' => 'Sport', 'url' => ['/shop?shopTypeId=3']],
-            ['label' => 'Beauty', 'url' => ['/shop?shopTypeId=4']],
-            ['label' => 'Buy', 'url' => ['/shop?shopTypeId=5']],
-            ['label' => 'All places', 'url' => ['/shop']],
+            ['label' => 'Business', 'url' => ['/user/business']],
+            ['label' => 'Food', 'url' => ['/shops?shopTypeId=1']],
+            ['label' => 'Child', 'url' => ['/shops?shopTypeId=2']],
+            ['label' => 'Sport', 'url' => ['/shops?shopTypeId=3']],
+            ['label' => 'Beauty', 'url' => ['/shops?shopTypeId=4']],
+            ['label' => 'Buy', 'url' => ['/shops?shopTypeId=5']],
+            ['label' => 'All places', 'url' => ['/shops']],
             //['label' => 'About', 'url' => ['/site/about']],
             //['label' => 'Contact', 'url' => ['/site/contact']],
             Yii::$app->user->isGuest ? (
-            ['label' => 'Login', 'url' => ['/site/login']]
+            ['label' => 'Login', 'url' => ['/login']]
             ) : (
             ['label' => Yii::$app->user->identity->username, 'url' => ['/site/login']]
 //                '<li>'

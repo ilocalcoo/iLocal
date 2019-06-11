@@ -15,10 +15,6 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <h1><?= Html::encode($this->title) ?></h1>
 
-    <p>
-        <?= Html::a('Create Event', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
     <?php Pjax::begin(); ?>
 		<?php echo $this->render('_search', ['model' => $searchModel, 'shortDescData' => $shortDescData]); ?>
 
@@ -26,10 +22,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'columns' => [
             [
-                'attribute' => \app\models\Event::RELATION_EVENT_PHOTO,
+                'attribute' => \app\models\Event::RELATION_EVENT_PHOTOS,
                 'value' => function (app\models\Event $model) {
                     // Html::img('@web/img/eventPhoto/' . $model->eventPhoto->eventPhoto);
-                    return $model->eventPhoto->eventPhoto;
+                    return $model->eventPhotos->eventPhoto;
                 },
                 'format' => 'html'
             ],
@@ -46,13 +42,17 @@ $this->params['breadcrumbs'][] = $this->title;
                     return $model->eventOwner->shopShortName;
                 },
             ],
-            'title',
+            [
+                'attribute' => 'title',
+                'value' => function (app\models\Event $model) {
+                    return Html::a($model->title, ['view', 'id' => $model->id]);
+                },
+                'format' => 'html'
+            ],
             'shortDesc',
             'fullDesc:ntext',
             'begin:datetime',
             'end:datetime',
-
-            ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
 
