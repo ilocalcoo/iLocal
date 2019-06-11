@@ -196,6 +196,12 @@ class SiteController extends Controller
      */
     public function actionFavorites()
     {
-        return $this->render('favorites');
+        $userShops = [];
+        $userEvents = [];
+
+        return $this->render('favorites', [
+            'userShops' => $userShops,
+            'userEvents' => $userEvents
+        ]);
     }
 }
