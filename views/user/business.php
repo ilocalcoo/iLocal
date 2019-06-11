@@ -15,7 +15,7 @@ $this->registerCssFile('/css/user/business.css');
 
     <?php foreach ($userShops as $shop) { ?>
         <div class="main-block-wrap">
-            <img src="/img/shopPhoto/<?php if (!$shop['shopPhotos'][0]['shopPhoto']) {
+            <img src="/img/shopPhoto/<?php if (!isset($shop['shopPhotos'][0]['shopPhoto'])) {
                 echo 'no-photo.png';
             } else {
                 echo $shop['shopPhotos'][0]['shopPhoto'];
@@ -54,7 +54,7 @@ $this->registerCssFile('/css/user/business.css');
 
     <?php foreach ($userEvents as $event) { ?>
         <div class="main-block-wrap">
-            <img src="/img/eventPhoto/<?php if (!$event['eventPhotos'][0]['eventPhoto']) {
+            <img src="/img/eventPhoto/<?php if (!isset($event['eventPhotos'][0]['eventPhoto'])) {
                 echo 'no-photo.png';
             } else {
                 echo $event['eventPhotos'][0]['eventPhoto'];

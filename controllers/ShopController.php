@@ -72,7 +72,7 @@ class ShopController extends Controller
      */
     public function actionCreateStep1()
     {
-        $id = $_GET['id'];
+        $id = Yii::$app->request->get('id');
         $setFlash = false;
 
         if (isset($id)) {
