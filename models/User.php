@@ -28,9 +28,13 @@ use yii\behaviors\TimestampBehavior;
  * @property Auth[] $auths
  * @property Shop[] $shops
  * @property UserAddress $userAddress
+ *
  */
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 {
+
+    const RELATION_SHOPS = 'shops';
+
     /**
      * {@inheritdoc}
      */
@@ -99,6 +103,14 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     public function getShops()
     {
         return $this->hasMany(Shop::className(), ['creatorId' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEvents()
+    {
+        return $this->hasMany(Event::className(), ['creatorId' => 'id']);
     }
 
     /**

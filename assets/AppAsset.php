@@ -20,9 +20,11 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
+        '//fonts.googleapis.com/css?family=Roboto:400,700&display=swap',
         'css/site.css',
     ];
     public $js = [
+        'js/imageUploaded.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

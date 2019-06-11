@@ -180,6 +180,16 @@ class SiteController extends Controller
     }
 
     /**
+     * Displays policy page.
+     *
+     * @return string
+     */
+    public function actionPolicy()
+    {
+        return $this->render('policy');
+    }
+
+    /**
      * Displays favorites page.
      *
      * @return string

@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use yii\behaviors\BlameableBehavior;
+use yii\behaviors\TimestampBehavior;
 use yii\web\UploadedFile;
 
 /**
@@ -24,6 +26,7 @@ use yii\web\UploadedFile;
  * @property string $shopAgregator
  * @property string $shopShortDescription
  * @property string $shopFullDescription
+ * @property string $shopLinkPdf
  * @property int $shopRating
  * @property int $shopStatusId
  *
@@ -31,6 +34,7 @@ use yii\web\UploadedFile;
  * @property ShopStatus $shopStatus
  * @property ShopType $shopType
  * @property ShopPhoto[] $shopPhotos
+ * @property Event[] $events
  */
 class Shop extends \yii\db\ActiveRecord
 {
@@ -38,14 +42,34 @@ class Shop extends \yii\db\ActiveRecord
     const RELATION_SHOP_ADDRESS = 'shopAddress';
     const RELATION_SHOP_TYPE = 'shopType';
     const RELATION_SHOP_PHOTOS = 'shopPhotos';
+    const RELATION_SHOP_EVENTS = 'events';
 
     const SHOP_ACTIVE_TRUE = 1;
     const SHOP_ACTIVE_FALSE = 0;
+
+    const SHOP_MIDDLE_COST_1 = 1;
+    const SHOP_MIDDLE_COST_2 = 2;
+    const SHOP_MIDDLE_COST_3 = 3;
+    const SHOP_MIDDLE_COST_4 = 4;
+    const SHOP_MIDDLE_COST = [self::SHOP_MIDDLE_COST_1, self::SHOP_MIDDLE_COST_2, self::SHOP_MIDDLE_COST_3, self::SHOP_MIDDLE_COST_4];
+    const SHOP_MIDDLE_COST_LABELS = [
+        self::SHOP_MIDDLE_COST_1 =>'₽',
+        self::SHOP_MIDDLE_COST_2 =>'₽₽',
+        self::SHOP_MIDDLE_COST_3 => '₽₽₽',
+        self::SHOP_MIDDLE_COST_4 => '₽₽₽₽',
+    ];
+
+    const SCENARIO_STEP1 = 'step1';
+    const SCENARIO_STEP2 = 'step2';
+    const SCENARIO_STEP3 = 'step3';
+    const SCENARIO_STEP4 = 'step4';
+    const SCENARIO_DEFAULT = 'delete';
 
     /**
      * @var UploadedFile[]
      */
     public $uploadedShopPhoto;
+
 
     /**
      * {@inheritdoc}
@@ -53,6 +77,17 @@ class Shop extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return 'shop';
+    }
+
+    public function behaviors()
+    {
+        return [
+            [
+                'class' => BlameableBehavior::className(),
+                'createdByAttribute' => 'creatorId',
+                'updatedByAttribute' => false,
+            ],
+        ];
     }
 
     /**
@@ -63,8 +98,8 @@ class Shop extends \yii\db\ActiveRecord
         return [
             [['shopActive', 'creatorId', 'shopTypeId', 'shopAddressId', 'shopCostMin', 'shopCostMax', 'shopStatusId', 'shopRating'],
                 'integer'],
-            [['creatorId', 'shopShortName', 'shopTypeId', 'shopAddressId', 'shopStatusId'], 'required'],
-            [['shopMiddleCost', 'shopWorkTime', 'shopShortDescription', 'shopFullDescription'], 'string'],
+            [['shopShortName', 'shopTypeId', 'shopStatusId'], 'required'],
+            [['shopMiddleCost', 'shopWorkTime', 'shopShortDescription', 'shopFullDescription', 'shopLinkPdf'], 'string'],
             [['shopShortName', 'shopPhone'], 'string', 'max' => 255],
             [['shopFullName', 'shopWeb', 'shopAgregator'], 'string', 'max' => 255],
             [['shopAddressId'], 'exist', 'skipOnError' => true, 'targetClass' => ShopAddress::className(), 'targetAttribute' => ['shopAddressId' => 'id']],
@@ -72,7 +107,7 @@ class Shop extends \yii\db\ActiveRecord
             [['shopTypeId'], 'exist', 'skipOnError' => true, 'targetClass' => ShopType::className(), 'targetAttribute' => ['shopTypeId' => 'id']],
             [['creatorId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute'
             => ['creatorId' => 'id']],
-            [['uploadedShopPhoto'], 'file', 'extensions' => 'png, jpg, jpeg', 'maxFiles' => 10]
+            [['uploadedShopPhoto'], 'file', 'extensions' => 'jpg, png', 'maxFiles' => 10]
         ];
     }
 
@@ -85,21 +120,33 @@ class Shop extends \yii\db\ActiveRecord
             'shopId' => 'Shop ID',
             'creatorId' => 'Creator ID',
             'shopActive' => 'Shop Active',
-            'shopShortName' => 'Shop Short Name',
+            'shopShortName' => 'Название места',
             'shopFullName' => 'Shop Full Name',
-            'shopTypeId' => 'Shop Type ID',
-            'shopPhone' => 'Shop Phone',
-            'shopWeb' => 'Shop Web',
-            'shopAddressId' => 'Shop Address ID',
-            'shopCostMin' => 'Shop Cost Min',
-            'shopCostMax' => 'Shop Cost Max',
-            'shopMiddleCost' => 'Shop Middle Cost',
-            'shopWorkTime' => 'Shop Work Time',
+            'shopTypeId' => 'Категория магазина',
+            'shopPhone' => 'Телефон',
+            'shopWeb' => 'Сайт',
+            'shopAddressId' => 'Адрес',
+            'shopCostMin' => 'Минимальная цена',
+            'shopCostMax' => 'Максимальная цена',
+            'shopMiddleCost' => 'Средний чек',
+            'shopWorkTime' => 'Часы работы',
             'shopAgregator' => 'Shop Agregator',
-            'shopShortDescription' => 'Shop Short Description',
-            'shopFullDescription' => 'Shop Full Description',
+            'shopShortDescription' => 'Краткое описание места',
+            'shopFullDescription' => 'Полное описание места',
+            'shopLinkPdf' => 'Ссылка на pdf',
             'shopRating' => 'Shop Rating',
             'shopStatusId' => 'Shop Status ID',
+        ];
+    }
+
+    public function scenarios()
+    {
+        return [
+            self::SCENARIO_DEFAULT => ['*'],
+            self::SCENARIO_STEP1 => ['creatorId', 'shopTypeId', 'shopShortName', 'shopShortDescription', 'shopFullDescription'],
+            self::SCENARIO_STEP2 => ['uploadedShopPhoto'],
+            self::SCENARIO_STEP3 => ['shopAddressId', 'shopPhone', 'shopWeb', 'shopWorkTime'],
+            self::SCENARIO_STEP4 => ['shopCostMin', 'shopCostMax', 'shopMiddleCost', 'shopLinkPdf'],
         ];
     }
 

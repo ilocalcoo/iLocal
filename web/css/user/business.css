@@ -1,0 +1,79 @@
+.business-header {
+    font-family: Roboto, sans-serif;
+    font-weight: bold;
+    font-size: 24px;
+    color: #454545;
+    margin-bottom: 40px;
+}
+
+.flex-wrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.flex-wrap:nth-child(n3) {
+    margin-right: unset;
+}
+
+.main-block-wrap {
+    position: relative;
+    width: 359px;
+    height: 338px;
+    background: #FFFFFF;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 22px;
+    margin: 0 30px 30px 0;
+}
+
+.main-block-wrap:nth-child(3n) {
+    margin-right: unset;
+}
+
+.photo {
+    width: 359px;
+    height: 270px;
+    border-radius: 22px 22px 0 0;
+}
+
+.info-block-wrap {
+    display: flex;
+    margin-top: 18px;
+    padding: 0 20px;
+}
+
+.title {
+    flex-grow: 1;
+    font-family: Roboto, sans-serif;
+    font-weight: bold;
+    font-size: 18px;
+    color: #454545;
+    transition: color 0.3s;
+}
+
+.title:hover {
+    text-decoration: none;
+    color: #FE8A80;
+}
+
+a.disabled {
+    pointer-events: none; !important;
+    cursor: default;
+    color: #888;
+}
+
+.update {
+    margin-right: 15px;
+}
+
+.icon-ellipse {
+    position: absolute;
+    width: 130px;
+    height: 130px;
+    top: 85px;
+    right: 122px;
+}
+
+.business-line {
+    border: 1px solid rgba(183, 183, 183, 0.6);
+    margin: 41px 0 14px 0;
+}
