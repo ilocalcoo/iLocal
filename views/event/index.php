@@ -1,5 +1,6 @@
 <?php
 
+use app\assets\EventAsset;
 use yii\bootstrap\Carousel;
 use yii\widgets\Pjax;
 
@@ -8,18 +9,21 @@ use yii\widgets\Pjax;
 /* @var \app\models\search\EventSearch $searchModel */
 /* @var \app\models\Event $shortDescData */
 /* @var \app\models\Event $event */
+/* @var \app\models\Event[] $events */
+/* @var \app\models\EventPhoto[] $photos */
 /* @var \app\models\EventPhoto $photo */
 /* @var \app\models\Shop[] $shops */
 
 $this->title = 'Events';
 $this->params['breadcrumbs'][] = $this->title;
+EventAsset::register($this);
 ?>
 <div class="event-index">
 
     <?php Pjax::begin(); ?>
 	<main class="container">
-	<?php
-    foreach ($shops as $shop) { ?>
+        <?php
+        foreach ($shops as $shop) { ?>
 
 		<div class="content">
 			<div class="cont_title">
@@ -43,10 +47,10 @@ $this->params['breadcrumbs'][] = $this->title;
 					</div>
 				</div>
 			</div>
-			<div class="carousel">
+			<div class="big_carousel">
                 <?php
-
-				foreach ($shop->getEvents()->all() as $event) {
+                $events = $shop->getEvents()->all();
+                foreach ($events as $event) {
                     $photos = $event->getTopEventPhotos()->asArray()->all();
                     if (count($photos) == 0) {
                         $photos = [
@@ -55,32 +59,46 @@ $this->params['breadcrumbs'][] = $this->title;
                             ]
                         ];
                     }
-                    $items = [];
-                    foreach ($photos as $photo) {
-                        $content = '<div class="event_card">
-							<div class="card_top">' .
-                            Carousel::widget([
-                                'items' => '<img src="' . $photo['eventPhoto'] . '"/img>',
-                            ]) .
-                            '</div>
-							<div class="card_bot">
-								
+                    ?>
+					<div class="event_card">
+						<div class="card_top">
+                            <?php
+                            $items = [];
+							foreach ($photos as $photo) {
+                                $content = [
+                                	'content' => '<img src="' . $photo['eventPhoto'] . '"/img>',
+									'caption' => $event->title,
+								];
+                                array_push($items, $content);
+                            }
+                            echo Carousel::widget([
+                                'items' => $items,
+                            ]);
+                            ?>
+						</div>
+						<div class="card_bot">
+							<div class="card_short_desc">
+                                <?= $event->shortDesc ?>
 							</div>
-						</div>';
-                        $content .= '<img src="' . $photo['eventPhoto'] . '"/img>';
-                        array_push($items, $content);
-                    }
-                    echo Carousel::widget([
-                        'items' => $items
-                    ]);
-                }
-                ?>
+							<div class="like_data">
+								<div class="like">
+									<img src="/img/like.png" alt="like">
+								</div>
+								<span>
+								<?php $data = $event->begin . '-' . $event->end;
+                                echo $data; ?>
+								</span>
+							</div>
+						</div>
+					</div>
+                <?php } ?>
 			</div>
 		</div>
-                <?php } ?>
-
-                <?php Pjax::end(); ?>
-
-
+        <?php } ?>
 	</main>
 </div>
+<?php Pjax::end(); ?>
+
+
+
+
