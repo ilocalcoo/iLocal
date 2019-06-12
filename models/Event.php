@@ -21,9 +21,11 @@ use yii\web\UploadedFile;
  * @property string $begin
  * @property string $end
  *
- * @property EventPhoto $eventPhotos
+ * @property EventPhoto[] $eventPhotos
  * @property EventType $eventType
  * @property Shop $eventOwner
+ * @property UserEvent[] $userEvents
+ * @property User[] $usersFavorites
  */
 class Event extends \yii\db\ActiveRecord
 {
@@ -73,10 +75,10 @@ class Event extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['active', 'eventOwnerId', 'eventTypeId'], 'integer'],
+            [['active', 'isEventTop', 'eventOwnerId', 'eventTypeId'], 'integer'],
             [['eventOwnerId', 'eventTypeId'], 'required'],
-            [['fullDesc', 'begin', 'end'], 'string'],
-            [['title', 'shortDesc'], 'string', 'max' => 255],
+            [['fullDesc'], 'string'],
+            [['title', 'shortDesc', 'begin', 'end'], 'string', 'max' => 255],
             [['eventTypeId'], 'exist', 'skipOnError' => true, 'targetClass' => EventType::className(), 'targetAttribute' => ['eventTypeId' => 'id']],
             [['eventOwnerId'], 'exist', 'skipOnError' => true, 'targetClass' => Shop::className(), 'targetAttribute'
             => ['eventOwnerId' => 'shopId']],
@@ -151,6 +153,22 @@ class Event extends \yii\db\ActiveRecord
     public function getEventOwner()
     {
         return $this->hasOne(Shop::className(), ['shopId' => 'eventOwnerId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserEvents()
+    {
+        return $this->hasMany(UserEvent::className(), ['event_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUsersFavorites()
+    {
+        return $this->hasMany(User::className(), ['id' => 'user_id'])->viaTable('user_event', ['event_id' => 'id']);
     }
 
     /**

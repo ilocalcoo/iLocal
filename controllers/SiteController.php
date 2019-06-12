@@ -3,7 +3,9 @@
 namespace app\controllers;
 
 use app\components\AuthHandler;
+use app\models\Shop;
 use app\models\User;
+use app\models\UserShop;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\Html;
@@ -196,7 +198,26 @@ class SiteController extends Controller
      */
     public function actionFavorites()
     {
+        if ($shopId = Yii::$app->request->get('add-shop-id')) {
+//            var_dump($shopId = Yii::$app->request->get());exit;
+            $userShop = new UserShop();
+            $userShop->user_id = Yii::$app->user->id;
+            $userShop->shop_id = $shopId;
+            $userShop->save();
+        }
+
+        if ($shopId = Yii::$app->request->get('del-shop-id')) {
+//            var_dump($shopId = Yii::$app->request->get());
+            $userShop = UserShop::find()
+                ->where(['user_id' => Yii::$app->user->id])
+                ->andWhere(['shop_id' => $shopId])
+                ->one();
+//            var_dump($userShop);exit;
+            $userShop->delete();
+        }
+
         $userShops = [];
+        $userShops = Shop::find()->all();
         $userEvents = [];
 
         return $this->render('favorites', [
