@@ -48,7 +48,9 @@ class EventSearch extends Event
             'query' => $query,
         ]);
 
-        $this->load($params);
+        if (!$this->load($params)) {
+            //...
+        }
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
@@ -72,5 +74,10 @@ class EventSearch extends Event
             ->andFilterWhere(['like', 'fullDesc', $this->fullDesc]);
 
         return $dataProvider;
+    }
+
+    public function formName()
+    {
+        return '';
     }
 }

@@ -22,6 +22,7 @@ class AppAsset extends AssetBundle
     public $css = [
         '//fonts.googleapis.com/css?family=Roboto:400,700&display=swap',
         'css/site.css',
+        'css/style.css',
     ];
     public $js = [
         'js/imageUploaded.js',

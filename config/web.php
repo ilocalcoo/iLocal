@@ -84,6 +84,7 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 '<action:(login)>' => 'site/login',
+                '<action:(favorites)>' => 'site/favorites',
                 '<controller:(shop)>s' => '<controller>/index',
                 '<controller:(shop)>s/<id:\d+>' => '<controller>/view',
                 '<controller:(shop)>s/<id:\d+>/<action:(view|update|delete)>' => '<controller>/<action>',
