@@ -26,8 +26,14 @@ use yii\behaviors\TimestampBehavior;
  * @property string $password write-only password
  *
  * @property Auth[] $auths
+ * @property Event[] $events
+ * @property Event[] $eventsFavorites
  * @property Shop[] $shops
+ * @property Shop[] $shopsFavorites
+ * @property Shoprating[] $shopratings
  * @property UserAddress $userAddress
+ * @property UserEvent[] $userEvents
+ * @property UserShop[] $userShops
  *
  */
 class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
@@ -74,16 +80,16 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
             'id' => 'ID',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
-            'lastName' => 'Last Name',
-            'firstName' => 'First Name',
-            'middleName' => 'Middle Name',
+            'lastName' => 'Фамилия',
+            'firstName' => 'Имя',
+            'middleName' => 'Отчество',
             'email' => 'Email',
             'password_hash' => 'Password Hash',
             'userAddressId' => 'User Address ID',
             'fb' => 'Fb',
             'vk' => 'Vk',
             'accessToken' => 'Access Token',
-            'username' => 'Username',
+            'username' => 'Логин',
             'auth_key' => 'Auth Key',
             'password_reset_token' => 'Password Reset Token',
         ];
@@ -100,9 +106,49 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getUserEvents()
+    {
+        return $this->hasMany(UserEvent::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getEventsFavorites()
+    {
+        return $this->hasMany(Event::className(), ['id' => 'event_id'])->viaTable('user_event', ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserShops()
+    {
+        return $this->hasMany(UserShop::className(), ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getShopsFavorites()
+    {
+        return $this->hasMany(Shop::className(), ['shopId' => 'shop_id'])->viaTable('user_shop', ['user_id' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getShops()
     {
         return $this->hasMany(Shop::className(), ['creatorId' => 'id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getShopratings()
+    {
+        return $this->hasMany(Shoprating::className(), ['userId' => 'id']);
     }
 
     /**

@@ -48,10 +48,12 @@ AppAsset::register($this);
             ['label' => 'All places', 'url' => ['/shops']],
             //['label' => 'About', 'url' => ['/site/about']],
             //['label' => 'Contact', 'url' => ['/site/contact']],
+            ['label' => 'Избранное', 'url' => ['/site/favorites']],
             Yii::$app->user->isGuest ? (
-            ['label' => 'Login', 'url' => ['/login']]
+            ['label' => 'Войти', 'url' => ['/site/login']]
             ) : (
-            ['label' => Yii::$app->user->identity->username, 'url' => ['/site/login']]
+            ['label' => 'Профиль', 'url' => ['/site/login']]
+//            ['label' => Yii::$app->user->identity->username, 'url' => ['/site/login']]
 //                '<li>'
 //                . Html::beginForm(['/site/logout'], 'post')
 //                . Html::submitButton(
