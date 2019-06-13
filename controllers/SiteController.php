@@ -5,6 +5,7 @@ namespace app\controllers;
 use app\components\AuthHandler;
 use app\models\Shop;
 use app\models\User;
+use app\models\UserAddress;
 use app\models\UserShop;
 use Yii;
 use yii\filters\AccessControl;
@@ -97,8 +98,8 @@ class SiteController extends Controller
             /** @var User $model */
             $model = Yii::$app->user->getIdentity();
 
-            if (Yii::$app->request->post()['address']) {
-                $addressArray = explode(',', Yii::$app->request->post()['address']);
+            if (Yii::$app->request->post('address')) {
+                $addressArray = explode(',', Yii::$app->request->post('address'));
 
                 if (!$addressArray[0]) {
                     Yii::$app->getSession()->setFlash('error', 'Не выбран город');
@@ -113,13 +114,22 @@ class SiteController extends Controller
                     return $this->refresh();
                 }
 
-                $model->userAddress->city = $addressArray[0];
-                $model->userAddress->street = $addressArray[1];
-                $model->userAddress->houseNumber = $addressArray[2];
-                $model->userAddress->latitude = $addressArray[3];
-                $model->userAddress->longitude = $addressArray[4];
+                if ($model->userAddress) {
+                    $modelAddress = $model->userAddress;
+                } else {
+                    $modelAddress = new UserAddress();
+                }
 
-                if ($model->userAddress->save()) {
+
+                $modelAddress->city = $addressArray[0];
+                $modelAddress->street = $addressArray[1];
+                $modelAddress->houseNumber = $addressArray[2];
+                $modelAddress->latitude = $addressArray[3];
+                $modelAddress->longitude = $addressArray[4];
+
+                if ($modelAddress->save()) {
+                    $model->userAddressId = $modelAddress->id;
+                    $model->save();
                     Yii::$app->getSession()->setFlash('success', 'Адрес сохранен');
                     return $this->refresh();
                 }
@@ -127,7 +137,7 @@ class SiteController extends Controller
             }
 
 
-            if (Yii::$app->request->post()['user']) {
+            if (Yii::$app->request->post('user')) {
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
                     Yii::$app->getSession()->setFlash('success', 'Изменения сохранены');
                     return $this->refresh();
