@@ -1,7 +1,8 @@
 <?php
 defined('YII_DEBUG') or define('YII_DEBUG', true);
 // если выкладываем на heroku, то переключаем dev среду на prod
-if (! preg_match('/herokuapp\.com$/', $_SERVER['SERVER_NAME'])) {
+if (!(preg_match('/herokuapp\.com$/', $_SERVER['SERVER_NAME']) ||
+    preg_match('/imlocal\.ru$/', $_SERVER['SERVER_NAME']))) {
     defined('YII_ENV') or define('YII_ENV', 'dev');
 }
 
