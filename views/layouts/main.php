@@ -10,6 +10,7 @@ use app\assets\AppAsset;
 $currentUrl = substr(Yii::$app->request->pathInfo, 0, 4);
 
 AppAsset::register($this);
+\app\assets\ModalAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -35,7 +36,8 @@ AppAsset::register($this);
             <a href="">Помощь</a>
             <a href="">Поиск</a>
             <?php if (Yii::$app->user->isGuest) { ?>
-                <a href="/login">Вход<span class="login-ellipse"></span></a>
+<!--                <a href="/login">Вход<span class="login-ellipse"></span></a>-->
+                <a id="modal-btn" data-target="<?php echo \yii\helpers\Url::to('/login')?>">Вход<span class="login-ellipse"></span></a>
             <?php } else { ?>
                 <a href="/login">Профиль</a>
                 <a href="/site/logout">Выход</a>
@@ -86,7 +88,7 @@ AppAsset::register($this);
 <footer class="main-footer footer">
 <!--    <div class="bg-ellipse-footer"></div>-->
     <div class="container">
-        <p class="pull-left"><a href="">Политика конфиденциальности</a></p>
+        <p class="pull-left"><a href="<?= \yii\helpers\Url::to('/policy') ?>">Политика конфиденциальности</a></p>
         <p class="pull-right">&copy; I`m local, <?= date('Y') ?></p>
     </div>
 </footer>
@@ -101,24 +103,17 @@ AppAsset::register($this);
     'id' => 'modal',
 ]);
 
-echo "<div id='modal-content'>";
+//echo "<div id='modal-content'>";
 
 echo yii\authclient\widgets\AuthChoice::widget([
     'baseAuthUrl' => ['site/auth'],
     'popupMode' => false,
 ]);
 
-echo "</div>";
+//echo "</div>";
 
 \yii\bootstrap\Modal::end();
 ?>
-<script>
-    $('#modal-btn').on('click', function () {
-        $('#modal').modal('show')
-            .find('#modal-content')
-            .load($(this).attr('data-target'));
-    });
-</script>
 
 
 </body>

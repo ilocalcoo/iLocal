@@ -85,6 +85,7 @@ $config = [
             'rules' => [
                 '<action:(login)>' => 'site/login',
                 '<action:(favorites)>' => 'site/favorites',
+                '<action:(policy)>' => 'site/policy',
                 '<controller:(shop)>s' => '<controller>/index',
                 '<controller:(shop)>s/<id:\d+>' => '<controller>/view',
                 '<controller:(shop)>s/<id:\d+>/<action:(view|update|delete)>' => '<controller>/<action>',
