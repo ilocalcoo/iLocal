@@ -1,6 +1,7 @@
 <?php
 
 /* @var $this \yii\web\View */
+
 /* @var $content string */
 
 use app\widgets\Alert;
@@ -50,7 +51,18 @@ AppAsset::register($this);
             //['label' => 'Contact', 'url' => ['/site/contact']],
             ['label' => 'Избранное', 'url' => ['/site/favorites']],
             Yii::$app->user->isGuest ? (
-            ['label' => 'Войти', 'url' => ['/site/login']]
+//            ['label' => 'Войти', 'url' => ['/site/login']]
+                '<li>'
+                . Html::beginForm(['/site/logout'], 'post')
+                . Html::submitButton('Войти', [
+                    'value' => Yii::$app->urlManager->createUrl('/site/login'),
+                    'class' => 'btn btn-link logout',
+                    'id' => 'BtnModalId',
+                    'data-toggle' => 'modal',
+                    'data-target' => '#your-modal',
+                ])
+                . Html::endForm()
+                . '</li>'
             ) : (
             ['label' => 'Профиль', 'url' => ['/site/login']]
 //            ['label' => Yii::$app->user->identity->username, 'url' => ['/site/login']]
@@ -86,6 +98,35 @@ AppAsset::register($this);
 </footer>
 
 <?php $this->endBody() ?>
+
+
+<?php
+\yii\bootstrap\Modal::begin([
+    'header' => '<h2>Hello world</h2>',
+//    'toggleButton' => ['label' => 'click me'],
+    'id' => 'modal',
+]);
+
+echo "<div id='modal-content'>";
+
+echo yii\authclient\widgets\AuthChoice::widget([
+    'baseAuthUrl' => ['site/auth'],
+    'popupMode' => false,
+]);
+
+echo "</div>";
+
+\yii\bootstrap\Modal::end();
+?>
+<script>
+    $('#modal-btn').on('click', function () {
+        $('#modal').modal('show')
+            .find('#modal-content')
+            .load($(this).attr('data-target'));
+    });
+</script>
+
+
 </body>
 </html>
 <?php $this->endPage() ?>
