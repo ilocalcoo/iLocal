@@ -1,7 +1,8 @@
 <?php
 
 // Конфиг подключения к БД меняется в зависимости от окружения
-if (preg_match('/herokuapp\.com$/', $_SERVER['SERVER_NAME'])) {
+if (preg_match('/herokuapp\.com$/', $_SERVER['SERVER_NAME']) ||
+    preg_match('/imlocal\.ru$/', $_SERVER['SERVER_NAME'])) {
     $url = parse_url(getenv("CLEARDB_DATABASE_URL"));
     $host = $url["host"];
     $username = $url["user"];
