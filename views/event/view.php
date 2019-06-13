@@ -35,7 +35,6 @@ $this->params['breadcrumbs'][] = $this->title;
             'eventOwnerId',
             'eventTypeId',
             'title',
-            'eventPhotoId',
             'shortDesc',
             'fullDesc:ntext',
             'begin',

@@ -81,7 +81,7 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 '<controller:(shop)>' => '<controller>/index',
-                '<controller:(shop)>/<action:(view|update|delete)>/<id:\d+>' => '<controller>/<action>',
+                '<controller:(shop|event)>/<action:(view|update|delete)>/<id:\d+>' => '<controller>/<action>',
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'api/shop'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'api/user'],
             ],

@@ -2,6 +2,7 @@
 
 use app\assets\EventAsset;
 use yii\bootstrap\Carousel;
+use yii\helpers\Html;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
@@ -27,15 +28,15 @@ EventAsset::register($this);
 
 		<div class="content">
 			<div class="cont_title">
-				<div class="shop_img">
+				<a class="shop_img" href="<?= 'shop/view/'.$shop->shopId ?>">
 					<img
 						src="<?php echo $shop->getShopPhotos()->limit(1)->asArray()->all()[0]['shopPhoto'] ?>"
 						alt="<?= $shop->shopShortName ?>"/>
-				</div>
+				</a>
 				<div class="right_title">
-					<div class="shop_name">
+					<a class="shop_name" href="<?= 'shop/view/'.$shop->shopId ?>">
                         <?= $shop->shopShortName ?>
-					</div>
+					</a>
 					<div class="shop_address">
                         <?php
                         $address = $shop->shopAddress->city . ', ул. ' .
@@ -61,8 +62,11 @@ EventAsset::register($this);
                     }
                     ?>
 					<div class="event_card">
-						<div class="card_top">
-                            <?php
+                        <?php
+                        echo Html::beginTag('a', [
+							'href' => 'event/view/'.$event->id,
+                            'class' => 'card_top',
+                        ]);
                             $items = [];
 							foreach ($photos as $photo) {
                                 $content = [
@@ -74,8 +78,8 @@ EventAsset::register($this);
                             echo Carousel::widget([
                                 'items' => $items,
                             ]);
-                            ?>
-						</div>
+                        Html::endTag('a');
+                        ?>
 						<div class="card_bot">
 							<div class="card_short_desc">
                                 <?= $event->shortDesc ?>
