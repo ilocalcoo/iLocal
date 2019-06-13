@@ -76,7 +76,7 @@ AppAsset::register($this);
         </div>
     </div>
 </header>
-
+  
 <div class="wrap">
     <div class="container">
         <?= $content ?>

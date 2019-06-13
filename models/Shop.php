@@ -19,8 +19,8 @@ use yii\web\UploadedFile;
  * @property string $shopPhone
  * @property string $shopWeb
  * @property int $shopAddressId
- * @property int $shopCostMin
- * @property int $shopCostMax
+ * @property string $shopCostMin
+ * @property string $shopCostMax
  * @property string $shopMiddleCost
  * @property string $shopWorkTime
  * @property string $shopAgregator
@@ -33,8 +33,12 @@ use yii\web\UploadedFile;
  * @property ShopAddress $shopAddress
  * @property ShopStatus $shopStatus
  * @property ShopType $shopType
+ * @property User $creator
  * @property ShopPhoto[] $shopPhotos
+ * @property ShopRating[] $shopRatings
  * @property Event[] $events
+ * @property UserShop[] $userShops
+ * @property User[] $usersFavorites
  */
 class Shop extends \yii\db\ActiveRecord
 {
@@ -96,12 +100,13 @@ class Shop extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['shopActive', 'creatorId', 'shopTypeId', 'shopAddressId', 'shopCostMin', 'shopCostMax', 'shopStatusId', 'shopRating'],
+            [['shopActive', 'creatorId', 'shopTypeId', 'shopAddressId', 'shopStatusId', 'shopRating'],
                 'integer'],
-            [['shopShortName', 'shopTypeId', 'shopStatusId'], 'required'],
-            [['shopMiddleCost', 'shopWorkTime', 'shopShortDescription', 'shopFullDescription', 'shopLinkPdf'], 'string'],
-            [['shopShortName', 'shopPhone'], 'string', 'max' => 255],
-            [['shopFullName', 'shopWeb', 'shopAgregator'], 'string', 'max' => 255],
+            [['shopShortName', 'shopTypeId'], 'required'],
+            [['shopMiddleCost'], 'string'],
+            [['shopShortName'], 'string', 'max' => 20],
+            [['shopFullName', 'shopPhone', 'shopWeb', 'shopCostMin', 'shopCostMax', 'shopWorkTime', 'shopAgregator', 'shopShortDescription',
+                'shopFullDescription', 'shopLinkPdf'], 'string', 'max' => 255],
             [['shopAddressId'], 'exist', 'skipOnError' => true, 'targetClass' => ShopAddress::className(), 'targetAttribute' => ['shopAddressId' => 'id']],
             [['shopStatusId'], 'exist', 'skipOnError' => true, 'targetClass' => ShopStatus::className(), 'targetAttribute' => ['shopStatusId' => 'id']],
             [['shopTypeId'], 'exist', 'skipOnError' => true, 'targetClass' => ShopType::className(), 'targetAttribute' => ['shopTypeId' => 'id']],
@@ -253,5 +258,29 @@ class Shop extends \yii\db\ActiveRecord
     public function getShopPhotos()
     {
         return $this->hasMany(ShopPhoto::className(), ['shopId' => 'shopId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getShopRatings()
+    {
+        return $this->hasMany(ShopRating::className(), ['shopId' => 'shopId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUserShops()
+    {
+        return $this->hasMany(UserShop::className(), ['shop_id' => 'shopId']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getUsersFavorites()
+    {
+        return $this->hasMany(User::className(), ['id' => 'user_id'])->viaTable('user_shop', ['shop_id' => 'shopId']);
     }
 }
