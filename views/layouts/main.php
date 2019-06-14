@@ -10,7 +10,6 @@ use app\assets\AppAsset;
 $currentUrl = substr(Yii::$app->request->pathInfo, 0, 4);
 
 AppAsset::register($this);
-\app\assets\ModalAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -36,8 +35,7 @@ AppAsset::register($this);
             <a href="">Помощь</a>
             <a href="">Поиск</a>
             <?php if (Yii::$app->user->isGuest) { ?>
-<!--                <a href="/login">Вход<span class="login-ellipse"></span></a>-->
-                <a id="modal-btn" data-target="<?php echo \yii\helpers\Url::to('/login')?>">Вход<span class="login-ellipse"></span></a>
+                <a href="/login">Вход<span class="login-ellipse"></span></a>
             <?php } else { ?>
                 <a href="/login">Профиль</a>
                 <a href="/site/logout">Выход</a>
@@ -94,26 +92,6 @@ AppAsset::register($this);
 </footer>
 
 <?php $this->endBody() ?>
-
-
-<?php
-\yii\bootstrap\Modal::begin([
-    'header' => '<h2>Hello world</h2>',
-//    'toggleButton' => ['label' => 'click me'],
-    'id' => 'modal',
-]);
-
-//echo "<div id='modal-content'>";
-
-echo yii\authclient\widgets\AuthChoice::widget([
-    'baseAuthUrl' => ['site/auth'],
-    'popupMode' => false,
-]);
-
-//echo "</div>";
-
-\yii\bootstrap\Modal::end();
-?>
 
 
 </body>

@@ -16,22 +16,6 @@ $this->title = 'Профиль';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
-
-<?php
-\yii\bootstrap\Modal::begin([
-    'header' => '<h2>Hello world</h2>',
-    'toggleButton' => ['label' => 'click me'],
-]);
-
-echo yii\authclient\widgets\AuthChoice::widget([
-    'baseAuthUrl' => ['site/auth'],
-    'popupMode' => false,
-]);
-
-\yii\bootstrap\Modal::end();
-?>
-
-
 <div class="site-login">
     <?php if (!Yii::$app->user->isGuest): ?>
 
