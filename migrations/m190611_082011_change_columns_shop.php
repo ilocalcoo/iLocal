@@ -21,8 +21,12 @@ class m190611_082011_change_columns_shop extends Migration
      */
     public function safeDown()
     {
+        $this->dropForeignKey('fx_shop_shopStatus', 'shop');
         $this->alterColumn('{{%shop}}', 'shopStatusId', $this->integer()->notNull());
+        $this->addForeignKey('fx_shop_shopStatus', 'shop', 'shopStatusId', 'shopStatus', 'id');
+        $this->dropForeignKey('fx_shop_shopAddress', 'shop');
         $this->alterColumn('{{%shop}}', 'shopAddressId', $this->integer()->notNull());
+        $this->addForeignKey('fx_shop_shopAddress', 'shop', 'shopAddressId', 'shopAddress', 'id');
     }
 
     /*
