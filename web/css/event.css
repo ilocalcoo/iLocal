@@ -30,6 +30,7 @@
 }
 .big_carousel {
   display: flex;
+  flex-wrap: wrap;
 }
 .event_card {
   margin-right: 30px;
@@ -44,6 +45,7 @@
 }
 .card_top img{
   height: 247px;
+  border-radius: 22px;
   background: linear-gradient(0deg, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0) 50%), url(IMG_8329-e1539241438624-543x390.jpg);
 }
 .carousel-caption {
