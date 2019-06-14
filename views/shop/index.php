@@ -6,60 +6,24 @@ use yii\grid\GridView;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\search\ShopSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-/* @var $shopShortNameData app\models\Shop */
+/* @var $shops app\models\Shop[] */
+/* @var $pages \yii\data\Pagination */
+/* @var $shopType \app\models\ShopType */
 
-$this->title = 'Shops';
-$this->params['breadcrumbs'][] = $this->title;
+$type = 'Все магазины';
+if (count(Yii::$app->request->queryParams) != 0) {
+    $shopType = \app\models\ShopType::find()->where(['id' => Yii::$app->request->queryParams['shopTypeId']])->one();
+	$type = $shopType->type;
+}
+$type = mb_strtoupper(mb_substr($type, 0, 1)) . mb_substr($type, 1, mb_strlen($type));
+$this->title = $type;
 ?>
 <div class="shop-index">
 
     <h1><?= Html::encode($this->title) ?></h1>
 
     <?php Pjax::begin(); ?>
-    <?php echo $this->render('_search', ['model' => $searchModel, 'shopShortNameData' => $shopShortNameData]); ?>
 
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'columns' => [
-            [
-                'attribute' => 'shopPhoto',
-                'value' => function (app\models\Shop $model) {
-                    $photo = [];
-                    foreach ($model->shopPhotos as $url) {
-                        $photo[] = $url->shopPhoto;
-                    }
-                    $str = implode(',', $photo);
-                    return $str;
-                },
-                'format' => 'html'
-            ],
-            [
-                'attribute' => 'shopShortName',
-                'value' => function (app\models\Shop $model) {
-                    return Html::a($model->shopShortName, ['view', 'id' => $model->shopId]);
-                },
-                'format' => 'html'
-            ],
-            [
-                'attribute' => 'shopType',
-                'value' => function (app\models\Shop $model) {
-                    return $model->shopType->type;
-                },
-            ],
-            [
-                'attribute' => 'shopAddress',
-                'value' => function (app\models\Shop $model) {
-                    return $model->shopAddress->city . "," .
-                        $model->shopAddress->street . "," .
-                        $model->shopAddress->houseNumber;
-                },
-            ],
-            'shopShortDescription',
-            [
-                'attribute' => 'shopRating',
-                'value' => function (app\models\Shop $model) {
                     return StarRating::widget([
                         'name' => 'shop_rating',
                         'value' => $model->shopRating,
@@ -100,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'shopWorkTime',
         ],
-    ]); ?>
+    ]);
 
     <?php Pjax::end(); ?>
 
