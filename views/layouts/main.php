@@ -38,7 +38,7 @@ AppAsset::register($this);
                 <a href="/login">Вход<span class="login-ellipse"></span></a>
             <?php } else { ?>
                 <a href="/login">Профиль</a>
-                <a href="/site/logout">Выход</a>
+                <a href="/logout">Выход</a>
             <?php } ?>
         </div>
         <div class="nav-bar-categories-wrap">

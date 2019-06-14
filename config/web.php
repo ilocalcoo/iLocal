@@ -84,6 +84,7 @@ $config = [
             'showScriptName' => false,
             'rules' => [
                 '<action:(login)>' => 'site/login',
+                '<action:(logout)>' => 'site/logout',
                 '<action:(favorites)>' => 'site/favorites',
                 '<action:(policy)>' => 'site/policy',
                 '<controller:(shop)>s' => '<controller>/index',
