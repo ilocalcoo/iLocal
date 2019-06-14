@@ -30,8 +30,14 @@ EventAsset::register($this);
 			<div class="cont_title">
 				<a class="shop_img" href="<?= 'shop/view/'.$shop->shopId ?>">
 					<img
-						src="<?php echo $shop->getShopPhotos()->limit(1)->asArray()->all()[0]['shopPhoto'] ?>"
-						alt="<?= $shop->shopShortName ?>"/>
+						src="<?php
+                        $shopPhoto = $shop->getShopPhotos()->asArray()->one()['shopPhoto'];
+						if (is_null($shopPhoto)) {
+                            $shopPhoto = '/img/nophoto.jpg';
+                        }
+						echo $shopPhoto ?>"
+						alt="<?= $shop->shopShortName ?>"
+					/>
 				</a>
 				<div class="right_title">
 					<a class="shop_name" href="<?= 'shop/view/'.$shop->shopId ?>">
@@ -99,6 +105,13 @@ EventAsset::register($this);
 			</div>
 		</div>
         <?php } ?>
+		<div class="pagination">
+			<?= \yii\widgets\LinkPager::widget([
+				'pagination' => $pages,
+				'nextPageLabel' => '>',
+				'prevPageLabel' => '<',
+			]); ?>
+		</div>
 	</main>
 </div>
 <?php Pjax::end(); ?>

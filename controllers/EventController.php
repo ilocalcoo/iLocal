@@ -51,9 +51,17 @@ class EventController extends Controller
 //            'dataProvider' => $dataProvider,
 //            'shortDescData' => $shortDescData,
 //        ]);
-        $shops = Shop::find()->where(['shopActive' => 1])->all();
+        $query = Shop::find()->where(['shopActive' => 1]);
+        $pages = new Pagination([
+            'totalCount' => $query->count(),
+            'pageSize' => 3,
+        ]);
+        $shops = $query->offset($pages->offset)
+            ->limit($pages->limit)
+            ->all();
         return $this->render('index', [
             'shops' => $shops,
+            'pages' => $pages,
         ]);
     }
 
