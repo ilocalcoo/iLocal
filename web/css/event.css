@@ -33,6 +33,7 @@
   flex-wrap: wrap;
 }
 .event_card {
+  background: #FFFFFF;
   margin-right: 30px;
   width: 360px;
   border-radius: 22px;
@@ -79,10 +80,10 @@
 }
 .like_data {
   display: flex;
+  justify-content: space-between;
 }
 .like {
   margin-top: 35px;
-  margin-right: 90px;
 }
 .like_data span {
   margin-top: 45px;
