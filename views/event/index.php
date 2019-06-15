@@ -28,7 +28,7 @@ EventAsset::register($this);
 
 		<div class="content">
 			<div class="cont_title">
-				<a class="shop_img" href="<?= 'shop/view/'.$shop->shopId ?>">
+				<a class="shop_img" href="<?= 'shops/'.$shop->shopId ?>">
 					<img
 						src="<?php
                         $shopPhoto = $shop->getShopPhotos()->asArray()->one()['shopPhoto'];
@@ -40,7 +40,7 @@ EventAsset::register($this);
 					/>
 				</a>
 				<div class="right_title">
-					<a class="shop_name" href="<?= 'shop/view/'.$shop->shopId ?>">
+					<a class="shop_name" href="<?= 'shops/'.$shop->shopId ?>">
                         <?= $shop->shopShortName ?>
 					</a>
 					<div class="shop_address">
@@ -70,7 +70,7 @@ EventAsset::register($this);
 					<div class="event_card">
                         <?php
                         echo Html::beginTag('a', [
-							'href' => 'event/view/'.$event->id,
+							'href' => 'events/'.$event->id,
                             'class' => 'card_top',
                         ]);
                             $items = [];
