@@ -54,7 +54,7 @@ $this->title = 'My Yii Application';
                     <div>Новое качество жизни: взгляните по-новому на свой район и не тратьте время на долгие поездки.
                     </div>
                     <div class="index-start-btn">
-                    <a href="/shops">Начать</a>
+                    <a href="/shops" tabindex="1">Начать</a>
                     </div>
                 </div>
             </div>

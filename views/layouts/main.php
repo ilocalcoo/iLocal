@@ -9,6 +9,13 @@ use app\assets\AppAsset;
 
 $currentUrl = substr(Yii::$app->request->pathInfo, 0, 4);
 
+function active($value) {
+    if (substr(Yii::$app->request->url, -8) == $value) {
+        return true;
+    }
+    return false;
+}
+
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -28,6 +35,7 @@ AppAsset::register($this);
 <header class="main-header">
     <div class="header-container">
         <div class="main-nav-bar">
+            <a href="/">Главная</a>
             <?php if (!Yii::$app->user->isGuest) { ?>
             <a href="/user/business">Бизнесу</a>
             <a href="/favorites">Избранное</a>
@@ -58,18 +66,18 @@ AppAsset::register($this);
             </div>
             <div class="nav-bar-categories">
                 <?php if ($currentUrl == 'even') { ?>
-                    <a href="/events?eventTypeId=1">Еда</a>
-                    <a href="/events?eventTypeId=2">Дети</a>
-                    <a href="/events?eventTypeId=3">Спорт</a>
-                    <a href="/events?eventTypeId=4">Красота</a>
-                    <a href="/events?eventTypeId=5">Покупки</a>
+                    <a href="/events?eventTypeId=1" <?php if(active('TypeId=1')) echo 'class="nav-bar-categories-active"'?>>Еда</a>
+                    <a href="/events?eventTypeId=2" <?php if(active('TypeId=2')) echo 'class="nav-bar-categories-active"'?>>Дети</a>
+                    <a href="/events?eventTypeId=3" <?php if(active('TypeId=3')) echo 'class="nav-bar-categories-active"'?>>Спорт</a>
+                    <a href="/events?eventTypeId=4" <?php if(active('TypeId=4')) echo 'class="nav-bar-categories-active"'?>>Красота</a>
+                    <a href="/events?eventTypeId=5" <?php if(active('TypeId=5')) echo 'class="nav-bar-categories-active"'?>>Покупки</a>
                     <a href="/events">Все</a>
                 <?php } else { ($currentUrl == 'shop') ?>
-                    <a href="/shops?shopTypeId=1">Еда</a>
-                    <a href="/shops?shopTypeId=2">Дети</a>
-                    <a href="/shops?shopTypeId=3">Спорт</a>
-                    <a href="/shops?shopTypeId=4">Красота</a>
-                    <a href="/shops?shopTypeId=5">Покупки</a>
+                    <a href="/shops?shopTypeId=1" <?php if(active('TypeId=1')) echo 'class="nav-bar-categories-active"'?>>Еда</a>
+                    <a href="/shops?shopTypeId=2" <?php if(active('TypeId=2')) echo 'class="nav-bar-categories-active"'?>>Дети</a>
+                    <a href="/shops?shopTypeId=3" <?php if(active('TypeId=3')) echo 'class="nav-bar-categories-active"'?>>Спорт</a>
+                    <a href="/shops?shopTypeId=4" <?php if(active('TypeId=4')) echo 'class="nav-bar-categories-active"'?>>Красота</a>
+                    <a href="/shops?shopTypeId=5" <?php if(active('TypeId=5')) echo 'class="nav-bar-categories-active"'?>>Покупки</a>
                     <a href="/shops">Все</a>
                 <?php } ?>
             </div>

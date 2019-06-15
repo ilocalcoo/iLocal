@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Yeseva+One&display=swap');
 
 .index-body {
-    background: url("/img/main/index-bg.png") right no-repeat;
+    background: url("/img/main/index-bg.png") right no-repeat fixed;
     background-size: 82% 100%;
 }
 
@@ -56,7 +56,7 @@
 
 .index-start-btn {
     text-align: right;
-    margin-top: 115px;
+    margin-top: 90px;
 }
 
 .index-start-btn>a {
@@ -79,4 +79,10 @@
 .index-start-btn>a:active {
     color: white;
     text-decoration: none;
+}
+
+.index-start-btn>a:focus {
+    color: white;
+    text-decoration: none;
+    outline: none;
 }
