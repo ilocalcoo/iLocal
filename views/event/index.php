@@ -68,12 +68,8 @@ EventAsset::register($this);
                     }
                     ?>
 					<div class="event_card">
-                        <?php
-                        echo Html::beginTag('a', [
-							'href' => 'events/'.$event->id,
-                            'class' => 'card_top',
-                        ]);
-                            $items = [];
+                        <div class="card_top">
+							<?php $items = [];
 							foreach ($photos as $photo) {
                                 $content = [
                                 	'content' => '<img src="' . $photo['eventPhoto'] . '"/img>',
@@ -83,9 +79,10 @@ EventAsset::register($this);
                             }
                             echo Carousel::widget([
                                 'items' => $items,
+								'controls' => false,
                             ]);
-                        Html::endTag('a');
-                        ?>
+                            ?>
+						</div>
 						<div class="card_bot">
 							<div class="card_short_desc">
                                 <?= $event->shortDesc ?>
