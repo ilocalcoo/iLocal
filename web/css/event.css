@@ -41,6 +41,10 @@
 .event_card:last-child {
   margin-right: 0px;
 }
+.card_top {
+  display: flex;
+  justify-content: center;
+}
 .card_top img{
   height: 247px;
   border-radius: 22px;
