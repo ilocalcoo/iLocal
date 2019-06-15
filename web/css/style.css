@@ -32,6 +32,10 @@
     color: #F9958D;
 }
 
+.contact-form {
+    cursor: pointer;
+}
+
 .login-ellipse {
     display: inline-block;
     width: 6px;
