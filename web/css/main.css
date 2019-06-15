@@ -34,6 +34,12 @@
     margin-bottom: 42px;
 }
 
+.index-info-header {
+    background: linear-gradient(-60deg, #FE61AB 0%, #FE8A80 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
 .index-info-wrap {
     display: flex;
     justify-content: space-between;
