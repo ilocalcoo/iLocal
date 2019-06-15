@@ -6,6 +6,7 @@ use app\models\search\EventSearch;
 use app\models\Shop;
 use Yii;
 use app\models\Event;
+use yii\data\Pagination;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -37,18 +38,35 @@ class EventController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new EventSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        $shortDescData = Event::find()
-            ->select(['shortDesc as value', 'shortDesc as label', 'id as id'])
-            ->asArray()
+//        $searchModel = new EventSearch();
+//        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+//
+//        $shortDescData = Event::find()
+//            ->select(['shortDesc as value', 'shortDesc as label', 'id as id'])
+//            ->asArray()
+//            ->all();
+//
+//        return $this->render('index', [
+//            'searchModel' => $searchModel,
+//            'dataProvider' => $dataProvider,
+//            'shortDescData' => $shortDescData,
+//        ]);
+        $query = Shop::find()->where(['shopActive' => 1]);
+        if (array_key_exists('shopTypeId', Yii::$app->request->queryParams)) {
+            $query = $query->where(
+                ['shopTypeId' => Yii::$app->request->queryParams['shopTypeId']]
+            );
+        }
+        $pages = new Pagination([
+            'totalCount' => $query->count(),
+            'pageSize' => 3,
+        ]);
+        $shops = $query->offset($pages->offset)
+            ->limit($pages->limit)
             ->all();
-
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'shortDescData' => $shortDescData,
+            'shops' => $shops,
+            'pages' => $pages,
         ]);
     }
 
