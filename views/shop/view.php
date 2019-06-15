@@ -1,5 +1,7 @@
 <?php
 
+use app\models\Event;
+use app\models\UserEvent;
 use kartik\rating\StarRating;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -7,6 +9,7 @@ use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Shop */
+/* @var $shopEvents app\models\Event */
 
 $this->title = $model->shopShortName;
 
@@ -138,6 +141,45 @@ else {
 
             </div>
         </div>
+
+    </div>
+
+    <h2>Акции</h2>
+
+    <div class="flex-wrap">
+
+        <?php foreach ($shopEvents as $event) { ?>
+            <div class="main-block-wrap">
+                <img src="/img/eventPhoto/<?php if (!isset($event['eventPhotos'][0]['eventPhoto'])) {
+                    echo 'figma.jpg';
+                } else {
+                    echo $event['eventPhotos'][0]['eventPhoto'];
+                } ?>" class="photo" alt="">
+                <div class="photo-wrap">
+                    <a href="/events/<?= $event['id'] ?>" class="title"><?= $event['title'] ?></a>
+                </div>
+                <div class="info-block-wrap">
+                    <p><?= mb_substr($event['shortDesc'], 0, 70) ?>
+                        <a href="/events/<?= $event['id'] ?>">Подробнее...</a></p>
+                </div>
+
+                <?php \yii\widgets\Pjax::begin() ?>
+                <?php if (UserEvent::find()->where(['user_id' => Yii::$app->user->id])->andWhere(['event_id' => $event->id])->one()) {
+                    $favorite = 'favorite_border_24px_rounded.svg';
+                    $eventId = 'del-event-id';
+                } else {
+                    $favorite = 'Favor_rounded.svg';
+                    $eventId = 'add-event-id';
+                } ?>
+                <a href="/shops/<?= $model->shopId ?>?<?= $eventId ?>=<?= $event['id'] ?>" title="Добавить в избранное"
+                   class="favorite">
+                    <img src="/img/user/<?= $favorite ?>" alt=""></a>
+                <?php \yii\widgets\Pjax::end() ?>
+
+                <span class="favorite-shop-type">Раздел - <a
+                            href="/events?eventTypeId=<?= $event['eventTypeId'] ?>"><?= $event->eventType->type ?></a></span>
+            </div>
+        <?php } ?>
 
     </div>
 
