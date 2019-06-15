@@ -2,8 +2,11 @@
 
 namespace app\controllers;
 
+use app\models\Event;
 use app\models\ShopAddress;
 use app\models\ShopRating;
+use app\models\UserEvent;
+use app\models\UserShop;
 use Yii;
 use app\models\Shop;
 use app\models\search\ShopSearch;
@@ -61,8 +64,41 @@ class ShopController extends Controller
      */
     public function actionView($id)
     {
+        if ($shopId = Yii::$app->request->get('add-shop-id')) {
+            $userShop = new UserShop();
+            $userShop->user_id = Yii::$app->user->id;
+            $userShop->shop_id = $shopId;
+            $userShop->save();
+        }
+
+        if ($shopId = Yii::$app->request->get('del-shop-id')) {
+            $userShop = UserShop::find()
+                ->where(['user_id' => Yii::$app->user->id])
+                ->andWhere(['shop_id' => $shopId])
+                ->one();
+            $userShop->delete();
+        }
+
+        if ($eventId = Yii::$app->request->get('add-event-id')) {
+            $userEvent = new UserEvent();
+            $userEvent->user_id = Yii::$app->user->id;
+            $userEvent->event_id = $eventId;
+            $userEvent->save();
+        }
+
+        if ($eventId = Yii::$app->request->get('del-event-id')) {
+            $userEvent = UserEvent::find()
+                ->where(['user_id' => Yii::$app->user->id])
+                ->andWhere(['event_id' => $eventId])
+                ->one();
+            $userEvent->delete();
+        }
+
+        $shopEvents = Event::find()->all();
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'shopEvents' => $shopEvents,
         ]);
     }
 

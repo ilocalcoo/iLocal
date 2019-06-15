@@ -3,9 +3,11 @@
 namespace app\controllers;
 
 use app\components\AuthHandler;
+use app\models\Event;
 use app\models\Shop;
 use app\models\User;
 use app\models\UserAddress;
+use app\models\UserEvent;
 use app\models\UserShop;
 use Yii;
 use yii\filters\AccessControl;
@@ -210,7 +212,6 @@ class SiteController extends Controller
     public function actionFavorites()
     {
         if ($shopId = Yii::$app->request->get('add-shop-id')) {
-//            var_dump($shopId = Yii::$app->request->get());exit;
             $userShop = new UserShop();
             $userShop->user_id = Yii::$app->user->id;
             $userShop->shop_id = $shopId;
@@ -218,22 +219,35 @@ class SiteController extends Controller
         }
 
         if ($shopId = Yii::$app->request->get('del-shop-id')) {
-//            var_dump($shopId = Yii::$app->request->get());
             $userShop = UserShop::find()
                 ->where(['user_id' => Yii::$app->user->id])
                 ->andWhere(['shop_id' => $shopId])
                 ->one();
-//            var_dump($userShop);exit;
             $userShop->delete();
         }
 
-        $userShops = [];
+        if ($eventId = Yii::$app->request->get('add-event-id')) {
+            $userEvent = new UserEvent();
+            $userEvent->user_id = Yii::$app->user->id;
+            $userEvent->event_id = $eventId;
+            $userEvent->save();
+        }
+
+        if ($eventId = Yii::$app->request->get('del-event-id')) {
+            $userEvent = UserEvent::find()
+                ->where(['user_id' => Yii::$app->user->id])
+                ->andWhere(['event_id' => $eventId])
+                ->one();
+            $userEvent->delete();
+        }
+
         $userShops = Shop::find()->all();
-        $userEvents = [];
+        $userEvents = Event::find()->all();
 
         return $this->render('favorites', [
             'userShops' => $userShops,
             'userEvents' => $userEvents
         ]);
     }
+
 }
