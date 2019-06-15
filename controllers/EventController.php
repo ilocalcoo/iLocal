@@ -52,9 +52,9 @@ class EventController extends Controller
 //            'shortDescData' => $shortDescData,
 //        ]);
         $query = Shop::find()->where(['shopActive' => 1]);
-        if (array_key_exists('shopTypeId', Yii::$app->request->queryParams)) {
+        if (array_key_exists('eventTypeId', Yii::$app->request->queryParams)) {
             $query = $query->where(
-                ['shopTypeId' => Yii::$app->request->queryParams['shopTypeId']]
+                ['shopTypeId' => Yii::$app->request->queryParams['eventTypeId']]
             );
         }
         $pages = new Pagination([
