@@ -3,6 +3,10 @@
 namespace app\controllers;
 
 use app\components\AuthHandler;
+use app\models\Shop;
+use app\models\User;
+use app\models\UserAddress;
+use app\models\UserShop;
 use Yii;
 use yii\filters\AccessControl;
 use yii\helpers\Html;
@@ -34,7 +38,7 @@ class SiteController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+//                    'logout' => ['post'],
                 ],
             ],
         ];
@@ -78,6 +82,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        $this->layout = false;
         return $this->render('index');
     }
 
@@ -88,22 +93,62 @@ class SiteController extends Controller
      */
     public function actionLogin()
     {
-        $title = 'Login';
+        $model = null;
 
         if (!Yii::$app->user->isGuest) {
-//            return $this->goHome();
-            $title = 'Link another account';
+            /** @var User $model */
+            $model = Yii::$app->user->getIdentity();
+
+            if (Yii::$app->request->post('address')) {
+                $addressArray = explode(',', Yii::$app->request->post('address'));
+
+                if (!$addressArray[0]) {
+                    Yii::$app->getSession()->setFlash('error', 'Не выбран город');
+                    return $this->refresh();
+                }
+                if (!$addressArray[1]) {
+                    Yii::$app->getSession()->setFlash('error', 'Не выбрана улица');
+                    return $this->refresh();
+                }
+                if (!$addressArray[2]) {
+                    Yii::$app->getSession()->setFlash('error', 'Не выбран дом');
+                    return $this->refresh();
+                }
+
+                if ($model->userAddress) {
+                    $modelAddress = $model->userAddress;
+                } else {
+                    $modelAddress = new UserAddress();
+                }
+
+
+                $modelAddress->city = $addressArray[0];
+                $modelAddress->street = $addressArray[1];
+                $modelAddress->houseNumber = $addressArray[2];
+                $modelAddress->latitude = $addressArray[3];
+                $modelAddress->longitude = $addressArray[4];
+
+                if ($modelAddress->save()) {
+                    $model->userAddressId = $modelAddress->id;
+                    $model->save();
+                    Yii::$app->getSession()->setFlash('success', 'Адрес сохранен');
+                    return $this->refresh();
+                }
+
+            }
+
+
+            if (Yii::$app->request->post('user')) {
+                if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                    Yii::$app->getSession()->setFlash('success', 'Изменения сохранены');
+                    return $this->refresh();
+                }
+            }
+
         }
 
-        $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
-        }
-
-        $model->password = '';
         return $this->render('login', [
             'model' => $model,
-            'title' => $title,
         ]);
     }
 
@@ -155,5 +200,40 @@ class SiteController extends Controller
     public function actionPolicy()
     {
         return $this->render('policy');
+    }
+
+    /**
+     * Displays favorites page.
+     *
+     * @return string
+     */
+    public function actionFavorites()
+    {
+        if ($shopId = Yii::$app->request->get('add-shop-id')) {
+//            var_dump($shopId = Yii::$app->request->get());exit;
+            $userShop = new UserShop();
+            $userShop->user_id = Yii::$app->user->id;
+            $userShop->shop_id = $shopId;
+            $userShop->save();
+        }
+
+        if ($shopId = Yii::$app->request->get('del-shop-id')) {
+//            var_dump($shopId = Yii::$app->request->get());
+            $userShop = UserShop::find()
+                ->where(['user_id' => Yii::$app->user->id])
+                ->andWhere(['shop_id' => $shopId])
+                ->one();
+//            var_dump($userShop);exit;
+            $userShop->delete();
+        }
+
+        $userShops = [];
+        $userShops = Shop::find()->all();
+        $userEvents = [];
+
+        return $this->render('favorites', [
+            'userShops' => $userShops,
+            'userEvents' => $userEvents
+        ]);
     }
 }

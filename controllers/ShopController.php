@@ -2,7 +2,7 @@
 
 namespace app\controllers;
 
-use app\models\ShopPhoto;
+use app\models\ShopAddress;
 use app\models\ShopRating;
 use Yii;
 use app\models\Shop;
@@ -67,48 +67,99 @@ class ShopController extends Controller
     }
 
     /**
-     * Creates a new Shop model.
-     * If creation is successful, the browser will be redirected to the 'view' page.
-     * @return mixed
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException
      */
-    public function actionCreate()
+    public function actionCreateStep1()
     {
-        $model = new Shop();
+        $id = Yii::$app->request->get('id');
+        $setFlash = false;
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $model->uploadedShopPhoto = UploadedFile::getInstances($model, 'uploadedShopPhoto');
-
-            if ($model->uploadShopPhoto()) {
-                return $this->redirect(['view', 'id' => $model->shopId]);
-            }
+        if (isset($id)) {
+            $model = $this->findModel($id);
+        } else {
+            $model = new Shop();
+            $setFlash = true;
         }
 
-        return $this->render('create', [
+        $model->setScenario(Shop::SCENARIO_STEP1);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if ($setFlash) {
+                Yii::$app->session->setFlash('success', 'Магазин: "' . $model->shopShortName . '" успешно добавлен.
+                Вы можете продолжить заполнение информации о магазине сейчас, либо позже.');
+            }
+            return $this->redirect(["/shops/$model->shopId/update/photo"]);
+        }
+        return $this->render('create/step-1', [
             'model' => $model,
         ]);
     }
 
     /**
-     * Updates an existing Shop model.
-     * If update is successful, the browser will be redirected to the 'view' page.
-     * @param integer $id
-     * @return mixed
-     * @throws NotFoundHttpException if the model cannot be found
+     * @param $id
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException
      */
-    public function actionUpdate($id)
+    public function actionCreateStep2($id)
     {
         $model = $this->findModel($id);
+        $model->setScenario(Shop::SCENARIO_STEP2);
 
-        if (Yii::$app->request->isPost) {
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $model->uploadedShopPhoto = UploadedFile::getInstances($model, 'uploadedShopPhoto');
 
             if ($model->uploadShopPhoto()) {
-                if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                    return $this->redirect(['view', 'id' => $model->shopId]);
-                }
+                return $this->refresh();
             }
         }
-        return $this->render('update', [
+        return $this->render('create/step-2', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * @param $id
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException
+     */
+    public function actionCreateStep3($id)
+    {
+        $model = $this->findModel($id);
+        $model->setScenario(Shop::SCENARIO_STEP3);
+
+        $shopAddress = ShopAddress::findOne($model->shopAddressId);
+        if (($shopAddress) === null) {
+            $shopAddress = new ShopAddress();
+        }
+
+        if ($shopAddress->load(Yii::$app->request->post()) && $shopAddress->save()) {
+            $model->shopAddressId = $shopAddress->id;
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(["/shops/$model->shopId/update/prices"]);
+            }
+        }
+        return $this->render('create/step-3', [
+            'model' => $model,
+            'shopAddress' => $shopAddress,
+        ]);
+    }
+
+    /**
+     * @param $id
+     * @return string|\yii\web\Response
+     * @throws NotFoundHttpException
+     */
+    public function actionCreateStep4($id)
+    {
+        $model = $this->findModel($id);
+        $model->setScenario(Shop::SCENARIO_STEP4);
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            return $this->redirect(['user/business']);
+        }
+
+        return $this->render('create/step-4', [
             'model' => $model,
         ]);
     }
@@ -150,6 +201,7 @@ class ShopController extends Controller
     public function actionDelete($id)
     {
         $model = $this->findModel($id);
+        $model->setScenario(Shop::SCENARIO_DEFAULT);
         $model->shopActive = Shop::SHOP_ACTIVE_FALSE;
         if ($model->save()) {
             Yii::$app->session->setFlash('success', 'Статус магазина: "' . $model->shopShortName . '" успешно изменён');

@@ -1,14 +1,20 @@
 <?php
 
 /* @var $this \yii\web\View */
+
 /* @var $content string */
 
-use app\widgets\Alert;
 use yii\helpers\Html;
-use yii\bootstrap\Nav;
-use yii\bootstrap\NavBar;
-use yii\widgets\Breadcrumbs;
 use app\assets\AppAsset;
+
+$currentUrl = substr(Yii::$app->request->pathInfo, 0, 4);
+
+function active($value) {
+    if (substr(Yii::$app->request->url, -8) == $value) {
+        return true;
+    }
+    return false;
+}
 
 AppAsset::register($this);
 ?>
@@ -23,66 +29,79 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body>
+<body class="main-body">
 <?php $this->beginBody() ?>
 
-<div class="wrap">
-    <?php
-    NavBar::begin([
-        'brandLabel' => Yii::$app->name,
-        'brandUrl' => Yii::$app->homeUrl,
-        'options' => [
-            'class' => 'navbar-inverse navbar-fixed-top',
-        ],
-    ]);
-    echo Nav::widget([
-        'options' => ['class' => 'navbar-nav navbar-right'],
-        'items' => [
-            //['label' => 'Home', 'url' => ['/site/index']],
-            ['label' => 'Food', 'url' => ['/shop?shopTypeId=1']],
-            ['label' => 'Child', 'url' => ['/shop?shopTypeId=2']],
-            ['label' => 'Sport', 'url' => ['/shop?shopTypeId=3']],
-            ['label' => 'Beauty', 'url' => ['/shop?shopTypeId=4']],
-            ['label' => 'Buy', 'url' => ['/shop?shopTypeId=5']],
-            ['label' => 'All places', 'url' => ['/shop']],
-            //['label' => 'About', 'url' => ['/site/about']],
-            //['label' => 'Contact', 'url' => ['/site/contact']],
-            Yii::$app->user->isGuest ? (
-            ['label' => 'Login', 'url' => ['/site/login']]
-            ) : (
-            ['label' => Yii::$app->user->identity->username, 'url' => ['/site/login']]
-//                '<li>'
-//                . Html::beginForm(['/site/logout'], 'post')
-//                . Html::submitButton(
-//                    'Logout (' . Yii::$app->user->identity->username . ')',
-//                    ['class' => 'btn btn-link logout']
-//                )
-//                . Html::endForm()
-//                . '</li>'
-            )
-        ],
-    ]);
-    NavBar::end();
-    ?>
+<header class="main-header">
+    <div class="header-container">
+        <div class="main-nav-bar">
+            <a href="/">Главная</a>
+            <?php if (!Yii::$app->user->isGuest) { ?>
+            <a href="/user/business">Бизнесу</a>
+            <a href="/favorites">Избранное</a>
+            <?php } ?>
+            <a href="">Помощь</a>
+            <a href="">Поиск</a>
+            <?php if (Yii::$app->user->isGuest) { ?>
+                <a href="/login">Вход<span class="login-ellipse"></span></a>
+            <?php } else { ?>
+                <a href="/login">Профиль</a>
+                <a href="/logout">Выход</a>
+            <?php } ?>
+        </div>
+        <div class="nav-bar-categories-wrap">
+            <div class="nav-bar-categories-main">
+                <a href="/shops" class="<?php if ($currentUrl == 'shop') {
+                    echo 'nav-bar-categories-main-active';
+                } else {
+                    echo 'nav-bar-categories-main-inactive';
+                }
+                ?>">Места</a>
+                <a href="/events" class="<?php if ($currentUrl == 'even') {
+                    echo 'nav-bar-categories-main-active';
+                } else {
+                    echo 'nav-bar-categories-main-inactive';
+                }
+                ?>">Акции</a>
+            </div>
+            <div class="nav-bar-categories">
+                <?php if ($currentUrl == 'even') { ?>
+                    <a href="/events?eventTypeId=1" <?php if(active('TypeId=1')) echo 'class="nav-bar-categories-active"'?>>Еда</a>
+                    <a href="/events?eventTypeId=2" <?php if(active('TypeId=2')) echo 'class="nav-bar-categories-active"'?>>Дети</a>
+                    <a href="/events?eventTypeId=3" <?php if(active('TypeId=3')) echo 'class="nav-bar-categories-active"'?>>Спорт</a>
+                    <a href="/events?eventTypeId=4" <?php if(active('TypeId=4')) echo 'class="nav-bar-categories-active"'?>>Красота</a>
+                    <a href="/events?eventTypeId=5" <?php if(active('TypeId=5')) echo 'class="nav-bar-categories-active"'?>>Покупки</a>
+                    <a href="/events">Все</a>
+                <?php } else { ($currentUrl == 'shop') ?>
+                    <a href="/shops?shopTypeId=1" <?php if(active('TypeId=1')) echo 'class="nav-bar-categories-active"'?>>Еда</a>
+                    <a href="/shops?shopTypeId=2" <?php if(active('TypeId=2')) echo 'class="nav-bar-categories-active"'?>>Дети</a>
+                    <a href="/shops?shopTypeId=3" <?php if(active('TypeId=3')) echo 'class="nav-bar-categories-active"'?>>Спорт</a>
+                    <a href="/shops?shopTypeId=4" <?php if(active('TypeId=4')) echo 'class="nav-bar-categories-active"'?>>Красота</a>
+                    <a href="/shops?shopTypeId=5" <?php if(active('TypeId=5')) echo 'class="nav-bar-categories-active"'?>>Покупки</a>
+                    <a href="/shops">Все</a>
+                <?php } ?>
+            </div>
+        </div>
+    </div>
+</header>
 
+<div class="wrap">
     <div class="container">
-        <?= Breadcrumbs::widget([
-            'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
-        ]) ?>
-        <?= Alert::widget() ?>
         <?= $content ?>
     </div>
 </div>
 
-<footer class="footer">
+<footer class="main-footer footer">
+<!--    <div class="bg-ellipse-footer"></div>-->
     <div class="container">
-        <p class="pull-left">&copy; My Company <?= date('Y') ?></p>
-
-        <p class="pull-right"><?= Yii::powered() ?></p>
+        <p class="pull-left"><a href="<?= \yii\helpers\Url::to('/policy') ?>">Политика конфиденциальности</a></p>
+        <p class="pull-right">&copy; I`m local, <?= date('Y') ?></p>
     </div>
 </footer>
 
 <?php $this->endBody() ?>
+
+
 </body>
 </html>
 <?php $this->endPage() ?>

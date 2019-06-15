@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css?family=Yeseva+One&display=swap');
+
+.index-body {
+    background: url("/img/main/index-bg.png") right no-repeat fixed;
+    background-size: 82% 100%;
+}
+
+.index-container {
+    width: 1138px;
+    margin: 0 auto;
+    font-family: Roboto, sans-serif;
+}
+
+.index-info-main-wrap {
+    width: 637px;
+}
+
+.index-main-wrap {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 66px;
+}
+
+.index-main-wrap>img {
+    margin-top: 43px;
+}
+
+.index-info-header,
+.index-info-num>div {
+    font-family: Yeseva One, sans-serif;
+    font-size: 48px;
+    line-height: 50px;
+    color: #FE8A80;
+    margin-bottom: 42px;
+}
+
+.index-info-header {
+    background: linear-gradient(-60deg, #FE61AB 0%, #FE8A80 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.index-info-wrap {
+    display: flex;
+    justify-content: space-between;
+}
+
+.index-info-num>div {
+    margin: 0 26px 43px 0;
+}
+
+.index-info-text>div {
+    font-size: 24px;
+    line-height: 28px;
+    color: #454545;
+    margin-bottom: 43px;
+}
+
+.index-info-text>div:nth-child(2) {
+   margin-top: 55px;
+}
+
+.index-start-btn {
+    text-align: right;
+    margin-top: 90px;
+}
+
+.index-start-btn>a {
+    background: linear-gradient(124.22deg, #FF44CB -60.02%, #FE8A80 125.54%);
+    box-shadow: 0 8px 14px rgba(172, 133, 255, 0.404);
+    border-radius: 54px;
+    font-size: 23px;
+    color: #FFFFFF;
+    padding: 11px 37px;
+    text-decoration: none;
+    transition: box-shadow 0.5s;
+}
+
+.index-start-btn>a:hover {
+    box-shadow: none;
+    color: white;
+    text-decoration: none;
+}
+
+.index-start-btn>a:active {
+    color: white;
+    text-decoration: none;
+}
+
+.index-start-btn>a:focus {
+    color: white;
+    text-decoration: none;
+    outline: none;
+}

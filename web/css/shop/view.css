@@ -1,0 +1,152 @@
+.shop-window-container {
+    /*width: 1440px;*/
+}
+
+.shop-window-container h1 {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 42px;
+    color: #454545;
+}
+
+.shop-type {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 28px;
+    color: #454545;
+}
+
+.shop-cost {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 20px;
+    line-height: 23px;
+    color: #454545;
+    margin-left: 20px;
+}
+
+.shop-contacts {
+    margin-top: 32px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.shop-location {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 16px;
+    line-height: 19px;
+    color: #454545;
+    margin-right: 30px;
+}
+
+.shop-location img {
+    margin-right: 8px;
+}
+
+.shop-window-gallery {
+    margin-top: 28px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.carousel {
+    width: 757px;
+    height: 567px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+
+.carousel-inner {
+    height: 100%;
+}
+
+.carousel-inner .item {
+    height: 100%;
+}
+
+.carousel-inner .item img {
+    min-width: 100% !important;
+    min-height: 100% !important;
+    max-width: none !important;
+}
+
+.shop-window-photos {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    align-content: space-between;
+}
+
+.shop-window-photo {
+    width: 360px;
+    height: 270px;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 4px;
+}
+
+.shop-window-photo img {
+    min-width: 100%;
+    min-height: 100%;
+    object-fit: cover;
+}
+
+.shop-window-container h1 {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 28px;
+    color: #454545;
+}
+
+.text-rating {
+    margin-top: 35px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.text-rating p {
+    display: block;
+    width: 718px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+    text-align: justify;
+    color: #474747;
+}
+
+.rating {
+    display: block;
+    width: 270px;
+    margin-right: 37px;
+    text-align: center;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+    color: #747474;
+}
+
+.rating span {
+    font-weight: bold;
+}
+
+.rating > * {
+    margin-top: 15px;
+}
