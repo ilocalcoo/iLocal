@@ -51,10 +51,9 @@
     background: #FFFFFF;
     box-shadow: 2px 4px 23px rgba(0, 0, 0, 0.13);
     border-radius: 80px;
-    font-size: 24px;
-    line-height: 28px;
+    font-size: 18px;
     color: #606060;
-    padding: 9px 23px;
+    padding: 11px 30px;
     margin-left: 20px;
     text-decoration: none;
     transition: color 0.3s, background-color 0.3s;
@@ -70,17 +69,17 @@
     color: white;
 }
 
-.nav-bar-categories>a:active {
-    box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.25);
-
+.nav-bar-categories-active {
+    background: #F9958D !important;
+    box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.25) !important;
+    color: white !important;
 }
 
 .nav-bar-categories-main>a {
     border: 1px solid #FE8A80;
-    padding: 9px 23px;
+    padding: 10px 30px;
     box-sizing: border-box;
-    font-size: 24px;
-    line-height: 28px;
+    font-size: 18px;
     text-decoration: none;
     transition: color 0.3s, background-color 0.3s;
 }
