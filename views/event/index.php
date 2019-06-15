@@ -55,7 +55,7 @@ EventAsset::register($this);
 				</div>
 				<div class="big_carousel">
                     <?php
-                    $events = $shop->getTopEvents()->all();
+                    $events = $shop->getEvents()->all();
                     foreach ($events as $event) {
                         $photos = $event->getTopEventPhotos()->asArray()->all();
                         if (count($photos) == 0) {

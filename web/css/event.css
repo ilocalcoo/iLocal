@@ -30,7 +30,7 @@
 }
 .big_carousel {
   display: flex;
-  flex-wrap: wrap;
+  overflow-x: scroll;
 }
 .event_card {
   background: #FFFFFF;
@@ -72,6 +72,8 @@
   padding: 36px 27px 18px 19px;
 }
 .card_short_desc {
+  max-height: 100px;
+  overflow: hidden;
   font-family: Roboto;
   font-style: normal;
   font-weight: normal;
