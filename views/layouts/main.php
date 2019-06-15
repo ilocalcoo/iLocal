@@ -38,7 +38,7 @@ AppAsset::register($this);
                 <a href="/login">Вход<span class="login-ellipse"></span></a>
             <?php } else { ?>
                 <a href="/login">Профиль</a>
-                <a href="/site/logout">Выход</a>
+                <a href="/logout">Выход</a>
             <?php } ?>
         </div>
         <div class="nav-bar-categories-wrap">
@@ -76,7 +76,7 @@ AppAsset::register($this);
         </div>
     </div>
 </header>
-  
+
 <div class="wrap">
     <div class="container">
         <?= $content ?>
@@ -86,12 +86,14 @@ AppAsset::register($this);
 <footer class="main-footer footer">
 <!--    <div class="bg-ellipse-footer"></div>-->
     <div class="container">
-        <p class="pull-left"><a href="">Политика конфиденциальности</a></p>
+        <p class="pull-left"><a href="<?= \yii\helpers\Url::to('/policy') ?>">Политика конфиденциальности</a></p>
         <p class="pull-right">&copy; I`m local, <?= date('Y') ?></p>
     </div>
 </footer>
 
 <?php $this->endBody() ?>
+
+
 </body>
 </html>
 <?php $this->endPage() ?>
