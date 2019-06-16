@@ -29,6 +29,7 @@ $this->title = 'My Yii Application';
 
 <div class="index-container">
     <div class="main-nav-bar">
+        <a href="/">Главная</a>
         <?php if (!Yii::$app->user->isGuest) { ?>
             <a href="/user/business">Бизнесу</a>
             <a href="/favorites">Избранное</a>
@@ -45,7 +46,7 @@ $this->title = 'My Yii Application';
         ?>
         <div class="modal-body"></div>
         <?php Modal::end(); ?>
-        <a href="">Поиск</a>
+<!--        <a href="">Поиск</a>-->
         <?php if (Yii::$app->user->isGuest) { ?>
             <a href="/login">Вход<span class="login-ellipse"></span></a>
         <?php } else { ?>
