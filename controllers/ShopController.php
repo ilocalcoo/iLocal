@@ -94,7 +94,9 @@ class ShopController extends Controller
             $userEvent->delete();
         }
 
-        $shopEvents = Event::find()->all();
+        $shopEvents = Event::find()
+            ->where(['eventOwnerId' => $id])
+            ->all();
 
         return $this->render('view', [
             'model' => $this->findModel($id),
