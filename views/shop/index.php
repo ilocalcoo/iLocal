@@ -12,11 +12,9 @@ use yii\widgets\Pjax;
 
 ShopAsset::register($this);
 $type = 'Все магазины';
-if (count(Yii::$app->request->queryParams) != 0) {
-    $shopType = \app\models\ShopType::find()->where(['id' => Yii::$app->request->queryParams['shopTypeId']])->one();
-    $type = $shopType->type;
+if (array_key_exists('shopTypeId', Yii::$app->request->queryParams)) {
+    $type = \app\models\ShopType::TYPES_LABELS[Yii::$app->request->queryParams['shopTypeId']];
 }
-$type = mb_strtoupper(mb_substr($type, 0, 1)) . mb_substr($type, 1, mb_strlen($type));
 $this->title = $type . ' рядом с вами';
 ?>
 <div class="shop-index">
@@ -84,9 +82,7 @@ $this->title = $type . ' рядом с вами';
                             } ?>
 						</span>
 					<span class="category">
-						<?php $category = $shop->shopType->type;
-                            $category = mb_strtoupper(mb_substr($category, 0, 1)) . mb_substr($category, 1, mb_strlen
-                                ($category));
+						<?php $category = \app\models\ShopType::TYPES_LABELS[$shop->shopTypeId];
                             echo 'Раздел - ' . $category; ?>
 					</span>
 				</div>
