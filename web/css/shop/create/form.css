@@ -229,6 +229,7 @@
     line-height: 160%;
     color: #747474;
     outline: none;
+    margin-top: 5px;
 }
 
 .step-form-3_address-name {
@@ -247,7 +248,8 @@
 .step-form-3_address-wrap {
     display: flex;
     flex-direction: column;
-    width: 380px;
+    width: 100%;
+    /*width: 380px;*/
     margin-right: 21px;
 }
 

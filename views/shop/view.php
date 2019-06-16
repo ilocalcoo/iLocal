@@ -36,8 +36,7 @@ if (count($carousel) == 1) {
     $carousel[1] = '<img src="/img/shopPhoto/no-photo.png"/>';
     $randomPhotos[0] = 0;
     $randomPhotos[1] = 1;
-}
-else {
+} else {
     $randomPhotos = array_rand($carousel, 2);
 }
 //var_dump($photos, $randomPhotos, $carousel);exit;
@@ -56,16 +55,20 @@ else {
                     if ($key == 'id' || $item == '') {
                         continue;
                     }
+                    if ($key == 'latitude') {
+                        break;
+                    }
                     echo $comma . $item;
                     $comma = ', ';
                 }
                 ?>
-                ?
             </div>
             <div class="shop-location"><img src="/img/shop/Phone.svg"
                                             alt="Phone"><?= $model->shopPhone ? $model->shopPhone : '' ?></div>
             <div class="shop-location"><img src="/img/shop/Url.svg"
-                                            alt="Url"><?= $model->shopWeb ? $model->shopWeb : '' ?></div>
+                                            alt="Url"><a href="<?= $model->shopWeb ? $model->shopWeb : '' ?>"
+                                                         target="_blank"><?= $model->shopWeb ? $model->shopWeb : '' ?></a>
+            </div>
             <div class="shop-location"><img src="/img/shop/Time_to_go.svg" alt="Time to go">Режим работы</div>
         </div>
         <div class="shop-window-gallery">
