@@ -39,7 +39,7 @@ $this->title = $type . ' рядом с вами';
 			</a>
 			<div class="right">
 				<div class="name_and_rating">
-					<a class="shop_name" href="<?= 'shops/' . $shop->shopId ?>">
+					<a class="shop_name" href="<?= 'shops/' . $shop->shopId ?>"  data-pjax="0">
                         <?= $shop->shopShortName ?>
 					</a>
                     <?php echo StarRating::widget([
