@@ -37,8 +37,9 @@ $this->registerCssFile('/css/user/business.css');
     <?php } ?>
 
     <div class="main-block-wrap">
-        <img src="/img/user/no-photo.png" class="photo" alt="">
-        <img src="/img/user/photo_icon_ellipse.png" class="icon-ellipse" alt="">
+        <div class="add-block">
+            <a href="/shop/create" class="add-ellipse"><img src="/img/user/plus-icon.svg" alt=""></a>
+        </div>
         <div class="info-block-wrap">
             <a href="/shop/create" class="title">Добавить место</a>
         </div>
@@ -76,8 +77,9 @@ $this->registerCssFile('/css/user/business.css');
     <?php } ?>
 
     <div class="main-block-wrap">
-        <img src="/img/user/no-photo.png" class="photo" alt="">
-        <img src="/img/user/photo_icon_ellipse.png" class="icon-ellipse" alt="">
+        <div class="add-block">
+            <a href="/event/create" class="add-ellipse"><img src="/img/user/plus-icon.svg" alt=""></a>
+        </div>
         <div class="info-block-wrap">
             <a href="/event/create" class="title <?php if (!$userShops) { ?>disabled<?php } ?>">Добавить акцию</a>
         </div>

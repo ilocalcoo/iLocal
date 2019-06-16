@@ -85,6 +85,7 @@
     width: 781px;
     height: 61px;
     margin-top: 12px;
+    resize: vertical;
 }
 
 #shop-shopfulldescription {

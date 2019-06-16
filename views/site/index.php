@@ -3,8 +3,11 @@
 /* @var $this yii\web\View */
 
 use app\assets\AppAsset;
+use yii\bootstrap\Modal;
 use yii\helpers\Html;
 
+$this->registerCssFile('/css/contactForm.css');
+$this->registerJsFile('/js/contactForm.js', ['depends' => 'app\assets\AppAsset']);
 $this->registerCssFile('/css/main.css');
 AppAsset::register($this);
 $this->title = 'My Yii Application';
@@ -30,7 +33,18 @@ $this->title = 'My Yii Application';
             <a href="/user/business">Бизнесу</a>
             <a href="/favorites">Избранное</a>
         <?php } ?>
-        <a href="">Помощь</a>
+        <?php
+        Modal::begin([
+            'header' => false,
+            'toggleButton' => [
+                'label' => 'Помощь',
+                'tag' => 'a',
+                'class' => 'contact-form',
+            ],
+        ]);
+        ?>
+        <div class="modal-body"></div>
+        <?php Modal::end(); ?>
         <a href="">Поиск</a>
         <?php if (Yii::$app->user->isGuest) { ?>
             <a href="/login">Вход<span class="login-ellipse"></span></a>
