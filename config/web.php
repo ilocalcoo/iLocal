@@ -66,7 +66,7 @@ $config = [
                 'class' => 'Swift_SmtpTransport',
                 'host' => 'smtp.gmail.com',
                 'username' => 'imlocalru@gmail.com',
-                'password' => \app\models\User::findOne(2)->password_hash,
+                'password' => '###',
                 'port' => '587',
                 'encryption' => 'tls',
             ],
