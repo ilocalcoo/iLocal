@@ -6,6 +6,7 @@
 
 /* @var $title string */
 
+use app\widgets\Alert;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\bootstrap\ActiveForm;
@@ -19,6 +20,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 <div class="site-login">
     <?php if (!Yii::$app->user->isGuest): ?>
+        <?= Alert::widget() ?>
 
         <h1><?= Html::encode($this->title) ?></h1>
         <h2>Логин: <?= Yii::$app->user->identity->username ?></h2>
@@ -65,13 +67,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
         <?= Html::beginForm(); ?>
         <?= Html::hiddenInput('address', '', ['id' => 'profile_address']); ?>
-        <div class="form-group">
-            <div class="col-lg-offset-1 col-lg-11">
+        <div class="form-group text-center">
+            <div>
+<!--            <div class="col-lg-offset-1 col-lg-11">-->
                 <?= Html::submitButton('Сохранить адрес', ['class' => 'btn btn-primary']) ?>
             </div>
         </div>
         <?= Html::endForm(); ?>
-        <br>
 
 
         <br>
