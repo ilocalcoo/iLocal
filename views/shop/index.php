@@ -26,30 +26,71 @@ $this->title = $type . ' рядом с вами';
 		<span>Вы смотрите места которые находятся рядом с вами в разделе "<?= $type ?>"</span>
 	</div>
     <?php Pjax::begin(); ?>
-	<main class="container">
-        <?php
-        foreach ($shops as $shop) { ?>
-			<div class="content">
-				<a class="shop_img" href="<?= 'shops/' . $shop->shopId ?>">
-					<img src="<?=
-                    $shopPhoto = $shop->getShopPhotos()->asArray()->one()['shopPhoto'];
-                    if (is_null($shopPhoto)) {
-                        $shopPhoto = '/img/nophoto.jpg';
-                    }
-                    echo $shopPhoto ?>" alt="<?= $shop->shopShortName ?>">
-				</a>
-				<div class="right">
-					<div class="name_and_rating">
-						<a class="shop_name" href="<?= 'shops/' . $shop->shopId ?>">
-                            <?= $shop->shopShortName ?>
-						</a>
-
+    <?php
+    foreach ($shops as $shop) { ?>
+		<div class="content">
+			<a class="shop_img" href="<?= 'shops/' . $shop->shopId ?>">
+				<img src="<?=
+                $shopPhoto = $shop->getShopPhotos()->asArray()->one()['shopPhoto'];
+                if (is_null($shopPhoto)) {
+                    $shopPhoto = '/img/nophoto.jpg';
+                }
+                echo $shopPhoto ?>" alt="<?= $shop->shopShortName ?>">
+			</a>
+			<div class="right">
+				<div class="name_and_rating">
+					<a class="shop_name" href="<?= 'shops/' . $shop->shopId ?>">
+                        <?= $shop->shopShortName ?>
+					</a>
+                    <?php echo StarRating::widget([
+                        'name' => 'shop_rating',
+                        'value' => $shop->shopRating,
+                        'language' => 'ru',
+                        'pluginOptions' => [
+                            'size' => 'md',
+                            'stars' => 5,
+                            'min' => 0,
+                            'max' => 5,
+                            'step' => 1,
+                            'showClear' => false,
+                            'showCaption' => false,
+                            'theme' => 'krajee-svg',
+                            'filledStar' => '<span class="krajee-icon krajee-icon-star"></span>',
+                            'emptyStar' => '<span class="krajee-icon krajee-icon-star"></span>'
+                        ],
+                    ]); ?>
+				</div>
+				<div class="shop_address">
+                    <?php
+                    $address = 'г. ' . $shop->shopAddress->city . ', ул. ' .
+                        $shop->shopAddress->street . ', д. ' .
+                        $shop->shopAddress->houseNumber;
+                    // TODO доделать отображение корпусов и строений
+                    echo $address;
+                    ?>
+				</div>
+				<div class="text_and_like">
+						<span>
+							<?= $shop->shopShortDescription ?>
+						</span>
+					<div class="like">
+						<img src="/img/like.png" alt="like">
 					</div>
 				</div>
+				<div class="work_time_and_category">
+						<span class="work_time">
+							<?php if ($shop->shopWorkTime) {
+                                echo 'Время работы: ' . $shop->shopWorkTime;
+                            } ?>
+						</span>
+					<span class="category">
+							<?= 'Раздел - ' . $type; ?>
+						</span>
+				</div>
 			</div>
-        <?php } ?>
+		</div>
+    <?php } ?>
 
-	</main>
     <?php Pjax::end(); ?>
 	<div class="pagination">
         <?= \yii\widgets\LinkPager::widget([
@@ -58,46 +99,5 @@ $this->title = $type . ' рядом с вами';
             'prevPageLabel' => '<',
         ]); ?>
 	</div>
-	return StarRating::widget([
-	'name' => 'shop_rating',
-	'value' => $model->shopRating,
-	'language' => 'ru',
-	'pluginOptions' => [
-	'size' => 'md',
-	'stars' => 5,
-	'min' => 0,
-	'max' => 5,
-	'step' => 1,
-	'showClear' => false,
-	'showCaption' => false,
-	'theme' => 'krajee-svg',
-	'filledStar' => '<span class="krajee-icon krajee-icon-star"></span>',
-	'emptyStar' => '<span class="krajee-icon krajee-icon-star"></span>'
-	],
-	'pluginEvents' => [
-	'rating:change' => "function(event, value, caption){
-	if (". $model->myIsGuest() .") { alert('guest'); return false; }
-	$.ajax({
-	url:'/shop/rating',
-	method:'post',
-	data:{
-	rating:value,
-	shopId:". $model->shopId .",
-	userId:". $model->getUserId() .",
-	},
-	dataType:'json',
-	success:function(data){
-	location.reload();
-	}
-	});
-	}"
-	],
-	]);
-	},
-	'format' => 'raw',
-	],
-	'shopWorkTime',
-	],
-	]);
 
 </div>
