@@ -99,7 +99,9 @@ class ShopController extends Controller
             $userEvent->delete();
         }
 
-        $shopEvents = Event::find()->all();
+        $shopEvents = Event::find()
+            ->where(['eventOwnerId' => $id])
+            ->all();
 
         return $this->render('view', [
             'model' => $this->findModel($id),
@@ -174,12 +176,64 @@ class ShopController extends Controller
             $shopAddress = new ShopAddress();
         }
 
-        if ($shopAddress->load(Yii::$app->request->post()) && $shopAddress->save()) {
-            $model->shopAddressId = $shopAddress->id;
-            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+
+        if (Yii::$app->request->post('address')) {
+            $addressArray = explode(',', Yii::$app->request->post('address'));
+
+            if (!$addressArray[0]) {
+                Yii::$app->getSession()->setFlash('error', 'Не выбран город');
+                return $this->refresh();
+            }
+            if (!$addressArray[1]) {
+                Yii::$app->getSession()->setFlash('error', 'Не выбрана улица');
+                return $this->refresh();
+            }
+            if (!$addressArray[2]) {
+                Yii::$app->getSession()->setFlash('error', 'Не выбран дом');
+                return $this->refresh();
+            }
+
+            if ($model->shopAddress) {
+                $modelAddress = $model->shopAddress;
+            } else {
+                $modelAddress = new ShopAddress();
+            }
+
+
+            $modelAddress->city = $addressArray[0];
+            $modelAddress->street = $addressArray[1];
+            $modelAddress->houseNumber = $addressArray[2];
+            $modelAddress->latitude = $addressArray[3];
+            $modelAddress->longitude = $addressArray[4];
+
+            if ($modelAddress->save()) {
+                $model->shopAddressId = $modelAddress->id;
+                $model->save();
+                Yii::$app->getSession()->setFlash('success', 'Адрес сохранен');
+                return $this->refresh();
+            }
+
+        }
+
+
+
+
+//        if ($shopAddress->load(Yii::$app->request->post()) && $shopAddress->save()) {
+//            $model->shopAddressId = $shopAddress->id;
+//            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+//                return $this->redirect(["/shops/$model->shopId/update/prices"]);
+//            }
+//        }
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            if ($model->shopAddressId) {
                 return $this->redirect(["/shops/$model->shopId/update/prices"]);
+            } else {
+                Yii::$app->getSession()->setFlash('error', 'Адрес не выбран!');
             }
         }
+
         return $this->render('create/step-3', [
             'model' => $model,
             'shopAddress' => $shopAddress,
