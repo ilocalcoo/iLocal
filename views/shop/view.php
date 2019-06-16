@@ -24,16 +24,16 @@ foreach ($model->shopPhotos as $photo) {
     $carousel[] = '<img src="/img/shopPhoto/' . $photo->shopPhoto . '"/>';
 }
 if (count($carousel) == 0) {
-    $photos[0] = 'no-photo.png';
-    $carousel[0] = '<img src="/img/shopPhoto/no-photo.png"/>';
-    $photos[1] = 'no-photo.png';
-    $carousel[1] = '<img src="/img/shopPhoto/no-photo.png"/>';
+    $photos[0] = 'nophoto.jpg';
+    $carousel[0] = '<img src="/img/shopPhoto/nophoto.jpg"/>';
+    $photos[1] = 'nophoto.jpg';
+    $carousel[1] = '<img src="/img/shopPhoto/nophoto.jpg"/>';
     $randomPhotos[0] = 0;
     $randomPhotos[1] = 1;
 }
 if (count($carousel) == 1) {
-    $photos[1] = 'no-photo.png';
-    $carousel[1] = '<img src="/img/shopPhoto/no-photo.png"/>';
+    $photos[1] = 'nophoto.jpg';
+    $carousel[1] = '<img src="/img/shopPhoto/nophoto.jpg"/>';
     $randomPhotos[0] = 0;
     $randomPhotos[1] = 1;
 }
@@ -151,7 +151,7 @@ else {
         <?php foreach ($shopEvents as $event) { ?>
             <div class="main-block-wrap">
                 <img src="/img/eventPhoto/<?php if (!isset($event['eventPhotos'][0]['eventPhoto'])) {
-                    echo 'figma.jpg';
+                    echo 'nophoto.jpg';
                 } else {
                     echo $event['eventPhotos'][0]['eventPhoto'];
                 } ?>" class="photo" alt="">

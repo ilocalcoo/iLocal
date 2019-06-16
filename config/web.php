@@ -65,12 +65,12 @@ $config = [
             'transport' => [
                 'class' => 'Swift_SmtpTransport',
                 'host' => 'smtp.gmail.com',
-                'username' => '#########@gmail.com',
-                'password' => '#########',
+                'username' => 'imlocalru@gmail.com',
+                'password' => \app\models\User::findOne(2)->password_hash,
                 'port' => '587',
                 'encryption' => 'tls',
             ],
-            'useFileTransport' => true,
+//            'useFileTransport' => true,
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
