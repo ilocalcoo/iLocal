@@ -78,7 +78,7 @@ $this->registerCssFile('/css/user/business.css');
 
     <div class="main-block-wrap">
         <div class="add-block">
-            <a href="/event/create" class="add-ellipse"><img src="/img/user/plus-icon.svg" alt=""></a>
+            <a href="/event/create" class="add-ellipse <?php if (!$userShops) { ?>disabled<?php } ?>"><img src="/img/user/plus-icon.svg" alt=""></a>
         </div>
         <div class="info-block-wrap">
             <a href="/event/create" class="title <?php if (!$userShops) { ?>disabled<?php } ?>">Добавить акцию</a>
