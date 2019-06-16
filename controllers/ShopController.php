@@ -43,7 +43,7 @@ class ShopController extends Controller
     public function actionIndex()
     {
         $query = Shop::find()->where(['shopActive' => 1]);
-        if (count(Yii::$app->request->queryParams) !== 0) {
+        if (array_key_exists('shopTypeId', Yii::$app->request->queryParams)) {
             $query = $query->where(
                 ['shopTypeId' => Yii::$app->request->queryParams['shopTypeId']]
             );
