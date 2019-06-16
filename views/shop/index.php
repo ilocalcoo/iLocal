@@ -28,7 +28,7 @@ $this->title = $type . ' рядом с вами';
     foreach ($shops as $shop) { ?>
 		<div class="content">
 			<a class="shop_img" href="<?= 'shops/' . $shop->shopId ?>" data-pjax="0">
-				<img src="<?=
+				<img src="/img/shopPhoto/<?php
                 $shopPhoto = $shop->getShopPhotos()->asArray()->one()['shopPhoto'];
                 if (is_null($shopPhoto)) {
                     $shopPhoto = '/img/nophoto.jpg';

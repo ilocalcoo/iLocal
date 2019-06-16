@@ -57,7 +57,7 @@ AppAsset::register($this);
             ?>
             <div class="modal-body"></div>
             <?php Modal::end(); ?>
-            <a href="">Поиск</a>
+<!--            <a href="">Поиск</a>-->
             <?php if (Yii::$app->user->isGuest) { ?>
                 <a href="/login">Вход<span class="login-ellipse"></span></a>
             <?php } else { ?>
