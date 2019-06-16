@@ -126,9 +126,9 @@
 
 .main-footer {
     position: relative;
-    padding-top: 40px;
+    padding-top: 20px;
     border-top: none;
-    height: 100px;
+    height: 60px;
     background: rgba(255, 255, 255, 0.4);
 }
 
