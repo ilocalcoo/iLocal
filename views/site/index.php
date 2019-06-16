@@ -28,31 +28,38 @@ $this->title = 'My Yii Application';
 <?php $this->beginBody() ?>
 
 <div class="index-container">
-    <div class="main-nav-bar">
-        <a href="/">Главная</a>
-        <?php if (!Yii::$app->user->isGuest) { ?>
-            <a href="/user/business">Бизнесу</a>
-            <a href="/favorites">Избранное</a>
-        <?php } ?>
-        <?php
-        Modal::begin([
-            'header' => false,
-            'toggleButton' => [
-                'label' => 'Помощь',
-                'tag' => 'a',
-                'class' => 'contact-form',
-            ],
-        ]);
-        ?>
-        <div class="modal-body"></div>
-        <?php Modal::end(); ?>
-<!--        <a href="">Поиск</a>-->
-        <?php if (Yii::$app->user->isGuest) { ?>
-            <a href="/login">Вход<span class="login-ellipse"></span></a>
-        <?php } else { ?>
-            <a href="/login">Профиль</a>
-            <a href="/site/logout">Выход</a>
-        <?php } ?>
+    <div class="main-nav-bar-wrap">
+        <div class="main-logo-wrap">
+            <a class="main-logo" href="/" tabindex="1">
+                <img src="/img/main/logo.svg" alt="">
+                i’m local
+            </a></div>
+        <div class="main-nav-bar">
+            <a href="/">Главная</a>
+            <?php if (!Yii::$app->user->isGuest) { ?>
+                <a href="/user/business">Бизнесу</a>
+                <a href="/favorites">Избранное</a>
+            <?php } ?>
+            <?php
+            Modal::begin([
+                'header' => false,
+                'toggleButton' => [
+                    'label' => 'Помощь',
+                    'tag' => 'a',
+                    'class' => 'contact-form',
+                ],
+            ]);
+            ?>
+            <div class="modal-body"></div>
+            <?php Modal::end(); ?>
+            <!--        <a href="">Поиск</a>-->
+            <?php if (Yii::$app->user->isGuest) { ?>
+                <a href="/login">Вход<span class="login-ellipse"></span></a>
+            <?php } else { ?>
+                <a href="/login">Профиль</a>
+                <a href="/site/logout">Выход</a>
+            <?php } ?>
+        </div>
     </div>
     <div class="index-main-wrap">
         <div class="index-info-main-wrap">
@@ -69,7 +76,7 @@ $this->title = 'My Yii Application';
                     <div>Новое качество жизни: взгляните по-новому на свой район и не тратьте время на долгие поездки.
                     </div>
                     <div class="index-start-btn">
-                    <a href="/shops" tabindex="1">Начать</a>
+                        <a href="/shops" tabindex="1">Начать</a>
                     </div>
                 </div>
             </div>
