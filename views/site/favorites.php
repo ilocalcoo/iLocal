@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php foreach ($userShops as $shop) { ?>
         <div class="main-block-wrap">
             <img src="/img/shopPhoto/<?php if (!isset($shop['shopPhotos'][0]['shopPhoto'])) {
-                echo 'figma.jpg';
+                echo 'nophoto.jpg';
             } else {
                 echo $shop['shopPhotos'][0]['shopPhoto'];
             } ?>" class="photo" alt="">
@@ -66,7 +66,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php foreach ($userEvents as $event) { ?>
         <div class="main-block-wrap">
             <img src="/img/eventPhoto/<?php if (!isset($event['eventPhotos'][0]['eventPhoto'])) {
-                echo 'figma.jpg';
+                echo 'nophoto.jpg';
             } else {
                 echo $event['eventPhotos'][0]['eventPhoto'];
             } ?>" class="photo" alt="">
