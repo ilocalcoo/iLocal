@@ -45,7 +45,7 @@ EventAsset::register($this);
 					</a>
 					<div class="shop_address">
                         <?php
-                        $address = $shop->shopAddress->city . ', ул. ' .
+                        $address = 'г. ' . $shop->shopAddress->city . ', ул. ' .
                             $shop->shopAddress->street . ', д. ' .
                             $shop->shopAddress->houseNumber;
                         // TODO доделать отображение корпусов и строений
