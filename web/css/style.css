@@ -5,6 +5,14 @@
 
 }
 
+@media (max-width: 1400px) {
+    .main-body {
+        background: url("/img/main/bg-ellipse-header.png") 55% -80% no-repeat,
+            /*url("/img/main/bg-ellipse-footer.png") 33% -319%  no-repeat fixed;*/
+        url("/img/main/bg-ellipse-footer.png") center 140% no-repeat fixed;
+    }
+}
+
 .main-header {
     font-family: Roboto, sans-serif;
     height: 193px;
