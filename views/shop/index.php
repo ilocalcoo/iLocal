@@ -29,13 +29,13 @@ $this->title = $type . ' рядом с вами';
     <?php
     foreach ($shops as $shop) { ?>
 		<div class="content">
-			<a class="shop_img" href="<?= 'shops/' . $shop->shopId ?>">
+			<a class="shop_img" href="<?= 'shops/' . $shop->shopId ?>" data-pjax="0">
 				<img src="<?=
                 $shopPhoto = $shop->getShopPhotos()->asArray()->one()['shopPhoto'];
                 if (is_null($shopPhoto)) {
                     $shopPhoto = '/img/nophoto.jpg';
                 }
-                echo $shopPhoto ?>" alt="<?= $shop->shopShortName ?>">
+                echo $shopPhoto ?>" alt="<?= $shop->shopShortName ?>" data-pjax="0">
 			</a>
 			<div class="right">
 				<div class="name_and_rating">
