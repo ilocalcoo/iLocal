@@ -39,6 +39,10 @@
     margin-bottom: 0;
 }
 
+#contactform-body {
+    resize: vertical;
+}
+
 .contact-form_title {
     text-align: center;
     font-weight: bold;
