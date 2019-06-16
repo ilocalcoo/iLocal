@@ -1,6 +1,7 @@
 <?php
 
 /* @var $this \yii\web\View */
+
 /* @var $content string */
 
 use yii\bootstrap\Modal;
@@ -38,32 +39,38 @@ AppAsset::register($this);
 
 <header class="main-header">
     <div class="header-container">
-        <div class="main-nav-bar">
-
-            <a href="/">Главная</a>
-            <?php if (!Yii::$app->user->isGuest) { ?>
-                <a href="/user/business">Бизнесу</a>
-                <a href="/favorites">Избранное</a>
-            <?php } ?>
-            <?php
-            Modal::begin([
-                'header' => false,
-                'toggleButton' => [
-                    'label' => 'Помощь',
-                    'tag' => 'a',
-                    'class' => 'contact-form',
-                ],
-            ]);
-            ?>
-            <div class="modal-body"></div>
-            <?php Modal::end(); ?>
-<!--            <a href="">Поиск</a>-->
-            <?php if (Yii::$app->user->isGuest) { ?>
-                <a href="/login">Вход<span class="login-ellipse"></span></a>
-            <?php } else { ?>
-                <a href="/login">Профиль</a>
-                <a href="/logout">Выход</a>
-            <?php } ?>
+        <div class="main-nav-bar-wrap">
+            <div class="main-logo-wrap">
+                <a class="main-logo" href="/">
+                    <img src="/img/main/logo.svg" alt="">
+                    i’m local
+                </a></div>
+            <div class="main-nav-bar">
+                <a href="/">Главная</a>
+                <?php if (!Yii::$app->user->isGuest) { ?>
+                    <a href="/user/business">Бизнесу</a>
+                    <a href="/favorites">Избранное</a>
+                <?php } ?>
+                <?php
+                Modal::begin([
+                    'header' => false,
+                    'toggleButton' => [
+                        'label' => 'Помощь',
+                        'tag' => 'a',
+                        'class' => 'contact-form',
+                    ],
+                ]);
+                ?>
+                <div class="modal-body"></div>
+                <?php Modal::end(); ?>
+                <!--            <a href="">Поиск</a>-->
+                <?php if (Yii::$app->user->isGuest) { ?>
+                    <a href="/login">Вход<span class="login-ellipse"></span></a>
+                <?php } else { ?>
+                    <a href="/login">Профиль</a>
+                    <a href="/logout">Выход</a>
+                <?php } ?>
+            </div>
         </div>
         <div class="nav-bar-categories-wrap">
             <div class="nav-bar-categories-main">

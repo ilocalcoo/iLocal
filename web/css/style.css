@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css?family=Yeseva+One&display=swap');
+
 .main-body {
     background: url("/img/main/bg-ellipse-header.png") 55% -33% no-repeat,
     url("/img/main/bg-ellipse-footer.png") center bottom no-repeat fixed;
@@ -42,9 +44,14 @@
     margin: 0 auto;
 }
 
+.main-nav-bar-wrap {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 30px;
+}
+
 .main-nav-bar {
     text-align: right;
-    padding-top: 30px;
 }
 
 .main-nav-bar>a {
@@ -58,6 +65,24 @@
 
 .main-nav-bar>a:hover {
     color: #F9958D;
+}
+
+.main-logo {
+    font-family: Yeseva One, sans-serif;
+    font-size: 30px;
+    color: #FE8A80;
+    text-decoration: none;
+}
+
+.main-logo:hover {
+    color: #FE8A80;
+    text-decoration: none;
+}
+
+.main-logo-wrap>a:focus {
+    color: #FE8A80;
+    text-decoration: none;
+    outline: none;
 }
 
 .contact-form {
