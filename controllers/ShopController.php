@@ -10,6 +10,7 @@ use app\models\UserShop;
 use Yii;
 use app\models\Shop;
 use app\models\search\ShopSearch;
+use yii\data\Pagination;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -41,18 +42,22 @@ class ShopController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new ShopSearch();
-        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-
-        $shopShortNameData = Shop::find()
-            ->select(['shopShortName as value', 'shopShortName as label', 'shopId as id'])
-            ->asArray()
+        $query = Shop::find()->where(['shopActive' => 1]);
+        if (count(Yii::$app->request->queryParams) !== 0) {
+            $query = $query->where(
+                ['shopTypeId' => Yii::$app->request->queryParams['shopTypeId']]
+            );
+        }
+        $pages = new Pagination([
+            'totalCount' => $query->count(),
+            'pageSize' => 4,
+        ]);
+        $shops = $query->offset($pages->offset)
+            ->limit($pages->limit)
             ->all();
-
         return $this->render('index', [
-            'searchModel' => $searchModel,
-            'dataProvider' => $dataProvider,
-            'shopShortNameData' => $shopShortNameData,
+            'shops' => $shops,
+            'pages' => $pages,
         ]);
     }
 
