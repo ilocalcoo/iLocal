@@ -75,3 +75,21 @@
   font-size: 14px;
   color: #646464;
 }
+.pagination {
+  display: flex;
+  justify-content: center;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+}
+.pagination > .active > a {
+  background-color: inherit;
+  color: #FE8A80;
+  border-color: inherit;
+}
+.pagination > li > a,
+.pagination > li > span {
+  color: #606060;
+  border: 0px solid #ddd;
+}

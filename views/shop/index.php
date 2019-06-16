@@ -84,8 +84,11 @@ $this->title = $type . ' рядом с вами';
                             } ?>
 						</span>
 					<span class="category">
-							<?= 'Раздел - ' . $type; ?>
-						</span>
+						<?php $category = $shop->shopType->type;
+                            $category = mb_strtoupper(mb_substr($category, 0, 1)) . mb_substr($category, 1, mb_strlen
+                                ($category));
+                            echo 'Раздел - ' . $category; ?>
+					</span>
 				</div>
 			</div>
 		</div>
