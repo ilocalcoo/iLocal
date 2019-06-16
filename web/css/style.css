@@ -1,6 +1,7 @@
 .main-body {
     background: url("/img/main/bg-ellipse-header.png") 55% -33% no-repeat,
-    url("/img/main/bg-ellipse-footer.png") 33% -319%  no-repeat fixed;
+    /*url("/img/main/bg-ellipse-footer.png") 33% -319%  no-repeat fixed;*/
+    url("/img/main/bg-ellipse-footer.png") center bottom no-repeat fixed;
 
 }
 

@@ -194,10 +194,12 @@
 #event-shortdesc {
     height: 60px;
     margin-top: 7px;
+    resize: vertical;
 }
 
 #event-fulldesc {
     height: 170px;
+    resize: vertical;
 }
 
 #event-eventownerid {
