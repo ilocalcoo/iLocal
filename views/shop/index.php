@@ -11,7 +11,7 @@ use yii\widgets\Pjax;
 /* @var $shopType \app\models\ShopType */
 
 ShopAsset::register($this);
-$type = 'Все магазины';
+$type = 'Все места';
 if (array_key_exists('shopTypeId', Yii::$app->request->queryParams)) {
     $type = \app\models\ShopType::TYPES_LABELS[Yii::$app->request->queryParams['shopTypeId']];
 }
@@ -19,27 +19,26 @@ $this->title = $type . ' рядом с вами';
 ?>
 <div class="shop-index">
 
-	<h1><?= Html::encode($this->title) ?></h1>
-	<div class="under_title">
-		<span>Вы смотрите места которые находятся рядом с вами в разделе "<?= $type ?>"</span>
-	</div>
+    <h1 class="main-shops-title"><?= Html::encode($this->title) ?></h1>
+    <div class="under_title">
+        <span>Вы смотрите места которые находятся рядом с вами в разделе "<?= $type ?>"</span>
+    </div>
     <?php Pjax::begin(); ?>
     <?php
     foreach ($shops as $shop) { ?>
-		<div class="content">
-			<a class="shop_img" href="<?= 'shops/' . $shop->shopId ?>" data-pjax="0">
-				<img src="/img/shopPhoto/<?php
+        <div class="content">
+            <a class="shop_img" href="<?= 'shops/' . $shop->shopId ?>" data-pjax="0">
+                <img src="/img/shopPhoto/<?php
                 $shopPhoto = $shop->getShopPhotos()->asArray()->one()['shopPhoto'];
                 if (is_null($shopPhoto)) {
                     $shopPhoto = '/img/nophoto.jpg';
                 }
                 echo $shopPhoto ?>" alt="<?= $shop->shopShortName ?>" data-pjax="0">
-			</a>
-			<div class="right">
-				<div class="name_and_rating">
-					<a class="shop_name" href="<?= 'shops/' . $shop->shopId ?>"  data-pjax="0">
-                        <?= $shop->shopShortName ?>
-					</a>
+            </a>
+            <div class="right">
+                <div class="name_and_rating">
+                    <a class="shop_name" href="<?= 'shops/' . $shop->shopId ?>" data-pjax="0"
+                       tabindex="1"><?= $shop->shopShortName ?></a>
                     <?php echo StarRating::widget([
                         'name' => 'shop_rating',
                         'value' => $shop->shopRating,
@@ -57,46 +56,53 @@ $this->title = $type . ' рядом с вами';
                             'emptyStar' => '<span class="krajee-icon krajee-icon-star"></span>'
                         ],
                     ]); ?>
-				</div>
-				<div class="shop_address">
-                    <?php
+                </div>
+                <div class="shop_address"><?php
                     $address = 'г. ' . $shop->shopAddress->city . ', ул. ' .
                         $shop->shopAddress->street . ', д. ' .
                         $shop->shopAddress->houseNumber;
                     // TODO доделать отображение корпусов и строений
                     echo $address;
-                    ?>
-				</div>
-				<div class="text_and_like">
-						<span>
-							<?= $shop->shopShortDescription ?>
-						</span>
-					<div class="like">
-						<img src="/img/like.png" alt="like">
-					</div>
-				</div>
-				<div class="work_time_and_category">
-						<span class="work_time">
-							<?php if ($shop->shopWorkTime) {
+                    ?></div>
+                <div class="shop_address-line"></div>
+                <div class="text_and_like">
+                    <span><?= $shop->shopShortDescription ?></span>
+                    <div class="like">
+                            <img src="/img/like.png" alt="like">
+                    </div>
+                </div>
+                <div class="work_time_and_category">
+						<span class="work_time"><?php if ($shop->shopWorkTime) {
                                 echo 'Время работы: ' . $shop->shopWorkTime;
-                            } ?>
-						</span>
-					<span class="category">
-						<?php $category = \app\models\ShopType::TYPES_LABELS[$shop->shopTypeId];
-                            echo 'Раздел - ' . $category; ?>
-					</span>
-				</div>
-			</div>
-		</div>
+                            } ?></span>
+                    <span class="category"><?php $category = \app\models\ShopType::TYPES_LABELS[$shop->shopTypeId];
+                        echo 'Раздел - ' . $category; ?></span>
+                </div>
+            </div>
+        </div>
     <?php } ?>
 
     <?php Pjax::end(); ?>
-	<div class="pagination">
+    <div class="pagination">
         <?= \yii\widgets\LinkPager::widget([
             'pagination' => $pages,
             'nextPageLabel' => '>',
             'prevPageLabel' => '<',
         ]); ?>
-	</div>
+    </div>
+
+    <div class="shop-banner">
+        <div class="banner-left">
+            <h1>Владелец бизнеса?</h1>
+            <div> Разместите Ваше место на платформе и станьте ближе к тысячам людей, которые живут и работают в
+                радиусе пешей доступности.
+                <div class="banner-text"><span>Бесплатный</span> пробный период на размещение акций.</div>
+            </div>
+            <a href="/user/business">Попробовать</a>
+        </div>
+        <div class="banner-right">
+            <img src="/img/shop/banner-img.png" alt="" tabindex="1">
+        </div>
+    </div>
 
 </div>
