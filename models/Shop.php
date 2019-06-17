@@ -68,6 +68,7 @@ class Shop extends \yii\db\ActiveRecord
     const SCENARIO_STEP3 = 'step3';
     const SCENARIO_STEP4 = 'step4';
     const SCENARIO_DEFAULT = 'delete';
+    const SCENARIO_RATING = 'rating';
 
     /**
      * @var UploadedFile[]
@@ -152,6 +153,7 @@ class Shop extends \yii\db\ActiveRecord
             self::SCENARIO_STEP2 => ['uploadedShopPhoto'],
             self::SCENARIO_STEP3 => ['shopAddressId', 'shopPhone', 'shopWeb', 'shopWorkTime'],
             self::SCENARIO_STEP4 => ['shopCostMin', 'shopCostMax', 'shopMiddleCost', 'shopLinkPdf'],
+            self::SCENARIO_RATING => ['shopRating'],
         ];
     }
 
