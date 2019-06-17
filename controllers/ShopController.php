@@ -313,7 +313,6 @@ class ShopController extends Controller
         if ($shop->shopRating()) {
             return true;
         }
-        echo 'false';
         return false;
     }
 
