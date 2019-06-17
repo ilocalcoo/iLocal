@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\models\search\EventSearch;
 use app\models\Shop;
+use app\models\UserEvent;
 use Yii;
 use app\models\Event;
 use yii\data\Pagination;
@@ -38,6 +39,21 @@ class EventController extends Controller
      */
     public function actionIndex()
     {
+        if ($eventId = Yii::$app->request->get('add-event-id')) {
+            $userEvent = new UserEvent();
+            $userEvent->user_id = Yii::$app->user->id;
+            $userEvent->event_id = $eventId;
+            $userEvent->save();
+        }
+
+        if ($eventId = Yii::$app->request->get('del-event-id')) {
+            $userEvent = UserEvent::find()
+                ->where(['user_id' => Yii::$app->user->id])
+                ->andWhere(['event_id' => $eventId])
+                ->one();
+            $userEvent->delete();
+        }
+
 //        $searchModel = new EventSearch();
 //        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 //

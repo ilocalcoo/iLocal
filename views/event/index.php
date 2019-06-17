@@ -1,6 +1,7 @@
 <?php
 
 use app\assets\EventAsset;
+use app\models\UserEvent;
 use yii\bootstrap\Carousel;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
@@ -27,9 +28,9 @@ EventAsset::register($this);
         if (count($shop->getEvents()->asArray()->all()) != 0) { ?>
 			<div class="content">
 				<div class="cont_title">
-					<a class="shop_img" href="<?= 'shops/' . $shop->shopId ?>">
+					<a class="shop_img" href="<?= 'shops/' . $shop->shopId ?>" data-pjax="0">
 						<img
-							src="<?php
+							src="/img/shopPhoto/<?php
                             $shopPhoto = $shop->getShopPhotos()->asArray()->one()['shopPhoto'];
                             if (is_null($shopPhoto)) {
                                 $shopPhoto = '/img/nophoto.jpg';
@@ -66,8 +67,8 @@ EventAsset::register($this);
                                 <?php $items = [];
                                 foreach ($photos as $photo) {
                                     $content = [
-                                        'content' => '<img src="' . $photo['eventPhoto'] . '"/img>',
-                                        'caption' => $event->title,
+                                        'content' => '<img src="/img/eventPhoto/' . $photo['eventPhoto'] . '">',
+                                        'caption' => '<a href="/events/' . $event->id . '" data-pjax="0">' . $event->title . '</a>',
                                     ];
                                     array_push($items, $content);
                                 }
@@ -83,7 +84,22 @@ EventAsset::register($this);
 								</div>
 								<div class="like_data">
 									<div class="like">
-										<img src="/img/like.png" alt="like">
+
+
+                                        <?php \yii\widgets\Pjax::begin() ?>
+                                        <?php if (UserEvent::find()->where(['user_id' => Yii::$app->user->id])->andWhere(['event_id' => $event->id])->one()) {
+                                            $favorite = 'favorite_border_24px_rounded.svg';
+                                            $EventId = 'del-event-id';
+                                        } else {
+                                            $favorite = 'Favor_rounded.svg';
+                                            $EventId = 'add-event-id';
+                                        } ?>
+                                        <a href="/events?<?= $EventId ?>=<?= $event['id'] ?>" title="Добавить в избранное"
+                                           class="favorite">
+                                            <img src="/img/user/<?= $favorite ?>" alt=""></a>
+                                        <?php \yii\widgets\Pjax::end() ?>
+
+<!--										<img src="/img/like.png" alt="like">-->
 									</div>
 									<span>
 								<?php $data = $event->begin . '-' . $event->end;
