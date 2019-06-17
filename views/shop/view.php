@@ -3,6 +3,7 @@
 use app\models\Event;
 use app\models\UserEvent;
 use kartik\rating\StarRating;
+use yii\bootstrap\Modal;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
@@ -13,8 +14,10 @@ use yii\widgets\DetailView;
 
 $this->title = $model->shopShortName;
 
+$this->registerJsFile('/js/eventsView.js', ['depends' => 'app\assets\AppAsset']);
 \yii\web\YiiAsset::register($this);
 $this->registerCssFile('/css/shop/view.css');
+$this->registerCssFile('/css/event/view.css');
 
 $photos = [];
 $carousel = [];
@@ -159,11 +162,43 @@ if (count($carousel) == 1) {
                     echo $event['eventPhotos'][0]['eventPhoto'];
                 } ?>" class="photo" alt="">
                 <div class="photo-wrap">
-                    <a href="/events/<?= $event['id'] ?>" class="title"><?= $event['title'] ?></a>
+
+                    <div class="modal fade" id="event-modal" tabindex="-1" role="dialog" aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                                aria-hidden="true">×</span></button>
+                                    <div class="modal-title">
+                                        <img src="/img/shopPhoto/<?= $photos[$randomPhotos[0]] ?>" alt="">
+                                        <div>
+                                            <div class="event-view-shop-name"><?= $model->shopShortName ?></div>
+                                            <div class="event-view-shop-address"><?
+                                                $comma = '';
+                                                foreach (ArrayHelper::toArray($model->shopAddress) as $key => $item) {
+                                                    if ($key == 'id' || $item == '') {
+                                                        continue;
+                                                    }
+                                                    if ($key == 'latitude') {
+                                                        break;
+                                                    }
+                                                    echo $comma . $item;
+                                                    $comma = ', ';
+                                                }
+                                                ?></div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-body"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <a href="" class="title event-view" id="<?= $event['id'] ?>"><?= $event['title'] ?></a>
                 </div>
                 <div class="info-block-wrap">
                     <p><?= mb_substr($event['shortDesc'], 0, 70) ?>
-                        <a href="/events/<?= $event['id'] ?>">Подробнее...</a></p>
+                        <a href="" class="event-view" id="<?= $event['id'] ?>2">Подробнее...</a></p>
                 </div>
 
                 <?php \yii\widgets\Pjax::begin() ?>
