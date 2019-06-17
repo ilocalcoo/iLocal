@@ -42,6 +42,35 @@ class ShopController extends Controller
      */
     public function actionIndex()
     {
+        if (Yii::$app->request->get('add-shop-id') || $shopId = Yii::$app->request->get('del-shop-id')) {
+            if (!Yii::$app->user->isGuest) {
+                if ($shopId = Yii::$app->request->get('add-shop-id')) {
+                    $userShop = new UserShop();
+                    $userShop->user_id = Yii::$app->user->id;
+                    $userShop->shop_id = $shopId;
+                    $userShop->save();
+                }
+
+                if ($shopId = Yii::$app->request->get('del-shop-id')) {
+                    $userShop = UserShop::find()
+                        ->where(['user_id' => Yii::$app->user->id])
+                        ->andWhere(['shop_id' => $shopId])
+                        ->one();
+                    $userShop->delete();
+                }
+
+                $query = Shop::find()->where(['shopActive' => 1]);
+                if (array_key_exists('shopTypeId', Yii::$app->request->queryParams)) {
+                    $query = $query->where(
+                        ['shopTypeId' => Yii::$app->request->queryParams['shopTypeId']]
+                    );
+                }
+            } else {
+                Yii::$app->getSession()->setFlash('error', 'Войдите, чтобы добавлять в избранное!');
+                //TODO сделать уведомление
+            }
+        }
+
         $query = Shop::find()->where(['shopActive' => 1]);
         if (array_key_exists('shopTypeId', Yii::$app->request->queryParams)) {
             $query = $query->where(

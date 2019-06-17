@@ -1,6 +1,7 @@
 <?php
 
 use app\assets\ShopAsset;
+use app\models\UserShop;
 use kartik\rating\StarRating;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
@@ -72,7 +73,19 @@ $this->title = $type . ' рядом с вами';
 							<?= $shop->shopShortDescription ?>
 						</span>
 					<div class="like">
-						<img src="/img/like.png" alt="like">
+                        <?php \yii\widgets\Pjax::begin() ?>
+                        <?php if (UserShop::find()->where(['user_id' => Yii::$app->user->id])->andWhere(['shop_id' => $shop->shopId])->one()) {
+                            $favorite = 'favorite_border_24px_rounded.svg';
+                            $shopId = 'del-shop-id';
+                        } else {
+                            $favorite = 'Favor_rounded.svg';
+                            $shopId = 'add-shop-id';
+                        } ?>
+                        <a href="/shops?<?= $shopId ?>=<?= $shop['shopId'] ?>" title="Добавить в избранное"
+                           class="favorite">
+                            <img src="/img/user/<?= $favorite ?>" alt=""></a>
+                        <?php \yii\widgets\Pjax::end() ?>
+<!--						<img src="/img/like.png" alt="like">-->
 					</div>
 				</div>
 				<div class="work_time_and_category">
