@@ -1,6 +1,7 @@
 <?php
 
 use app\models\UserEvent;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -10,10 +11,33 @@ use yii\widgets\DetailView;
 $this->registerCssFile('/css/event/view.css');
 
 $eventPhoto = $model->getEventPhotos()->asArray()->one()["eventPhoto"];
+$shopAddress = \app\models\ShopAddress::findOne($model->eventOwner["shopAddressId"]);
+$shopPhoto = \app\models\ShopPhoto::find()->where(['=', 'shopId', $model->eventOwner["shopId"]])->asArray()->one();
 
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="event-view" id="event-view-content">
+
+    <div class="modal-title event-model-title">
+        <img src="/img/shopPhoto/<?= $shopPhoto["shopPhoto"] ?>" alt="">
+        <div>
+            <div class="event-view-shop-name"><?= $model->eventOwner["shopShortName"] ?></div>
+            <div class="event-view-shop-address"><?
+                $comma = '';
+                foreach (ArrayHelper::toArray($shopAddress) as $key => $item) {
+                    if ($key == 'id' || $item == '') {
+                        continue;
+                    }
+                    if ($key == 'latitude') {
+                        break;
+                    }
+                    echo $comma . $item;
+                    $comma = ', ';
+                }
+                ?></div>
+        </div>
+    </div>
+
 
     <img class="event-view-img" src="/img/eventPhoto/<?= $eventPhoto ?>" alt="">
     
