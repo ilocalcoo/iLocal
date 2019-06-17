@@ -308,10 +308,12 @@ class ShopController extends Controller
         }
 
         $shop = $this->findModel($_POST['shopId']);
+        $shop->setScenario(Shop::SCENARIO_RATING);
 
         if ($shop->shopRating()) {
             return true;
         }
+        echo 'false';
         return false;
     }
 
