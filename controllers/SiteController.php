@@ -250,8 +250,8 @@ class SiteController extends Controller
             $userEvent->delete();
         }
 
-        $userShops = Shop::find()->all();
-        $userEvents = Event::find()->all();
+        $userShops = User::findOne(Yii::$app->user->id)->shopsFavorites;
+        $userEvents = User::findOne(Yii::$app->user->id)->eventsFavorites;
 
         return $this->render('favorites', [
             'userShops' => $userShops,
