@@ -78,6 +78,7 @@
     font-size: 18px;
     color: #FFFFFF;
     transition: color 0.3s;
+    margin-right: 20px;
 }
 
 .title:hover {

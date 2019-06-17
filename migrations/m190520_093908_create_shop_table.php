@@ -16,7 +16,7 @@ class m190520_093908_create_shop_table extends Migration
             'shopId' => $this->primaryKey(),
             'creatorId' => $this->integer()->notNull(),
             'shopActive' => $this->boolean()->defaultValue(1),
-            'shopShortName' => $this->string(20)->notNull(),
+            'shopShortName' => $this->string(75)->notNull(),
             'shopFullName' => $this->string()->notNull(),
             'shopPhotoId' => $this->integer(),
             'shopTypeId' => $this->integer()->notNull(),
