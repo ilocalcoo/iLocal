@@ -3,6 +3,7 @@
 use app\assets\EventAsset;
 use app\models\UserEvent;
 use yii\bootstrap\Carousel;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
 
@@ -16,6 +17,9 @@ use yii\widgets\Pjax;
 /* @var \app\models\EventPhoto $photo */
 /* @var \app\models\Shop[] $shops */
 
+$this->registerCssFile('/css/event/view.css');
+$this->registerJsFile('/js/eventsView.js', ['depends' => 'app\assets\AppAsset']);
+
 $this->title = 'Events';
 $this->params['breadcrumbs'][] = $this->title;
 EventAsset::register($this);
@@ -26,24 +30,24 @@ EventAsset::register($this);
     <?php
     foreach ($shops as $shop) {
         if (count($shop->getEvents()->asArray()->all()) != 0) { ?>
-			<div class="content">
-				<div class="cont_title">
-					<a class="shop_img" href="<?= 'shops/' . $shop->shopId ?>" data-pjax="0">
-						<img
-							src="/img/shopPhoto/<?php
-                            $shopPhoto = $shop->getShopPhotos()->asArray()->one()['shopPhoto'];
-                            if (is_null($shopPhoto)) {
-                                $shopPhoto = '/img/nophoto.jpg';
-                            }
-                            echo $shopPhoto ?>"
-							alt="<?= $shop->shopShortName ?>"
-						/>
-					</a>
-					<div class="cont_right">
-						<a class="shop_name" href="<?= 'shops/' . $shop->shopId ?>" data-pjax="0">
+            <div class="content">
+                <div class="cont_title">
+                    <a class="shop_img" href="<?= 'shops/' . $shop->shopId ?>" data-pjax="0">
+                        <img
+                                src="/img/shopPhoto/<?php
+                                $shopPhoto = $shop->getShopPhotos()->asArray()->one()['shopPhoto'];
+                                if (is_null($shopPhoto)) {
+                                    $shopPhoto = '/img/nophoto.jpg';
+                                }
+                                echo $shopPhoto ?>"
+                                alt="<?= $shop->shopShortName ?>"
+                        />
+                    </a>
+                    <div class="cont_right">
+                        <a class="shop_name" href="<?= 'shops/' . $shop->shopId ?>" data-pjax="0">
                             <?= $shop->shopShortName ?>
-						</a>
-						<div class="shop_address">
+                        </a>
+                        <div class="shop_address">
                             <?php
                             $address = 'г. ' . $shop->shopAddress->city . ', ул. ' .
                                 $shop->shopAddress->street . ', д. ' .
@@ -51,10 +55,10 @@ EventAsset::register($this);
                             // TODO доделать отображение корпусов и строений
                             echo $address;
                             ?>
-						</div>
-					</div>
-				</div>
-				<div class="big_carousel">
+                        </div>
+                    </div>
+                </div>
+                <div class="big_carousel">
                     <?php
                     $events = $shop->getEvents()->all();
                     foreach ($events as $event) {
@@ -67,13 +71,13 @@ EventAsset::register($this);
                             ];
                         }
                         ?>
-						<div class="event_card">
-							<div class="card_top">
+                        <div class="event_card">
+                            <div class="card_top">
                                 <?php $items = [];
                                 foreach ($photos as $photo) {
                                     $content = [
                                         'content' => '<img src="/img/eventPhoto/' . $photo['eventPhoto'] . '">',
-                                        'caption' => '<a href="/events/' . $event->id . '" data-pjax="0">' . $event->title . '</a>',
+                                        'caption' => '<a href="" class="event-view" id="' . $event->id .'" data-pjax="0">' . $event->title . '</a>',
                                     ];
                                     array_push($items, $content);
                                 }
@@ -82,13 +86,13 @@ EventAsset::register($this);
                                     'controls' => false,
                                 ]);
                                 ?>
-							</div>
-							<div class="card_bot">
-								<div class="card_short_desc">
+                            </div>
+                            <div class="card_bot">
+                                <div class="card_short_desc">
                                     <?= $event->shortDesc ?>
-								</div>
-								<div class="like_data">
-									<div class="like">
+                                </div>
+                                <div class="like_data">
+                                    <div class="like">
 
 
                                         <?php \yii\widgets\Pjax::begin() ?>
@@ -99,32 +103,53 @@ EventAsset::register($this);
                                             $favorite = 'Favor_rounded.svg';
                                             $EventId = 'add-event-id';
                                         } ?>
-                                        <a href="/events?<?= $EventId ?>=<?= $event['id'] ?>" title="Добавить в избранное"
+                                        <a href="/events?<?= $EventId ?>=<?= $event['id'] ?>"
+                                           title="Добавить в избранное"
                                            class="favorite">
                                             <img src="/img/user/<?= $favorite ?>" alt=""></a>
                                         <?php \yii\widgets\Pjax::end() ?>
 
-<!--										<img src="/img/like.png" alt="like">-->
-									</div>
-									<span>
+                                        <!--										<img src="/img/like.png" alt="like">-->
+                                    </div>
+                                    <span>
 								<?php $data = $event->begin . '-' . $event->end;
                                 echo $data; ?>
 								</span>
-								</div>
-							</div>
-						</div>
+                                </div>
+                            </div>
+                        </div>
                     <?php } ?>
-				</div>
-			</div>
+                </div>
+            </div>
         <?php }
     } ?>
-	<div class="pagination">
+    <div class="pagination">
         <?= \yii\widgets\LinkPager::widget([
             'pagination' => $pages,
             'nextPageLabel' => '>',
             'prevPageLabel' => '<',
         ]); ?>
-	</div>
+    </div>
+
+    <div class="modal fade" id="event-modal" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                                aria-hidden="true">×</span></button>
+                    <div class="modal-title">
+                        <img src="/img/shopPhoto/<? //TODO shopPhoto ?>" alt="">
+                        <div>
+                            <div class="event-view-shop-name"><? //TODO shopShortName ?></div>
+                            <div class="event-view-shop-address"><? //TODO shopAddress ?></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-body"></div>
+            </div>
+        </div>
+    </div>
+
 </div>
 <?php Pjax::end(); ?>
 
