@@ -5,12 +5,14 @@
 use app\assets\AppAsset;
 use yii\bootstrap\Modal;
 use yii\helpers\Html;
+use yii\helpers\Url;
 
+$this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => Url::to(['img/main/favicon.png'])]);
 $this->registerCssFile('/css/contactForm.css');
 $this->registerJsFile('/js/contactForm.js', ['depends' => 'app\assets\AppAsset']);
 $this->registerCssFile('/css/main.css');
 AppAsset::register($this);
-$this->title = 'My Yii Application';
+$this->title = "I'm Local";
 ?>
 
 <?php $this->beginPage() ?>

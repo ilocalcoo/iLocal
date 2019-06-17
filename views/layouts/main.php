@@ -7,7 +7,10 @@
 use yii\bootstrap\Modal;
 use yii\helpers\Html;
 use app\assets\AppAsset;
+use yii\helpers\Url;
 
+
+$this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => Url::to(['img/main/favicon.png'])]);
 $this->registerCssFile('/css/contactForm.css');
 $this->registerJsFile('/js/contactForm.js', ['depends' => 'app\assets\AppAsset']);
 
