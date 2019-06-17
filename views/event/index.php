@@ -93,8 +93,6 @@ EventAsset::register($this);
                                 </div>
                                 <div class="like_data">
                                     <div class="like">
-
-
                                         <?php \yii\widgets\Pjax::begin() ?>
                                         <?php if (UserEvent::find()->where(['user_id' => Yii::$app->user->id])->andWhere(['event_id' => $event->id])->one()) {
                                             $favorite = 'favorite_border_24px_rounded.svg';
@@ -133,17 +131,10 @@ EventAsset::register($this);
 
     <div class="modal fade" id="event-modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
+            <div class="modal-content event-view-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
                                 aria-hidden="true">×</span></button>
-                    <div class="modal-title">
-                        <img src="/img/shopPhoto/<? //TODO shopPhoto ?>" alt="">
-                        <div>
-                            <div class="event-view-shop-name"><? //TODO shopShortName ?></div>
-                            <div class="event-view-shop-address"><? //TODO shopAddress ?></div>
-                        </div>
-                    </div>
                 </div>
                 <div class="modal-body"></div>
             </div>
