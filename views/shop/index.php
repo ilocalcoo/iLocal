@@ -10,7 +10,9 @@ use yii\widgets\Pjax;
 /* @var $pages \yii\data\Pagination */
 /* @var $shopType \app\models\ShopType */
 
+
 ShopAsset::register($this);
+\app\assets\ShopsMapsAsset::register($this);
 $type = 'Все места';
 if (array_key_exists('shopTypeId', Yii::$app->request->queryParams)) {
     $type = \app\models\ShopType::TYPES_LABELS[Yii::$app->request->queryParams['shopTypeId']];
@@ -18,6 +20,7 @@ if (array_key_exists('shopTypeId', Yii::$app->request->queryParams)) {
 $this->title = $type . ' рядом с вами';
 ?>
 <div class="shop-index">
+    <div id="shops_map"></div>
 
     <h1 class="main-shops-title"><?= Html::encode($this->title) ?></h1>
     <div class="under_title">
