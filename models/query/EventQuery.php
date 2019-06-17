@@ -18,7 +18,7 @@ class EventQuery extends \yii\db\ActiveQuery
 
     public function byTop()
     {
-        return $this->andWhere('isEventTop = '.Event::MARK_AS_TOP);
+        return $this->andWhere('isEventTop='.Event::MARK_AS_TOP);
     }
 
     /**

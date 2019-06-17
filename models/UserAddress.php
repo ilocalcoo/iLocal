@@ -13,6 +13,8 @@ use Yii;
  * @property string $houseNumber
  * @property int $housing
  * @property int $building
+ * @property double $latitude
+ * @property double $longitude
  *
  * @property User[] $users
  */
@@ -34,6 +36,7 @@ class UserAddress extends \yii\db\ActiveRecord
         return [
             [['city', 'street', 'houseNumber'], 'required'],
             [['housing', 'building'], 'integer'],
+            [['latitude', 'longitude'], 'number'],
             [['city', 'street', 'houseNumber'], 'string', 'max' => 255],
         ];
     }
@@ -45,11 +48,13 @@ class UserAddress extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'city' => 'City',
-            'street' => 'Street',
-            'houseNumber' => 'House Number',
-            'housing' => 'Housing',
-            'building' => 'Building',
+            'city' => 'Город',
+            'street' => 'Улица',
+            'houseNumber' => 'Номер дома',
+            'housing' => 'Корпус',
+            'building' => 'Строение',
+            'latitude' => 'Latitude',
+            'longitude' => 'Longitude',
         ];
     }
 

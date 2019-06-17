@@ -2,52 +2,90 @@
 
 /* @var $this yii\web\View */
 
+use app\assets\AppAsset;
+use yii\bootstrap\Modal;
+use yii\helpers\Html;
+
+$this->registerCssFile('/css/contactForm.css');
+$this->registerJsFile('/js/contactForm.js', ['depends' => 'app\assets\AppAsset']);
+$this->registerCssFile('/css/main.css');
+AppAsset::register($this);
 $this->title = 'My Yii Application';
 ?>
-<div class="site-index">
 
-    <div class="jumbotron">
-        <h1>Congratulations!</h1>
+<?php $this->beginPage() ?>
+<!DOCTYPE html>
+<html lang="<?= Yii::$app->language ?>">
+<head>
+    <meta charset="<?= Yii::$app->charset ?>">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <?php $this->registerCsrfMetaTags() ?>
+    <title><?= Html::encode($this->title) ?></title>
+    <?php $this->head() ?>
+</head>
+<body class="index-body">
+<?php $this->beginBody() ?>
 
-        <p class="lead">You have successfully created your Yii-powered application.</p>
-
-        <p><a class="btn btn-lg btn-success" href="http://www.yiiframework.com">Get started with Yii</a></p>
+<div class="index-container">
+    <div class="main-nav-bar-wrap">
+        <div class="main-logo-wrap">
+            <a class="main-logo" href="/" tabindex="1">
+                <img src="/img/main/logo.svg" alt="">
+                i’m local
+            </a></div>
+        <div class="main-nav-bar">
+            <a href="/">Главная</a>
+            <?php if (!Yii::$app->user->isGuest) { ?>
+                <a href="/user/business">Бизнесу</a>
+                <a href="/favorites">Избранное</a>
+            <?php } ?>
+            <?php
+            Modal::begin([
+                'header' => false,
+                'toggleButton' => [
+                    'label' => 'Помощь',
+                    'tag' => 'a',
+                    'class' => 'contact-form',
+                ],
+            ]);
+            ?>
+            <div class="modal-body"></div>
+            <?php Modal::end(); ?>
+            <!--        <a href="">Поиск</a>-->
+            <?php if (Yii::$app->user->isGuest) { ?>
+                <a href="/login">Вход<span class="login-ellipse"></span></a>
+            <?php } else { ?>
+                <a href="/login">Профиль</a>
+                <a href="/site/logout">Выход</a>
+            <?php } ?>
+        </div>
     </div>
-
-    <div class="body-content">
-
-        <div class="row">
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/doc/">Yii Documentation &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Yii Forum &raquo;</a></p>
-            </div>
-            <div class="col-lg-4">
-                <h2>Heading</h2>
-
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                    dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                    ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                    fugiat nulla pariatur.</p>
-
-                <p><a class="btn btn-default" href="http://www.yiiframework.com/extensions/">Yii Extensions &raquo;</a></p>
+    <div class="index-main-wrap">
+        <div class="index-info-main-wrap">
+            <h1 class="index-info-header">Места, акции и события рядом с Вами</h1>
+            <div class="index-info-wrap">
+                <div class="index-info-num">
+                    <div>1.</div>
+                    <div>2.</div>
+                    <div>3.</div>
+                </div>
+                <div class="index-info-text">
+                    <div>Открывайте новые места и узнавайте о том, что происходит поблизости.</div>
+                    <div>Удобный поиск и возможность сохранять.</div>
+                    <div>Новое качество жизни: взгляните по-новому на свой район и не тратьте время на долгие поездки.
+                    </div>
+                    <div class="index-start-btn">
+                        <a href="/shops" tabindex="1">Начать</a>
+                    </div>
+                </div>
             </div>
         </div>
-
+        <img src="/img/main/index-bg-img.png" alt="">
     </div>
 </div>
+
+<?php $this->endBody() ?>
+</body>
+</html>
+<?php $this->endPage() ?>

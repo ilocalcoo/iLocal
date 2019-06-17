@@ -5,8 +5,11 @@ $db = require __DIR__ . '/db.php';
 
 $config = [
     'id' => 'basic',
+    'name' => 'I`m local',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
+    'language'=>'ru-RU',
+    'sourceLanguage'=>'ru-RU',
     'aliases' => [
         '@bower' => '@vendor/bower-asset',
         '@npm'   => '@vendor/npm-asset',
@@ -59,10 +62,15 @@ $config = [
         ],
         'mailer' => [
             'class' => 'yii\swiftmailer\Mailer',
-            // send all mails to a file by default. You have to set
-            // 'useFileTransport' to false and configure a transport
-            // for the mailer to send real emails.
-            'useFileTransport' => true,
+            'transport' => [
+                'class' => 'Swift_SmtpTransport',
+                'host' => 'smtp.gmail.com',
+                'username' => 'imlocalru@gmail.com',
+                'password' => '###',
+                'port' => '587',
+                'encryption' => 'tls',
+            ],
+//            'useFileTransport' => true,
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -80,8 +88,24 @@ $config = [
 //            'enableStrictParsing' => true,
             'showScriptName' => false,
             'rules' => [
-                '<controller:(shop)>' => '<controller>/index',
-                '<controller:(shop)>/<action:(view|update|delete)>/<id:\d+>' => '<controller>/<action>',
+                '<action:(login)>' => 'site/login',
+                '<action:(logout)>' => 'site/logout',
+                '<action:(favorites)>' => 'site/favorites',
+                '<action:(policy)>' => 'site/policy',
+                '<controller:(shop)>s' => '<controller>/index',
+                '<controller:(shop)>s/<id:\d+>' => '<controller>/view',
+                '<controller:(shop)>s/<id:\d+>/<action:(view|update|delete)>' => '<controller>/<action>',
+                '<controller:(shop)>s/<action:(rating)>' => '<controller>/<action>',
+                '<controller:(shop)>/<action:(create)>' => '<controller>/create-step-1',
+                '<controller:(shop)>s/<id:\d+>/<action:(update/photo)>' => '<controller>/create-step-2',
+                '<controller:(shop)>s/<id:\d+>/<action:(update/address)>' => '<controller>/create-step-3',
+                '<controller:(shop)>s/<id:\d+>/<action:(update/prices)>' => '<controller>/create-step-4',
+                '<controller:(event)>s' => '<controller>/index',
+                '<controller:(event)>s/<id:\d+>' => '<controller>/view',
+                '<controller:(event)>s/<id:\d+>/<action:(view|update|delete)>' => '<controller>/<action>',
+                '<controller:(event)>/<action:(create)>' => '<controller>/create-step-1',
+                '<controller:(event)>s/<id:\d+>/<action:(update/info)>' => '<controller>/create-step-2',
+                '<controller:(event)>s/<id:\d+>/<action:(update/photo)>' => '<controller>/create-step-3',
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'api/shop'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'api/user'],
             ],

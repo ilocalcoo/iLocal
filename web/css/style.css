@@ -1,0 +1,205 @@
+@import url('https://fonts.googleapis.com/css?family=Yeseva+One&display=swap');
+
+.main-body {
+    background: url("/img/main/bg-ellipse-header.png") 55% -33% no-repeat,
+    url("/img/main/bg-ellipse-footer.png") center bottom no-repeat fixed;
+
+}
+
+@media (max-width: 1500px) {
+    .main-body {
+        background: url("/img/main/bg-ellipse-header.png") 55% -52% no-repeat,
+        url("/img/main/bg-ellipse-footer.png") center 120% no-repeat fixed;
+    }
+}
+
+@media (max-width: 1300px) {
+    .main-body {
+        background: url("/img/main/bg-ellipse-header.png") 55% -90% no-repeat,
+        url("/img/main/bg-ellipse-footer.png") center 190% no-repeat fixed;
+    }
+}
+
+@media (max-width: 1100px) {
+    .main-body {
+        background: url("/img/main/bg-ellipse-header.png") 55% -160% no-repeat,
+        url("/img/main/bg-ellipse-footer.png") center 270% no-repeat fixed;
+    }
+}
+
+@media (max-width: 1000px) {
+    .main-body {
+        background: url("/img/main/bg-ellipse-header.png") 55% -300% no-repeat,
+        url("/img/main/bg-ellipse-footer.png") center 960% no-repeat fixed;
+    }
+}
+
+.main-header {
+    font-family: Roboto, sans-serif;
+    height: 193px;
+}
+
+.header-container {
+    width: 1140px;
+    margin: 0 auto;
+}
+
+.main-nav-bar-wrap {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 30px;
+}
+
+.main-nav-bar {
+    text-align: right;
+}
+
+.main-nav-bar>a {
+    font-size: 16px;
+    text-transform: uppercase;
+    color: #9B9B9B;
+    margin-left: 27px;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.main-nav-bar>a:hover {
+    color: #F9958D;
+}
+
+.main-logo {
+    font-family: Yeseva One, sans-serif;
+    font-size: 30px;
+    color: #FE8A80;
+    text-decoration: none;
+}
+
+.main-logo:hover {
+    color: #FE8A80;
+    text-decoration: none;
+}
+
+.main-logo-wrap>a:focus {
+    color: #FE8A80;
+    text-decoration: none;
+    outline: none;
+}
+
+.contact-form {
+    cursor: pointer;
+}
+
+.login-ellipse {
+    display: inline-block;
+    width: 6px;
+    height: 6px;
+    background: #FE8A80;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.nav-bar-categories-wrap {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 87px;
+}
+
+.nav-bar-categories>a {
+    background: #FFFFFF;
+    box-shadow: 2px 4px 23px rgba(0, 0, 0, 0.13);
+    border-radius: 80px;
+    font-size: 18px;
+    color: #606060;
+    padding: 11px 30px;
+    margin-left: 20px;
+    text-decoration: none;
+    transition: color 0.3s, background-color 0.3s;
+}
+
+.nav-bar-categories>a:nth-child(1) {
+    margin-left: unset;
+}
+
+.nav-bar-categories>a:hover {
+    background: #F9958D;
+    box-shadow: 2px 4px 23px rgba(0, 0, 0, 0.13), 0 4px 4px rgba(0, 0, 0, 0.25);
+    color: white;
+}
+
+.nav-bar-categories-active {
+    background: #F9958D !important;
+    box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.25) !important;
+    color: white !important;
+}
+
+.nav-bar-categories-main>a {
+    border: 1px solid #FE8A80;
+    padding: 10px 30px;
+    box-sizing: border-box;
+    font-size: 18px;
+    text-decoration: none;
+    transition: color 0.3s, background-color 0.3s;
+}
+
+.nav-bar-categories-main>a:nth-child(1){
+    border-radius: 50px 0 0 50px;
+}
+
+.nav-bar-categories-main>a:nth-last-child(1){
+    border-radius: 0 50px 50px 0;
+    margin-left: -5px;
+}
+
+.nav-bar-categories-main>a:nth-child(1):hover,
+.nav-bar-categories-main>a:nth-last-child(1):hover {
+    color: white;
+    background: #FE8A80;
+}
+
+.nav-bar-categories-main-active {
+    color: white;
+    background: #FE8A80;
+}
+
+.nav-bar-categories-main-inactive {
+    color: #9B9B9B;
+    background: #FFFFFF;
+}
+
+.main-footer {
+    position: relative;
+    padding-top: 20px;
+    border-top: none;
+    height: 60px;
+    background: rgba(255, 255, 255, 0.4);
+}
+
+.pull-left>a {
+    font-size: 18px;
+    color: #9B9B9B;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+
+.pull-left>a:hover {
+    color: #747474;
+}
+
+.pull-left>a:active {
+    color: #F9958D;
+}
+
+.pull-right {
+    font-weight: bold;
+    font-size: 18px;
+    color: #9B9B9B;
+}
+
+/*.bg-ellipse-footer {*/
+/*    position: absolute;*/
+/*    width: 100%;*/
+/*    height: 924px;*/
+/*    top: -825%;*/
+/*    z-index: -1;*/
+/*    background: url("/img/main/bg-ellipse-footer.png") 37% 0 no-repeat;*/
+/*}*/

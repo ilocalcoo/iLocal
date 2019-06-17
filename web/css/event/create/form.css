@@ -1,0 +1,331 @@
+.create-step {
+    width: 781px;
+    margin: auto;
+    font-family: Roboto, sans-serif;
+    color: #454545;
+}
+
+.step_form-rectangle-wrap {
+    display: flex;
+    height: 12px;
+    margin-bottom: 46px;
+}
+
+.step_form-rectangle {
+    height: inherit;
+    width: 100%;
+    background: #C4C4C4;
+    border-right: 3px solid white;
+}
+
+.step_form-rectangle_active {
+    background: #FE8A80;
+}
+
+.step_form-rectangle:first-child {
+    border-radius: 10px 0 0 10px;
+}
+
+.step_form-rectangle:last-child {
+    border-radius: 0 10px 10px 0;
+    border: none;
+}
+
+.step_name {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 28px;
+    margin: 0 0 34px 0;
+}
+
+.shop-create-form>label {
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    height: 27px;
+    line-height: 160%;
+    outline: none;
+    color: #454545 !important;
+}
+
+.shop-create-form>label>div {
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 160%;
+    color: #747474;
+}
+
+.shop-create-form>input:focus,
+.shop-create-form>textarea:focus{
+    box-shadow: none !important;
+    border: 1px solid #B7B7B7 !important;
+}
+
+.shop-create_type-radio-btn {
+    display: block;
+    text-align: center;
+    padding: 22px;
+    width: 148px;
+    height: 69px;
+    background: #F5F5F5;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 28px;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 24px;
+    line-height: 28px;
+    color: #A6A6A6;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.shop-create_type-radio-btn-wrap>input {
+    visibility: hidden;
+}
+
+.shop-create_type-radio-btn-wrap>input:checked + .shop-create_type-radio-btn {
+    color: white;
+    background: #FE8A80;
+    box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.25);
+    transition: background-color 0.7s, color 0.3s;
+}
+
+.step_form-line {
+    height: 0;
+    border: 1px solid rgba(183, 183, 183, 0.272);
+    margin: 51px 0 27px 0;
+}
+
+.step_form-rectangle_btn-wrap {
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.step_form-rectangle_btn-next {
+    background: #FE8A80;
+    box-shadow: 0 2px 7px rgba(0, 0, 0, 0.4);
+    border-radius: 35px;
+    padding: 0 15px 0 22px;
+    border: none;
+    font-weight: bold;
+    font-size: 18px;
+    color: #F9F9F9;
+    transition: opacity 0.5s, box-shadow 0.5s;
+}
+
+.step_form-rectangle_btn-next-a {
+    padding: 12px 15px 0 22px;
+}
+
+.step_form-rectangle_btn-next>img {
+    margin-left: 16px;
+}
+
+.step_form-rectangle_btn-next:focus {
+    outline: none;
+}
+
+.step_form-rectangle_btn-back {
+    display: flex;
+    width: 124px;
+    height: 48px;
+    color: #454545;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 160%;
+    text-decoration: none;
+    transition: color 0.5s;
+}
+
+.keyboard_arrow_left {
+    width: 7px;
+    height: 11px;
+    margin: 8px 13px 0 0;
+    background-image: url(/img/shop/createShopBtn/keyboard_arrow_left_24px.svg);
+    transition: background 0.5s;
+}
+
+.step_form-rectangle_btn-back:hover .keyboard_arrow_left {
+    background-image: url(/img/shop/createShopBtn/keyboard_hover_arrow_left_24px.svg);
+}
+
+.step_form-rectangle_btn-back:hover {
+    text-decoration: none;
+    color: #FE8A80;
+}
+
+.step_form-rectangle_btn-next:hover {
+    text-decoration: none;
+    color: #F9F9F9;
+    opacity: 0.7;
+}
+
+
+.step_form-rectangle_btn-next:active {
+    box-shadow: inset 0 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+#event-eventownerid,
+#event-title,
+#event-begin,
+#event-end,
+#event-shortdesc,
+#event-fulldesc {
+    border: 1px solid #B7B7B7;
+    border-radius: unset;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 160%;
+    color: #747474;
+    outline: none;
+    box-shadow: none;
+}
+
+#event-title {
+    width: 380px;
+    margin-top: 7px;
+}
+
+#event-shortdesc {
+    height: 60px;
+    margin-top: 7px;
+    resize: vertical;
+}
+
+#event-fulldesc {
+    height: 170px;
+    resize: vertical;
+}
+
+#event-eventownerid {
+    margin-top: 15px;
+}
+
+.field-event-eventtypeid {
+    margin-top: 65px;
+}
+
+.step_form-event-name-wrap {
+    display: flex;
+    justify-content: space-between;
+}
+
+.field-event-begin>label,
+.field-event-end>label {
+    width: 179px;
+    margin-bottom: 27px;
+}
+
+.field-event-shortdesc,
+.field-event-fulldesc {
+    margin-top: 19px;
+}
+
+.shop-form_shop-photos-wrap {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.shop-form_shop-photos {
+    position: relative;
+    width: 380px;
+    height: 285px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    margin-bottom: 45px;
+}
+
+.shop-form_photo {
+    width: 380px;
+    height: 285px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.shop-form_photo-icon {
+    position: absolute;
+    width: 77px;
+    height: 60px;
+    left: 40%;
+    top: 30%;
+    cursor: pointer;
+}
+
+.shop-form_photo-icon_ellipse {
+    position: absolute;
+    width: 130px;
+    height: 130px;
+    left: 33%;
+    top: 26%;
+    cursor: pointer;
+    transition: filter 0.3s;
+}
+
+.shop-form_photo-text {
+    position: absolute;
+    width: 200px;
+    height: 55px;
+    left: 25%;
+    top: 55%;
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 21px;
+    color: #747474;
+    text-align: center;
+    cursor: pointer;
+    transition: color 0.2s;
+}
+
+.shop-form_photo-delete {
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    top: 1%;
+    left: 91%;
+    filter: drop-shadow(0px 0px 3px rgb(0, 0, 0));
+}
+
+.shop-form_photo:hover ~ .shop-form_photo-text {
+    color: #FE8A80;
+}
+
+.shop-form_photo-text:hover {
+    color: #FE8A80;
+}
+
+.shop-form_photo-icon:hover ~ .shop-form_photo-text {
+    color: #FE8A80;
+}
+
+.shop-form_photo-icon_ellipse:hover {
+    filter: drop-shadow(0px 0px 5px rgba(0, 0, 0, 0.25));
+}
+
+.shop-form_shop-photos-hidden {
+    display: none;
+}
+
+.shop-form_photo-info {
+    position: relative;
+    line-height: 160%;
+    margin: -25px 0 30px 0;
+}
+
+.shop-form_photo-info,
+.shop-form_photo-info-main {
+    font-size: 12px;
+    color: #747474;
+}
+
+.shop-form_photo-info-main {
+    position: absolute;
+    font-style: italic;
+    line-height: 14px;
+    top: 345px;
+}

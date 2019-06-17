@@ -1,66 +1,48 @@
 <?php
 
+use app\assets\ShopAsset;
 use kartik\rating\StarRating;
 use yii\helpers\Html;
-use yii\grid\GridView;
 use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\search\ShopSearch */
-/* @var $dataProvider yii\data\ActiveDataProvider */
-/* @var $shopShortNameData app\models\Shop */
+/* @var $shops app\models\Shop[] */
+/* @var $pages \yii\data\Pagination */
+/* @var $shopType \app\models\ShopType */
 
-$this->title = 'Shops';
-$this->params['breadcrumbs'][] = $this->title;
+ShopAsset::register($this);
+$type = 'Все магазины';
+if (array_key_exists('shopTypeId', Yii::$app->request->queryParams)) {
+    $type = \app\models\ShopType::TYPES_LABELS[Yii::$app->request->queryParams['shopTypeId']];
+}
+$this->title = $type . ' рядом с вами';
 ?>
 <div class="shop-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Create Shop', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-
+	<h1><?= Html::encode($this->title) ?></h1>
+	<div class="under_title">
+		<span>Вы смотрите места которые находятся рядом с вами в разделе "<?= $type ?>"</span>
+	</div>
     <?php Pjax::begin(); ?>
-    <?php echo $this->render('_search', ['model' => $searchModel, 'shopShortNameData' => $shopShortNameData]); ?>
-
-    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'columns' => [
-            [
-                'attribute' => 'shopPhoto',
-                'value' => function (app\models\Shop $model) {
-                    $photo = [];
-                    foreach ($model->shopPhotos as $url) {
-                        $photo[] = $url->shopPhoto;
-                    }
-                    $str = implode(',', $photo);
-                    return $str;
-                },
-                'format' => 'html'
-            ],
-            'shopShortName',
-            [
-                'attribute' => 'shopType',
-                'value' => function (app\models\Shop $model) {
-                    return $model->shopType->type;
-                },
-            ],
-            [
-                'attribute' => 'shopAddress',
-                'value' => function (app\models\Shop $model) {
-                    return $model->shopAddress->city . "," .
-                        $model->shopAddress->street . "," .
-                        $model->shopAddress->houseNumber;
-                },
-            ],
-            'shopShortDescription',
-            [
-                'attribute' => 'shopRating',
-                'value' => function (app\models\Shop $model) {
-                    return StarRating::widget([
+    <?php
+    foreach ($shops as $shop) { ?>
+		<div class="content">
+			<a class="shop_img" href="<?= 'shops/' . $shop->shopId ?>" data-pjax="0">
+				<img src="/img/shopPhoto/<?php
+                $shopPhoto = $shop->getShopPhotos()->asArray()->one()['shopPhoto'];
+                if (is_null($shopPhoto)) {
+                    $shopPhoto = '/img/nophoto.jpg';
+                }
+                echo $shopPhoto ?>" alt="<?= $shop->shopShortName ?>" data-pjax="0">
+			</a>
+			<div class="right">
+				<div class="name_and_rating">
+					<a class="shop_name" href="<?= 'shops/' . $shop->shopId ?>"  data-pjax="0">
+                        <?= $shop->shopShortName ?>
+					</a>
+                    <?php echo StarRating::widget([
                         'name' => 'shop_rating',
-                        'value' => $model->shopRating,
+                        'value' => $shop->shopRating,
                         'language' => 'ru',
                         'pluginOptions' => [
                             'size' => 'md',
@@ -74,34 +56,47 @@ $this->params['breadcrumbs'][] = $this->title;
                             'filledStar' => '<span class="krajee-icon krajee-icon-star"></span>',
                             'emptyStar' => '<span class="krajee-icon krajee-icon-star"></span>'
                         ],
-                        'pluginEvents' => [
-                            'rating:change' => "function(event, value, caption){
-                                if (". $model->myIsGuest() .") { alert('guest'); return false; }
-                                $.ajax({
-                                    url:'/shop/rating',
-                                    method:'post',
-                                    data:{
-                                        rating:value,
-                                        shopId:". $model->shopId .",
-                                        userId:". $model->getUserId() .",
-                                    },
-                                    dataType:'json',
-                                    success:function(data){
-                                        location.reload();
-                                    }
-                                });
-                            }"
-                        ],
-                    ]);
-                },
-                'format' => 'raw',
-            ],
-            'shopWorkTime',
-
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
+                    ]); ?>
+				</div>
+				<div class="shop_address">
+                    <?php
+                    $address = 'г. ' . $shop->shopAddress->city . ', ул. ' .
+                        $shop->shopAddress->street . ', д. ' .
+                        $shop->shopAddress->houseNumber;
+                    // TODO доделать отображение корпусов и строений
+                    echo $address;
+                    ?>
+				</div>
+				<div class="text_and_like">
+						<span>
+							<?= $shop->shopShortDescription ?>
+						</span>
+					<div class="like">
+						<img src="/img/like.png" alt="like">
+					</div>
+				</div>
+				<div class="work_time_and_category">
+						<span class="work_time">
+							<?php if ($shop->shopWorkTime) {
+                                echo 'Время работы: ' . $shop->shopWorkTime;
+                            } ?>
+						</span>
+					<span class="category">
+						<?php $category = \app\models\ShopType::TYPES_LABELS[$shop->shopTypeId];
+                            echo 'Раздел - ' . $category; ?>
+					</span>
+				</div>
+			</div>
+		</div>
+    <?php } ?>
 
     <?php Pjax::end(); ?>
+	<div class="pagination">
+        <?= \yii\widgets\LinkPager::widget([
+            'pagination' => $pages,
+            'nextPageLabel' => '>',
+            'prevPageLabel' => '<',
+        ]); ?>
+	</div>
 
 </div>
