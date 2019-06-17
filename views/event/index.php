@@ -39,14 +39,19 @@ EventAsset::register($this);
 							alt="<?= $shop->shopShortName ?>"
 						/>
 					</a>
-					<div class="shop_address">
-                        <?php
-                        $address = 'г. ' . $shop->shopAddress->city . ', ул. ' .
-                            $shop->shopAddress->street . ', д. ' .
-                            $shop->shopAddress->houseNumber;
-                        // TODO доделать отображение корпусов и строений
-                        echo $address;
-                        ?>
+					<div class="cont_right">
+						<a class="shop_name" href="<?= 'shops/' . $shop->shopId ?>" data-pjax="0">
+                            <?= $shop->shopShortName ?>
+						</a>
+						<div class="shop_address">
+                            <?php
+                            $address = 'г. ' . $shop->shopAddress->city . ', ул. ' .
+                                $shop->shopAddress->street . ', д. ' .
+                                $shop->shopAddress->houseNumber;
+                            // TODO доделать отображение корпусов и строений
+                            echo $address;
+                            ?>
+						</div>
 					</div>
 				</div>
 				<div class="big_carousel">
