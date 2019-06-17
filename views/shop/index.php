@@ -11,7 +11,7 @@ use yii\widgets\Pjax;
 /* @var $shopType \app\models\ShopType */
 
 ShopAsset::register($this);
-$type = 'Все магазины';
+$type = 'Все места';
 if (array_key_exists('shopTypeId', Yii::$app->request->queryParams)) {
     $type = \app\models\ShopType::TYPES_LABELS[Yii::$app->request->queryParams['shopTypeId']];
 }
