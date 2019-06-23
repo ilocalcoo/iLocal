@@ -3,6 +3,7 @@
 use app\models\Event;
 use app\models\UserEvent;
 use kartik\rating\StarRating;
+use yii\authclient\widgets\AuthChoice;
 use yii\bootstrap\Modal;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -169,18 +170,45 @@ if (count($carousel) == 1) {
                         <a href="" class="event-view" id="<?= $event['id'] ?>">Подробнее...</a></p>
                 </div>
 
-                <?php \yii\widgets\Pjax::begin() ?>
-                <?php if (UserEvent::find()->where(['user_id' => Yii::$app->user->id])->andWhere(['event_id' => $event->id])->one()) {
-                    $favorite = 'favorite_border_24px_rounded.svg';
-                    $eventId = 'del-event-id';
-                } else {
-                    $favorite = 'Favor_rounded.svg';
-                    $eventId = 'add-event-id';
-                } ?>
-                <a href="/shops/<?= $model->shopId ?>?<?= $eventId ?>=<?= $event['id'] ?>" title="Добавить в избранное"
-                   class="favorite">
-                    <img src="/img/user/<?= $favorite ?>" alt=""></a>
-                <?php \yii\widgets\Pjax::end() ?>
+                <?php if (Yii::$app->user->isGuest) { ?>
+                    <?php
+                    Modal::begin([
+                        'header' => false,
+                        'toggleButton' => [
+                            'label' => '<img src="/img/user/Favor_rounded.svg" alt="" class="favorite">',
+                            'tag' => 'a',
+                            'class' => 'modal-enter',
+                        ],
+                    ]);
+                    ?>
+                    <div class="modal-enter-body">
+                        <h2>ВХОД</h2>
+                        <p>Войдите, чтобы добавить в избранное!</p>
+                    </div>
+                    <div class="enter-icons">
+                        <?= yii\authclient\widgets\AuthChoice::widget([
+                            'baseAuthUrl' => ['site/auth'],
+                            'popupMode' => true,
+                        ]) ?>
+                    </div>
+                    <p class="enter-policy">Продолжая, Вы соглашаетесь с нашими Условиями использования и
+                        подтверждаете, что прочли
+                        <a href="/policy" target="_blank">Политику конфиденциальности</a> .</p>
+                    <?php Modal::end(); ?>
+                <?php } else { ?>
+                    <?php \yii\widgets\Pjax::begin() ?>
+                    <?php if (UserEvent::find()->where(['user_id' => Yii::$app->user->id])->andWhere(['event_id' => $event->id])->one()) {
+                        $favorite = 'favorite_border_24px_rounded.svg';
+                        $eventId = 'del-event-id';
+                    } else {
+                        $favorite = 'Favor_rounded.svg';
+                        $eventId = 'add-event-id';
+                    } ?>
+                    <a href="/shops/<?= $model->shopId ?>?<?= $eventId ?>=<?= $event['id'] ?>" title="Добавить в избранное"
+                       class="favorite">
+                        <img src="/img/user/<?= $favorite ?>" alt=""></a>
+                    <?php \yii\widgets\Pjax::end() ?>
+                <?php } ?>
 
                 <span class="favorite-shop-type">Раздел - <a
                             href="/events?eventTypeId=<?= $event['eventTypeId'] ?>"><?= $event->eventType->type ?></a></span>

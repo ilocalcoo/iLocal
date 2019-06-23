@@ -82,7 +82,7 @@ $this->title = $type . ' рядом с вами';
                             ?>
                             <div class="modal-enter-body">
                                 <h2>ВХОД</h2>
-                                <p>Войдите, чтобы добавить в избранное:</p>
+                                <p>Войдите, чтобы добавить в избранное!</p>
                             </div>
                             <div class="enter-icons">
                                 <?= yii\authclient\widgets\AuthChoice::widget([

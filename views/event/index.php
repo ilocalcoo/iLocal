@@ -2,7 +2,9 @@
 
 use app\assets\EventAsset;
 use app\models\UserEvent;
+use yii\authclient\widgets\AuthChoice;
 use yii\bootstrap\Carousel;
+use yii\bootstrap\Modal;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
@@ -93,21 +95,48 @@ EventAsset::register($this);
                                 </div>
                                 <div class="like_data">
                                     <div class="like">
-                                        <?php \yii\widgets\Pjax::begin() ?>
-                                        <?php if (UserEvent::find()->where(['user_id' => Yii::$app->user->id])->andWhere(['event_id' => $event->id])->one()) {
-                                            $favorite = 'favorite_border_24px_rounded.svg';
-                                            $EventId = 'del-event-id';
-                                        } else {
-                                            $favorite = 'Favor_rounded.svg';
-                                            $EventId = 'add-event-id';
-                                        } ?>
-                                        <a href="/events?<?= $EventId ?>=<?= $event['id'] ?>"
-                                           title="Добавить в избранное"
-                                           class="favorite">
-                                            <img src="/img/user/<?= $favorite ?>" alt=""></a>
-                                        <?php \yii\widgets\Pjax::end() ?>
 
-                                        <!--										<img src="/img/like.png" alt="like">-->
+                                        <?php if (Yii::$app->user->isGuest) { ?>
+                                            <?php
+                                            Modal::begin([
+                                                'header' => false,
+                                                'toggleButton' => [
+                                                    'label' => '<img src="/img/user/Favor_rounded.svg" alt="" class="favorite">',
+                                                    'tag' => 'a',
+                                                    'class' => 'modal-enter',
+                                                ],
+                                            ]);
+                                            ?>
+                                            <div class="modal-enter-body">
+                                                <h2>ВХОД</h2>
+                                                <p>Войдите, чтобы добавить в избранное!</p>
+                                            </div>
+                                            <div class="enter-icons">
+                                                <?= yii\authclient\widgets\AuthChoice::widget([
+                                                    'baseAuthUrl' => ['site/auth'],
+                                                    'popupMode' => true,
+                                                ]) ?>
+                                            </div>
+                                            <p class="enter-policy">Продолжая, Вы соглашаетесь с нашими Условиями использования и
+                                                подтверждаете, что прочли
+                                                <a href="/policy" target="_blank">Политику конфиденциальности</a> .</p>
+                                            <?php Modal::end(); ?>
+                                        <?php } else { ?>
+                                            <?php \yii\widgets\Pjax::begin() ?>
+                                            <?php if (UserEvent::find()->where(['user_id' => Yii::$app->user->id])->andWhere(['event_id' => $event->id])->one()) {
+                                                $favorite = 'favorite_border_24px_rounded.svg';
+                                                $EventId = 'del-event-id';
+                                            } else {
+                                                $favorite = 'Favor_rounded.svg';
+                                                $EventId = 'add-event-id';
+                                            } ?>
+                                            <a href="/events?<?= $EventId ?>=<?= $event['id'] ?>"
+                                               title="Добавить в избранное"
+                                               class="favorite">
+                                                <img src="/img/user/<?= $favorite ?>" alt=""></a>
+                                            <?php \yii\widgets\Pjax::end() ?>
+                                        <?php } ?>
+
                                     </div>
                                     <span>
 								<?php $data = $event->begin . '-' . $event->end;
