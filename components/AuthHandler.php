@@ -95,6 +95,7 @@ class AuthHandler
                 // Обновляем username.
                 $this->updateUserInfo($user, $nickname);
                 // Авторизуем пользователя (можно в конфиге задать время сессии)
+                Yii::$app->user->returnUrl = Yii::$app->request->getReferrer();
                 Yii::$app->user->login($user);
 //                Yii::$app->user->login($user, Yii::$app->params['user.rememberMeDuration']);
             } else { // signup (регистрация)
@@ -139,6 +140,7 @@ class AuthHandler
                         ]);
                         if ($auth->save()) {
                             $transaction->commit();
+                            Yii::$app->user->returnUrl = Yii::$app->request->getReferrer();
                             Yii::$app->user->login($user);
 //                            Yii::$app->user->login($user, Yii::$app->params['user.rememberMeDuration']);
                         } else {

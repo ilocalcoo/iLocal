@@ -2,6 +2,8 @@
 
 use app\assets\ShopAsset;
 use kartik\rating\StarRating;
+use yii\authclient\widgets\AuthChoice;
+use yii\bootstrap\Modal;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
 
@@ -67,19 +69,46 @@ $this->title = $type . ' рядом с вами';
                 <div class="text_and_like">
                     <span><?= $shop->shopShortDescription ?></span>
                     <div class="like">
-                        <?php \yii\widgets\Pjax::begin() ?>
-                        <?php if (\app\models\UserShop::find()->where(['user_id' => Yii::$app->user->id])->andWhere(['shop_id' => $shop->shopId])->one()) {
-                            $favorite = 'favorite_border_24px_rounded.svg';
-                            $shopId = 'del-shop-id';
-                        } else {
-                            $favorite = 'Favor_rounded.svg';
-                            $shopId = 'add-shop-id';
-                        } ?>
-                        <a href="/shops?<?= $shopId ?>=<?= $shop['shopId'] ?>" title="Добавить в избранное"
-                           class="favorite">
-                            <img src="/img/user/<?= $favorite ?>" alt=""></a>
-                        <?php \yii\widgets\Pjax::end() ?>
-					          </div>
+                        <?php if (Yii::$app->user->isGuest) { ?>
+                            <?php
+                            Modal::begin([
+                                'header' => false,
+                                'toggleButton' => [
+                                    'label' => '<img src="/img/user/Favor_rounded.svg" alt="">',
+                                    'tag' => 'a',
+                                    'class' => 'modal-enter',
+                                ],
+                            ]);
+                            ?>
+                            <div class="modal-enter-body">
+                                <h2>ВХОД</h2>
+                                <p>Войдите, чтобы добавить в избранное:</p>
+                            </div>
+                            <div class="enter-icons">
+                                <?= yii\authclient\widgets\AuthChoice::widget([
+                                    'baseAuthUrl' => ['site/auth'],
+                                    'popupMode' => true,
+                                ]) ?>
+                            </div>
+                            <p class="enter-policy">Продолжая, Вы соглашаетесь с нашими Условиями использования и
+                                подтверждаете, что прочли
+                                <a href="/policy" target="_blank">Политику конфиденциальности</a> .</p>
+                            <?php Modal::end(); ?>
+                        <?php } else { ?>
+                            <?php \yii\widgets\Pjax::begin() ?>
+                            <?php if (\app\models\UserShop::find()->where(['user_id' => Yii::$app->user->id])->andWhere(['shop_id' => $shop->shopId])->one()) {
+                                $favorite = 'favorite_border_24px_rounded.svg';
+                                $shopId = 'del-shop-id';
+                            } else {
+                                $favorite = 'Favor_rounded.svg';
+                                $shopId = 'add-shop-id';
+                            } ?>
+                            <a href="/shops?<?= $shopId ?>=<?= $shop['shopId'] ?>" title="Добавить в избранное"
+                               class="favorite">
+                                <img src="/img/user/<?= $favorite ?>" alt=""></a>
+                            <?php \yii\widgets\Pjax::end() ?>
+                        <?php } ?>
+                    </div>
                 </div>
                 <div class="work_time_and_category">
 						<span class="work_time"><?php if ($shop->shopWorkTime) {

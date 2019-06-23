@@ -68,7 +68,30 @@ AppAsset::register($this);
                 <?php Modal::end(); ?>
                 <!--            <a href="">Поиск</a>-->
                 <?php if (Yii::$app->user->isGuest) { ?>
-                    <a href="/login">Вход<span class="login-ellipse"></span></a>
+                    <?php
+                    Modal::begin([
+                        'header' => false,
+                        'toggleButton' => [
+                            'label' => 'Вход<span class="login-ellipse"></span>',
+                            'tag' => 'a',
+                            'class' => 'modal-enter',
+                        ],
+                    ]);
+                    ?>
+                    <div class="modal-enter-body">
+                        <h2>ВХОД</h2>
+                        <p>Через социальные сети</p>
+                    </div>
+                    <div class="enter-icons">
+                        <?= yii\authclient\widgets\AuthChoice::widget([
+                            'baseAuthUrl' => ['site/auth'],
+                            'popupMode' => true,
+                        ]) ?>
+                    </div>
+                    <p class="enter-policy">Продолжая, Вы соглашаетесь с нашими Условиями использования и подтверждаете, что прочли
+                        <a href="/policy" target="_blank">Политику конфиденциальности</a> .</p>
+                    <?php Modal::end(); ?>
+<!--                    <a href="/login">Вход<span class="login-ellipse"></span></a>-->
                 <?php } else { ?>
                     <a href="/login">Профиль</a>
                     <a href="/logout">Выход</a>

@@ -105,7 +105,7 @@ class Shop extends \yii\db\ActiveRecord
                 'integer'],
             [['shopShortName', 'shopTypeId'], 'required'],
             [['shopMiddleCost'], 'string'],
-            [['shopShortName'], 'string', 'max' => 20],
+            [['shopShortName'], 'string', 'max' => 75],
             [['shopFullName', 'shopPhone', 'shopWeb', 'shopCostMin', 'shopCostMax', 'shopWorkTime', 'shopAgregator', 'shopShortDescription',
                 'shopFullDescription', 'shopLinkPdf'], 'string', 'max' => 255],
             [['shopAddressId'], 'exist', 'skipOnError' => true, 'targetClass' => ShopAddress::className(), 'targetAttribute' => ['shopAddressId' => 'id']],
