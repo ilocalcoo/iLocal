@@ -142,3 +142,47 @@ a.desc:after {
 ::-webkit-scrollbar-track:hover{
     background-color: #eee;
 }
+
+.modal-enter {
+    cursor: pointer;
+}
+
+.modal-enter-body h2 {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 48px;
+    line-height: 56px;
+    text-align: center;
+    color: #FE8A80;
+}
+
+.modal-enter-body p {
+    margin-top: 40px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 28px;
+    text-align: center;
+    color: #747474;
+}
+
+.enter-icons {
+    margin: 30px 0 30px -40px;
+    display: flex;
+    justify-content: center;
+}
+
+.enter-policy {
+    width: 436px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 15px;
+    text-align: center;
+    color: #747474;
+    margin-left: auto;
+    margin-right: auto;
+}
