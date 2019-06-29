@@ -71,10 +71,21 @@ class ShopController extends Controller
             }
         }
 
+        $searchModel = new ShopSearch();
+        $shopShortName = Shop::find()
+            ->select(['shopShortName as value', 'shopShortName as label', 'shopId as id'])
+            ->asArray()
+            ->all();
+
         $query = Shop::find()->where(['shopActive' => 1]);
         if (array_key_exists('shopTypeId', Yii::$app->request->queryParams)) {
             $query = $query->where(
                 ['shopTypeId' => Yii::$app->request->queryParams['shopTypeId']]
+            );
+        }
+        if (array_key_exists('shopShortName', Yii::$app->request->queryParams)) {
+            $query = $query->where(
+                ['like', 'shopShortName', Yii::$app->request->queryParams['shopShortName']]
             );
         }
         $pages = new Pagination([
@@ -85,8 +96,10 @@ class ShopController extends Controller
             ->limit($pages->limit)
             ->all();
         return $this->render('index', [
+            'searchModel' => $searchModel,
             'shops' => $shops,
             'pages' => $pages,
+            'shopShortName' => $shopShortName,
         ]);
     }
 

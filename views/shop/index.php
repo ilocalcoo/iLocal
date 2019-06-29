@@ -11,6 +11,8 @@ use yii\widgets\Pjax;
 /* @var $shops app\models\Shop[] */
 /* @var $pages \yii\data\Pagination */
 /* @var $shopType \app\models\ShopType */
+/* @var $searchModel \app\models\search\ShopSearch */
+/* @var $shopShortName \app\models\search\ShopSearch */
 
 ShopAsset::register($this);
 $type = 'Все места';
@@ -25,8 +27,10 @@ $this->title = $type . ' рядом с вами';
     <div class="under_title">
         <span>Вы смотрите места которые находятся рядом с вами в разделе "<?= $type ?>"</span>
     </div>
+	<br>
     <?php Pjax::begin(); ?>
-    <?php
+    <?php echo $this->render('_search', ['model' => $searchModel, 'shopShortName' => $shopShortName]); ?>
+	<?php
     foreach ($shops as $shop) { ?>
         <div class="content">
             <a class="shop_img" href="<?= 'shops/' . $shop->shopId ?>" data-pjax="0">
