@@ -69,7 +69,7 @@ class EventController extends Controller
 //        ]);
         $query = Shop::find()->where(['shopActive' => 1])->where(['shopId' => Event::find()->select('eventOwnerId')]);
         if (array_key_exists('eventTypeId', Yii::$app->request->queryParams)) {
-            $query = $query->where(
+            $query = $query->having(
                 ['shopTypeId' => Yii::$app->request->queryParams['eventTypeId']]
             );
         }
