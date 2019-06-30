@@ -35,8 +35,11 @@ use yii\jui\AutoComplete;
 
 
     <div class="form-group">
-        <?= Html::submitButton('Искать', ['class' => 'btn btn-primary']) ?>
-        <?= Html::resetButton('Сбросить', ['class' => 'btn btn-outline-secondary']) ?>
+        <?= Html::submitButton('Искать', ['class' => 'btn search-button']) ?>
+        <?= Html::resetButton('Сбросить', [
+        	'class' => 'btn',
+			'id' => 'reset_button',
+			]) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

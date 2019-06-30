@@ -25,6 +25,7 @@ class ShopAsset extends AssetBundle
         'https://fonts.googleapis.com/css?family=Roboto&display=swap',
     ];
     public $js = [
+        'js/shop_feed.js'
     ];
     public $depends = [
         'yii\web\YiiAsset',
