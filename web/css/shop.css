@@ -196,3 +196,18 @@
     width: 474px;
     height: 319px;
 }
+.control-label {
+    font-weight: bold;
+    font-size: 16px;
+    color: #757575;
+}
+.search-button {
+    color: white;
+    background: #FE8A80;
+}
+.search-button:hover {
+    color: white;
+}
+#reset-button {
+    color: #606060;
+}
