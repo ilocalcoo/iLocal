@@ -3,6 +3,7 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\jui\AutoComplete;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\search\ShopSearch */
@@ -33,7 +34,7 @@ use yii\jui\AutoComplete;
 		]
     ])->label('Поиск по названию места'); ?>
 
-
+    <?php Pjax::begin(); ?>
     <div class="form-group">
         <?= Html::submitButton('Искать', ['class' => 'btn search-button']) ?>
         <?= Html::resetButton('Сбросить', [
@@ -41,7 +42,7 @@ use yii\jui\AutoComplete;
 			'id' => 'reset_button',
 			]) ?>
     </div>
-
+    <?php Pjax::end(); ?>
     <?php ActiveForm::end(); ?>
 
 </div>
