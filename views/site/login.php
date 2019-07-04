@@ -44,7 +44,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
 
         <b>Адрес:</b>
-        <?
+        <?php
         $comma = '';
         foreach (ArrayHelper::toArray($model->userAddress) as $key => $item) {
             if ($key == 'id' || $item == '') {

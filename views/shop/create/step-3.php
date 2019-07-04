@@ -29,7 +29,7 @@ $this->registerCssFile('/css/shop/create/form.css');
 
     <span class="step-form-3_address-name">Адрес</span>
     <br>
-    <?
+    <?php
     $comma = '';
     foreach (ArrayHelper::toArray($model->shopAddress) as $key => $item) {
         if ($key == 'id' || $item == '') {
