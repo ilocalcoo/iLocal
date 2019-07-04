@@ -53,7 +53,7 @@ if (count($carousel) == 1) {
         <span class="shop-cost"><?= $model::SHOP_MIDDLE_COST_LABELS[$model->shopMiddleCost] ?></span>
         <div class="shop-contacts">
             <div class="shop-location"><img src="/img/shop/Location.svg" alt="Location">
-                <?
+                <?php
                 $comma = '';
                 foreach (ArrayHelper::toArray($model->shopAddress) as $key => $item) {
                     if ($key == 'id' || $item == '') {

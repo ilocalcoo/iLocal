@@ -22,7 +22,7 @@ $shopPhoto = \app\models\ShopPhoto::find()->where(['=', 'shopId', $model->eventO
         <img src="/img/shopPhoto/<?= $shopPhoto["shopPhoto"] ?>" alt="">
         <div>
             <div class="event-view-shop-name"><?= $model->eventOwner["shopShortName"] ?></div>
-            <div class="event-view-shop-address"><?
+            <div class="event-view-shop-address"><?php
                 $comma = '';
                 foreach (ArrayHelper::toArray($shopAddress) as $key => $item) {
                     if ($key == 'id' || $item == '') {
