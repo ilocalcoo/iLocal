@@ -3,11 +3,12 @@
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\jui\AutoComplete;
+use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\search\ShopSearch */
 /* @var $form yii\widgets\ActiveForm */
-/* @var $shopShortNameData app\models\Shop */
+/* @var $shopShortName app\models\Shop */
 ?>
 
 <div class="shop-search">
@@ -20,48 +21,28 @@ use yii\jui\AutoComplete;
         ],
     ]); ?>
 
-    <?php // echo $form->field($model, 'shopId') ?>
-
-    <?php // echo $form->field($model, 'shopActive') ?>
-
-    <?php // echo $form->field($model, 'shopShortName') ?>
-
-    <?= $form->field($model, 'shopShortName')->widget(
+    <?= $form->field($model, 'shopShortName')
+		->widget(
         AutoComplete::className(), [
         'clientOptions' => [
-            'source' => $shopShortNameData,
+            'source' => $shopShortName,
             'minLength' => '2',
         ],
         'options'=>[
-            'class'=>'form-control'
-        ]
-    ])->label('Search'); ?>
+            'class'=>'form-control',
+        	'value' => Yii::$app->request->get('shopShortName'),
+		]
+    ])->label('Поиск по названию места'); ?>
 
-    <?php // echo $form->field($model, 'shopPhoto') ?>
-
-    <?php // echo $form->field($model, 'shopTypeId') ?>
-
-    <?php // echo $form->field($model, 'shopPhone') ?>
-
-    <?php // echo $form->field($model, 'shopWeb') ?>
-
-    <?php // echo $form->field($model, 'shopAddressId') ?>
-
-    <?php // echo $form->field($model, 'shopCostMin') ?>
-
-    <?php // echo $form->field($model, 'shopCostMax') ?>
-
-    <?php // echo $form->field($model, 'shopMiddleCost') ?>
-
-    <?php // echo $form->field($model, 'shopAgregator') ?>
-
-    <?php // echo $form->field($model, 'shopStatusId') ?>
-
+    <?php Pjax::begin(); ?>
     <div class="form-group">
-        <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-        <?php // Html::resetButton('Reset', ['class' => 'btn btn-outline-secondary']) ?>
+        <?= Html::submitButton('Искать', ['class' => 'btn search-button']) ?>
+        <?= Html::resetButton('Сбросить', [
+        	'class' => 'btn',
+			'id' => 'reset_button',
+			]) ?>
     </div>
-
+    <?php Pjax::end(); ?>
     <?php ActiveForm::end(); ?>
 
 </div>
