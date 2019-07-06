@@ -1,6 +1,6 @@
 <?php
 
-use app\assets\EventAsset;
+use app\assets\EventFeedAsset;
 use app\models\UserEvent;
 use yii\authclient\widgets\AuthChoice;
 use yii\bootstrap\Carousel;
@@ -24,7 +24,7 @@ $this->registerJsFile('/js/eventsView.js', ['depends' => 'app\assets\AppAsset'])
 
 $this->title = 'Events';
 $this->params['breadcrumbs'][] = $this->title;
-EventAsset::register($this);
+EventFeedAsset::register($this);
 ?>
 <div class="event-index">
 

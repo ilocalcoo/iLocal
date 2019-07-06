@@ -15,10 +15,7 @@ use yii\widgets\DetailView;
 
 $this->title = $model->shopShortName;
 
-$this->registerJsFile('/js/eventsView.js', ['depends' => 'app\assets\AppAsset']);
-\yii\web\YiiAsset::register($this);
-$this->registerCssFile('/css/shop/view.css');
-$this->registerCssFile('/css/event/view.css');
+\app\assets\StoreFrontAsset::register($this);
 
 $photos = [];
 $carousel = [];
@@ -47,13 +44,13 @@ if (count($carousel) == 1) {
 ?>
 <div class="shop-view">
     <div class="shop-window-container">
-
+		<div id="show-map"></div>
         <h1><?= Html::encode($this->title) ?></h1>
         <span class="shop-type"><?= $model->shopType::TYPES_LABELS[$model->shopType->id] ?></span>
         <span class="shop-cost"><?= $model::SHOP_MIDDLE_COST_LABELS[$model->shopMiddleCost] ?></span>
         <div class="shop-contacts">
             <div class="shop-location"><img src="/img/shop/Location.svg" alt="Location">
-                <?php
+				<a id="link-map" href="#"><?php
                 $comma = '';
                 foreach (ArrayHelper::toArray($model->shopAddress) as $key => $item) {
                     if ($key == 'id' || $item == '') {
@@ -65,7 +62,7 @@ if (count($carousel) == 1) {
                     echo $comma . $item;
                     $comma = ', ';
                 }
-                ?>
+                ?></a>
             </div>
             <div class="shop-location"><img src="/img/shop/Phone.svg"
                                             alt="Phone"><?= $model->shopPhone ? $model->shopPhone : '' ?></div>

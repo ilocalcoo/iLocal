@@ -61,7 +61,7 @@ class ShopController extends Controller
 
                 $query = Shop::find()->where(['shopActive' => 1]);
                 if (array_key_exists('shopTypeId', Yii::$app->request->queryParams)) {
-                    $query = $query->where(
+                    $query->where(
                         ['shopTypeId' => Yii::$app->request->queryParams['shopTypeId']]
                     );
                 }
