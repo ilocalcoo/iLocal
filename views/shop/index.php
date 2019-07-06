@@ -1,6 +1,6 @@
 <?php
 
-use app\assets\ShopAsset;
+use app\assets\ShopFeedAsset;
 use kartik\rating\StarRating;
 use yii\authclient\widgets\AuthChoice;
 use yii\bootstrap\Modal;
@@ -14,7 +14,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel \app\models\search\ShopSearch */
 /* @var $shopShortName \app\models\search\ShopSearch */
 
-ShopAsset::register($this);
+ShopFeedAsset::register($this);
 $type = 'Все места';
 if (array_key_exists('shopTypeId', Yii::$app->request->queryParams)) {
     $type = \app\models\ShopType::TYPES_LABELS[Yii::$app->request->queryParams['shopTypeId']];

@@ -15,14 +15,12 @@ use yii\web\AssetBundle;
  * @author Qiang Xue <qiang.xue@gmail.com>
  * @since 2.0
  */
-class ShopAsset extends AssetBundle
+class ShopFeedAsset extends AssetBundle
 {
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
-        'css/site.css',
         'css/shop.css',
-        'https://fonts.googleapis.com/css?family=Roboto&display=swap',
     ];
     public $js = [
         'js/shop_feed.js'
@@ -30,5 +28,6 @@ class ShopAsset extends AssetBundle
     public $depends = [
         'yii\web\YiiAsset',
         'yii\bootstrap\BootstrapAsset',
+        'app\assets\AppAsset',
     ];
 }
