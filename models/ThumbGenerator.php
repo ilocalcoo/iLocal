@@ -10,7 +10,7 @@ use function is_dir;
 use function mkdir;
 use yii\web\UploadedFile;
 
-class thumbGenerator extends UploadedFile
+class ThumbGenerator extends UploadedFile
 {
     private $ds = DIRECTORY_SEPARATOR;
     public $sizes = [
