@@ -317,8 +317,7 @@ a.disabled {
 #link-map {
     color: inherit;
 }
-#show-map {
-    display: none;
-    width: 90vh;
+.modal-size {
+    width: 85vh;
     height: 90vh;
 }

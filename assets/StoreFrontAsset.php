@@ -24,7 +24,10 @@ class StoreFrontAsset extends AssetBundle
         'css/event/view.css',
     ];
     public $js = [
-        'js/eventsView.js'
+        'https://api-maps.yandex.ru/2.1/?apikey=e44f02d7-5ab4-4a5b-a382-ca2665e3825e&lang=ru_RU',
+        'js/eventsView.js',
+        'js/store_front.js',
+        'js/modal_map.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',

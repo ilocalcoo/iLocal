@@ -55,25 +55,39 @@ if (count($carousel) == 1) {
 //var_dump($photos, $randomPhotos, $carousel);exit;
 ?>
 <div class="shop-view">
-    <div class="shop-window-container">
-		<div id="show-map"></div>
-        <h1><?= Html::encode($this->title) ?></h1>
-        <span class="shop-type"><?= $model->shopType::TYPES_LABELS[$model->shopType->id] ?></span>
-        <span class="shop-cost"><?= $model::SHOP_MIDDLE_COST_LABELS[$model->shopMiddleCost] ?></span>
-        <div class="shop-contacts">
-            <div class="shop-location"><img src="/img/shop/Location.svg" alt="Location">
-				<a id="link-map" href="#"><?php
-                $comma = '';
-                foreach (ArrayHelper::toArray($model->shopAddress) as $key => $item) {
-                    if ($key == 'id' || $item == '') {
-                        continue;
+	<div class="shop-window-container">
+		<div class="modal fade" id="modal-map" tabindex="-1" role="dialog" aria-labelledby="map-label"
+			 aria-hidden="true">
+			<div class="modal-dialog" role="document">
+				<div class="modal-content modal-size">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						<h4 class="modal-title" id="map-label">Адрес места</h4>
+					</div>
+					<div class="modal-body modal-size" id="show-map">
+					</div>
+				</div>
+			</div>
+		</div>
+		<h1><?= Html::encode($this->title) ?></h1>
+		<span class="shop-type"><?= $model->shopType::TYPES_LABELS[$model->shopType->id] ?></span>
+		<span class="shop-cost"><?= $model::SHOP_MIDDLE_COST_LABELS[$model->shopMiddleCost] ?></span>
+		<div class="shop-contacts">
+			<div class="shop-location"><img src="/img/shop/Location.svg" alt="Location">
+				<a type="button" id="link-map" data-toggle="modal" data-target="#modal-map" href="#"><?php
+                    $comma = '';
+                    foreach (ArrayHelper::toArray($model->shopAddress) as $key => $item) {
+                        if ($key == 'id' || $item == '') {
+                            continue;
+                        }
+                        if ($key == 'latitude') {
+                            break;
+                        }
+                        echo $comma . $item;
+                        $comma = ', ';
                     }
-                    if ($key == 'latitude') {
-                        break;
-                    }
-                    echo $comma . $item;
-                    $comma = ', ';
-                }
                 ?></a>
             </div>
             <div class="shop-location"><img src="/img/shop/Phone.svg"
@@ -160,34 +174,34 @@ if (count($carousel) == 1) {
                         ],
                     ]);
                     ?>
-                </div>
+				</div>
 
-                <div><span>Диапазон цен:</span> 300–3000 руб.</div>
-                <div>Pdf: меню, расписание, услуги</div>
+				<div><span>Диапазон цен:</span> 300–3000 руб.</div>
+				<div>Pdf: меню, расписание, услуги</div>
 
-            </div>
-        </div>
+			</div>
+		</div>
 
-    </div>
+	</div>
 
-    <h2>Акции</h2>
+	<h2>Акции</h2>
 
-    <div class="flex-wrap">
+	<div class="flex-wrap">
 
         <?php foreach ($shopEvents as $event) { ?>
-            <div class="main-block-wrap">
-                <img src="/img/eventPhoto/<?php if (!isset($event['eventPhotos'][0]['eventPhoto'])) {
+			<div class="main-block-wrap">
+				<img src="/img/eventPhoto/<?php if (!isset($event['eventPhotos'][0]['eventPhoto'])) {
                     echo 'nophoto.jpg';
                 } else {
                     echo $event['eventPhotos'][0]['eventPhoto'];
                 } ?>" class="photo" alt="">
-                <div class="photo-wrap">
-                    <a href="" class="title event-view" id="<?= $event['id'] ?>"><?= $event['title'] ?></a>
-                </div>
-                <div class="info-block-wrap">
-                    <p><?= mb_substr($event['shortDesc'], 0, 70) ?>
-                        <a href="" class="event-view" id="<?= $event['id'] ?>">Подробнее...</a></p>
-                </div>
+				<div class="photo-wrap">
+					<a href="" class="title event-view" id="<?= $event['id'] ?>"><?= $event['title'] ?></a>
+				</div>
+				<div class="info-block-wrap">
+					<p><?= mb_substr($event['shortDesc'], 0, 70) ?>
+						<a href="" class="event-view" id="<?= $event['id'] ?>">Подробнее...</a></p>
+				</div>
 
                 <?php if (Yii::$app->user->isGuest) { ?>
                     <?php
@@ -200,19 +214,19 @@ if (count($carousel) == 1) {
                         ],
                     ]);
                     ?>
-                    <div class="modal-enter-body">
-                        <h2>ВХОД</h2>
-                        <p>Войдите, чтобы добавить в избранное!</p>
-                    </div>
-                    <div class="enter-icons">
+					<div class="modal-enter-body">
+						<h2>ВХОД</h2>
+						<p>Войдите, чтобы добавить в избранное!</p>
+					</div>
+					<div class="enter-icons">
                         <?= yii\authclient\widgets\AuthChoice::widget([
                             'baseAuthUrl' => ['site/auth'],
                             'popupMode' => true,
                         ]) ?>
-                    </div>
-                    <p class="enter-policy">Продолжая, Вы соглашаетесь с нашими Условиями использования и
-                        подтверждаете, что прочли
-                        <a href="/policy" target="_blank">Политику конфиденциальности</a> .</p>
+					</div>
+					<p class="enter-policy">Продолжая, Вы соглашаетесь с нашими Условиями использования и
+						подтверждаете, что прочли
+						<a href="/policy" target="_blank">Политику конфиденциальности</a> .</p>
                     <?php Modal::end(); ?>
                 <?php } else { ?>
                     <?php \yii\widgets\Pjax::begin() ?>
@@ -223,30 +237,31 @@ if (count($carousel) == 1) {
                         $favorite = 'Favor_rounded.svg';
                         $eventId = 'add-event-id';
                     } ?>
-                    <a href="/shops/<?= $model->shopId ?>?<?= $eventId ?>=<?= $event['id'] ?>" title="Добавить в избранное"
-                       class="favorite">
-                        <img src="/img/user/<?= $favorite ?>" alt=""></a>
+					<a href="/shops/<?= $model->shopId ?>?<?= $eventId ?>=<?= $event['id'] ?>"
+					   title="Добавить в избранное"
+					   class="favorite">
+						<img src="/img/user/<?= $favorite ?>" alt=""></a>
                     <?php \yii\widgets\Pjax::end() ?>
                 <?php } ?>
 
-                <span class="favorite-shop-type">Раздел - <a
-                            href="/events?eventTypeId=<?= $event['eventTypeId'] ?>"><?= $event->eventType->type ?></a></span>
-            </div>
+				<span class="favorite-shop-type">Раздел - <a
+						href="/events?eventTypeId=<?= $event['eventTypeId'] ?>"><?= $event->eventType->type ?></a></span>
+			</div>
         <?php } ?>
 
-    </div>
+	</div>
 
-    <div class="modal fade" id="event-modal" tabindex="-1" role="dialog" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content event-view-content">
-                <div class="modal-header">
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
-                </div>
-                <div class="modal-body"></div>
-            </div>
-        </div>
-    </div>
+	<div class="modal fade" id="event-modal" tabindex="-1" role="dialog" aria-hidden="true">
+		<div class="modal-dialog modal-dialog-centered">
+			<div class="modal-content event-view-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body"></div>
+			</div>
+		</div>
+	</div>
 
 </div>
