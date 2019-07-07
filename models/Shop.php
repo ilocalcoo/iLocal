@@ -55,12 +55,14 @@ class Shop extends \yii\db\ActiveRecord
     const SHOP_MIDDLE_COST_2 = 2;
     const SHOP_MIDDLE_COST_3 = 3;
     const SHOP_MIDDLE_COST_4 = 4;
-    const SHOP_MIDDLE_COST = [self::SHOP_MIDDLE_COST_1, self::SHOP_MIDDLE_COST_2, self::SHOP_MIDDLE_COST_3, self::SHOP_MIDDLE_COST_4];
+    const SHOP_MIDDLE_COST_5 = 5;
+    const SHOP_MIDDLE_COST = [self::SHOP_MIDDLE_COST_1, self::SHOP_MIDDLE_COST_2, self::SHOP_MIDDLE_COST_3, self::SHOP_MIDDLE_COST_4,self::SHOP_MIDDLE_COST_5];
     const SHOP_MIDDLE_COST_LABELS = [
         self::SHOP_MIDDLE_COST_1 =>'₽',
         self::SHOP_MIDDLE_COST_2 =>'₽₽',
         self::SHOP_MIDDLE_COST_3 => '₽₽₽',
         self::SHOP_MIDDLE_COST_4 => '₽₽₽₽',
+        self::SHOP_MIDDLE_COST_5 => '₽₽₽₽₽',
     ];
 
     const SCENARIO_STEP1 = 'step1';
