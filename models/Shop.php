@@ -163,7 +163,9 @@ class Shop extends \yii\db\ActiveRecord
     {
         if ($this->validate()) {
             foreach ($this->uploadedShopPhoto as $file) {
-                $file->saveAs('img/shopPhoto/' . $file->baseName . '.' . $file->extension);
+                $fileName = 'img/shopPhoto/' . $file->baseName . '.' . $file->extension;
+                $file->saveAs($fileName);
+                ThumbGenerator::generate($fileName, $this->shopId);
                 $model = new ShopPhoto();
                 $model->shopPhoto = $file->baseName . '.' . $file->extension;
                 $model->shopId = $this->shopId;
