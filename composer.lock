@@ -4,9 +4,40 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "76267b15de7cb88aa07af1488f10632a",
-    "content-hash": "9ff693c74a496d5220684580f24f8432",
+    "hash": "796b54bf38de6d934552d789a44a3f54",
+    "content-hash": "46cd322096e89a11d8f7131a110389f6",
     "packages": [
+        {
+            "name": "andkon/yii2kladr",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/andkon13/yii2-klard.git",
+                "reference": "c4de6855017963285671720e17cf8644dcba5aee"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/andkon13/yii2-klard/zipball/c4de6855017963285671720e17cf8644dcba5aee",
+                "reference": "c4de6855017963285671720e17cf8644dcba5aee",
+                "shasum": ""
+            },
+            "require": {
+                "bower-asset/jquery.kladr": "*"
+            },
+            "type": "project",
+            "autoload": {
+                "psr-4": {
+                    "andkon\\yii2kladr\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "description": "Widget for yii2 Kladr",
+            "homepage": "https://github.com/andkon13/yii2-klard",
+            "time": "2017-01-31 11:10:42"
+        },
         {
             "name": "bower-asset/bootstrap",
             "version": "v3.4.1",
@@ -91,6 +122,29 @@
             "license": [
                 "MIT"
             ]
+        },
+        {
+            "name": "bower-asset/jquery.kladr",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/garakh/kladrapi-jsclient.git",
+                "reference": "006d91520a0a131cd0c20e332f5f762cb57aebff"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/garakh/kladrapi-jsclient/zipball/006d91520a0a131cd0c20e332f5f762cb57aebff",
+                "reference": "006d91520a0a131cd0c20e332f5f762cb57aebff",
+                "shasum": null
+            },
+            "require": {
+                "bower-asset/jquery": ">=1.6"
+            },
+            "type": "bower-asset",
+            "license": [
+                "Public Domain"
+            ],
+            "time": "2019-06-16 15:46:09"
         },
         {
             "name": "bower-asset/punycode",
@@ -3950,7 +4004,9 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {
-        "php": ">=5.4.0"
+        "php": ">=7.0.0",
+        "ext-imagick": "*",
+        "ext-exif": "*"
     },
     "platform-dev": []
 }

@@ -22,7 +22,8 @@
         "yiisoft/yii2-jui": "^2.0@dev",
         "kartik-v/yii2-widget-rating": "*",
         "ext-imagick": "*",
-        "ext-exif": "*"
+        "ext-exif": "*",
+        "andkon/yii2kladr": "^1.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

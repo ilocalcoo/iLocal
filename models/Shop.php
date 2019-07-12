@@ -115,7 +115,7 @@ class Shop extends \yii\db\ActiveRecord
             [['shopTypeId'], 'exist', 'skipOnError' => true, 'targetClass' => ShopType::className(), 'targetAttribute' => ['shopTypeId' => 'id']],
             [['creatorId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute'
             => ['creatorId' => 'id']],
-            [['uploadedShopPhoto'], 'file', 'extensions' => 'jpg, png', 'maxFiles' => 10]
+            [['uploadedShopPhoto'], 'file', 'extensions' => 'jpeg, jpg, png', 'maxFiles' => 10]
         ];
     }
 
