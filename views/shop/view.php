@@ -70,7 +70,13 @@ if (count($carousel) == 1) {
                                             alt="Url"><a href="<?= $model->shopWeb ? $model->shopWeb : '' ?>"
                                                          target="_blank"><?= $model->shopWeb ? $model->shopWeb : '' ?></a>
             </div>
-            <div class="shop-location"><img src="/img/shop/Time_to_go.svg" alt="Time to go">Режим работы</div>
+            <div class="shop-location shop-location-work-time">
+                <img src="/img/shop/Time_to_go.svg" alt="Time to go">
+                <span>Режим работы</span>
+                <div class="shop-location-work-time-hidden">
+                    <?= $model->shopWorkTime ? $model->shopWorkTime : 'Не указан' ?>
+                </div>
+            </div>
         </div>
         <div class="shop-window-gallery">
             <div class="shop-window-carousel">
