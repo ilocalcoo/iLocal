@@ -65,13 +65,14 @@ $this->registerCssFile('/css/shop/create/form.css');
 
     <div class="step-form-3_main-wrap">
         <div class="step-form-3_address-wrap">
-<!--            --><?//= $form->field($shopAddress, 'city', ['options' => ['class' => 'shop-create-form_address shop-create-form']])->textInput(['placeholder' => 'Москва']) ?>
-<!--            --><?//= $form->field($shopAddress, 'street', ['options' => ['class' => 'shop-create-form_address shop-create-form']])->textInput(['placeholder' => 'Тверская']) ?>
-<!--            <div class="step-form-3_address-wrap_number">-->
-<!--                --><?//= $form->field($shopAddress, 'houseNumber', ['options' => ['class' => 'shop-create-form_address shop-create-form']])->textInput(['placeholder' => '1']) ?>
-<!--                --><?//= $form->field($shopAddress, 'housing', ['options' => ['class' => 'shop-create-form_address shop-create-form']])->textInput(['placeholder' => 'А']) ?>
-<!--                --><?//= $form->field($shopAddress, 'building', ['options' => ['class' => 'shop-create-form_address shop-create-form']])->textInput(['placeholder' => '1']) ?>
-<!--            </div>-->
+            <?= $form->field($shopAddress, 'city', ['options' => ['class' => 'shop-create-form_address shop-create-form']])->textInput(['placeholder' => 'Москва']) ?>
+            <?= $form->field($shopAddress, 'street', ['options' => ['class' => 'shop-create-form_address shop-create-form']])->textInput(['placeholder' => 'Тверская']) ?>
+
+            <div class="step-form-3_address-wrap_number">
+                <?= $form->field($shopAddress, 'houseNumber', ['options' => ['class' => 'shop-create-form_address shop-create-form']])->textInput(['placeholder' => '1']) ?>
+                <?= $form->field($shopAddress, 'housing', ['options' => ['class' => 'shop-create-form_address shop-create-form']])->textInput(['placeholder' => 'А']) ?>
+                <?= $form->field($shopAddress, 'building', ['options' => ['class' => 'shop-create-form_address shop-create-form']])->textInput(['placeholder' => '1']) ?>
+            </div>
 
             <?= $form->field($model, 'shopPhone', ['options' => ['class' => 'shop-create-form']])->textInput(['maxlength' => true, 'placeholder' => '+7']) ?>
 

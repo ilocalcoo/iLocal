@@ -1,6 +1,7 @@
 <?php
 
 use app\models\Event;
+use app\models\ThumbGenerator;
 use app\models\UserEvent;
 use kartik\rating\StarRating;
 use yii\authclient\widgets\AuthChoice;
@@ -19,11 +20,22 @@ $this->title = $model->shopShortName;
 
 $photos = [];
 $carousel = [];
+$photoLinks = [];
 $randomPhotos = [];
-foreach ($model->shopPhotos as $photo) {
-    $photos[] = $photo->shopPhoto;
-    $carousel[] = '<img src="/img/shopPhoto/' . $photo->shopPhoto . '"/>';
+$gallery = ThumbGenerator::getGallery($model->shopId);
+if ($gallery) {
+    $photos = $gallery['medium'];
+    foreach ($gallery['full'] as $key => $galleryFile) {
+        $photoLinks[] = '<img src="/img/shopPhoto/' . $gallery['medium'][$key] . '"/>';
+        $carousel[] = '<img src="/img/shopPhoto/' . $galleryFile . '"/>';
+    }
+} else { // для обратной совместимости
+    foreach ($model->shopPhotos as $photo) {
+        $photos[] = $photo->shopPhoto;
+        $carousel[] = '<img src="/img/shopPhoto/' . $photo->shopPhoto . '"/>';
+    }
 }
+
 if (count($carousel) == 0) {
     $photos[0] = 'nophoto.jpg';
     $carousel[0] = '<img src="/img/shopPhoto/nophoto.jpg"/>';
@@ -94,11 +106,15 @@ if (count($carousel) == 1) {
                 ]) ?>
             </div>
             <div class="shop-window-photos">
-                <a href="/img/shopPhoto/<?= $photos[$randomPhotos[0]] ?>" target="_blank">
-                    <div class="shop-window-photo"><?= $carousel[$randomPhotos[0]] ?></div>
+                <a href="/img/shopPhoto/<?= $gallery['full'][$randomPhotos[0]] ?? $photos[$randomPhotos[0]] ?>" target="_blank">
+                    <div class="shop-window-photo">
+                        <?= $photoLinks[$randomPhotos[0]] ?? $carousel[$randomPhotos[0]]; ?>
+                    </div>
                 </a>
-                <a href="/img/shopPhoto/<?= $photos[$randomPhotos[1]] ?>" target="_blank">
-                    <div class="shop-window-photo"><?= $carousel[$randomPhotos[1]] ?></div>
+                <a href="/img/shopPhoto/<?= $gallery['full'][$randomPhotos[1]] ?? $photos[$randomPhotos[1]] ?>" target="_blank">
+                    <div class="shop-window-photo">
+                        <?= $photoLinks[$randomPhotos[1]] ?? $carousel[$randomPhotos[1]]; ?>
+                    </div>
                 </a>
             </div>
         </div>
