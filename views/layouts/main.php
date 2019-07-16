@@ -51,8 +51,9 @@ AppAsset::register($this);
                 </a></div>
             <div class="main-nav-bar">
                 <a href="/">Главная</a>
+                <a href="/user/business">Бизнесу</a>
                 <?php if (!Yii::$app->user->isGuest) { ?>
-                    <a href="/user/business">Бизнесу</a>
+
                     <a href="/favorites">Избранное</a>
                 <?php } ?>
                 <?php

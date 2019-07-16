@@ -50,6 +50,7 @@ $this->title = $type . ' рядом с вами';
                         'value' => $shop->shopRating,
                         'language' => 'ru',
                         'pluginOptions' => [
+                            'displayOnly' => true,
                             'size' => 'md',
                             'stars' => 5,
                             'min' => 0,
@@ -58,7 +59,7 @@ $this->title = $type . ' рядом с вами';
                             'showClear' => false,
                             'showCaption' => false,
                             'theme' => 'krajee-svg',
-                            'filledStar' => '<span class="krajee-icon krajee-icon-star"></span>',
+                            'filledStar' => '<span class="krajee-icon krajee-icon-star rating-filled-stars"></span>',
                             'emptyStar' => '<span class="krajee-icon krajee-icon-star"></span>'
                         ],
                     ]); ?>
