@@ -137,7 +137,7 @@ if (count($carousel) == 1) {
                             'showClear' => false,
                             'showCaption' => false,
                             'theme' => 'krajee-svg',
-                            'filledStar' => '<span class="krajee-icon krajee-icon-star"></span>',
+                            'filledStar' => '<span class="krajee-icon krajee-icon-star rating-filled-stars"></span>',
                             'emptyStar' => '<span class="krajee-icon krajee-icon-star"></span>'
                         ],
                         'pluginEvents' => [
