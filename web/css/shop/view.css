@@ -319,5 +319,8 @@ a.disabled {
 }
 .modal-size {
     width: 85vh;
-    height: 90vh;
+}
+#show-map {
+    width: 85vh;
+    height: 80vh;
 }

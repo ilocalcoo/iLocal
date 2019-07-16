@@ -66,7 +66,7 @@ if (count($carousel) == 1) {
 						</button>
 						<h4 class="modal-title" id="map-label">Адрес места</h4>
 					</div>
-					<div class="modal-body modal-size" id="show-map">
+					<div class="modal-body" id="show-map">
 					</div>
 				</div>
 			</div>
@@ -76,7 +76,13 @@ if (count($carousel) == 1) {
 		<span class="shop-cost"><?= $model::SHOP_MIDDLE_COST_LABELS[$model->shopMiddleCost] ?></span>
 		<div class="shop-contacts">
 			<div class="shop-location"><img src="/img/shop/Location.svg" alt="Location">
-				<a type="button" id="link-map" data-toggle="modal" data-target="#modal-map" href="#"><?php
+				<a type="button" id="link-map" data-toggle="modal"
+				   data-coords="<?php
+                   if ($model->shopAddress->latitude && $model->shopAddress->longitude) {
+                       echo $model->shopAddress->latitude . ',' . $model->shopAddress->longitude;
+                   }
+                   ?>"
+				   data-target="#modal-map" href="#"><?php
                     $comma = '';
                     foreach (ArrayHelper::toArray($model->shopAddress) as $key => $item) {
                         if ($key == 'id' || $item == '') {
