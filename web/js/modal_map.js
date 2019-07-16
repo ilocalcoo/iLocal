@@ -34,7 +34,6 @@ function init() {
 
     // Размещение геообъекта на карте.
     myMap.geoObjects.add(myGeoObject);
-    myMap.container.fitToViewport();
   }
 
 }
