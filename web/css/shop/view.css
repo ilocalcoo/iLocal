@@ -315,3 +315,14 @@ a.disabled {
     border: 1px solid rgba(183, 183, 183, 0.6);
     margin: 41px 0 14px 0;
 }
+
+#link-map {
+    color: inherit;
+}
+.modal-size {
+    width: 85vh;
+}
+#show-map {
+    width: 85vh;
+    height: 80vh;
+}
