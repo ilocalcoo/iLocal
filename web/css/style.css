@@ -90,7 +90,8 @@
 }
 
 .login-ellipse {
-    display: inline-block;
+    display: block;
+    float: right;
     width: 6px;
     height: 6px;
     background: #FE8A80;

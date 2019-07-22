@@ -1,0 +1,242 @@
+@import url('https://fonts.googleapis.com/css?family=Yeseva+One&display=swap');
+
+body {
+    font-size: 14px;
+}
+
+a {
+    color: #9B9B9B;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #FE61AB;
+    text-decoration: none;
+}
+
+a:visited {
+    color: #9B9B9B;
+    text-decoration: none;
+}
+
+.logo-text {
+    font-family: Yeseva One;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 50px;
+    /* or 278% */
+
+    align-items: center;
+    color: #FE8A80;
+    vertical-align: middle;
+}
+
+.logo-img {
+    vertical-align: middle;
+}
+
+.nav-item {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 16px;
+
+    color: #9B9B9B;
+}
+
+.navbar-light .navbar-nav .active > .nav-link {
+    color: #FE8A80;
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+    color: #FE61AB;
+}
+
+.navbar-light .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='rgb(254, 138, 128)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+.navbar-toggler {
+    border: 0px;
+    color: #FE8A80;
+
+}
+
+.elipse {
+    background: url("../img/main/elipse.png") center no-repeat;
+    background-position: center 84.06px;
+    background-size: cover;
+}
+
+.bottom-img {
+    align-items:center;
+    background: url("../img/main/index-bg-img.png") center no-repeat;
+    background-size:contain;
+    background-position: bottom;
+}
+
+.h1 {
+    font-family: Yeseva One;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 36px;
+    line-height: 45px;
+
+    /* or 125% */
+    text-align: center;
+    background: linear-gradient(-60deg, #FE61AB 0%, #FE8A80 100%);
+    background-clip: border-box;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+
+
+/*main page list*/
+.list-num {
+    font-family: Yeseva One, sans-serif;
+    position: relative;
+    font-size: 36px;
+    line-height: 42px;
+    color: #FE8A80;
+}
+
+.list-text {
+    font-size: 16px;
+    line-height: 24px;
+    color: #454545;
+    margin-bottom: 23px;
+}
+
+/* form elements */
+.main-form {
+    height: 420px;
+}
+
+.form-group {
+    margin-bottom: 21px;
+    position: relative;
+}
+
+.btn-coral {
+    background: #FE8A80;
+    color: white;
+}
+
+.index-start-btn {
+    background: linear-gradient(124.22deg, #FF44CB -60.02%, #FE8A80 125.54%);
+    box-shadow: 0 8px 14px rgba(172, 133, 255, 0.404);
+    border-radius: 54px;
+    font-size: 23px;
+    color: #FFFFFF;
+    padding: 11px 37px;
+    text-decoration: none;
+    transition: box-shadow 0.5s;
+}
+
+.index-start-btn:hover {
+    box-shadow: none;
+    color: white;
+    text-decoration: none;
+}
+
+.input {
+    border-radius: 80px;
+    height: 48px;
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.15);
+}
+
+.input-place {
+    padding-left: 65px;
+    font-size: 14px;
+    line-height: 16px;
+
+    color: #8F8F8F;
+}
+
+.input-label {
+    position: absolute;
+    left: 18px;
+    top: 10px;
+}
+
+.input-label img {
+    width: 20px;
+}
+/* form elements */
+
+.bg-gray {
+    background: #FCF7F4;
+}
+
+.text-gray {
+    color: #9B9B9B;
+}
+
+.footer {
+    width: 100%;
+    height: 50px;
+    background: #FCF7F4;
+    text-align: center;
+}
+
+.footer-link {
+    font-size: 18px;
+    color: #9B9B9B;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+.footer-link:hover {
+    color: #747474;
+}
+
+/* map modal */
+#profile_map {
+    width: 100%;
+    height: 400px;
+    margin-bottom: 30px;
+}
+/* map modal */
+
+/* desktop only parametrs */
+@media (min-width: 576px) {
+    body {
+        font-size: 18px;
+    }
+
+    .h1 {
+        font-size: 48px;
+        line-height: 50px;
+        margin-bottom: 32px;
+        padding-bottom: 10px;
+    }
+
+    .list-text {
+        font-size: 24px;
+        line-height: 28px;
+        margin-bottom: 43px;
+    }
+
+    .list-num {
+        font-size: 48px;
+    }
+
+    .bottom-img {
+        height: 100%;
+        background: none;
+    }
+    .elipse {
+        height: 100%;
+    }
+
+    .main-form {
+        height: auto
+    }
+
+    .input-label {
+        top: 7px;
+    }
+
+}

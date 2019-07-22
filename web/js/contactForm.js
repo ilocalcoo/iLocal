@@ -5,7 +5,7 @@ $(document).ready(function () {
             url: '/site/contact',
             type: "GET",
             success: function (data) {
-                $('.modal-body').html($(data).find('#contact-form-content').html());
+                $('#contact-form').html($(data).find('#contact-form-content').html());
             }
         });
     });
