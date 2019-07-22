@@ -28,7 +28,7 @@ $this->registerCssFile('/css/shop/create/form.css');
         ->label('Краткое описание места <div>Краткое описание места не должно превышать 255 знаков</div>') ?>
 
     <?= $form->field($model, 'shopFullDescription', ['options' => ['class' => 'shop-create-form']])->textarea()
-        ->label('Полное описание места <div>Напишите подробно обо всем, что выгодно отличает Ваше место от конкурентов. Максимум 1500 знаков</div>') ?>
+        ->label('Полное описание места <div>Напишите подробно обо всем, что выгодно отличает Ваше место от конкурентов (не более 1500 знаков)</div>') ?>
 
     <?= $form->field($model, 'shopTypeId', ['options' => ['class' => 'shop-create-form']])->radioList(
         app\models\ShopType::TYPES_LABELS,

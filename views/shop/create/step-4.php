@@ -32,8 +32,9 @@ $this->registerCssFile('/css/shop/create/form.css');
                 [
                     'item' => function ($index, $label, $name, $checked, $value) {
                         $check = $checked ? ' checked="checked"' : '';
-                        $return = '<label class="shop-create_cost-radio-btn-wrap">';
-                        $return .= '<input type="radio" name="' . $name . '" value="' . $value  . '" tabindex="3" ' .$check. '>';
+                        $hidden = $value=='' ? 'style="display:none"' : '';
+                        $return = '<label class="shop-create_cost-radio-btn-wrap"'.$hidden.'>';
+                        $return .= '<input type="radio" name="' . $name . '" value="' . $value  . '" tabindex="3" ' .$check.' ' .$hidden. '>';
                         $return .= '<div class="shop-create_cost-radio-btn">' . ucwords($label) . '</div>';
                         $return .= '</label>';
                         return $return;
