@@ -51,13 +51,15 @@ class Shop extends \yii\db\ActiveRecord
     const SHOP_ACTIVE_TRUE = 1;
     const SHOP_ACTIVE_FALSE = 0;
 
+    const SHOP_MIDDLE_COST_0 = null;
     const SHOP_MIDDLE_COST_1 = 1;
     const SHOP_MIDDLE_COST_2 = 2;
     const SHOP_MIDDLE_COST_3 = 3;
     const SHOP_MIDDLE_COST_4 = 4;
     const SHOP_MIDDLE_COST_5 = 5;
-    const SHOP_MIDDLE_COST = [self::SHOP_MIDDLE_COST_1, self::SHOP_MIDDLE_COST_2, self::SHOP_MIDDLE_COST_3, self::SHOP_MIDDLE_COST_4,self::SHOP_MIDDLE_COST_5];
+    const SHOP_MIDDLE_COST = [self::SHOP_MIDDLE_COST_0, self::SHOP_MIDDLE_COST_1, self::SHOP_MIDDLE_COST_2, self::SHOP_MIDDLE_COST_3, self::SHOP_MIDDLE_COST_4,self::SHOP_MIDDLE_COST_5];
     const SHOP_MIDDLE_COST_LABELS = [
+        self::SHOP_MIDDLE_COST_0 =>null,
         self::SHOP_MIDDLE_COST_1 =>'₽',
         self::SHOP_MIDDLE_COST_2 =>'₽₽',
         self::SHOP_MIDDLE_COST_3 => '₽₽₽',
@@ -108,8 +110,10 @@ class Shop extends \yii\db\ActiveRecord
             [['shopShortName', 'shopTypeId'], 'required'],
             [['shopMiddleCost'], 'string'],
             [['shopShortName'], 'string', 'max' => 75],
-            [['shopFullName', 'shopPhone', 'shopWeb', 'shopCostMin', 'shopCostMax', 'shopWorkTime', 'shopAgregator', 'shopShortDescription',
-                'shopFullDescription', 'shopLinkPdf'], 'string', 'max' => 255],
+            [['shopFullName', 'shopPhone', 'shopWeb', 'shopCostMin',
+                'shopCostMax', 'shopWorkTime', 'shopAgregator',
+                'shopShortDescription', 'shopLinkPdf'], 'string', 'max' => 255],
+            [['shopFullDescription'], 'string', 'max' => 1500],
             [['shopAddressId'], 'exist', 'skipOnError' => true, 'targetClass' => ShopAddress::className(), 'targetAttribute' => ['shopAddressId' => 'id']],
             [['shopStatusId'], 'exist', 'skipOnError' => true, 'targetClass' => ShopStatus::className(), 'targetAttribute' => ['shopStatusId' => 'id']],
             [['shopTypeId'], 'exist', 'skipOnError' => true, 'targetClass' => ShopType::className(), 'targetAttribute' => ['shopTypeId' => 'id']],
