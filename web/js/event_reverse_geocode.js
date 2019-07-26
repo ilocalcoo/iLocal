@@ -105,6 +105,10 @@ function init() {
                 addressInput.setAttribute('value', addressOnlyArray);
                 addressInput.style.color = '#FE8A80';
             }
+            if (addressView = document.getElementById('view_address')) {
+                addressView.innerHTML = addressOnlyArray;
+                addressView.style.color = '#FE8A80';
+            }
 
             if (addressCoords = document.getElementById('coords_address')) {
                 addressCoords.setAttribute('value', coords);
