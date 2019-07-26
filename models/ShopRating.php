@@ -5,7 +5,7 @@ namespace app\models;
 use Yii;
 
 /**
- * This is the model class for table "shoprating".
+ * This is the model class for table "shopRating".
  *
  * @property int $shopId
  * @property int $userId
