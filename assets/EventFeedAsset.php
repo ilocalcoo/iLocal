@@ -21,12 +21,13 @@ class EventFeedAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'css/event.css',
+        'css/event/view.css',
     ];
     public $js = [
+        'js/eventsView.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
         'app\assets\AppAsset',
     ];
 }
