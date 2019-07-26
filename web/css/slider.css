@@ -28,7 +28,7 @@ input[type="range"]:focus {
     left: 10px;
     -webkit-appearance: none;  /* Override default CSS styles */
     appearance: none;
-    width: 85% !important; /* Full-width */
+    width: 85%; /* Full-width */
     height: 1px; /* Specified height */
     background: #C4C4C4; /* Grey background */
     outline: none; /* Remove outline */

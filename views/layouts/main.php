@@ -114,6 +114,12 @@ AppAsset::register($this);
                     echo 'nav-bar-categories-main-inactive';
                 }
                 ?>">Акции</a>
+                <a href="/places" class="<?php if ($currentUrl == 'place') {
+                    echo 'nav-bar-categories-main-active';
+                } else {
+                    echo 'nav-bar-categories-main-inactive';
+                }
+                ?>">События</a>
             </div>
             <div class="nav-bar-categories">
                 <?php if ($currentUrl == 'even') { ?>
