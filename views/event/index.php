@@ -174,16 +174,29 @@ EventFeedAsset::register($this);
 <?php Pjax::end(); ?>
 
 <!--мобильная версия ленты акций-->
-<section class="container-fluid d-block">
+<section class="container-fluid d-md-none d-sm-block">
   <?php
   foreach ($shops as $shop) {
     if ($countEvents != 0) { ?>
       <div class="row">
-        <div class="col-12 scrolls">
-          <?php foreach ($events as $event) { ?>
-            <div class="col-12 slide">
-              <div class="slide-img">
-                <img src="<?php $photos[0]['eventPhoto'] ?>" alt="<?php $event->shortDesc?>">
+        <div class="col-12 d-flex overflow-auto">
+          <?php $events = $shop->getEvents()->all();
+          foreach ($events as $event) {
+            $photo = $event->getTopEventPhotos()->asArray()->one();
+            if (is_null($photo)) {
+              $photo = [
+                  'eventPhoto' => '/img/nophoto.jpg'
+              ];
+            } ?>
+            <div class="col-10">
+              <div class="slide-img mw-100">
+                <img src="<?= '/img/eventPhoto/' . $photo['eventPhoto'] ?>" alt="<?= $event->title ?>">
+                <div class="overlay">
+                  <?= Html::a($event->title, 'events/' . $event->id) ?>
+                </div>
+              </div>
+              <div class="slide-text">
+                <?= $event->shortDesc; ?>
               </div>
             </div>
           <?php } ?>
@@ -191,6 +204,13 @@ EventFeedAsset::register($this);
       </div>
     <?php }
   } ?>
+  <div class="pagination">
+    <?= \yii\widgets\LinkPager::widget([
+        'pagination' => $pages,
+        'nextPageLabel' => '>',
+        'prevPageLabel' => '<',
+    ]); ?>
+  </div>
 </section>
 
 
