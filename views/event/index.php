@@ -174,7 +174,7 @@ EventFeedAsset::register($this);
 <?php Pjax::end(); ?>
 
 <!--мобильная версия ленты акций-->
-<section class="container-fluid d-md-none d-sm-block">
+<section class="container d-md-none d-sm-block">
   <?php
   foreach ($shops as $shop) {
     if ($countEvents != 0) { ?>
@@ -183,13 +183,13 @@ EventFeedAsset::register($this);
           <?php $events = $shop->getEvents()->all();
           foreach ($events as $event) {
             $photo = $event->getTopEventPhotos()->asArray()->one();
-            if (is_null($photo)) {
+            if ($photo['eventPhoto'] == '') {
               $photo = [
-                  'eventPhoto' => '/img/nophoto.jpg'
+                    'eventPhoto' => 'nophoto.jpg'
               ];
             } ?>
             <div class="col-10">
-              <div class="slide-img mw-100">
+              <div class="slide-img">
                 <img src="<?= '/img/eventPhoto/' . $photo['eventPhoto'] ?>" alt="<?= $event->title ?>">
                 <div class="overlay">
                   <?= Html::a($event->title, 'events/' . $event->id) ?>
