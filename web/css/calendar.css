@@ -1,0 +1,38 @@
+.daterangepicker td.active, .daterangepicker td.active:hover {
+    background-color: #FCF7F4;
+    border-color: transparent;
+    color: #FE8A80;
+}
+
+.daterangepicker td {
+    color: #8F8F8F;
+}
+
+.in-range {
+    background: #FCF7F4;
+}
+
+.daterangepicker td.start-date {
+    border-radius: 15px 0px 0px 15px;
+}
+
+.daterangepicker td.end-date {
+    border-radius: 0px 15px 15px 0px;
+}
+
+.daterangepicker td.start-date.end-date {
+    border-radius: 15px;
+}
+
+.daterangepicker td.in-range {
+    background: #FCF7F4;
+    color: #FE8A80;
+}
+
+.table-condensed > thead {
+    color: #FE8A80;
+}
+
+.month {
+    color: black;
+}

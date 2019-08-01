@@ -195,6 +195,10 @@ body {
     border-color: #FE61AB;
 }
 
+.btn-link-coral, .btn-link-coral:hover {
+    color: #FE8A80;
+}
+
 .btn-outline-coral {
     color: #FE8A80;
     border-color: #FE8A80;
@@ -230,6 +234,12 @@ body {
     overflow: hidden;
 }
 .slide-img img {
+    max-height: 270px;
+    border-radius: 5px;
+    width: 277px;
+}
+
+.happening-img img {
     width: inherit;
 }
 
@@ -323,18 +333,21 @@ body {
 .category-link, .category-link:hover {
     display: block;
     height: auto;
-    color: inherit;
+    color: inherit  !important;
     text-decoration: none;
 }
-
+.nav-bar-categories {
+    color: #FE8A80;
+}
 .nav-bar-categories>a {
     background: #FFFFFF;
     box-shadow: 2px 4px 23px rgba(0, 0, 0, 0.13);
-    border-radius: 80px;
-    font-size: 18px;
-    color: #606060;
-    padding: 11px 30px;
-    margin-left: 20px;
+    border-radius: 30px;
+    font-size: 14px;
+    line-height: 16px;
+    color: #FE8A80;
+    padding: 8px 10px;
+    margin-left: 10px;
     text-decoration: none;
     transition: color 0.3s, background-color 0.3s;
 }
@@ -355,12 +368,47 @@ body {
     color: white !important;
 }
 
+/*pager*/
+.page-item:hover .page-link {
+    z-index: 1;
+    color: #fff;
+    background: #FE61AB;
+    border-color: #FE8A80;
+}
 
+.page-item.active .page-link {
+    z-index: 1;
+    color: #fff;
+    background: #FE8A80;
+    border-color: #FE8A80;
+}
+
+.page-link:focus {
+    box-shadow: 0 0 0 .2rem rgba(254,138,128,.5);
+    color: #fff;
+    background-color: #FE61AB;
+    border-color: #FE61AB;
+}
+/*pager*/
+
+.range-value[readonly], .range-value[readonly]:focus {
+    background: white;
+    color: #FE8A80;
+    border: none;
+    text-decoration: underline;
+    cursor: pointer;
+    max-width: 110px;
+    font-size: 14px;
+}
 
 /* desktop only parametrs */
 @media (min-width: 576px) {
     body {
         font-size: 18px;
+    }
+
+    .wrap > .container {
+        padding: 50px 15px 20px;
     }
 
     .h1 {
@@ -401,6 +449,18 @@ body {
     .badge {
         font-size: 16px;
     }
+
+    .nav-bar-categories>a {
+        font-size: 18px;
+        border-radius: 80px;
+        padding: 11px 30px;
+        margin-left: 20px;
+    }
+
+    .range-value[readonly], .range-value[readonly]:focus {
+        max-width: 130px;
+        font-size: 18px;
+    }
 }
 
 a {
@@ -412,5 +472,5 @@ a:hover {
 }
 
 a:visited {
-    color: #9B9B9B;
+    color: inherit;
 }

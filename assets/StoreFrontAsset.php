@@ -29,8 +29,6 @@ class StoreFrontAsset extends AssetBundle
         'js/modal_map.js',
     ];
     public $depends = [
-        'yii\web\YiiAsset',
-        'yii\bootstrap\BootstrapAsset',
-        'app\assets\AppAsset',
+
     ];
 }

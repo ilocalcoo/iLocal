@@ -44,8 +44,8 @@ use yii\jui\AutoComplete;
     ]) ?>
 
 	<div class="form-group">
-      <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
-      <?= Html::resetButton('Reset', ['class' => 'btn btn-outline-secondary']) ?>
+      <?= Html::submitButton('Search', ['class' => 'btn btn-coral']) ?>
+      <?= Html::resetButton('Reset', ['class' => 'btn btn-outline-coral']) ?>
 	</div>
 
     <?php ActiveForm::end(); ?>

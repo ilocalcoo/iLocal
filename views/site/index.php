@@ -28,6 +28,7 @@ $this->title = "I'm Local";
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <head>
+    <base href="<?= Url::base(true) ?>">
     <meta charset="<?= Yii::$app->charset ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -41,7 +42,7 @@ $this->title = "I'm Local";
 <div class="container-fluid bottom-img">
     <div class="container">
         <nav class="navbar navbar-expand-lg navbar-light">
-            <a class="navbar-brand" href="<?php Yii::$app->homeUrl ?>">
+            <a class="navbar-brand" href="<?= Url::base(true) ?>">
                 <img src="img/main/logo.png" width="30" height="30" class="d-inline-block logo-img" alt="i’m local">
                 <span class="logo-text">i’m local</span>
             </a>
@@ -68,15 +69,16 @@ $this->title = "I'm Local";
                         'toggleButton' => [
                             'label' => 'Помощь',
                             'tag' => 'a',
+                            'type' => '',
                             'class' => 'contact-form nav-link',
                         ],
-                        'closeButton' => [
-                            'class' => 'btn btn-coral',
-                            'label' => 'Закрыть'
-                        ]
+//                        'closeButton' => [
+//                            'class' => 'btn btn-coral',
+//                            'label' => 'Закрыть'
+//                        ]
                     ]);
                     ?>
-                    <div class="modal-body"></div>
+                    <div class="modal-body contact-modal-body"></div>
                     <?php Modal::end(); ?>
                     </li>
                     <?php if (Yii::$app->user->isGuest) { ?>
@@ -87,6 +89,7 @@ $this->title = "I'm Local";
                         'toggleButton' => [
                             'label' => 'Вход<span class="login-ellipse"></span>',
                             'tag' => 'a',
+                            'type' => '',
                             'class' => 'modal-enter nav-link',
                         ],
                     ]);
@@ -188,71 +191,72 @@ $this->title = "I'm Local";
         <div class="row">
             <div class="col-12 scrolls" id="scrolls">
                 <?php foreach ($events as $event) { ?>
-                <div class="slide col-md-3 col-8">
+
+                <div class="slide col-md-3 col-8 align-top">
+                    <a href="/events/<?= $event->id ?>">
                     <div class="slide-img">
-                        <img src="<?= '/img/eventPhoto/'.$event->eventPhotos[0]->eventPhoto ?>" alt="First slide">
+                        <img width="277px" src="<?= '/img/eventPhoto/'.$event->eventPhotos[0]->eventPhoto ?>" alt="<?= $event->title ?>">
                         <div class="overlay">
-                            <a class="overlay-link" href="#"><?= $event->title ?></a>
+                            <a class="overlay-link" href="/events/<?= $event->id ?>"><?= $event->title ?></a>
                         </div>
                         <span class="badge badge-coral">-15%</span>
                     </div>
-                    <div class="slide-text"><?= $event->shortDesc ?></div>
+                    <div class="slide-text"><?= mb_substr($event->shortDesc,0,128).'...' ?></div>
+                    </a>
                 </div>
+
                 <?php } ?>
             </div>
         </div>
     </div>
 </section>
-
-<section id="events">
+<?php if (!empty($happenings)) {?>
+<section id="happening">
     <div class="container mt-5">
         <div class="w-100 mb-3"><span class="h3">События рядом с вами</span></div>
         <div class="row">
-            <?php //foreach ($events as $event) { ?>
-            <div class="event-item col-md-6 col-12">
-                <div class="slide-img">
-                    <img src="/img/eventPhoto/14.jpg" alt="First slide">
+            <?php foreach ($happenings as $happening) { ?>
+            <div class="event-item col-md-4 col-12">
+                <div class="slide-img happening-img">
+                    <img src="/img/happeningPhoto/<?php $happeningPhoto = $happening->getPhotos()->asArray()->one()['happeningPhoto'];
+                    if (is_null($happeningPhoto)) {
+                        $happeningPhoto = '/img/nophoto.jpg';
+                    }
+                    echo $happeningPhoto ?>" alt="<?= $happening->title ?>">
                     <div class="overlay">
                         <a class="overlay-link event-link" href="#">Мастер-класс для детей “Построй свой замок” <div class="event-date">13:00 18.07.19</div></a>
                     </div>
                     <span class="badge badge-coral">Free</span>
                 </div>
             </div>
-            <div class="event-item col-md-6 col-12">
-                <div class="slide-img">
-                    <img src="/img/eventPhoto/14.jpg" alt="First slide">
-                    <div class="overlay">
-                        <a class="overlay-link event-link" href="#">Мастер-класс для детей “Построй свой замок” <div class="event-date">13:00 18.07.19</div></a>
-                    </div>
-                    <span class="badge badge-coral">Free</span>
-                </div>
-            </div>
-            <?php //} ?>
+            <?php } ?>
         </div>
         <a href="/iLocal/events.html"><button  class="btn btn-outline-coral w-100">Все события</button></a>
     </div>
 </section>
-
-<section id="places">
+<?php } ?>
+<section id="shops">
     <div class="container mt-5">
         <div class="w-100 mb-3"><span class="h3">Места</span><span style="float: right"><a href="/shops"><button  class="btn btn-outline-coral">Все места</button></a></span></div>
         <div class="row">
             <div class="col-12 scrolls" id="scrolls">
                 <?php foreach ($shops as $shop) { ?>
-                <div class="slide col-md-3 col-8">
-                    <div class="slide-img">
-                        <img src="/img/shopPhoto/<?php
-                        $shopPhoto = $shop->getShopPhotos()->asArray()->one()['shopPhoto'];
-                        if (is_null($shopPhoto)) {
-                            $shopPhoto = '/img/nophoto.jpg';
-                        }
-                        echo $shopPhoto ?>" alt="<?= $shop->shopShortName ?>" data-pjax="0">
-                        <div class="overlay">
-                            <a class="overlay-link event-link" href="<?= 'shops/' . $shop->shopId ?>" data-pjax="0"><?= $shop->shopShortName ?> <div class="event-date">1 км</div></a>
-                        </div>
-                        <span class="badge badge-coral"><?= $shop->shopRating ?></span>
+                    <div class="slide col-md-3 col-8">
+                        <a href="/shops/<?= $shop->shopId ?>">
+                            <div class="slide-img">
+                                <img src="/img/shopPhoto/<?php
+                                $shopPhoto = $shop->getShopPhotos()->asArray()->one()['shopPhoto'];
+                                if (is_null($shopPhoto)) {
+                                    $shopPhoto = '/img/nophoto.jpg';
+                                }
+                                echo $shopPhoto ?>" alt="<?= $shop->shopShortName ?>" data-pjax="0">
+                                <div class="overlay">
+                                    <a class="overlay-link event-link" href="<?= 'shops/' . $shop->shopId ?>" data-pjax="0"><?= $shop->shopShortName ?> <div class="event-date">1 км</div></a>
+                                </div>
+                                <span class="badge badge-coral"><?= $shop->shopRating ?></span>
+                            </div>
+                        </a>
                     </div>
-                </div>
                 <?php } ?>
             </div>
 
@@ -265,8 +269,17 @@ $this->title = "I'm Local";
         <div class="row">
             <div class="col-md-6 col-12">
                 <a class="footer-link" href="/about">О проекте</a>&nbsp;
-                <a class="footer-link" href="/policy" target="_blank">Политику конфиденциальности</a>&nbsp;
-                <a class="footer-link" href="#">Помощь</a>
+                <a class="footer-link" href="/policy" target="_blank">Политика конфиденциальности</a>&nbsp;
+                <?php Modal::begin([
+                    'toggleButton' => [
+                        'label' => 'Помощь',
+                        'tag' => 'a',
+                        'class' => 'contact-form footer-link',
+                    ],
+                ]);
+                ?>
+                <div class="modal-body contact-modal-body"></div>
+                <?php Modal::end(); ?>
             </div>
             <div class="col-md-6 col-12 small-text">© 2019, i’m local</div>
         </div>

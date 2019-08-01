@@ -15,7 +15,7 @@
 }
 
 .content {
-    height: 272px;
+    /*height: 272px;*/
     display: flex;
     margin-top: 42px;
     background: #FFFFFF;

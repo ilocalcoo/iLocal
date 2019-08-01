@@ -1,9 +1,10 @@
 <?php
 
+use app\assets\AppAsset;
 use app\assets\ShopFeedAsset;
 use kartik\rating\StarRating;
 use yii\authclient\widgets\AuthChoice;
-use yii\bootstrap\Modal;
+use yii\bootstrap4\Modal;
 use yii\helpers\Html;
 use yii\widgets\Pjax;
 
@@ -14,7 +15,10 @@ use yii\widgets\Pjax;
 /* @var $searchModel \app\models\search\ShopSearch */
 /* @var $shopShortName \app\models\search\ShopSearch */
 
-ShopFeedAsset::register($this);
+//ShopFeedAsset::register($this);
+//$this->registerCssFile('/css/shop.css', ['depends' => 'yii\web\YiiAsset']);
+$this->registerCssFile('/css/contactForm.css');
+$this->registerJsFile('/js/contactForm.js', ['depends' => 'app\assets\AppAsset']);
 $type = 'Все места';
 if (array_key_exists('shopTypeId', Yii::$app->request->queryParams)) {
     $type = \app\models\ShopType::TYPES_LABELS[Yii::$app->request->queryParams['shopTypeId']];
@@ -77,7 +81,6 @@ $this->title = $type . ' рядом с вами';
                         <?php if (Yii::$app->user->isGuest) { ?>
                             <?php
                             Modal::begin([
-                                'header' => false,
                                 'toggleButton' => [
                                     'label' => '<img src="/img/user/Favor_rounded.svg" alt="">',
                                     'tag' => 'a',
@@ -128,13 +131,18 @@ $this->title = $type . ' рядом с вами';
     <?php } ?>
 
     <?php Pjax::end(); ?>
-    <div class="pagination">
+    <nav class="pagination">
         <?= \yii\widgets\LinkPager::widget([
             'pagination' => $pages,
+            'nextPageCssClass' => 'page-item',
+            'disabledListItemSubTagOptions' => ['tag' => 'span', 'class' => 'page-link'],
+            'prevPageCssClass' => 'page-item',
+            'pageCssClass' => 'page-item',
+            'linkOptions' => ['class' => 'page-link'],
             'nextPageLabel' => '>',
             'prevPageLabel' => '<',
         ]); ?>
-    </div>
+    </nav>
 
     <div class="shop-banner">
         <div class="banner-left">

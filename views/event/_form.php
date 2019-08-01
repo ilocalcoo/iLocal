@@ -31,7 +31,7 @@ use yii\widgets\ActiveForm;
     <?= $form->field($model, 'end')->textInput() ?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Save', ['class' => 'btn btn-coral']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

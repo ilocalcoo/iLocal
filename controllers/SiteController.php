@@ -92,6 +92,7 @@ class SiteController extends Controller
         return $this->render('index', [
             'events' => $events,
             'shops' => $shops,
+            'happenings' => [],
         ]);
     }
 

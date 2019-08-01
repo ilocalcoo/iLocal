@@ -5,7 +5,7 @@ use app\models\ThumbGenerator;
 use app\models\UserEvent;
 use kartik\rating\StarRating;
 use yii\authclient\widgets\AuthChoice;
-use yii\bootstrap\Modal;
+use yii\bootstrap4\Modal;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
@@ -202,7 +202,7 @@ if (count($carousel) == 1) {
                     echo $event['eventPhotos'][0]['eventPhoto'];
                 } ?>" class="photo" alt="">
 				<div class="photo-wrap">
-					<a href="" class="title event-view" id="<?= $event['id'] ?>"><?= $event['title'] ?></a>
+					<a href="events/<?= $event['id'] ?>" class="title event-view" id="<?= $event['id'] ?>"><?= $event['title'] ?></a>
 				</div>
 				<div class="info-block-wrap">
 					<p><?= mb_substr($event['shortDesc'], 0, 70) ?>
@@ -212,7 +212,6 @@ if (count($carousel) == 1) {
                 <?php if (Yii::$app->user->isGuest) { ?>
                     <?php
                     Modal::begin([
-                        'header' => false,
                         'toggleButton' => [
                             'label' => '<img src="/img/user/Favor_rounded.svg" alt="" class="favorite">',
                             'tag' => 'a',

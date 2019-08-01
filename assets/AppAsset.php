@@ -22,14 +22,17 @@ class AppAsset extends AssetBundle
     public $css = [
         '//fonts.googleapis.com/css?family=Roboto:400,700&display=swap',
         'https://use.fontawesome.com/releases/v5.8.2/css/all.css',
+        'css/contactForm.css',
         'css/fonts.css',
         'css/site.css',
         'css/style.css',
         'css/mainBootstrap.css',
         'css/slider.css',
+        'css/shop.css',
     ];
     public $js = [
         'js/imageUploaded.js',
+        '/js/contactForm.js',
     ];
     public $depends = [
         'yii\web\YiiAsset',
