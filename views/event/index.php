@@ -147,6 +147,7 @@ EventFeedAsset::register($this);
                                                 'toggleButton' => [
                                                     'label' => '<img src="/img/user/Favor_rounded.svg" alt="">',
                                                     'tag' => 'a',
+                                                    'type' => '',
                                                     'class' => 'modal-enter',
                                                 ],
                                             ]);
