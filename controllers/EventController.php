@@ -67,21 +67,24 @@ class EventController extends Controller
 //            'dataProvider' => $dataProvider,
 //            'shortDescData' => $shortDescData,
 //        ]);
-        $query = Shop::find()->where(['shopActive' => 1])->where(['shopId' => Event::find()->select('eventOwnerId')]);
-        if (array_key_exists('eventTypeId', Yii::$app->request->queryParams)) {
-            $query = $query->having(
-                ['shopTypeId' => Yii::$app->request->queryParams['eventTypeId']]
-            );
-        }
+
+//        $query = Shop::find()->where(['shopActive' => 1])->where(['shopId' => Event::find()->select('eventOwnerId')]);
+//        if (array_key_exists('eventTypeId', Yii::$app->request->queryParams)) {
+//            $query = $query->having(
+//                ['shopTypeId' => Yii::$app->request->queryParams['eventTypeId']]
+//            );
+//        }
+        $query = Event::find()->joinWith('shop');
         $pages = new Pagination([
             'totalCount' => $query->count(),
-            'pageSize' => 3,
+            'pageSize' => 10,
         ]);
         $shops = $query->offset($pages->offset)
             ->limit($pages->limit)
             ->all();
         return $this->render('index', [
-            'shops' => $shops,
+            'events' => $shops,
+//            'shops' => $shops,
             'pages' => $pages,
         ]);
     }

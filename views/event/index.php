@@ -33,8 +33,8 @@ EventFeedAsset::register($this);
 <div class="event-index">
     <div class="row">
         <div class="col-12">
-            <div class="row" style="min-height:38px;background: #FFFFFF;box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);border-radius: 15px 15px 0px 0px;">
-                <div class="col-6" style>
+            <div class="row date-picker-panel">
+                <div class="col-6" >
                     Дата: <?php echo DateRangePicker::widget([
                                     'name'=>'date_range_1',
                                     'hideInput' => true,
@@ -88,7 +88,7 @@ EventFeedAsset::register($this);
                             ?>
                 </div>
                 <div class="col-6 text-right">
-                    Бесплатные
+                    <div class="custom-switch-label">Бесплатные</div>
                     <div class="custom-control custom-switch" style="display: inline-block">
                         <input type="checkbox" class="custom-control-input" id="customSwitches" checked>
                         <label class="custom-control-label" for="customSwitches"></label>
@@ -102,49 +102,91 @@ EventFeedAsset::register($this);
     <?php Pjax::begin(); ?>
     <div class="row">
     <?php
-    foreach ($shops as $shop) {
-        $events = $shop->getEvents()->all();
+    foreach ($events as $event) {
+        //$events = $shop->getEvents()->all();
         if (count($events) != 0) { ?>
-            <div class="col-12 mb-4">
-                <div class="content container card p-3">
+            <div class="col-md-4 col-12">
+                <div class="content card p-3">
                     <div class="row align-items-center h-100">
-                        <div class="col-md-2 col-12 mx-auto text-center">
-                            <a class="shop_img" href="<?= 'shops/' . $shop->shopId ?>" data-pjax="0">
-                                <img class=""
-                                        src="/img/shopPhoto/<?php
-                                        $shopPhoto = $shop->getShopPhotos()->asArray()->one()['shopPhoto'];
+                        <div class="col-12">
+                            <a class="shop-link" href="<?= 'shops/' . $event->shop->shopId ?>" data-pjax="0">
+                                <h5 class="card-title">
+                                <img class="shop_img" src="/img/shopPhoto/<?php
+                                        $shopPhoto = $event->shop->getShopPhotos()->asArray()->one()['shopPhoto'];
                                         if (is_null($shopPhoto)) {
                                             $shopPhoto = '/img/nophoto.jpg';
                                         }
                                         echo $shopPhoto ?>"
-                                        alt="<?= $shop->shopShortName ?>"
+                                        alt="<?= $event->shop->shopShortName ?>"
                                 />
+                                <?= $event->shop->shopShortName ?>
+                                </h5>
                             </a>
                         </div>
-                        <div class="col-md-10 col-12 mx-auto text-md-left text-center">
-                            <h5 class="card-title"><?= $shop->shopShortName ?></h5>
-                        </div>
-                    </div>
-                    <div class="row ml-3 mr-3">
-                        <div class="col-12 scrolls" id="scrolls">
-                            <?php
-                            $events = $shop->getEvents()->all();
-                            foreach ($events as $event) { ?>
-
-                                <div class="slide col-md-3 col-8 align-top">
-                                    <a href="/events/<?= $event->id ?>">
-                                        <div class="slide-img">
-                                            <img width="277px" src="<?= '/img/eventPhoto/'.$event->eventPhotos[0]->eventPhoto ?>" alt="<?= $event->title ?>">
-                                            <div class="overlay">
-                                                <a class="overlay-link" href="/events/<?= $event->id ?>"><?= $event->title ?></a>
-                                            </div>
-                                            <span class="badge badge-coral">-15%</span>
-                                        </div>
-                                        <div class="slide-text"><?= mb_substr($event->shortDesc,0,70).'...' ?></div>
-                                    </a>
+                        <div class="col-12">
+                            <a href="/events/<?= $event->id ?>">
+                                <a href="/events/<?= $event->id ?>">
+                                <div class="slide-img">
+                                    <img src="<?= '/img/eventPhoto/'.$event->eventPhotos[0]->eventPhoto ?>" alt="<?= $event->title ?>">
+                                    <div class="overlay">
+                                        <div class="overlay-link"><?= $event->title ?></div>
+                                    </div>
+                                    <span class="badge badge-coral">-15%</span>
                                 </div>
-
-                            <?php } ?>
+                                </a>
+                                <div class="slide-text"><?= mb_substr($event->shortDesc,0,70).'...' ?></div>
+                            </a>
+                        </div>
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-4">
+                                    <div class="like">
+                                        <?php if (Yii::$app->user->isGuest) { ?>
+                                            <?php
+                                            Modal::begin([
+                                                'toggleButton' => [
+                                                    'label' => '<img src="/img/user/Favor_rounded.svg" alt="">',
+                                                    'tag' => 'a',
+                                                    'class' => 'modal-enter',
+                                                ],
+                                            ]);
+                                            ?>
+                                            <div class="modal-enter-body">
+                                                <h2>ВХОД</h2>
+                                                <p>Войдите, чтобы добавить в избранное!</p>
+                                            </div>
+                                            <div class="enter-icons">
+                                                <?= yii\authclient\widgets\AuthChoice::widget([
+                                                    'baseAuthUrl' => ['site/auth'],
+                                                    'popupMode' => true,
+                                                ]) ?>
+                                            </div>
+                                            <p class="enter-policy">Продолжая, Вы соглашаетесь с нашими Условиями использования и
+                                                подтверждаете, что прочли
+                                                <a href="/policy" target="_blank">Политику конфиденциальности</a> .</p>
+                                            <?php Modal::end(); ?>
+                                        <?php } else { ?>
+                                            <?php \yii\widgets\Pjax::begin() ?>
+                                            <?php if (\app\models\UserShop::find()->where(['user_id' => Yii::$app->user->id])->andWhere(['shop_id' => $event->shop->shopId])->one()) {
+                                                $favorite = 'favorite_border_24px_rounded.svg';
+                                                $shopId = 'del-shop-id';
+                                            } else {
+                                                $favorite = 'Favor_rounded.svg';
+                                                $shopId = 'add-shop-id';
+                                            } ?>
+                                            <a href="/shops?<?= $shopId ?>=<?= $event->shop->shopId ?>" title="Добавить в избранное"
+                                                    class="favorite">
+                                                <img src="/img/user/<?= $favorite ?>" alt=""></a>
+                                            <?php \yii\widgets\Pjax::end() ?>
+                                        <?php } ?>
+                                    </div>
+                                </div>
+                                <div class="col-8">
+                                    <div class="text-right event-date">
+                                        <?= $event->begin .' - '. $event->end ?>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

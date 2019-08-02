@@ -187,4 +187,8 @@ class Event extends \yii\db\ActiveRecord
     {
         return new \app\models\query\EventQuery(get_called_class());
     }
+
+    public function getShop() {
+        return $this->hasOne(Shop::class, ['shopId' => 'eventOwnerId']);
+    }
 }

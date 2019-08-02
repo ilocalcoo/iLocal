@@ -236,7 +236,7 @@ body {
 .slide-img img {
     max-height: 270px;
     border-radius: 5px;
-    width: 277px;
+    width: 100%
 }
 
 .happening-img img {
@@ -391,6 +391,13 @@ body {
 }
 /*pager*/
 
+.date-picker-panel {
+    min-height:38px;
+    background: #FFFFFF;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
+    border-radius: 15px 15px 0px 0px;
+}
+
 .range-value[readonly], .range-value[readonly]:focus {
     background: white;
     color: #FE8A80;
@@ -399,6 +406,54 @@ body {
     cursor: pointer;
     max-width: 110px;
     font-size: 14px;
+}
+
+/* custom check-btn*/
+.custom-switch .custom-control-label::before {
+    left: -2.25rem;
+    top: -0.0rem;
+    width: 2.7rem;
+    pointer-events: all;
+    border-radius: 1rem;
+    height: calc(1.75rem + 1px);
+}
+
+.custom-control-input ~ .custom-control-label::before {
+    border: 3px solid #8f8f8f;
+    background: white;
+}
+.custom-control-input:checked ~ .custom-control-label::before {
+    background-color: white;
+    border: 3px solid #FE8A80;
+}
+.custom-switch .custom-control-label::after {
+    top: 0.3rem;
+    left: calc(-1.9rem);
+    width: calc(1.2rem);
+    height: calc(1.2rem);
+    background-color: white;
+    border-radius: 1.2rem;
+    border: 3px solid #8f8f8f;
+}
+
+.custom-switch .custom-control-input:checked ~ .custom-control-label::after {
+    background-color: white;
+    border: 3px solid #FE8A80;
+    transform: translateX(0.75rem);
+}
+
+.custom-switch-label {
+    color: #FE8A80;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 2rem;
+    display: inline-block;
+    margin-right: 10px;
+}
+/* custom check-btn*/
+
+.card-title {
+    font-size: 16px;
 }
 
 /* desktop only parametrs */
@@ -449,7 +504,10 @@ body {
     .badge {
         font-size: 16px;
     }
-
+    .custom-switch-label {
+        font-size: 18px;
+        line-height: 41px;
+    }
     .nav-bar-categories>a {
         font-size: 18px;
         border-radius: 80px;
@@ -459,6 +517,9 @@ body {
 
     .range-value[readonly], .range-value[readonly]:focus {
         max-width: 130px;
+        font-size: 18px;
+    }
+    .card-title {
         font-size: 18px;
     }
 }
