@@ -39,7 +39,7 @@ $this->title = $type . ' рядом с вами';
             <?php
             foreach ($shops as $shop) { ?>
                 <div class="row content">
-                    <div class="col-md-4 col-12">
+                    <div class="d-flex col-md-4 col-12 align-items-center">
                         <a class="shop_img" href="<?= 'shops/' . $shop->shopId ?>" data-pjax="0">
                             <img src="/img/shopPhoto/<?php
                             $shopPhoto = $shop->getShopPhotos()->asArray()->one()['shopPhoto'];
