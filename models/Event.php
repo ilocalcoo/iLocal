@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\behaviors\BlameableBehavior;
+use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 
 /**
@@ -103,6 +104,13 @@ class Event extends \yii\db\ActiveRecord
             'begin' => 'Начало акции',
             'end' => 'Окончание акции',
         ];
+    }
+
+    public function fields()
+    {
+        return ArrayHelper::merge(parent::fields(), [
+            'eventPhotos'
+        ]);
     }
 
     public function scenarios()
