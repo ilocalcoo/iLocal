@@ -19,7 +19,6 @@ class UserController extends Controller
     return [
         'access' => [
             'class' => AccessControl::className(),
-            'only' => ['business'],
             'rules' => [
                 [
                     'allow' => false,
