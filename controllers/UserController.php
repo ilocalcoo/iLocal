@@ -6,10 +6,29 @@ use app\models\Event;
 use app\models\Shop;
 use app\models\User;
 use Yii;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 
 class UserController extends Controller
 {
+  /**
+   * {@inheritdoc}
+   */
+  public function behaviors()
+  {
+    return [
+        'access' => [
+            'class' => AccessControl::className(),
+            'rules' => [
+                [
+                    'allow' => false,
+                    'actions' => ['business'],
+                    'roles' => ['?'],
+                ],
+            ],
+        ],
+    ];
+  }
     /**
      * @return string
      */
