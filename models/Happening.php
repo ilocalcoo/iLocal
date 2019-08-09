@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\db\ActiveRecord;
+use yii\helpers\ArrayHelper;
 
 /**
  * This is the model class for table "happening".
@@ -67,6 +68,21 @@ class Happening extends ActiveRecord
             'createdOn' => Yii::t('app', 'Created On'),
             'updatedOn' => Yii::t('app', 'Updated On'),
         ];
+    }
+
+    public function fields()
+    {
+        return ArrayHelper::merge(parent::fields(), [
+            'happeningPhotos'
+        ]);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getHappeningPhotos()
+    {
+        return $this->hasMany(HappeninPhoto::className(), ['happeningId' => 'id']);
     }
 
     /**
