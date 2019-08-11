@@ -92,8 +92,27 @@ function init() {
                 firstGeoObject.getPremiseNumber(),
                 coords
             ];
-            var hiddenInput = document.getElementById('profile_address');
-            hiddenInput.setAttribute('value', addressArray);
+            var addressOnlyArray = [
+                firstGeoObject.getLocalities()[0],
+                firstGeoObject.getThoroughfare(),
+                firstGeoObject.getPremiseNumber(),
+            ];
+            if (hiddenInput = document.getElementById('profile_address')) {
+                hiddenInput.setAttribute('value', addressArray);
+            }
+
+            if (addressInput = document.getElementById('input_address')) {
+                addressInput.setAttribute('value', addressOnlyArray);
+                addressInput.style.color = '#FE8A80';
+            }
+            if (addressView = document.getElementById('view_address')) {
+                addressView.innerHTML = addressOnlyArray;
+                addressView.style.color = '#FE8A80';
+            }
+
+            if (addressCoords = document.getElementById('coords_address')) {
+                addressCoords.setAttribute('value', coords);
+            }
         });
     }
 }

@@ -1,15 +1,14 @@
 .content {
-  margin-bottom: 45px;
+
 }
 .cont_title {
   display: flex;
   margin-bottom: 30px;
 }
-.shop_img img{
-  width: 90px;
-  height: 90px;
-  border-radius: 45px;
-  margin-right: 19px;
+.shop_img {
+  width: 30px;
+  height: 30px;
+  border-radius: 30px;
 }
 .shop_name {
   margin-top: 8px;
@@ -89,7 +88,6 @@
   justify-content: space-between;
 }
 .like {
-  margin-top: 35px;
 }
 .like_data span {
   margin-top: 45px;
@@ -117,4 +115,22 @@
 .pagination > li > span {
   color: #606060;
   border: 0px solid #ddd;
+}
+
+.shop-link {
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: #454545;
+}
+.event-date {
+  font-size: 14px;
+  line-height: 16px;
+  display: inline-block;
+  align-items: center;
+  color: #8F8F8F;
+}
+/* desktop only parametrs */
+@media (min-width: 576px) {
 }

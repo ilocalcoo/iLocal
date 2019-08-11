@@ -23,7 +23,9 @@
         "kartik-v/yii2-widget-rating": "*",
         "ext-imagick": "*",
         "ext-exif": "*",
-        "andkon/yii2kladr": "^1.0"
+        "andkon/yii2kladr": "^1.0",
+        "yiisoft/yii2-bootstrap4": "^2.0",
+        "kartik-v/yii2-date-range": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

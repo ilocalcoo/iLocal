@@ -5,6 +5,7 @@ namespace app\models;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 
 /**
@@ -149,6 +150,13 @@ class Shop extends \yii\db\ActiveRecord
             'shopRating' => 'Shop Rating',
             'shopStatusId' => 'Shop Status ID',
         ];
+    }
+
+    public function fields()
+    {
+        return ArrayHelper::merge(parent::fields(), [
+            'shopPhotos', 'events'
+        ]);
     }
 
     public function scenarios()

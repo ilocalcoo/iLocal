@@ -36,9 +36,9 @@ use yii\widgets\Pjax;
 
     <?php Pjax::begin(); ?>
     <div class="form-group">
-        <?= Html::submitButton('Искать', ['class' => 'btn search-button']) ?>
+        <?= Html::submitButton('Искать', ['class' => 'btn btn-coral']) ?>
         <?= Html::resetButton('Сбросить', [
-        	'class' => 'btn',
+        	'class' => 'btn btn-outline-coral',
 			'id' => 'reset_button',
 			]) ?>
     </div>

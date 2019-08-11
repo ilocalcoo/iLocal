@@ -110,6 +110,7 @@ $config = [
                 '<controller:(event)>s/<id:\d+>/<action:(update/info)>' => '<controller>/create-step-2',
                 '<controller:(event)>s/<id:\d+>/<action:(update/photo)>' => '<controller>/create-step-3',
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'api/shop'],
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'api/event'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'api/user'],
             ],
         ],

@@ -4,6 +4,7 @@ namespace app\models;
 
 use Yii;
 use yii\behaviors\BlameableBehavior;
+use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 
 /**
@@ -105,6 +106,13 @@ class Event extends \yii\db\ActiveRecord
         ];
     }
 
+    public function fields()
+    {
+        return ArrayHelper::merge(parent::fields(), [
+            'eventPhotos'
+        ]);
+    }
+
     public function scenarios()
     {
         return [
@@ -186,5 +194,9 @@ class Event extends \yii\db\ActiveRecord
     public static function find()
     {
         return new \app\models\query\EventQuery(get_called_class());
+    }
+
+    public function getShop() {
+        return $this->hasOne(Shop::class, ['shopId' => 'eventOwnerId']);
     }
 }

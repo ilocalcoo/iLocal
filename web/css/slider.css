@@ -1,0 +1,73 @@
+input[type="range"]:focus {
+
+}
+
+.range-text {
+    position: absolute;
+    left: 65px;
+    top: 7px;
+    font-size: 14px;
+    line-height: 16px;
+
+    color: #8F8F8F;
+}
+
+.range-value {
+    color: #FE8A80;
+}
+
+.slidecontainer {
+    width: 100%; /* Width of the outside container */
+    align-items: center;
+}
+
+/* The slider itself */
+.slider {
+    position: relative;
+    top: 7px;
+    left: 10px;
+    -webkit-appearance: none;  /* Override default CSS styles */
+    appearance: none;
+    width: 85%; /* Full-width */
+    height: 1px; /* Specified height */
+    background: #C4C4C4; /* Grey background */
+    outline: none; /* Remove outline */
+    opacity: 0.7; /* Set transparency (for mouse-over effects on hover) */
+    -webkit-transition: .2s; /* 0.2 seconds transition on hover */
+    transition: opacity .2s;
+}
+
+/* Mouse-over effects */
+.slider:hover {
+    opacity: 1; /* Fully shown on mouse-over */
+}
+
+.slider:focus {
+    outline: none;
+}
+
+/* The slider handle (use -webkit- (Chrome, Opera, Safari, Edge) and -moz- (Firefox) to override default look) */
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; /* Override default look */
+    appearance: none;
+    width: 15px; /* Set a specific slider handle width */
+    height: 15px; /* Slider handle height */
+    border-radius: 50%;
+    background: #FE8A80; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-moz-range-thumb {
+    width: 15px; /* Set a specific slider handle width */
+    height: 15px; /* Slider handle height */
+    border-radius: 50%;
+    background: #FE8A80; /* Green background */
+    cursor: pointer; /* Cursor on hover */
+}
+
+.slider::-ms-fill-lower {
+    background: #FE8A80;
+}
+.slider::-moz-range-progress {
+    background: #FE8A80;
+}

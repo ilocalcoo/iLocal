@@ -85,7 +85,15 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $this->layout = false;
-        return $this->render('index');
+        $query = Shop::find()->where(['shopActive' => 1]);
+        $shops = $query->limit(10)->all();
+        $query = Event::find()->where(['active' => 1]);
+        $events = $query->limit(10)->all();
+        return $this->render('index', [
+            'events' => $events,
+            'shops' => $shops,
+            'happenings' => [],
+        ]);
     }
 
     /**

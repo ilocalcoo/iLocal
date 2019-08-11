@@ -3,15 +3,24 @@
 /* @var $this yii\web\View */
 
 use app\assets\AppAsset;
-use yii\bootstrap\Modal;
+use app\assets\ProfileMapsAsset;
+use app\models\Shop;
+use yii\authclient\widgets\AuthChoice;
+use yii\bootstrap4\Modal;
 use yii\helpers\Html;
 use yii\helpers\Url;
+use yii\web\View;
+
+/* @var $this yii\web\View */
+/* @var $shops app\models\Shop[] */
+/* @var $events app\models\Event[] */
 
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => Url::to(['img/main/favicon.png'])]);
 $this->registerCssFile('/css/contactForm.css');
 $this->registerJsFile('/js/contactForm.js', ['depends' => 'app\assets\AppAsset']);
-$this->registerCssFile('/css/main.css');
+$this->registerJsFile('/js/slider.js');
 AppAsset::register($this);
+ProfileMapsAsset::register($this);
 $this->title = "I'm Local";
 ?>
 
@@ -19,6 +28,7 @@ $this->title = "I'm Local";
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <head>
+    <base href="<?= Url::base(true) ?>">
     <meta charset="<?= Yii::$app->charset ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,89 +36,255 @@ $this->title = "I'm Local";
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body class="index-body">
+<body class="elipse">
 <?php $this->beginBody() ?>
 
-<div class="index-container">
-    <div class="main-nav-bar-wrap">
-        <div class="main-logo-wrap">
-            <a class="main-logo" href="/" tabindex="1">
-                <img src="/img/main/logo.svg" alt="">
-                i’m local
-            </a></div>
-        <div class="main-nav-bar">
-            <a href="/">Главная</a>
-            <?php if (!Yii::$app->user->isGuest) { ?>
-                <a href="/user/business">Бизнесу</a>
-                <a href="/favorites">Избранное</a>
+<div class="container-fluid bottom-img">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="<?= Url::base(true) ?>">
+                <img src="img/main/logo.png" width="30" height="30" class="d-inline-block logo-img" alt="i’m local">
+                <span class="logo-text">i’m local</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item ml-auto active">
+                        <a class="nav-link" href="<?php Yii::$app->homeUrl ?>">Главная</a>
+                    </li>
+                    <?php if (!Yii::$app->user->isGuest) { ?>
+                        <li class="nav-item ml-auto">
+                            <a class="nav-link" href="/user/business">Бизнесу</a>
+                        </li>
+                        <li class="nav-item ml-auto">
+                            <a class="nav-link" href="/favorites">Избранное</a>
+                        </li>
+                    <?php } ?>
+                    <li class="nav-item ml-auto">
+                    <?php
+                    Modal::begin([
+                        'bodyOptions' => ['id' => 'contact-form'],
+                        'toggleButton' => [
+                            'label' => 'Помощь',
+                            'tag' => 'a',
+                            'type' => '',
+                            'class' => 'contact-form nav-link',
+                        ],
+//                        'closeButton' => [
+//                            'class' => 'btn btn-coral',
+//                            'label' => 'Закрыть'
+//                        ]
+                    ]);
+                    ?>
+                    <div class="modal-body contact-modal-body"></div>
+                    <?php Modal::end(); ?>
+                    </li>
+                    <?php if (Yii::$app->user->isGuest) { ?>
+                    <li class="nav-item ml-auto">
+                    <?php
+                    Modal::begin([
+                        'bodyOptions' => ['id' => 'modal-enter'],
+                        'toggleButton' => [
+                            'label' => 'Вход<span class="login-ellipse"></span>',
+                            'tag' => 'a',
+                            'type' => '',
+                            'class' => 'modal-enter nav-link',
+                        ],
+                    ]);
+                    ?>
+                    <div class="modal-enter-body">
+                        <h2>ВХОД</h2>
+                        <p>Через социальные сети</p>
+                    </div>
+                    <div class="enter-icons">
+                        <?= yii\authclient\widgets\AuthChoice::widget([
+                            'baseAuthUrl' => ['site/auth'],
+                            'popupMode' => true,
+                        ]) ?>
+                    </div>
+                    <p class="enter-policy">Продолжая, Вы соглашаетесь с нашими Условиями использования и подтверждаете, что прочли
+                        <a href="/policy" target="_blank">Политику конфиденциальности</a> .</p>
+                    <?php Modal::end(); ?>
+                    </li>
+                    <?php } else { ?>
+                        <a href="/login">Профиль</a>
+                        <a href="/site/logout">Выход</a>
+                    <?php } ?>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <div class="container">
+        <div class="mt-5 d-none d-md-block"></div>
+        <div class="row">
+            <div class="col-md-6 offset-md-3 col-12">
+                <h1 class="h1">I’m local – ваш гид по местам в округе</h1>
+            </div>
+            <div class="col-md-6 col-12 mt-3">
+                <div class="d-none d-md-block">
+                    <div class="row">
+                        <div class="col-2 list-num">1.</div>
+                        <div class="col-10 list-text">Открывайте новые места и узнавайте о том, что происходит поблизости.</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2 list-num">2.</div>
+                        <div class="col-10 list-text">Удобный поиск и возможность сохранять.</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-2 list-num">3.</div>
+                        <div class="col-10 list-text">Новое качество жизни: взгляните по-новому на свой район и не тратьте время на долгие поездки.</div>
+                    </div>
+                </div>
+
+                <form action="/shops" method="get" class="text-center main-form">
+                    <input type="hidden" name="coords_address" id="coords_address" value="">
+                    <input type="hidden" id="input_address" value="">
+                    <div class="form-group main-group">
+                        <?php
+                        Modal::begin([
+                            'size' => 'modal-lg',
+                            'toggleButton' => [
+                                'label' => '<div class="form-control input input-place" data-toggle="modal" data-target="#exampleModal">
+                                    <span class="place-text" id="view_address">Выберите местоположение</span>
+                                    <span class="input-label"><img src="img/main/building.png" alt="Выберите место"></span>
+                                <span class="input-label-right"><i class="fas fa-chevron-right"></i></span>
+                                </div>',
+                                'tag' => 'a',
+                                'class' => '',
+                            ],
+                            'closeButton' => [
+                                'class' => 'btn btn-coral',
+                                'label' => 'Выбрать'
+                            ]
+                        ]);
+
+                        ?>
+                        <div class="modal-body">
+                            <div id="profile_map"></div>
+                        </div>
+                        <?php Modal::end(); ?>
+                    </div>
+                    <div class="form-group main-group">
+                        <div class="slidecontainer input form-control bg-white">
+                            <input type="range" min="1" max="11" value="5" class="slider" id="round_range">
+                        </div>
+                        <span class="range-text">На расстоянии <span id="range_text" class="range-value">1 км</span></span>
+                        <span class="input-label"><img src="img/main/aim.png" alt="Выберите место"></span>
+                    </div>
+                    <button class="btn btn-coral w-100">Начать</button>
+                </form>
+
+            </div>
+            <div class="col-md-6 col-12 d-none d-md-block" >
+                <img src="img/main/index-bg-img.png" alt="people" height="585px">
+            </div>
+        </div>
+    </div>
+</div>
+
+<section id="actions">
+    <div class="container mt-5">
+        <div class="w-100 mb-3"><span class="h3">Акции</span><span style="float: right"><a href="#"><button  class="btn btn-outline-coral">Все акции</button></a></span></div>
+        <div class="row">
+            <div class="col-12 scrolls" id="scrolls">
+                <?php foreach ($events as $event) { ?>
+
+                <div class="slide col-md-3 col-8 align-top">
+                    <a href="/events/<?= $event->id ?>">
+                    <div class="slide-img">
+                        <img width="277px" src="<?= '/img/eventPhoto/'.$event->eventPhotos[0]->eventPhoto ?>" alt="<?= $event->title ?>">
+                        <div class="overlay">
+                            <a class="overlay-link" href="/events/<?= $event->id ?>"><?= $event->title ?></a>
+                        </div>
+                        <span class="badge badge-coral">-15%</span>
+                    </div>
+                    <div class="slide-text"><?= mb_substr($event->shortDesc,0,128).'...' ?></div>
+                    </a>
+                </div>
+
+                <?php } ?>
+            </div>
+        </div>
+    </div>
+</section>
+<?php if (!empty($happenings)) {?>
+<section id="happening">
+    <div class="container mt-5">
+        <div class="w-100 mb-3"><span class="h3">События рядом с вами</span></div>
+        <div class="row">
+            <?php foreach ($happenings as $happening) { ?>
+            <div class="event-item col-md-4 col-12">
+                <div class="slide-img happening-img">
+                    <img src="/img/happeningPhoto/<?php $happeningPhoto = $happening->getPhotos()->asArray()->one()['happeningPhoto'];
+                    if (is_null($happeningPhoto)) {
+                        $happeningPhoto = '/img/nophoto.jpg';
+                    }
+                    echo $happeningPhoto ?>" alt="<?= $happening->title ?>">
+                    <div class="overlay">
+                        <a class="overlay-link event-link" href="#">Мастер-класс для детей “Построй свой замок” <div class="event-date">13:00 18.07.19</div></a>
+                    </div>
+                    <span class="badge badge-coral">Free</span>
+                </div>
+            </div>
             <?php } ?>
-            <?php
-            Modal::begin([
-                'header' => false,
-                'toggleButton' => [
-                    'label' => 'Помощь',
-                    'tag' => 'a',
-                    'class' => 'contact-form',
-                ],
-            ]);
-            ?>
-            <div class="modal-body"></div>
-            <?php Modal::end(); ?>
-            <!--        <a href="">Поиск</a>-->
-            <?php if (Yii::$app->user->isGuest) { ?>
-                <?php
-                Modal::begin([
-                    'header' => false,
+        </div>
+        <a href="/iLocal/events.html"><button  class="btn btn-outline-coral w-100">Все события</button></a>
+    </div>
+</section>
+<?php } ?>
+<section id="shops">
+    <div class="container mt-5">
+        <div class="w-100 mb-3"><span class="h3">Места</span><span style="float: right"><a href="/shops"><button  class="btn btn-outline-coral">Все места</button></a></span></div>
+        <div class="row">
+            <div class="col-12 scrolls" id="scrolls">
+                <?php foreach ($shops as $shop) { ?>
+                    <div class="slide col-md-3 col-8">
+                        <a href="/shops/<?= $shop->shopId ?>">
+                            <div class="slide-img">
+                                <img src="/img/shopPhoto/<?php
+                                $shopPhoto = $shop->getShopPhotos()->asArray()->one()['shopPhoto'];
+                                if (is_null($shopPhoto)) {
+                                    $shopPhoto = '/img/nophoto.jpg';
+                                }
+                                echo $shopPhoto ?>" alt="<?= $shop->shopShortName ?>" data-pjax="0">
+                                <div class="overlay">
+                                    <a class="overlay-link event-link" href="<?= 'shops/' . $shop->shopId ?>" data-pjax="0"><?= $shop->shopShortName ?> <div class="event-date">1 км</div></a>
+                                </div>
+                                <span class="badge badge-coral"><?= $shop->shopRating ?></span>
+                            </div>
+                        </a>
+                    </div>
+                <?php } ?>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<footer class="footer text-gray pt-2 mt-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6 col-12">
+                <a class="footer-link" href="/about">О проекте</a>&nbsp;
+                <a class="footer-link" href="/policy" target="_blank">Политика конфиденциальности</a>&nbsp;
+                <?php Modal::begin([
                     'toggleButton' => [
-                        'label' => 'Вход<span class="login-ellipse"></span>',
+                        'label' => 'Помощь',
                         'tag' => 'a',
-                        'class' => 'modal-enter',
+                        'class' => 'contact-form footer-link',
                     ],
                 ]);
                 ?>
-                <div class="modal-enter-body">
-                    <h2>ВХОД</h2>
-                    <p>Через социальные сети</p>
-                </div>
-                <div class="enter-icons">
-                    <?= yii\authclient\widgets\AuthChoice::widget([
-                        'baseAuthUrl' => ['site/auth'],
-                        'popupMode' => true,
-                    ]) ?>
-                </div>
-                <p class="enter-policy">Продолжая, Вы соглашаетесь с нашими Условиями использования и подтверждаете, что прочли
-                    <a href="/policy" target="_blank">Политику конфиденциальности</a> .</p>
+                <div class="modal-body contact-modal-body"></div>
                 <?php Modal::end(); ?>
-<!--                <a href="/login">Вход<span class="login-ellipse"></span></a>-->
-            <?php } else { ?>
-                <a href="/login">Профиль</a>
-                <a href="/site/logout">Выход</a>
-            <?php } ?>
-        </div>
-    </div>
-    <div class="index-main-wrap">
-        <div class="index-info-main-wrap">
-            <h1 class="index-info-header">Места, акции и события рядом с Вами</h1>
-            <div class="index-info-wrap">
-                <div class="index-info-num">
-                    <div>1.</div>
-                    <div>2.</div>
-                    <div>3.</div>
-                </div>
-                <div class="index-info-text">
-                    <div>Открывайте новые места и узнавайте о том, что происходит поблизости.</div>
-                    <div>Удобный поиск и возможность сохранять.</div>
-                    <div>Новое качество жизни: взгляните по-новому на свой район и не тратьте время на долгие поездки.
-                    </div>
-                    <div class="index-start-btn">
-                        <a href="/shops" tabindex="1">Начать</a>
-                    </div>
-                </div>
             </div>
+            <div class="col-md-6 col-12 small-text">© 2019, i’m local</div>
         </div>
-        <img src="/img/main/index-bg-img.png" alt="">
     </div>
-</div>
+</footer>
 
 <?php $this->endBody() ?>
 </body>

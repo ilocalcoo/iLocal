@@ -4,7 +4,7 @@
 
 /* @var $content string */
 
-use yii\bootstrap\Modal;
+use yii\bootstrap4\Modal;
 use yii\helpers\Html;
 use app\assets\AppAsset;
 use yii\helpers\Url;
@@ -13,6 +13,7 @@ use yii\helpers\Url;
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => Url::to(['img/main/favicon.png'])]);
 $this->registerCssFile('/css/contactForm.css');
 $this->registerJsFile('/js/contactForm.js', ['depends' => 'app\assets\AppAsset']);
+$this->registerJsFile('/js/slider.js');
 
 $currentUrl = substr(Yii::$app->request->pathInfo, 0, 4);
 
@@ -23,7 +24,6 @@ function active($value)
     }
     return false;
 }
-
 AppAsset::register($this);
 ?>
 <?php $this->beginPage() ?>
@@ -38,104 +38,124 @@ AppAsset::register($this);
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
 </head>
-<body class="main-body">
+<body style="background: #FCF7F4">
 <?php $this->beginBody() ?>
 
-<header class="main-header">
-    <div class="header-container">
-        <div class="main-nav-bar-wrap">
-            <div class="main-logo-wrap">
-                <a class="main-logo" href="/">
-                    <img src="/img/main/logo.svg" alt="">
-                    i’m local
-                </a></div>
-            <div class="main-nav-bar">
-                <a href="/">Главная</a>
-                <a href="/user/business">Бизнесу</a>
-                <?php if (!Yii::$app->user->isGuest) { ?>
-
-                    <a href="/favorites">Избранное</a>
-                <?php } ?>
-                <?php
-                Modal::begin([
-                    'header' => false,
-                    'toggleButton' => [
-                        'label' => 'Помощь',
-                        'tag' => 'a',
-                        'class' => 'contact-form',
-                    ],
-                ]);
-                ?>
-                <div class="modal-body"></div>
-                <?php Modal::end(); ?>
-                <!--            <a href="">Поиск</a>-->
-                <?php if (Yii::$app->user->isGuest) { ?>
-                    <?php
-                    Modal::begin([
-                        'header' => false,
-                        'toggleButton' => [
-                            'label' => 'Вход<span class="login-ellipse"></span>',
-                            'tag' => 'a',
-                            'class' => 'modal-enter',
-                        ],
-                    ]);
-                    ?>
-                    <div class="modal-enter-body">
-                        <h2>ВХОД</h2>
-                        <p>Через социальные сети</p>
-                    </div>
-                    <div class="enter-icons">
-                        <?= yii\authclient\widgets\AuthChoice::widget([
-                            'baseAuthUrl' => ['site/auth'],
-                            'popupMode' => true,
-                        ]) ?>
-                    </div>
-                    <p class="enter-policy">Продолжая, Вы соглашаетесь с нашими Условиями использования и подтверждаете, что прочли
-                        <a href="/policy" target="_blank">Политику конфиденциальности</a> .</p>
-                    <?php Modal::end(); ?>
-<!--                    <a href="/login">Вход<span class="login-ellipse"></span></a>-->
-                <?php } else { ?>
-                    <a href="/login">Профиль</a>
-                    <a href="/logout">Выход</a>
-                <?php } ?>
+<div class="container-fluid">
+    <div class="container">
+        <nav class="navbar navbar-expand-lg navbar-light">
+            <a class="navbar-brand" href="/">
+                <img src="img/main/logo.png" width="30" height="30" class="d-inline-block logo-img" alt="i’m local">
+                <span class="logo-text">i’m local</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item ml-auto">
+                        <a class="nav-link" href="/">Главная</a>
+                    </li>
+                    <?php if (!Yii::$app->user->isGuest) { ?>
+                        <li class="nav-item ml-auto">
+                            <a class="nav-link" href="/user/business">Бизнесу</a>
+                        </li>
+                        <li class="nav-item ml-auto">
+                            <a class="nav-link" href="/favorites">Избранное</a>
+                        </li>
+                    <?php } ?>
+                    <li class="nav-item ml-auto">
+                        <?php
+                        Modal::begin([
+                            'toggleButton' => [
+                                'label' => 'Помощь',
+                                'tag' => 'a',
+                                'type' => '',
+                                'class' => 'contact-form nav-link',
+                            ],
+                        ]);
+                        ?>
+                        <div class="modal-body contact-modal-body"></div>
+                        <?php Modal::end(); ?>
+                    </li>
+                    <?php if (Yii::$app->user->isGuest) { ?>
+                    <li class="nav-item ml-auto">
+                        <?php Modal::begin([
+                            'bodyOptions' => ['id' => 'modal-enter'],
+                            'toggleButton' => [
+                                'label' => 'Вход<span class="login-ellipse"></span>',
+                                'tag' => 'a',
+                                'type' => '',
+                                'class' => 'modal-enter nav-link',
+                            ],
+                        ]);
+                        ?>
+                        <div class="modal-enter-body">
+                            <h2>ВХОД</h2>
+                            <p>Через социальные сети</p>
+                        </div>
+                        <div class="enter-icons">
+                            <?= yii\authclient\widgets\AuthChoice::widget([
+                                'baseAuthUrl' => ['site/auth'],
+                                'popupMode' => true,
+                            ]) ?>
+                        </div>
+                        <p class="enter-policy">Продолжая, Вы соглашаетесь с нашими Условиями использования и подтверждаете, что прочли
+                            <a href="/policy" target="_blank">Политику конфиденциальности</a> .</p>
+                        <?php Modal::end(); ?>
+                    </li>
+                    <?php } else { ?>
+                        <li class="nav-item ml-auto">
+                            <a class="nav-link" href="/login">Профиль</a>
+                        </li>
+                        <li class="nav-item ml-auto">
+                            <a class="nav-link" href="/logout">Выход</a>
+                        </li>
+                    <?php } ?>
+                </ul>
             </div>
-        </div>
-        <div class="nav-bar-categories-wrap">
-            <div class="nav-bar-categories-main">
-                <a href="/shops" class="<?php if ($currentUrl == 'shop') {
-                    echo 'nav-bar-categories-main-active';
-                } else {
-                    echo 'nav-bar-categories-main-inactive';
-                }
-                ?>">Места</a>
-                <a href="/events" class="<?php if ($currentUrl == 'even') {
-                    echo 'nav-bar-categories-main-active';
-                } else {
-                    echo 'nav-bar-categories-main-inactive';
-                }
-                ?>">Акции</a>
-            </div>
-            <div class="nav-bar-categories">
-                <?php if ($currentUrl == 'even') { ?>
-                    <a href="/events?eventTypeId=1" <?php if (active('TypeId=1')) echo 'class="nav-bar-categories-active"' ?>>Еда</a>
-                    <a href="/events?eventTypeId=2" <?php if (active('TypeId=2')) echo 'class="nav-bar-categories-active"' ?>>Дети</a>
-                    <a href="/events?eventTypeId=3" <?php if (active('TypeId=3')) echo 'class="nav-bar-categories-active"' ?>>Спорт</a>
-                    <a href="/events?eventTypeId=4" <?php if (active('TypeId=4')) echo 'class="nav-bar-categories-active"' ?>>Красота</a>
-                    <a href="/events?eventTypeId=5" <?php if (active('TypeId=5')) echo 'class="nav-bar-categories-active"' ?>>Покупки</a>
-                    <a href="/events">Все</a>
-                <?php } else {
-                    ($currentUrl == 'shop') ?>
-                    <a href="/shops?shopTypeId=1" <?php if (active('TypeId=1')) echo 'class="nav-bar-categories-active"' ?>>Еда</a>
-                    <a href="/shops?shopTypeId=2" <?php if (active('TypeId=2')) echo 'class="nav-bar-categories-active"' ?>>Дети</a>
-                    <a href="/shops?shopTypeId=3" <?php if (active('TypeId=3')) echo 'class="nav-bar-categories-active"' ?>>Спорт</a>
-                    <a href="/shops?shopTypeId=4" <?php if (active('TypeId=4')) echo 'class="nav-bar-categories-active"' ?>>Красота</a>
-                    <a href="/shops?shopTypeId=5" <?php if (active('TypeId=5')) echo 'class="nav-bar-categories-active"' ?>>Покупки</a>
-                    <a href="/shops">Все</a>
-                <?php } ?>
-            </div>
-        </div>
+        </nav>
     </div>
-</header>
+</div>
+    <div class="container">
+        <div class="mt-3 d-none d-md-block"></div>
+        <div class="row">
+            <div class="col-md-4 col-12">
+                <div class="row nav-bar-categories-main">
+                    <div class="col-4 nav-bar-categories-main-item <?php echo $currentUrl == 'shop' ? 'item-active' : '';?>">
+                        <a href="/shops" class="category-link">Места</a>
+                    </div>
+                    <div class="col-4 nav-bar-categories-main-item <?php echo $currentUrl == 'even' ? 'item-active' : ''; ?>">
+                        <a href="/events" class="category-link">Акции</a>
+                    </div>
+                    <div class="col-4 nav-bar-categories-main-item <?php echo $currentUrl == 'happening' ? 'item-active' : ''; ?>">
+                        <a href="/happenings" class="category-link">События</a></div>
+                </div>
+
+            </div>
+            <div class="col-md-8 col-12 scrolls">
+                <div class="nav-bar-categories" style="margin-bottom: 23px; margin-top: 23px;">
+                    <?php if ($currentUrl == 'even') { ?>
+                        <a href="/events?eventTypeId=1" <?php if (active('TypeId=1')) echo 'class="nav-bar-categories-active"' ?>>Еда</a>
+                        <a href="/events?eventTypeId=2" <?php if (active('TypeId=2')) echo 'class="nav-bar-categories-active"' ?>>Дети</a>
+                        <a href="/events?eventTypeId=3" <?php if (active('TypeId=3')) echo 'class="nav-bar-categories-active"' ?>>Спорт</a>
+                        <a href="/events?eventTypeId=4" <?php if (active('TypeId=4')) echo 'class="nav-bar-categories-active"' ?>>Красота</a>
+                        <a href="/events?eventTypeId=5" <?php if (active('TypeId=5')) echo 'class="nav-bar-categories-active"' ?>>Покупки</a>
+                        <a href="/events">Все</a>
+                    <?php } elseif ($currentUrl == 'shop') {?>
+                        <a href="/shops?shopTypeId=1" <?php if (active('TypeId=1')) echo 'class="nav-bar-categories-active"' ?>>Еда</a>
+                        <a href="/shops?shopTypeId=2" <?php if (active('TypeId=2')) echo 'class="nav-bar-categories-active"' ?>>Дети</a>
+                        <a href="/shops?shopTypeId=3" <?php if (active('TypeId=3')) echo 'class="nav-bar-categories-active"' ?>>Спорт</a>
+                        <a href="/shops?shopTypeId=4" <?php if (active('TypeId=4')) echo 'class="nav-bar-categories-active"' ?>>Красота</a>
+                        <a href="/shops?shopTypeId=5" <?php if (active('TypeId=5')) echo 'class="nav-bar-categories-active"' ?>>Покупки</a>
+                        <a href="/shops">Все</a>
+                    <?php } ?>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
 
 <div class="wrap">
     <div class="container">
@@ -143,11 +163,25 @@ AppAsset::register($this);
     </div>
 </div>
 
-<footer class="main-footer footer">
-    <!--    <div class="bg-ellipse-footer"></div>-->
+<footer class="footer text-gray pt-2 mt-3">
     <div class="container">
-        <p class="pull-left"><a href="<?= \yii\helpers\Url::to('/policy') ?>">Политика конфиденциальности</a></p>
-        <p class="pull-right">&copy; I`m local, <?= date('Y') ?></p>
+        <div class="row">
+            <div class="col-md-6 col-12">
+                <a class="footer-link" href="/about">О проекте</a>&nbsp;
+                <a class="footer-link" href="/policy" target="_blank">Политика конфиденциальности</a>&nbsp;
+                <?php Modal::begin([
+                    'toggleButton' => [
+                        'label' => 'Помощь',
+                        'tag' => 'a',
+                        'class' => 'contact-form footer-link',
+                    ],
+                ]);
+                ?>
+                <div class="modal-body contact-modal-body"></div>
+                <?php Modal::end(); ?>
+            </div>
+            <div class="col-md-6 col-12 small-text">© 2019, i’m local</div>
+        </div>
     </div>
 </footer>
 
