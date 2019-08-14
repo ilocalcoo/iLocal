@@ -10,15 +10,13 @@ use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $shops app\models\Shop[] */
+/* @var $distances array */
 /* @var $pages \yii\data\Pagination */
 /* @var $shopType \app\models\ShopType */
 /* @var $searchModel \app\models\search\ShopSearch */
 /* @var $shopShortName \app\models\search\ShopSearch */
 
-//ShopFeedAsset::register($this);
-//$this->registerCssFile('/css/shop.css', ['depends' => 'yii\web\YiiAsset']);
-$this->registerCssFile('/css/contactForm.css');
-$this->registerJsFile('/js/contactForm.js', ['depends' => 'app\assets\AppAsset']);
+ShopFeedAsset::register($this);
 $type = 'Все места';
 if (array_key_exists('shopTypeId', Yii::$app->request->queryParams)) {
   $type = \app\models\ShopType::TYPES_LABELS[Yii::$app->request->queryParams['shopTypeId']];
@@ -33,14 +31,14 @@ $this->title = $type . ' рядом с вами';
     <br>
     <?php echo $this->render('_search', ['model' => $searchModel, 'shopShortName' => $shopShortName]); ?>
   </div>
-  
+
   <div class="row">
     <div class="col-12">
       <?php
       Pjax::begin();
-      foreach ($shops as $shop) { ?>
+      foreach ($shops as $key => $shop) { ?>
         <div class="row content">
-          <div class="d-flex col-md-4 col-12 align-items-center">
+          <div class="d-flex col-4 align-items-center">
             <a class="shop_img" href="<?= 'shops/' . $shop->shopId ?>" data-pjax="0">
               <img src="/img/shopPhoto/<?php
               $shopPhoto = $shop->getShopPhotos()->asArray()->one()['shopPhoto'];
@@ -51,58 +49,66 @@ $this->title = $type . ' рядом с вами';
             </a>
           </div>
 
-          <div class="col-md-8 col-12">
+          <div class="col-md-8 col-7">
             <div class="row">
-              <div class="col-md-8 col-12">
+              <div class="col-lg-8 col-md-7 col-12">
                 <div class="name_and_rating">
                   <a class="shop_name" href="<?= 'shops/' . $shop->shopId ?>" data-pjax="0"
                      tabindex="1"><?= $shop->shopShortName ?></a>
                 </div>
 
               </div>
-              <div class="col-md-4 col-12">
+              <div class="col-lg-4 col-md-5 d-none d-md-block">
                 <?php echo StarRating::widget([
-                    'name' => 'shop_rating',
-                    'value' => $shop->shopRating,
-                    'language' => 'ru',
-                    'pluginOptions' => [
-                        'displayOnly' => true,
-                        'size' => 'md',
-                        'stars' => 5,
-                        'min' => 0,
-                        'max' => 5,
-                        'step' => 1,
-                        'showClear' => false,
-                        'showCaption' => false,
-                        'theme' => 'krajee-svg',
-                        'filledStar' => '<span class="krajee-icon krajee-icon-star rating-filled-stars"></span>',
-                        'emptyStar' => '<span class="krajee-icon krajee-icon-star"></span>'
-                    ],
+                  'name' => 'shop_rating',
+                  'value' => $shop->shopRating,
+                  'language' => 'ru',
+                  'pluginOptions' => [
+                    'displayOnly' => true,
+                    'size' => 'md',
+                    'stars' => 5,
+                    'min' => 0,
+                    'max' => 5,
+                    'step' => 1,
+                    'showClear' => false,
+                    'showCaption' => false,
+                    'theme' => 'krajee-svg',
+                    'filledStar' => '<span class="krajee-icon krajee-icon-star rating-filled-stars"></span>',
+                    'emptyStar' => '<span class="krajee-icon krajee-icon-star"></span>'
+                  ],
                 ]); ?>
               </div>
             </div>
             <div class="row shop_address">
-              <div class="col-12">
+              <div class="col-12 d-none d-md-block">
                 <?php
                 $address = 'г. ' . $shop->shopAddress->city . ', ул. ' .
-                    $shop->shopAddress->street . ', д. ' .
-                    $shop->shopAddress->houseNumber;
+                  $shop->shopAddress->street . ', д. ' .
+                  $shop->shopAddress->houseNumber;
                 // TODO доделать отображение корпусов и строений
                 echo $address; ?>
               </div>
             </div>
-            <div class="row shop_address-line"></div>
-            <div class="text_and_like">
-              <span><?= $shop->shopShortDescription ?></span>
-              <div class="like">
+            <div class="row shop_address-line d-none d-md-block"></div>
+            <div class="row d-sm-block d-md-none">
+              <span class="distance"><?=
+                (count($distances) !== 0) ?
+                \app\models\Shop::beautifyDistance($distances[$pages->page * $pages->pageSize + $key])
+                  : '';
+                ?>
+              </span>
+            </div>
+            <div class="row text_and_like">
+              <span class="col-12"><?= $shop->shopShortDescription ?></span>
+              <div class="like offset-11">
                 <?php if (Yii::$app->user->isGuest) { ?>
                   <?php
                   Modal::begin([
-                      'toggleButton' => [
-                          'label' => '<img src="/img/user/Favor_rounded.svg" alt="">',
-                          'tag' => 'a',
-                          'class' => 'modal-enter',
-                      ],
+                    'toggleButton' => [
+                      'label' => '<img src="/img/user/Favor_rounded.svg" alt="">',
+                      'tag' => 'a',
+                      'class' => 'modal-enter',
+                    ],
                   ]);
                   ?>
                   <div class="modal-enter-body">
@@ -111,8 +117,8 @@ $this->title = $type . ' рядом с вами';
                   </div>
                   <div class="enter-icons">
                     <?= yii\authclient\widgets\AuthChoice::widget([
-                        'baseAuthUrl' => ['site/auth'],
-                        'popupMode' => true,
+                      'baseAuthUrl' => ['site/auth'],
+                      'popupMode' => true,
                     ]) ?>
                   </div>
                   <p class="enter-policy">Продолжая, Вы соглашаетесь с нашими Условиями использования и
@@ -135,7 +141,7 @@ $this->title = $type . ' рядом с вами';
                 <?php } ?>
               </div>
             </div>
-            <div class="work_time_and_category">
+            <div class="work_time_and_category d-none d-md-block">
 						<span class="work_time"><?php if ($shop->shopWorkTime) {
 
                 echo 'Время работы: ' . $shop->shopWorkTime;
@@ -154,14 +160,14 @@ $this->title = $type . ' рядом с вами';
     <div class="col-12">
       <nav class="pagination">
         <?= \yii\widgets\LinkPager::widget([
-            'pagination' => $pages,
-            'nextPageCssClass' => 'page-item',
-            'disabledListItemSubTagOptions' => ['tag' => 'span', 'class' => 'page-link'],
-            'prevPageCssClass' => 'page-item',
-            'pageCssClass' => 'page-item',
-            'linkOptions' => ['class' => 'page-link'],
-            'nextPageLabel' => '>',
-            'prevPageLabel' => '<',
+          'pagination' => $pages,
+          'nextPageCssClass' => 'page-item',
+          'disabledListItemSubTagOptions' => ['tag' => 'span', 'class' => 'page-link'],
+          'prevPageCssClass' => 'page-item',
+          'pageCssClass' => 'page-item',
+          'linkOptions' => ['class' => 'page-link'],
+          'nextPageLabel' => '>',
+          'prevPageLabel' => '<',
         ]); ?>
       </nav>
     </div>
