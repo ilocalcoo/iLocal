@@ -12,6 +12,7 @@ use app\models\Shop;
 use app\models\search\ShopSearch;
 use yii\data\Pagination;
 use yii\data\Sort;
+use yii\db\Query;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -102,27 +103,30 @@ class ShopController extends Controller
     }
 
     $distances = [];
-    if ((Yii::$app->request->queryParams['coords_address'] !== '') &&
-      (Yii::$app->request->queryParams['round_range'] !== '')) {
-      $userPoint = Yii::$app->request->queryParams['coords_address'];
-      $range = Yii::$app->request->queryParams['round_range'] * 1000; // в метры
+    if ((array_key_exists('coords_address', Yii::$app->request->queryParams)) &&
+      (array_key_exists('round_range', Yii::$app->request->queryParams))) {
+      if ((Yii::$app->request->queryParams['coords_address'] !== '') &&
+        (Yii::$app->request->queryParams['round_range'] !== '')) {
+        $userPoint = Yii::$app->request->queryParams['coords_address'];
+        $range = Yii::$app->request->queryParams['round_range'] * 1000; // в метры
 //      $query = $query->where(
 //          ['shopId' => ShopAddress::find([])->all()]
 //      );
 
-      foreach ($query->all() as $shop) {
-        $shopCoords = [$shop->shopAddress->latitude, $shop->shopAddress->longitude];
-        $distance = Shop::getDistance(explode(',', $userPoint), $shopCoords);
-        if ($distance > $range) {
-          $shop->isItFar = Shop::IS_IT_FAR_TRUE;
-          $shop->save(false);
-        } else {
-          array_push($distances, $distance);
+        foreach ($query->all() as $shop) {
+          $shopCoords = [$shop->shopAddress->latitude, $shop->shopAddress->longitude];
+          $distance = Shop::getDistance(explode(',', $userPoint), $shopCoords);
+          if ($distance > $range) {
+            $shop->isItFar = Shop::IS_IT_FAR_TRUE;
+            $shop->save(false);
+          } else {
+            array_push($distances, $distance);
+          }
         }
-      }
 
-      // в представление попадают только те места, поле 'isItFar' которых не тронуто, то есть они не далеко
-      $query = $query->where(['isItFar' => Shop::IS_IT_FAR_FALSE]);
+        // в представление попадают только те места, поле 'isItFar' которых не тронуто, то есть они не далеко
+        $query = $query->where(['isItFar' => Shop::IS_IT_FAR_FALSE]);
+      }
     }
     $pages = new Pagination([
       'totalCount' => $query->count(),
@@ -147,6 +151,13 @@ class ShopController extends Controller
       ->orderBy($sort->orders)
       ->all();
 
+    $ratings = (new Query)
+      ->select(['shopId', 'avg(rating) as avg'])
+      ->from('{{%shopRating}}')
+      ->groupBy('shopId')
+      ->indexBy('shopId')
+      ->all();
+
     // очищаем у всех мест поле 'isItFar'
     foreach (Shop::find()->where(['isItFar' => Shop::IS_IT_FAR_TRUE])->all() as $shop) {
       $shop->isItFar = Shop::IS_IT_FAR_FALSE;
@@ -160,6 +171,7 @@ class ShopController extends Controller
       'shopShortName' => $shopShortName,
       'sort' => $sort,
       'distances' => $distances,
+      'ratings' => $ratings,
     ]);
   }
 
