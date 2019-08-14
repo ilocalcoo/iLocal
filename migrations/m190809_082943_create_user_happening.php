@@ -12,7 +12,13 @@ class m190809_082943_create_user_happening extends Migration
      */
     public function safeUp()
     {
-
+        $this->createTable('userHappening', [
+            'id' => $this->primaryKey(),
+            'userId' => $this->integer()->notNull(),
+            'happeningId' => $this->integer()->notNull(),
+            'createdOn'=>$this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
+            'updatedOn'=>$this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
+        ]);
     }
 
     /**
@@ -20,9 +26,7 @@ class m190809_082943_create_user_happening extends Migration
      */
     public function safeDown()
     {
-        echo "m190809_082943_create_user_happening cannot be reverted.\n";
-
-        return false;
+        $this->dropTable('userHappening');
     }
 
     /*

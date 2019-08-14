@@ -1,0 +1,53 @@
+.event-item {
+  margin: 10px auto;
+}
+.event-date {
+  font-size: 12px;
+  line-height: 14px;
+}
+
+.slide-img {
+  position: relative;
+  width: 100%;
+  display: block;
+  overflow: hidden;
+}
+.slide-img img {
+  width: inherit;
+}
+
+.slide-text {
+  font-size: 14px;
+  line-height: 14px;
+  padding: 5px;
+}
+
+.overlay {
+  position: absolute;
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  border-radius: 5px;
+  transform: translate(-0%,-100%);
+  -ms-transform: translate(-50%,-50%);
+  background: linear-gradient(to top, black, transparent);
+  z-index: 2;
+}
+
+.overlay-link {
+  color: white !important;
+  text-decoration: none  !important;
+
+}
+
+.badge {
+  position: absolute;
+  display: inline-block;
+  right: 20px;
+  top: 10px;
+  font-size: 14px;
+}
+.badge-coral {
+  background: #FE8A80;
+  color: white;
+}

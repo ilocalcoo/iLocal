@@ -39,17 +39,17 @@ class HappeningController extends Controller
      */
     public function actionIndex()
     {
-        if ($eventId = Yii::$app->request->get('add-event-id')) {
+        if ($happeningId = Yii::$app->request->get('add-happening-id')) {
             $userHappening = new UserHappening();
             $userHappening->user_id = Yii::$app->user->id;
-            $userHappening->event_id = $eventId;
+            $userHappening->event_id = $happeningId;
             $userHappening->save();
         }
 
-        if ($eventId = Yii::$app->request->get('del-event-id')) {
+        if ($happeningId = Yii::$app->request->get('del-happening-id')) {
             $userHappening = UserHappening::find()
-                ->where(['user_id' => Yii::$app->user->id])
-                ->andWhere(['event_id' => $eventId])
+                ->where(['userId' => Yii::$app->user->id])
+                ->andWhere(['happeningId' => $happeningId])
                 ->one();
             $userHappening->delete();
         }
@@ -79,12 +79,11 @@ class HappeningController extends Controller
             'totalCount' => $query->count(),
             'pageSize' => 10,
         ]);
-        $shops = $query->offset($pages->offset)
+        $happenings = $query->offset($pages->offset)
             ->limit($pages->limit)
             ->all();
         return $this->render('index', [
-            'events' => $shops,
-//            'shops' => $shops,
+            'happenings' => $happenings,
             'pages' => $pages,
         ]);
     }

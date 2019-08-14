@@ -1,5 +1,6 @@
 <?php
 
+use app\assets\HappeningFeedAsset;
 use kartik\daterange\DateRangePicker;
 use kartik\daterange\DateRangePickerAsset;
 use yii\authclient\widgets\AuthChoice;
@@ -26,7 +27,7 @@ $this->registerJsFile('/js/happeningsView.js', ['depends' => 'app\assets\AppAsse
 
 $this->title = 'happenings';
 $this->params['breadcrumbs'][] = $this->title;
-happeningFeedAsset::register($this);
+HappeningFeedAsset::register($this);
 ?>
 <div class="happening-index">
     <div class="row">
@@ -96,115 +97,129 @@ happeningFeedAsset::register($this);
         </div>
     </div>
 
-
     <?php Pjax::begin(); ?>
-    <div class="row">
-    <?php
-    foreach ($happenings as $happening) {
-        //$happenings = $shop->gethappenings()->all();
-        if (count($happenings) != 0) { ?>
-            <div class="col-md-4 col-12">
-                <div class="content card p-3">
-                    <div class="row align-items-center h-100">
-                        <div class="col-12">
-                            <a class="shop-link" href="<?= 'shops/' . $happening->shop->shopId ?>" data-pjax="0">
-                                <h5 class="card-title">
-                                <img class="shop_img" src="/img/shopPhoto/<?php
-                                        $shopPhoto = $happening->shop->getShopPhotos()->asArray()->one()['shopPhoto'];
-                                        if (is_null($shopPhoto)) {
-                                            $shopPhoto = '/img/nophoto.jpg';
-                                        }
-                                        echo $shopPhoto ?>"
-                                        alt="<?= $happening->shop->shopShortName ?>"
-                                />
-                                <?= $happening->shop->shopShortName ?>
-                                </h5>
-                            </a>
-                        </div>
-                        <div class="col-12">
-                            <a href="/happenings/<?= $happening->id ?>">
-                                <a href="/happenings/<?= $happening->id ?>">
-                                <div class="slide-img">
-                                    <img src="<?= '/img/happeningPhoto/'.$happening->happeningPhotos[0]->happeningPhoto ?>" alt="<?= $happening->title ?>">
-                                    <div class="overlay">
-                                        <div class="overlay-link"><?= $happening->title ?></div>
+    <section id="events">
+        <div class="container mt-5">
+            <div class="w-100 mb-3"><span class="h3">События рядом с вами</span></div>
+            <div class="row">
+                <?php
+                foreach ($happenings as $happening) {
+                    //$happenings = $shop->gethappenings()->all();
+                    if (count($happenings) != 0) { ?>
+                        <div class="col-md-4 col-12">
+                            <div class="content card p-3">
+                                <div class="row align-items-center h-100">
+                                    <div class="col-12">
+                                        <a class="shop-link" href="<?= 'shops/' . $happening->shop->shopId ?>" data-pjax="0">
+                                            <h5 class="card-title">
+                                                <img class="shop_img" src="/img/shopPhoto/<?php
+                                                $shopPhoto = $happening->shop->getShopPhotos()->asArray()->one()['shopPhoto'];
+                                                if (is_null($shopPhoto)) {
+                                                    $shopPhoto = '/img/nophoto.jpg';
+                                                }
+                                                echo $shopPhoto ?>"
+                                                        alt="<?= $happening->shop->shopShortName ?>"
+                                                />
+                                                <?= $happening->shop->shopShortName ?>
+                                            </h5>
+                                        </a>
                                     </div>
-                                    <span class="badge badge-coral">-15%</span>
-                                </div>
-                                </a>
-                                <div class="slide-text"><?= mb_substr($happening->shortDesc,0,70).'...' ?></div>
-                            </a>
-                        </div>
-                        <div class="col-12">
-                            <div class="row">
-                                <div class="col-4">
-                                    <div class="like">
-                                        <?php if (Yii::$app->user->isGuest) { ?>
-                                            <?php
-                                            Modal::begin([
-                                                'toggleButton' => [
-                                                    'label' => '<img src="/img/user/Favor_rounded.svg" alt="">',
-                                                    'tag' => 'a',
-                                                    'type' => '',
-                                                    'class' => 'modal-enter',
-                                                ],
-                                            ]);
-                                            ?>
-                                            <div class="modal-enter-body">
-                                                <h2>ВХОД</h2>
-                                                <p>Войдите, чтобы добавить в избранное!</p>
-                                            </div>
-                                            <div class="enter-icons">
-                                                <?= yii\authclient\widgets\AuthChoice::widget([
-                                                    'baseAuthUrl' => ['site/auth'],
-                                                    'popupMode' => true,
-                                                ]) ?>
-                                            </div>
-                                            <p class="enter-policy">Продолжая, Вы соглашаетесь с нашими Условиями использования и
-                                                подтверждаете, что прочли
-                                                <a href="/policy" target="_blank">Политику конфиденциальности</a> .</p>
-                                            <?php Modal::end(); ?>
-                                        <?php } else { ?>
-                                            <?php \yii\widgets\Pjax::begin() ?>
-                                            <?php if (\app\models\UserShop::find()->where(['user_id' => Yii::$app->user->id])->andWhere(['shop_id' => $happening->shop->shopId])->one()) {
-                                                $favorite = 'favorite_border_24px_rounded.svg';
-                                                $shopId = 'del-shop-id';
-                                            } else {
-                                                $favorite = 'Favor_rounded.svg';
-                                                $shopId = 'add-shop-id';
-                                            } ?>
-                                            <a href="/shops?<?= $shopId ?>=<?= $happening->shop->shopId ?>" title="Добавить в избранное"
-                                                    class="favorite">
-                                                <img src="/img/user/<?= $favorite ?>" alt=""></a>
-                                            <?php \yii\widgets\Pjax::end() ?>
-                                        <?php } ?>
+                                    <div class="col-12">
+                                        <a href="/happenings/<?= $happening->id ?>">
+                                            <a href="/happenings/<?= $happening->id ?>">
+                                                <div class="slide-img">
+                                                    <img src="<?= '/img/happeningPhoto/'.$happening->happeningPhotos[0]->happeningPhoto ?>" alt="<?= $happening->title ?>">
+                                                    <div class="overlay">
+                                                        <div class="overlay-link"><?= $happening->title ?></div>
+                                                    </div>
+                                                    <span class="badge badge-coral">-15%</span>
+                                                </div>
+                                            </a>
+                                            <div class="slide-text"><?= mb_substr($happening->shortDesc,0,70).'...' ?></div>
+                                        </a>
                                     </div>
-                                </div>
-                                <div class="col-8">
-                                    <div class="text-right happening-date">
-                                        <?= $happening->begin .' - '. $happening->end ?>
+                                    <div class="col-12">
+                                        <div class="row">
+                                            <div class="col-4">
+                                                <div class="like">
+                                                    <?php if (Yii::$app->user->isGuest) { ?>
+                                                        <?php
+                                                        Modal::begin([
+                                                            'toggleButton' => [
+                                                                'label' => '<img src="/img/user/Favor_rounded.svg" alt="">',
+                                                                'tag' => 'a',
+                                                                'type' => '',
+                                                                'class' => 'modal-enter',
+                                                            ],
+                                                        ]);
+                                                        ?>
+                                                        <div class="modal-enter-body">
+                                                            <h2>ВХОД</h2>
+                                                            <p>Войдите, чтобы добавить в избранное!</p>
+                                                        </div>
+                                                        <div class="enter-icons">
+                                                            <?= yii\authclient\widgets\AuthChoice::widget([
+                                                                'baseAuthUrl' => ['site/auth'],
+                                                                'popupMode' => true,
+                                                            ]) ?>
+                                                        </div>
+                                                        <p class="enter-policy">Продолжая, Вы соглашаетесь с нашими Условиями использования и
+                                                            подтверждаете, что прочли
+                                                            <a href="/policy" target="_blank">Политику конфиденциальности</a> .</p>
+                                                        <?php Modal::end(); ?>
+                                                    <?php } else { ?>
+                                                        <?php \yii\widgets\Pjax::begin() ?>
+                                                        <?php if (\app\models\UserShop::find()->where(['user_id' => Yii::$app->user->id])->andWhere(['shop_id' => $happening->shop->shopId])->one()) {
+                                                            $favorite = 'favorite_border_24px_rounded.svg';
+                                                            $shopId = 'del-shop-id';
+                                                        } else {
+                                                            $favorite = 'Favor_rounded.svg';
+                                                            $shopId = 'add-shop-id';
+                                                        } ?>
+                                                        <a href="/shops?<?= $shopId ?>=<?= $happening->shop->shopId ?>" title="Добавить в избранное"
+                                                                class="favorite">
+                                                            <img src="/img/user/<?= $favorite ?>" alt=""></a>
+                                                        <?php \yii\widgets\Pjax::end() ?>
+                                                    <?php } ?>
+                                                </div>
+                                            </div>
+                                            <div class="col-8">
+                                                <div class="text-right happening-date">
+                                                    <?= $happening->begin .' - '. $happening->end ?>
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
+                    <?php }
+                } ?>
+                <div class="event-item col-md-6 col-12">
+                    <div class="slide-img">
+                        <img src="img/events/Rectangle3.png" alt="First slide">
+                        <div class="overlay">
+                            <a class="overlay-link event-link" href="#">Мастер-класс для детей “Построй свой замок” <div class="event-date">13:00 18.07.19</div></a>
+                        </div>
+                        <span class="badge badge-coral">Free</span>
                     </div>
                 </div>
+
             </div>
-        <?php }
-    } ?>
-    </div>
-    <nav class="pagination">
-        <?= \yii\widgets\LinkPager::widget([
-            'pagination' => $pages,
-            'nextPageCssClass' => 'page-item',
-            'disabledListItemSubTagOptions' => ['tag' => 'span', 'class' => 'page-link'],
-            'prevPageCssClass' => 'page-item',
-            'pageCssClass' => 'page-item',
-            'linkOptions' => ['class' => 'page-link'],
-            'nextPageLabel' => '>',
-            'prevPageLabel' => '<',
-        ]); ?>
-    </nav>
+            <nav class="pagination">
+                <?= \yii\widgets\LinkPager::widget([
+                    'pagination' => $pages,
+                    'nextPageCssClass' => 'page-item',
+                    'disabledListItemSubTagOptions' => ['tag' => 'span', 'class' => 'page-link'],
+                    'prevPageCssClass' => 'page-item',
+                    'pageCssClass' => 'page-item',
+                    'linkOptions' => ['class' => 'page-link'],
+                    'nextPageLabel' => '>',
+                    'prevPageLabel' => '<',
+                ]); ?>
+            </nav>
+        </div>
+    </section>
 
     <div class="modal fade" id="happening-modal" tabindex="-1" role="dialog" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
