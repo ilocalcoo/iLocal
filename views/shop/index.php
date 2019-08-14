@@ -11,6 +11,7 @@ use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $shops app\models\Shop[] */
 /* @var $distances array */
+/* @var $ratings array */
 /* @var $pages \yii\data\Pagination */
 /* @var $shopType \app\models\ShopType */
 /* @var $searchModel \app\models\search\ShopSearch */
@@ -149,6 +150,12 @@ $this->title = $type . ' рядом с вами';
               <span class="category"><?php $category = \app\models\ShopType::TYPES_LABELS[$shop->shopTypeId];
                 echo 'Раздел - ' . $category; ?></span>
             </div>
+          </div>
+          <div class="d-sm-block d-md-none col">
+            <?=
+            array_key_exists($shop->shopId, $ratings) ? mb_substr($ratings[$shop->shopId]['avg'],0,3) : '';
+            // \yii\helpers\VarDumper::dumpAsString($shop->shopId, 5, true);
+            ?>
           </div>
         </div>
       <?php } ?>
