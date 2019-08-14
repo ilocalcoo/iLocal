@@ -4,7 +4,9 @@ namespace app\controllers;
 
 use app\models\search\HappeningSearch;
 use app\models\Shop;
+use app\models\User;
 use app\models\UserHappening;
+use DateTime;
 use Yii;
 use app\models\Happening;
 use yii\data\Pagination;
@@ -152,11 +154,13 @@ class HappeningController extends Controller
                 Yii::$app->session->setFlash('success', 'Акция успешно добавлена.
                 Вы можете продолжить заполнение информации о акции сейчас, либо позже.');
             }
-            return $this->redirect(["/events/$model->id/update/info"]);
+            return $this->redirect(["/happenings/$model->id/update/info"]);
         }
+
         return $this->render('create/step-1', [
             'model' => $model,
             'eventOwner' => $eventOwner,
+            'userId' => Yii::$app->user->id,
         ]);
     }
 
@@ -171,7 +175,7 @@ class HappeningController extends Controller
         $model->setScenario(Happening::SCENARIO_STEP2);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(["/events/$model->id/update/photo"]);
+            return $this->redirect(["/happenings/$model->id/update/photo"]);
         }
 
         return $this->render('create/step-2', [

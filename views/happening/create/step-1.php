@@ -1,13 +1,17 @@
 <?php
 
 use yii\helpers\Html;
+use yii\web\User;
 use yii\widgets\ActiveForm;
 
 $this->registerCssFile('/css/event/create/form.css');
 /* @var $this yii\web\View */
-/* @var $model app\models\Event */
+/* @var $model app\models\Happening */
 /* @var $form yii\widgets\ActiveForm */
 /* @var $eventOwner array */
+/**
+ * @var $userId integer
+ */
 ?>
 
 <div class="shop-form create-step">
@@ -20,12 +24,12 @@ $this->registerCssFile('/css/event/create/form.css');
     <h1 class="step_name">Шаг 1: Выберите владельца и категорию акции</h1>
 
     <?php $form = ActiveForm::begin(); ?>
-
-    <?= $form->field($model, 'eventOwnerId', ['options' => ['class' => 'shop-create-form']])->dropDownList($eventOwner)
+    <?= $form->field($model, 'creatorId')->hiddenInput(['value' => $userId])->label(false) ?>
+    <?= $form->field($model, 'shopId', ['options' => ['class' => 'shop-create-form']])->dropDownList($eventOwner)
         ->label('Выберите наименование владельца акции') ?>
 
-    <?= $form->field($model, 'eventTypeId', ['options' => ['class' => 'shop-create-form']])->radioList(
-        app\models\EventType::TYPES_LABELS,
+    <?= $form->field($model, 'happeningTypeId', ['options' => ['class' => 'shop-create-form']])->radioList(
+        app\models\HappeningType::TYPES_LABELS,
         [
             'item' => function ($index, $label, $name, $checked, $value) {
                 $check = $checked ? ' checked="checked"' : '';

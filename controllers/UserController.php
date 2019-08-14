@@ -3,6 +3,7 @@
 namespace app\controllers;
 
 use app\models\Event;
+use app\models\Happening;
 use app\models\Shop;
 use app\models\User;
 use Yii;
@@ -27,9 +28,16 @@ class UserController extends Controller
             ->asArray()
             ->all();
 
+        $userHappenings = Happening::find()
+            ->where(['=', 'creatorId', Yii::$app->user->id])
+            ->joinWith(Happening::RELATION_HAPPENING_PHOTOS)
+            ->asArray()
+            ->all();
+
         return $this->render('business', [
             'userShops' => $userShops,
-            'userEvents' => $userEvents
+            'userEvents' => $userEvents,
+            'userHappenings' => $userHappenings,
         ]);
     }
 }

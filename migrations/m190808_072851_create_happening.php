@@ -15,10 +15,10 @@ class m190808_072851_create_happening extends Migration
         $this->createTable('happening', [
             'id' => $this->primaryKey(),
             'shopId' => $this->integer()->notNull(),
-            'creatorId' => $this->integer()->notNull(),
-            'title'=>$this->string(150)->notNull(),
+            'creatorId' => $this->integer(),
+            'title'=>$this->string(150),
             'description'=>$this->text(),
-            'address'=>$this->string(256)->notNull(),
+            'address'=>$this->string(256),
             'price' => $this->float(),
             'begin'=>$this->date(),
             'createdOn'=>$this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
