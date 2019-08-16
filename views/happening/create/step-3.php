@@ -36,7 +36,7 @@ $this->registerCssFile('/css/event/create/form.css');
         <?php } ?>
         <?php if (!$model->happeningPhotos) { ?>
             <div class="shop-form_shop-photos">
-                <label for="event-uploadedeventphoto">
+                <label for="happening-uploadedhappeningphoto">
                     <?= Html::img('/img/shopPhoto/default.png', ['class' => 'shop-form_photo']) ?>
                     <?= Html::img('/img/shop/photo_icon.svg', ['class' => 'shop-form_photo-icon']) ?>
                     <span class="shop-form_photo-text">Загрузите фотографии jpg, png</span>
@@ -44,7 +44,7 @@ $this->registerCssFile('/css/event/create/form.css');
             </div>
         <?php } else { ?>
             <div class="shop-form_shop-photos">
-                <label for="event-uploadedeventphoto">
+                <label for="happening-uploadedhappeningphoto">
                     <?= Html::img('/img/shopPhoto/default.png', ['class' => 'shop-form_photo']) ?>
                     <?= Html::img('/img/shop/photo_icon_ellipse.svg', ['class' => 'shop-form_photo-icon_ellipse']) ?>
                 </label>

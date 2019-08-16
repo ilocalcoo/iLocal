@@ -17,25 +17,24 @@ $this->registerCssFile('/css/event/create/form.css');
 
     <h1 class="step_name">Шаг 2: Добавьте название события, его описание и дату начала</h1>
 
-    <?php $form = ActiveForm::begin(); ?>
+        <?php $form = \yii\bootstrap4\ActiveForm::begin(); ?>
+            <?= $form->field($model, 'title', ['options' => ['class' => 'form-group shop-create-form']])->textInput(['options' => ['class' => 'form-control']])
+                ->label('Название события <div>Название события не должно превышать 150 знаков</div>') ?>
+            <?= $form->field($model, 'begin', ['options' => ['class' => 'form-group shop-create-form']])->widget(DateTimePicker::class, [
+                'options' => [
+                    'value' => (!$model->begin) ? date('Y-m-d H:i') : $model->begin,
+                    'class' => 'form-control'
+                ],
+                'pluginOptions' => [
+                    'startDate' => date('Y-m-d H:i'),
+                    'format' => 'yyyy-mm-dd hh:ii',
+                    'autoclose' => true,
+                    'todayHighlight' => true
+                ]
+            ]); ?><br>
+            <?= $form->field($model, 'price', ['options' => ['class' => 'form-group shop-create-form']])->textInput(['options' => ['class' => 'form-control']])
+                ->label('Стоимость билета (входа) на событие <div>Можно оставить пустым, если бесплатно</div>') ?>
 
-    <div class="step_form-event-name-wrap">
-    <?= $form->field($model, 'title', ['options' => ['class' => 'shop-create-form']])->textInput()
-        ->label('Название события <div>Название события не должно превышать 150 знаков</div>') ?>
-
-    <?= $form->field($model, 'begin', ['options' => ['class' => 'shop-create-form']])->widget(DateTimePicker::class, [
-        'options' => [
-            'value' => (!$model->begin) ? date('Y-m-d H:i') : $model->begin,
-        ],
-        'pluginOptions' => [
-            'startDate' => date('Y-m-d H:i'),
-            'format' => 'yyyy-mm-dd hh:ii',
-            'autoclose' => true,
-            'todayHighlight' => true
-        ]
-    ]); ?>
-
-    </div>
     <?= $form->field($model, 'description', ['options' => ['class' => 'shop-create-form']])->textarea()
         ->label('Описание события') ?>
 
@@ -49,6 +48,6 @@ $this->registerCssFile('/css/event/create/form.css');
     </div>
 
 
-    <?php ActiveForm::end(); ?>
+    <?php \yii\bootstrap4\ActiveForm::end(); ?>
 
 </div>

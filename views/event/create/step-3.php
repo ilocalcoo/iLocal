@@ -15,7 +15,7 @@ $this->registerCssFile('/css/event/create/form.css');
         <div class="step_form-rectangle step_form-rectangle_active"></div>
     </div>
     <h1 class="step_name">Шаг 2: Добавьте изображения</h1>
-    <div class="shop-form_photo-info">Вы можете загрузить до тех фотографий
+    <div class="shop-form_photo-info">Вы можете загрузить до трех фотографий
         <div class="shop-form_photo-info-main">Основное фото</div>
     </div>
 

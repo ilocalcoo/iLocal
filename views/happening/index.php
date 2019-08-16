@@ -25,7 +25,7 @@ $this->registerCssFile('/css/happening/view.css');
 $this->registerCssFile('/css/calendar.css', ['depends' => 'kartik\daterange\DateRangePickerAsset']);
 $this->registerJsFile('/js/happeningsView.js', ['depends' => 'app\assets\AppAsset']);
 
-$this->title = 'happenings';
+$this->title = 'События';
 $this->params['breadcrumbs'][] = $this->title;
 HappeningFeedAsset::register($this);
 ?>
@@ -110,9 +110,14 @@ HappeningFeedAsset::register($this);
                     if (count($happenings) != 0) { ?>
                         <div class="event-item col-md-6 col-12">
                             <div class="slide-img">
-                                <img src="<?= '/img/happeningPhoto/'.$happening->happeningPhotos[0]->happeningPhoto ?>" alt="<?= $happening->title ?>">
+                                <img src="<?= '/img/happeningPhoto/'.($happening->happeningPhotos ? $happening->happeningPhotos[0]->happeningPhoto : 'nofoto') ?>" alt="<?= $happening->title ?>">
                                 <div class="overlay">
-                                    <a class="overlay-link event-link" href="#"><?= mb_substr($happening->title,0,70).'...' ?> <div class="event-date"><?php date('H:i d.m.Y', $happening->begin) ?></div></a>
+                                    <a class="overlay-link event-link" href="/happenings/<?= $happening->id ?>">
+                                        <?= mb_strlen($happening->title) > 70 ? mb_substr($happening->title,0,70).'...' : $happening->title ?>
+                                        <div class="event-date">
+                                            <?= date('H:i d.m.Y', strtotime($happening->begin)) ?>
+                                        </div>
+                                    </a>
                                 </div>
                                 <span class="badge badge-coral"><?= $happening->price ?? 'Free'?></span>
                             </div>

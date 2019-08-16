@@ -17,7 +17,7 @@ use yii\web\UploadedFile;
  * @property string $title
  * @property string $description
  * @property string $address
- * @property double $price
+ * @property string $price
  * @property string $begin
  * @property string $createdOn
  * @property string $updatedOn
@@ -149,6 +149,7 @@ class Happening extends ActiveRecord
     {
         if ($this->validate()) {
             foreach ($this->uploadedHappeningPhoto as $file) {
+                mkdir('img/happeningPhoto', 0755);
                 $fileName = 'img/happeningPhoto/' . $file->baseName . '.' . $file->extension;
                 $file->saveAs($fileName);
                 ThumbGenerator::generate($fileName, $this->shopId);

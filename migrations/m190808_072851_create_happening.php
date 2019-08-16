@@ -19,8 +19,8 @@ class m190808_072851_create_happening extends Migration
             'title'=>$this->string(150),
             'description'=>$this->text(),
             'address'=>$this->string(256),
-            'price' => $this->float(),
-            'begin'=>$this->date(),
+            'price' => $this->string(100),
+            'begin'=>$this->timestamp(),
             'createdOn'=>$this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
             'updatedOn'=>$this->timestamp()->notNull()->defaultExpression('CURRENT_TIMESTAMP'),
         ]);

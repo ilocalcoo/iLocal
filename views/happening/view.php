@@ -1,5 +1,7 @@
 <?php
 
+use app\models\Shop;
+use app\models\ShopAddress;
 use app\models\UserEvent;
 use kartik\daterange\DateRangePicker;
 use yii\bootstrap4\ActiveForm;
@@ -8,61 +10,64 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Event */
+/* @var $model app\models\Happening */
+/**
+ * @var $shop Shop
+ */
 
-$this->registerCssFile('/css/event/view.css');
-$this->registerCssFile('/css/event.css',['depends' => '\app\assets\AppAsset']);
+$this->registerCssFile('/css/happening/view.css');
 
-$eventPhoto = $model->getEventPhotos()->asArray()->one()["eventPhoto"];
-$shopAddress = \app\models\ShopAddress::findOne($model->eventOwner["shopAddressId"]);
-$shopPhoto = \app\models\ShopPhoto::find()->where(['=', 'shopId', $model->eventOwner["shopId"]])->asArray()->one();
-
+$happeningPhoto = $model->getHappeningPhotos()->asArray()->one();
+$shop = Shop::find()->where(['=', 'shopId', $model->shopId])->asArray()->one();
+$shopAddress = ShopAddress::find()->where(['=', 'id', $shop['shopAddressId']])->asArray()->one();
 //\yii\web\YiiAsset::register($this);
+$this->title = 'События / '.$model->title;
+$this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="event-view" id="event-view-content">
-    <div class="container">
-        <div class="row align-items-center mb-3">
-            <div class="col-md-2 col-12 mx-auto text-center">
-                <a class="shop_img" href="<?= 'shops/' . $model->eventOwner["shopId"] ?>" data-pjax="0">
-                    <img src="/img/shopPhoto/<?= $shopPhoto["shopPhoto"] ?>" alt="">
-                </a>
-            </div>
-            <div class="col-md-10 col-12 mx-auto text-md-left text-center">
-                <h5 class="card-title"><?= $model->eventOwner["shopShortName"] ?></h5>
-                <div class="event-view-shop-address"><?php
-                    $comma = '';
-                    foreach (ArrayHelper::toArray($shopAddress) as $key => $item) {
-                        if ($key == 'id' || $item == '') {
-                            continue;
-                        }
-                        if ($key == 'latitude') {
-                            break;
-                        }
-                        echo $comma . $item;
-                        $comma = ', ';
-                    }
-                    ?></div>
-            </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4 col-12">
-                <img class="w-100" src="/img/eventPhoto/<?= $eventPhoto ?>" alt="">
-            </div>
-            <div class="col-md-8 col-12">
-                <h1 class="event-view-title"><?= $model->title ?></h1>
+<div class="container happening-index">
 
-                <div class="event-view-full-desc"><?= $model->fullDesc ?></div>
-
-                <div class="event-view-date-wrap">
-                    <div>
-                        <img src="/img/user/Favor_rounded.svg" alt="">
+    <div class="row">
+        <div class="event-item col-md-6 col-12">
+            <div class="slide-img">
+                <img class="event-view-img" src="<?= '/img/happeningPhoto/'.($happeningPhoto['happeningPhoto'] ?? 'f') ?>" alt="<?= $model->title ?>">
+                <div class="overlay">
+                    <div class="overlay-link event-link">
+                        <div class="event-title"><?= $model->title ?></div>
+                        <div class="org-name">Организатор: <?= $shop['shopFullName'] ?? $shop['shopShortName'] ?></div>
+                        <div class="event-date"><?php date('H:i d.m.Y', strtotime($model->begin)) ?></div>
                     </div>
-                    <div><?= $model->begin ?> - <?= $model->end ?></div>
                 </div>
             </div>
         </div>
+        <div class="col-md-6 col-12 event-info">
+            <div class="row">
+                <div class="col-12">
+                    <h1 class="event-view-title"><?= $model->title ?></h1>
+                </div>
+                <div class="col-12">
+                    <div class="row">
+                        <div class="col-12">
+                            <i class="fas fa-map-marker-alt"></i> <?= $shopAddress['city'].', '.$shopAddress['street'].', '.$shopAddress['houseNumber'] ?> <br>
+                        </div>
+                        <div class="col-6">
+                            <i class="far fa-clock"></i> <?php echo date('H:i d.m.Y', strtotime($model->begin)) ?><br>
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div class="col-6">
+                            <i class="fas fa-globe"></i><br>
+                            <i class="fas fa-ruble-sign"></i> <?= $happening->price ?? 'Free'?>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12">
+                    <div class="event-view-full-desc">
+                        <h2 class="event-about">О Событии</h2>
+                        <?= $model->description ?>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
     </div>
-
-    
-
 </div>
