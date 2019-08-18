@@ -10,7 +10,6 @@ use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $shops app\models\Shop[] */
-/* @var $distances array */
 /* @var $ratings array */
 /* @var $pages \yii\data\Pagination */
 /* @var $shopType \app\models\ShopType */
@@ -93,8 +92,8 @@ $this->title = $type . ' рядом с вами';
             <div class="row shop_address-line d-none d-md-block"></div>
             <div class="row d-sm-block d-md-none">
               <span class="distance"><?=
-                (count($distances) !== 0) ?
-                \app\models\Shop::beautifyDistance($distances[$pages->page * $pages->pageSize + $key])
+                (!is_null($shop->distance)) ?
+                \app\models\Shop::beautifyDistance($shop->distance)
                   : '';
                 ?>
               </span>

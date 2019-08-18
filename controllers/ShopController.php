@@ -151,6 +151,11 @@ class ShopController extends Controller
       ->orderBy($sort->orders)
       ->all();
 
+    if ($distances !== []) {
+      foreach ($shops as $shop) {
+        $shop->distance = $distances[$shop->shopId];
+      }
+    }
     $ratings = (new Query)
       ->select(['shopId', 'avg(rating) as avg'])
       ->from('{{%shopRating}}')
@@ -170,7 +175,6 @@ class ShopController extends Controller
       'pages' => $pages,
       'shopShortName' => $shopShortName,
       'sort' => $sort,
-      'distances' => $distances,
       'ratings' => $ratings,
     ]);
   }

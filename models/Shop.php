@@ -85,6 +85,7 @@ class Shop extends \yii\db\ActiveRecord
    * @var UploadedFile[]
    */
   public $uploadedShopPhoto;
+  public $distance;
 
 
   /**
