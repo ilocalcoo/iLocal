@@ -169,7 +169,7 @@ $this->title = "I'm Local";
                     </div>
                     <div class="form-group main-group">
                         <div class="slidecontainer input form-control bg-white">
-                            <input type="range" min="1" max="11" value="5" class="slider" id="round_range">
+                            <input type="range" min="1" max="11" value="5" class="slider" id="round_range" name="round_range">
                         </div>
                         <span class="range-text">На расстоянии <span id="range_text" class="range-value">1 км</span></span>
                         <span class="input-label"><img src="img/main/aim.png" alt="Выберите место"></span>

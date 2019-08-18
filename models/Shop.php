@@ -30,6 +30,7 @@ use yii\web\UploadedFile;
  * @property string $shopLinkPdf
  * @property int $shopRating
  * @property int $shopStatusId
+ * @property int $isItFar
  *
  * @property ShopAddress $shopAddress
  * @property ShopStatus $shopStatus
@@ -44,261 +45,306 @@ use yii\web\UploadedFile;
 class Shop extends \yii\db\ActiveRecord
 {
 
-    const RELATION_SHOP_ADDRESS = 'shopAddress';
-    const RELATION_SHOP_TYPE = 'shopType';
-    const RELATION_SHOP_PHOTOS = 'shopPhotos';
-    const RELATION_SHOP_EVENTS = 'events';
+  const RELATION_SHOP_ADDRESS = 'shopAddress';
+  const RELATION_SHOP_TYPE = 'shopType';
+  const RELATION_SHOP_PHOTOS = 'shopPhotos';
+  const RELATION_SHOP_EVENTS = 'events';
 
-    const SHOP_ACTIVE_TRUE = 1;
-    const SHOP_ACTIVE_FALSE = 0;
+  const SHOP_ACTIVE_TRUE = 1;
+  const SHOP_ACTIVE_FALSE = 0;
 
-    const SHOP_MIDDLE_COST_0 = null;
-    const SHOP_MIDDLE_COST_1 = 1;
-    const SHOP_MIDDLE_COST_2 = 2;
-    const SHOP_MIDDLE_COST_3 = 3;
-    const SHOP_MIDDLE_COST_4 = 4;
-    const SHOP_MIDDLE_COST_5 = 5;
-    const SHOP_MIDDLE_COST = [self::SHOP_MIDDLE_COST_0, self::SHOP_MIDDLE_COST_1, self::SHOP_MIDDLE_COST_2, self::SHOP_MIDDLE_COST_3, self::SHOP_MIDDLE_COST_4,self::SHOP_MIDDLE_COST_5];
-    const SHOP_MIDDLE_COST_LABELS = [
-        self::SHOP_MIDDLE_COST_0 =>null,
-        self::SHOP_MIDDLE_COST_1 =>'₽',
-        self::SHOP_MIDDLE_COST_2 =>'₽₽',
-        self::SHOP_MIDDLE_COST_3 => '₽₽₽',
-        self::SHOP_MIDDLE_COST_4 => '₽₽₽₽',
-        self::SHOP_MIDDLE_COST_5 => '₽₽₽₽₽',
+  const IS_IT_FAR_TRUE = 1;
+  const IS_IT_FAR_FALSE = null;
+
+  const NUMBER_OF_DISPLAYED_PAGES = 4;
+
+  const SHOP_MIDDLE_COST_0 = null;
+  const SHOP_MIDDLE_COST_1 = 1;
+  const SHOP_MIDDLE_COST_2 = 2;
+  const SHOP_MIDDLE_COST_3 = 3;
+  const SHOP_MIDDLE_COST_4 = 4;
+  const SHOP_MIDDLE_COST_5 = 5;
+  const SHOP_MIDDLE_COST = [self::SHOP_MIDDLE_COST_0, self::SHOP_MIDDLE_COST_1, self::SHOP_MIDDLE_COST_2, self::SHOP_MIDDLE_COST_3, self::SHOP_MIDDLE_COST_4, self::SHOP_MIDDLE_COST_5];
+  const SHOP_MIDDLE_COST_LABELS = [
+    self::SHOP_MIDDLE_COST_0 => null,
+    self::SHOP_MIDDLE_COST_1 => '₽',
+    self::SHOP_MIDDLE_COST_2 => '₽₽',
+    self::SHOP_MIDDLE_COST_3 => '₽₽₽',
+    self::SHOP_MIDDLE_COST_4 => '₽₽₽₽',
+    self::SHOP_MIDDLE_COST_5 => '₽₽₽₽₽',
+  ];
+
+  const SCENARIO_STEP1 = 'step1';
+  const SCENARIO_STEP2 = 'step2';
+  const SCENARIO_STEP3 = 'step3';
+  const SCENARIO_STEP4 = 'step4';
+  const SCENARIO_DEFAULT = 'delete';
+  const SCENARIO_RATING = 'rating';
+
+  /**
+   * @var UploadedFile[]
+   */
+  public $uploadedShopPhoto;
+
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function tableName()
+  {
+    return 'shop';
+  }
+
+  public function behaviors()
+  {
+    return [
+      [
+        'class' => BlameableBehavior::className(),
+        'createdByAttribute' => 'creatorId',
+        'updatedByAttribute' => false,
+      ],
     ];
+  }
 
-    const SCENARIO_STEP1 = 'step1';
-    const SCENARIO_STEP2 = 'step2';
-    const SCENARIO_STEP3 = 'step3';
-    const SCENARIO_STEP4 = 'step4';
-    const SCENARIO_DEFAULT = 'delete';
-    const SCENARIO_RATING = 'rating';
+  /**
+   * {@inheritdoc}
+   */
+  public function rules()
+  {
+    return [
+      [['shopActive', 'creatorId', 'shopTypeId', 'shopAddressId', 'shopStatusId', 'shopRating', 'isItFar'],
+        'integer'],
+      [['shopShortName', 'shopTypeId'], 'required'],
+      [['shopMiddleCost'], 'string'],
+      [['shopShortName'], 'string', 'max' => 75],
+      [['shopFullName', 'shopPhone', 'shopWeb', 'shopCostMin',
+        'shopCostMax', 'shopWorkTime', 'shopAgregator',
+        'shopShortDescription', 'shopLinkPdf'], 'string', 'max' => 255],
+      [['shopFullDescription'], 'string', 'max' => 1500],
+      [['shopAddressId'], 'exist', 'skipOnError' => true, 'targetClass' => ShopAddress::className(), 'targetAttribute' => ['shopAddressId' => 'id']],
+      [['shopStatusId'], 'exist', 'skipOnError' => true, 'targetClass' => ShopStatus::className(), 'targetAttribute' => ['shopStatusId' => 'id']],
+      [['shopTypeId'], 'exist', 'skipOnError' => true, 'targetClass' => ShopType::className(), 'targetAttribute' => ['shopTypeId' => 'id']],
+      [['creatorId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute'
+      => ['creatorId' => 'id']],
+      [['uploadedShopPhoto'], 'file', 'extensions' => 'jpeg, jpg, png', 'maxFiles' => 10]
+    ];
+  }
 
-    /**
-     * @var UploadedFile[]
-     */
-    public $uploadedShopPhoto;
+  /**
+   * {@inheritdoc}
+   */
+  public function attributeLabels()
+  {
+    return [
+      'shopId' => 'Shop ID',
+      'creatorId' => 'Creator ID',
+      'shopActive' => 'Shop Active',
+      'shopShortName' => 'Название места',
+      'shopFullName' => 'Shop Full Name',
+      'shopTypeId' => 'Категория магазина',
+      'shopPhone' => 'Телефон',
+      'shopWeb' => 'Сайт',
+      'shopAddressId' => 'Адрес',
+      'shopCostMin' => 'Минимальная цена',
+      'shopCostMax' => 'Максимальная цена',
+      'shopMiddleCost' => 'Средний чек',
+      'shopWorkTime' => 'Часы работы',
+      'shopAgregator' => 'Shop Agregator',
+      'shopShortDescription' => 'Краткое описание места',
+      'shopFullDescription' => 'Полное описание места',
+      'shopLinkPdf' => 'Ссылка на pdf',
+      'shopRating' => 'Shop Rating',
+      'shopStatusId' => 'Shop Status ID',
+    ];
+  }
 
+  public function fields()
+  {
+    return ArrayHelper::merge(parent::fields(), [
+      'shopPhotos', 'events'
+    ]);
+  }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function tableName()
-    {
-        return 'shop';
+  public function scenarios()
+  {
+    return [
+      self::SCENARIO_DEFAULT => ['*'],
+      self::SCENARIO_STEP1 => ['creatorId', 'shopTypeId', 'shopShortName', 'shopShortDescription', 'shopFullDescription'],
+      self::SCENARIO_STEP2 => ['uploadedShopPhoto'],
+      self::SCENARIO_STEP3 => ['shopAddressId', 'shopPhone', 'shopWeb', 'shopWorkTime'],
+      self::SCENARIO_STEP4 => ['shopCostMin', 'shopCostMax', 'shopMiddleCost', 'shopLinkPdf'],
+      self::SCENARIO_RATING => ['shopRating'],
+    ];
+  }
+
+  public function uploadShopPhoto()
+  {
+    if ($this->validate()) {
+      foreach ($this->uploadedShopPhoto as $file) {
+        $fileName = 'img/shopPhoto/' . $file->baseName . '.' . $file->extension;
+        $file->saveAs($fileName);
+        ThumbGenerator::generate($fileName, $this->shopId);
+        $model = new ShopPhoto();
+        $model->shopPhoto = $file->baseName . '.' . $file->extension;
+        $model->shopId = $this->shopId;
+        $model->save();
+      }
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  public function shopRating()
+  {
+    $shopRating = ShopRating::find()->where(['shopId' => $this->shopId])->asArray()->all();
+    $value = null;
+    foreach ($shopRating as $rating) {
+      $value += $rating['rating'];
+    }
+    $this->shopRating = round($value / count($shopRating));
+    if ($this->save()) {
+      return true;
+    }
+    return false;
+  }
+
+  public function getUserId()
+  {
+    if (Yii::$app->user->isGuest) {
+      return 0;
+    } else {
+      return Yii::$app->user->id;
+    }
+  }
+
+  public function myIsGuest()
+  {
+    if (Yii::$app->user->isGuest) {
+      return 1;
+    } else {
+      return 0;
     }
 
-    public function behaviors()
-    {
-        return [
-            [
-                'class' => BlameableBehavior::className(),
-                'createdByAttribute' => 'creatorId',
-                'updatedByAttribute' => false,
-            ],
-        ];
-    }
+  }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function rules()
-    {
-        return [
-            [['shopActive', 'creatorId', 'shopTypeId', 'shopAddressId', 'shopStatusId', 'shopRating'],
-                'integer'],
-            [['shopShortName', 'shopTypeId'], 'required'],
-            [['shopMiddleCost'], 'string'],
-            [['shopShortName'], 'string', 'max' => 75],
-            [['shopFullName', 'shopPhone', 'shopWeb', 'shopCostMin',
-                'shopCostMax', 'shopWorkTime', 'shopAgregator',
-                'shopShortDescription', 'shopLinkPdf'], 'string', 'max' => 255],
-            [['shopFullDescription'], 'string', 'max' => 1500],
-            [['shopAddressId'], 'exist', 'skipOnError' => true, 'targetClass' => ShopAddress::className(), 'targetAttribute' => ['shopAddressId' => 'id']],
-            [['shopStatusId'], 'exist', 'skipOnError' => true, 'targetClass' => ShopStatus::className(), 'targetAttribute' => ['shopStatusId' => 'id']],
-            [['shopTypeId'], 'exist', 'skipOnError' => true, 'targetClass' => ShopType::className(), 'targetAttribute' => ['shopTypeId' => 'id']],
-            [['creatorId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute'
-            => ['creatorId' => 'id']],
-            [['uploadedShopPhoto'], 'file', 'extensions' => 'jpeg, jpg, png', 'maxFiles' => 10]
-        ];
-    }
+  /**
+   * @return \yii\db\ActiveQuery
+   */
+  public function getShopAddress()
+  {
+    return $this->hasOne(ShopAddress::className(), ['id' => 'shopAddressId']);
+  }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function attributeLabels()
-    {
-        return [
-            'shopId' => 'Shop ID',
-            'creatorId' => 'Creator ID',
-            'shopActive' => 'Shop Active',
-            'shopShortName' => 'Название места',
-            'shopFullName' => 'Shop Full Name',
-            'shopTypeId' => 'Категория магазина',
-            'shopPhone' => 'Телефон',
-            'shopWeb' => 'Сайт',
-            'shopAddressId' => 'Адрес',
-            'shopCostMin' => 'Минимальная цена',
-            'shopCostMax' => 'Максимальная цена',
-            'shopMiddleCost' => 'Средний чек',
-            'shopWorkTime' => 'Часы работы',
-            'shopAgregator' => 'Shop Agregator',
-            'shopShortDescription' => 'Краткое описание места',
-            'shopFullDescription' => 'Полное описание места',
-            'shopLinkPdf' => 'Ссылка на pdf',
-            'shopRating' => 'Shop Rating',
-            'shopStatusId' => 'Shop Status ID',
-        ];
-    }
+  /**
+   * @return \yii\db\ActiveQuery
+   */
+  public function getShopStatus()
+  {
+    return $this->hasOne(ShopStatus::className(), ['id' => 'shopStatusId']);
+  }
 
-    public function fields()
-    {
-        return ArrayHelper::merge(parent::fields(), [
-            'shopPhotos', 'events'
-        ]);
-    }
+  /**
+   * @return \yii\db\ActiveQuery
+   */
+  public function getShopType()
+  {
+    return $this->hasOne(ShopType::className(), ['id' => 'shopTypeId']);
+  }
 
-    public function scenarios()
-    {
-        return [
-            self::SCENARIO_DEFAULT => ['*'],
-            self::SCENARIO_STEP1 => ['creatorId', 'shopTypeId', 'shopShortName', 'shopShortDescription', 'shopFullDescription'],
-            self::SCENARIO_STEP2 => ['uploadedShopPhoto'],
-            self::SCENARIO_STEP3 => ['shopAddressId', 'shopPhone', 'shopWeb', 'shopWorkTime'],
-            self::SCENARIO_STEP4 => ['shopCostMin', 'shopCostMax', 'shopMiddleCost', 'shopLinkPdf'],
-            self::SCENARIO_RATING => ['shopRating'],
-        ];
-    }
+  /**
+   * @return \yii\db\ActiveQuery
+   */
+  public function getCreator()
+  {
+    return $this->hasOne(User::className(), ['id' => 'creatorId']);
+  }
 
-    public function uploadShopPhoto()
-    {
-        if ($this->validate()) {
-            foreach ($this->uploadedShopPhoto as $file) {
-                $fileName = 'img/shopPhoto/' . $file->baseName . '.' . $file->extension;
-                $file->saveAs($fileName);
-                ThumbGenerator::generate($fileName, $this->shopId);
-                $model = new ShopPhoto();
-                $model->shopPhoto = $file->baseName . '.' . $file->extension;
-                $model->shopId = $this->shopId;
-                $model->save();
-            }
-            return true;
-        } else {
-            return false;
-        }
-    }
+  /**
+   * @return \yii\db\ActiveQuery
+   */
+  public function getEvents()
+  {
+    return $this->hasMany(Event::className(), ['eventOwnerId' => 'shopId']);
+  }
 
-    public function shopRating()
-    {
-        $shopRating = ShopRating::find()->where(['shopId' => $this->shopId])->asArray()->all();
-        $value = null;
-        foreach ($shopRating as $rating) {
-            $value += $rating['rating'];
-        }
-        $this->shopRating = round($value / count($shopRating));
-        if ($this->save()) {
-            return true;
-        }
-        return false;
-    }
+  /**
+   * @return \yii\db\ActiveQuery
+   */
+  public function getTopEvents()
+  {
+    return Event::find()->byTop()->limit(Event::MAX_SHOW_EVENTS);
+  }
 
-    public function getUserId()
-    {
-        if (Yii::$app->user->isGuest) {
-            return 0;
-        } else {
-            return Yii::$app->user->id;
-        }
-    }
+  /**
+   * @return \yii\db\ActiveQuery
+   */
+  public function getShopPhotos()
+  {
+    return $this->hasMany(ShopPhoto::className(), ['shopId' => 'shopId']);
+  }
 
-    public function myIsGuest()
-    {
-        if (Yii::$app->user->isGuest) {
-            return 1;
-        } else {
-            return 0;
-        }
+  /**
+   * @return \yii\db\ActiveQuery
+   */
+  public function getShopRatings()
+  {
+    return $this->hasMany(ShopRating::className(), ['shopId' => 'shopId']);
+  }
 
-    }
+  /**
+   * @return \yii\db\ActiveQuery
+   */
+  public function getUserShops()
+  {
+    return $this->hasMany(UserShop::className(), ['shop_id' => 'shopId']);
+  }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getShopAddress()
-    {
-        return $this->hasOne(ShopAddress::className(), ['id' => 'shopAddressId']);
-    }
+  /**
+   * @return \yii\db\ActiveQuery
+   */
+  public function getUsersFavorites()
+  {
+    return $this->hasMany(User::className(), ['id' => 'user_id'])->viaTable('user_shop', ['shop_id' => 'shopId']);
+  }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getShopStatus()
-    {
-        return $this->hasOne(ShopStatus::className(), ['id' => 'shopStatusId']);
-    }
+  /**
+   * @param array $c1 first coordinate
+   * @param array $c2 second coordinate
+   * @return float distance between coordinates
+   */
+  public static function getDistance($c1, $c2)
+  {
+    $r = 6371000; // Earth radius in m
+    // get attitude and latitude from array
+    $lat1 = $c1[0];
+    $lat2 = $c2[0];
+    $lon1 = $c1[1];
+    $lon2 = $c2[1];
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getShopType()
-    {
-        return $this->hasOne(ShopType::className(), ['id' => 'shopTypeId']);
-    }
+    $dLat = deg2rad($lat2 - $lat1);  // deg2rad below
+    $dLon = deg2rad($lon2 - $lon1);
+    $a =
+      sin($dLat / 2) * sin($dLat / 2) +
+      cos(deg2rad($lat1)) * cos(deg2rad($lat2)) *
+      sin($dLon / 2) * sin($dLon / 2);
+    $c = 2 * atan2(sqrt($a), sqrt(1 - $a));
+    return round($r * $c); // Distance in m
+  }
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getCreator()
-    {
-        return $this->hasOne(User::className(), ['id' => 'creatorId']);
-    }
+  /**
+   * @param int $dist distance
+   * @return string beauty string as '100 м' or '1.2 км'
+   */
+  public static function beautifyDistance($dist) {
 
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getEvents()
-    {
-        return $this->hasMany(Event::className(), ['eventOwnerId' => 'shopId']);
+    if ($dist < 1000) {
+      $dist .= ' м';
+    } else {
+      $dist = floor($dist / 100);
+      $dist = ((($dist % 10) == 0) ? (floor($dist / 10)) : ($dist / 10));
+      $dist .= ' км';
     }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getTopEvents()
-    {
-        return Event::find()->byTop()->limit(Event::MAX_SHOW_EVENTS);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getShopPhotos()
-    {
-        return $this->hasMany(ShopPhoto::className(), ['shopId' => 'shopId']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getShopRatings()
-    {
-        return $this->hasMany(ShopRating::className(), ['shopId' => 'shopId']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUserShops()
-    {
-        return $this->hasMany(UserShop::className(), ['shop_id' => 'shopId']);
-    }
-
-    /**
-     * @return \yii\db\ActiveQuery
-     */
-    public function getUsersFavorites()
-    {
-        return $this->hasMany(User::className(), ['id' => 'user_id'])->viaTable('user_shop', ['shop_id' => 'shopId']);
-    }
+    return $dist;
+  }
 }
