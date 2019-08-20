@@ -128,7 +128,7 @@ AppAsset::register($this);
                     <div class="col-4 nav-bar-categories-main-item <?php echo $currentUrl == 'even' ? 'item-active' : ''; ?>">
                         <a href="/events" class="category-link">Акции</a>
                     </div>
-                    <div class="col-4 nav-bar-categories-main-item <?php echo $currentUrl == 'happening' ? 'item-active' : ''; ?>">
+                    <div class="col-4 nav-bar-categories-main-item <?php echo $currentUrl == 'happ' ? 'item-active' : ''; ?>">
                         <a href="/happenings" class="category-link">События</a></div>
                 </div>
 
@@ -149,6 +149,13 @@ AppAsset::register($this);
                         <a href="/shops?shopTypeId=4" <?php if (active('TypeId=4')) echo 'class="nav-bar-categories-active"' ?>>Красота</a>
                         <a href="/shops?shopTypeId=5" <?php if (active('TypeId=5')) echo 'class="nav-bar-categories-active"' ?>>Покупки</a>
                         <a href="/shops">Все</a>
+                    <?php } elseif ($currentUrl == 'happ') {?>
+                    <a href="/happenings?happeningTypeId=1" <?php if (active('TypeId=1')) echo 'class="nav-bar-categories-active"' ?>>Еда</a>
+                    <a href="/happenings?happeningTypeId=2" <?php if (active('TypeId=2')) echo 'class="nav-bar-categories-active"' ?>>Дети</a>
+                    <a href="/happenings?happeningTypeId=3" <?php if (active('TypeId=3')) echo 'class="nav-bar-categories-active"' ?>>Спорт</a>
+                    <a href="/happenings?happeningTypeId=4" <?php if (active('TypeId=4')) echo 'class="nav-bar-categories-active"' ?>>Красота</a>
+                    <a href="/happenings?happeningTypeId=5" <?php if (active('TypeId=5')) echo 'class="nav-bar-categories-active"' ?>>Покупки</a>
+                    <a href="/happenings">Все</a>
                     <?php } ?>
                 </div>
             </div>

@@ -195,7 +195,7 @@ $this->title = "I'm Local";
                 <div class="slide col-md-3 col-8 align-top">
                     <a href="/events/<?= $event->id ?>">
                     <div class="slide-img">
-                        <img width="277px" src="<?= '/img/eventPhoto/'.$event->eventPhotos[0]->eventPhoto ?>" alt="<?= $event->title ?>">
+                        <img width="277px" src="<?= '/img/eventPhoto/'.($event->eventPhotos ? $event->eventPhotos[0]->eventPhoto : 'nofoto') ?>" alt="<?= $event->title ?>">
                         <div class="overlay">
                             <a class="overlay-link" href="/events/<?= $event->id ?>"><?= $event->title ?></a>
                         </div>

@@ -1,0 +1,132 @@
+.modal-content {
+    font-family: Roboto, sans-serif;
+}
+
+.event-view-content {
+    background: white !important;
+    position: relative;
+}
+
+.event-model-title {
+    display: flex;
+    height: 90px;
+    position: absolute;
+    top: -35px;
+}
+
+.event-model-title>img {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    margin-right: 28px;
+}
+
+.event-view-shop-name {
+    font-size: 21px;
+    overflow: hidden;
+    max-height: 62px;
+    margin-top: 10px;
+}
+
+.event-view-shop-address {
+    font-size: 14px;
+    color: #606060;
+    max-height: 43px;
+    overflow: hidden;
+}
+
+.event-view-img {
+    max-height: none !important;
+    border-radius: 5px;
+    width: 100%;
+}
+
+.event-view-title {
+    color: #454545;
+    margin-bottom: 17px;
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 23px;
+    display: none;
+}
+
+.event-title {
+    font-weight: 500;
+    font-size: 20px;
+    line-height: 23px;
+
+    color: #FFFFFF;
+}
+
+.event-view-full-desc {
+    font-size: 14px;
+    color: #747474;
+}
+
+.event-view-date-wrap {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+}
+
+.event-view-date-wrap>div {
+    font-size: 14px;
+    color: #747474;
+}
+
+.event-about {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+
+    color: #454545;
+}
+
+.event-item {
+    padding: 0 !important;
+}
+
+.org-name {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+
+    color: #FFFFFF;
+}
+
+.event-info {
+    background: white;
+    border-radius: 15px 15px 0px 0px;
+    margin-top: -25px;
+    padding-top: 10px;
+    z-index: 10;
+    line-height: 5vh;
+}
+
+.overlay-link {
+    margin-bottom: 20px;
+
+}
+
+/* desktop only parametrs */
+@media (min-width: 576px) {
+    .event-view-title {
+        display: block;
+    }
+
+    .event-item {
+        padding: 15px !important;
+    }
+
+    .event-info {
+        background: none;
+        border-radius: 0;
+        margin-top: 0;
+    }
+    .overlay-link {
+        margin-bottom: 0;
+    }
+}

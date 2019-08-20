@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 $this->registerCssFile('/css/event/create/form.css');
 /* @var $this yii\web\View */
-/* @var $model app\models\Event */
+/* @var $model app\models\Happening */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -21,12 +21,12 @@ $this->registerCssFile('/css/event/create/form.css');
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'uploadedEventPhoto[]')->fileInput(['style' => 'display: none;'])->label(false) ?>
+    <?= $form->field($model, 'uploadedHappeningPhoto[]')->fileInput(['style' => 'display: none;'])->label(false) ?>
     <div class="shop-form_shop-photos-wrap">
-        <?php foreach ($model->eventPhotos as $photo) { ?>
+        <?php foreach ($model->happeningPhotos as $photo) { ?>
             <div class="shop-form_shop-photos">
-                <?= Html::img('/img/shopPhoto/' . ($photo['eventPhoto']), ['class' => 'shop-form_photo']) ?>
-                <?= Html::a(Html::img('/img/shop/photo_delete.svg'), ['/event-photo/delete', 'id' => $photo['id']], [
+                <?= Html::img('/img/happeningPhoto/' . ($photo['happeningPhoto']), ['class' => 'shop-form_photo']) ?>
+                <?= Html::a(Html::img('/img/shop/photo_delete.svg'), ['/happening-photo/delete', 'id' => $photo['id']], [
                     'class' => 'shop-form_photo-delete',
                     'data' => [
                         'confirm' => 'Вы уверены что хотите удалить фотографию?'
@@ -34,9 +34,9 @@ $this->registerCssFile('/css/event/create/form.css');
                 ]) ?>
             </div>
         <?php } ?>
-        <?php if (!$model->eventPhotos) { ?>
+        <?php if (!$model->happeningPhotos) { ?>
             <div class="shop-form_shop-photos">
-                <label for="event-uploadedeventphoto">
+                <label for="happening-uploadedhappeningphoto">
                     <?= Html::img('/img/shopPhoto/default.png', ['class' => 'shop-form_photo']) ?>
                     <?= Html::img('/img/shop/photo_icon.svg', ['class' => 'shop-form_photo-icon']) ?>
                     <span class="shop-form_photo-text">Загрузите фотографии jpg, png</span>
@@ -44,7 +44,7 @@ $this->registerCssFile('/css/event/create/form.css');
             </div>
         <?php } else { ?>
             <div class="shop-form_shop-photos">
-                <label for="event-uploadedeventphoto">
+                <label for="happening-uploadedhappeningphoto">
                     <?= Html::img('/img/shopPhoto/default.png', ['class' => 'shop-form_photo']) ?>
                     <?= Html::img('/img/shop/photo_icon_ellipse.svg', ['class' => 'shop-form_photo-icon_ellipse']) ?>
                 </label>
@@ -54,7 +54,7 @@ $this->registerCssFile('/css/event/create/form.css');
     <div class="step_form-line"></div>
 
     <div class="form-group step_form-rectangle_btn-wrap">
-        <a class="step_form-rectangle_btn-back" href="/events/<?= $model->id ?>/update/info">
+        <a class="step_form-rectangle_btn-back" href="/happenings/<?= $model->id ?>/update/info">
             <span class="keyboard_arrow_left"></span> Назад</a>
         <a class="step_form-rectangle_btn-next step_form-rectangle_btn-next-a" href="/user/business">Разместить </a>
     </div>

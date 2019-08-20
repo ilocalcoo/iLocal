@@ -86,6 +86,45 @@ $this->registerCssFile('/css/user/business.css');
     </div>
 </div>
 
+<div class="business-line"></div>
+
+<h1 class="business-header">Ваши события</h1>
+
+<div class="flex-wrap">
+
+    <?php foreach ($userHappenings as $happening) { ?>
+        <div class="main-block-wrap">
+            <img src="/img/happeningPhoto/<?php if (!isset($happening['happeningPhotos'][0]['happeningPhoto'])) {
+                echo 'no-photo.png';
+            } else {
+                echo $happening['happeningPhotos'][0]['happeningPhoto'];
+            } ?>" class="photo" alt="">
+            <div class="info-block-wrap">
+                <a href="/happenings/<?= $happening['id'] ?>" class="title"><?= $happening['title'] ?></a>
+                <a href="/happening/create?id=<?= $happening['id'] ?>" title="Редактировать" aria-label="Редактировать"
+                        class="update"><img src="/img/user/contract-btn.svg" alt=""></a>
+                <?= Html::a(Html::img('/img/user/delete-btn.svg'), ['/happenings/' . $happening['id'] . '/delete'], [
+                    'title' => 'Удалить',
+                    'aria-label' => 'Удалить',
+                    'data' => [
+                        'confirm' => 'Вы уверены что хотите удалить акцию?',
+                        'method' => 'post'
+                    ],
+                ]) ?>
+            </div>
+        </div>
+    <?php } ?>
+
+    <div class="main-block-wrap">
+        <div class="add-block">
+            <a href="/happening/create" class="add-ellipse <?php if (!$userShops) { ?>disabled<?php } ?>"><img src="/img/user/plus-icon.svg" alt=""></a>
+        </div>
+        <div class="info-block-wrap">
+            <a href="/happening/create" class="title <?php if (!$userShops) { ?>disabled<?php } ?>">Добавить событие</a>
+        </div>
+    </div>
+</div>
+
 
 
 
