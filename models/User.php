@@ -30,7 +30,7 @@ use yii\behaviors\TimestampBehavior;
  * @property Event[] $eventsFavorites
  * @property Shop[] $shops
  * @property Shop[] $shopsFavorites
- * @property Shoprating[] $shopratings
+ * @property ShopRating[] $shopRatings
  * @property UserAddress $userAddress
  * @property UserEvent[] $userEvents
  * @property UserShop[] $userShops
@@ -146,9 +146,9 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getShopratings()
+    public function getShopRatings()
     {
-        return $this->hasMany(Shoprating::className(), ['userId' => 'id']);
+        return $this->hasMany(ShopRating::className(), ['userId' => 'id']);
     }
 
     /**
