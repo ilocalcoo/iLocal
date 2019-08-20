@@ -49,6 +49,7 @@ class Shop extends \yii\db\ActiveRecord
     const RELATION_SHOP_TYPE = 'shopType';
     const RELATION_SHOP_PHOTOS = 'shopPhotos';
     const RELATION_SHOP_EVENTS = 'events';
+    const RELATION_SHOP_HAPPENINGS = 'happenings';
 
     const SHOP_ACTIVE_TRUE = 1;
     const SHOP_ACTIVE_FALSE = 0;
