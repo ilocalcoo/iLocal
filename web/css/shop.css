@@ -227,3 +227,18 @@
         max-height: 69px;
     }
 }
+
+.mobile-rating span{
+    position: relative;
+    top: 20px;
+    width: 32px;
+    height: 24px;
+
+    background: #FE8A80;
+    border-radius: 5px;
+    font-weight: 500;
+    font-size: 14px;
+    align-items: center;
+    text-align: center;
+    color: #F3F3F3;
+}

@@ -25,40 +25,40 @@ $this->title = $type . ' рядом с вами';
 ?>
 <div class="shop-index">
 
-  <h1 class="main-shops-title"><?= Html::encode($this->title) ?></h1>
-  <div class="under_title d-none d-md-block">
-    <span>Вы смотрите места которые находятся рядом с вами в разделе "<?= $type ?>"</span>
-    <br>
+	<h1 class="main-shops-title"><?= Html::encode($this->title) ?></h1>
+	<div class="under_title d-none d-md-block">
+		<span>Вы смотрите места которые находятся рядом с вами в разделе "<?= $type ?>"</span>
+		<br>
     <?php echo $this->render('_search', ['model' => $searchModel, 'shopShortName' => $shopShortName]); ?>
-  </div>
+	</div>
 
-  <div class="row">
-    <div class="col-12">
+	<div class="row">
+		<div class="col-12">
       <?php
       Pjax::begin();
       foreach ($shops as $key => $shop) { ?>
-        <div class="row content">
-          <div class="d-flex col-4 align-items-center">
-            <a class="shop_img" href="<?= 'shops/' . $shop->shopId ?>" data-pjax="0">
-              <img src="/img/shopPhoto/<?php
+				<div class="row content">
+					<div class="d-flex col-4 align-items-center">
+						<a class="shop_img" href="<?= 'shops/' . $shop->shopId ?>" data-pjax="0">
+							<img src="/img/shopPhoto/<?php
               $shopPhoto = $shop->getShopPhotos()->asArray()->one()['shopPhoto'];
               if (is_null($shopPhoto)) {
                 $shopPhoto = '/img/nophoto.jpg';
               }
               echo $shopPhoto ?>" alt="<?= $shop->shopShortName ?>" data-pjax="0">
-            </a>
-          </div>
+						</a>
+					</div>
 
-          <div class="col-md-8 col-7">
-            <div class="row">
-              <div class="col-lg-8 col-md-7 col-12">
-                <div class="name_and_rating">
-                  <a class="shop_name" href="<?= 'shops/' . $shop->shopId ?>" data-pjax="0"
-                     tabindex="1"><?= $shop->shopShortName ?></a>
-                </div>
+					<div class="col-md-8 col-7">
+						<div class="row">
+							<div class="col-lg-8 col-md-7 col-12">
+								<div class="name_and_rating">
+									<a class="shop_name" href="<?= 'shops/' . $shop->shopId ?>" data-pjax="0"
+										 tabindex="1"><?= $shop->shopShortName ?></a>
+								</div>
 
-              </div>
-              <div class="col-lg-4 col-md-5 d-none d-md-block">
+							</div>
+							<div class="col-lg-4 col-md-5 d-none d-md-block">
                 <?php echo StarRating::widget([
                   'name' => 'shop_rating',
                   'value' => $shop->shopRating,
@@ -77,30 +77,30 @@ $this->title = $type . ' рядом с вами';
                     'emptyStar' => '<span class="krajee-icon krajee-icon-star"></span>'
                   ],
                 ]); ?>
-              </div>
-            </div>
-            <div class="row shop_address">
-              <div class="col-12 d-none d-md-block">
+							</div>
+						</div>
+						<div class="row shop_address">
+							<div class="col-12 d-none d-md-block">
                 <?php
                 $address = 'г. ' . $shop->shopAddress->city . ', ул. ' .
                   $shop->shopAddress->street . ', д. ' .
                   $shop->shopAddress->houseNumber;
                 // TODO доделать отображение корпусов и строений
                 echo $address; ?>
-              </div>
-            </div>
-            <div class="row shop_address-line d-none d-md-block"></div>
-            <div class="row d-sm-block d-md-none">
+							</div>
+						</div>
+						<div class="row shop_address-line d-none d-md-block"></div>
+						<div class="row d-sm-block d-md-none col-12">
               <span class="distance"><?=
                 (!is_null($shop->distance)) ?
-                \app\models\Shop::beautifyDistance($shop->distance)
+                  \app\models\Shop::beautifyDistance($shop->distance) . " от Вас"
                   : '';
                 ?>
               </span>
-            </div>
-            <div class="row text_and_like">
-              <span class="col-12"><?= $shop->shopShortDescription ?></span>
-              <div class="like offset-11">
+						</div>
+						<div class="row text_and_like">
+							<span class="col-12"><?= $shop->shopShortDescription ?></span>
+							<div class="like offset-11">
                 <?php if (Yii::$app->user->isGuest) { ?>
                   <?php
                   Modal::begin([
@@ -111,19 +111,19 @@ $this->title = $type . ' рядом с вами';
                     ],
                   ]);
                   ?>
-                  <div class="modal-enter-body">
-                    <h2>ВХОД</h2>
-                    <p>Войдите, чтобы добавить в избранное!</p>
-                  </div>
-                  <div class="enter-icons">
+									<div class="modal-enter-body">
+										<h2>ВХОД</h2>
+										<p>Войдите, чтобы добавить в избранное!</p>
+									</div>
+									<div class="enter-icons">
                     <?= yii\authclient\widgets\AuthChoice::widget([
                       'baseAuthUrl' => ['site/auth'],
                       'popupMode' => true,
                     ]) ?>
-                  </div>
-                  <p class="enter-policy">Продолжая, Вы соглашаетесь с нашими Условиями использования и
-                    подтверждаете, что прочли
-                    <a href="/policy" target="_blank">Политику конфиденциальности</a> .</p>
+									</div>
+									<p class="enter-policy">Продолжая, Вы соглашаетесь с нашими Условиями использования и
+										подтверждаете, что прочли
+										<a href="/policy" target="_blank">Политику конфиденциальности</a> .</p>
                   <?php Modal::end(); ?>
                 <?php } else { ?>
                   <?php \yii\widgets\Pjax::begin() ?>
@@ -134,37 +134,40 @@ $this->title = $type . ' рядом с вами';
                     $favorite = 'Favor_rounded.svg';
                     $shopId = 'add-shop-id';
                   } ?>
-                  <a href="/shops?<?= $shopId ?>=<?= $shop['shopId'] ?>" title="Добавить в избранное"
-                     class="favorite">
-                    <img src="/img/user/<?= $favorite ?>" alt=""></a>
+									<a href="/shops?<?= $shopId ?>=<?= $shop['shopId'] ?>" title="Добавить в избранное"
+										 class="favorite">
+										<img src="/img/user/<?= $favorite ?>" alt=""></a>
                   <?php \yii\widgets\Pjax::end() ?>
                 <?php } ?>
-              </div>
-            </div>
-            <div class="work_time_and_category d-none d-md-block">
+							</div>
+						</div>
+						<div class="work_time_and_category d-none d-md-block">
 						<span class="work_time"><?php if ($shop->shopWorkTime) {
 
                 echo 'Время работы: ' . $shop->shopWorkTime;
               } ?></span>
-              <span class="category"><?php $category = \app\models\ShopType::TYPES_LABELS[$shop->shopTypeId];
+							<span class="category"><?php $category = \app\models\ShopType::TYPES_LABELS[$shop->shopTypeId];
                 echo 'Раздел - ' . $category; ?></span>
-            </div>
-          </div>
-          <div class="d-sm-block d-md-none col">
-            <?=
-            array_key_exists($shop->shopId, $ratings) ? mb_substr($ratings[$shop->shopId]['avg'],0,3) : '';
-            // \yii\helpers\VarDumper::dumpAsString($shop->shopId, 5, true);
-            ?>
-          </div>
-        </div>
+						</div>
+					</div>
+					<div class="d-sm-block d-md-none col-1 mobile-rating">
+						<div class="row">
+              <?php if (array_key_exists($shop->shopId, $ratings)) { ?>
+								<span>
+								<?= mb_substr($ratings[$shop->shopId]['avg'], 0, 3); ?>
+								</span>
+              <?php } ?>
+						</div>
+					</div>
+				</div>
       <?php } ?>
-    </div>
-  </div>
+		</div>
+	</div>
   <?php Pjax::end(); ?>
 
-  <div class="row">
-    <div class="col-12">
-      <nav class="pagination">
+	<div class="row">
+		<div class="col-12">
+			<nav class="pagination">
         <?= \yii\widgets\LinkPager::widget([
           'pagination' => $pages,
           'nextPageCssClass' => 'page-item',
@@ -175,23 +178,23 @@ $this->title = $type . ' рядом с вами';
           'nextPageLabel' => '>',
           'prevPageLabel' => '<',
         ]); ?>
-      </nav>
-    </div>
-  </div>
+			</nav>
+		</div>
+	</div>
 
 
-  <div class="shop-banner">
-    <div class="banner-left">
-      <h1>Владелец бизнеса?</h1>
-      <div> Разместите Ваше место на платформе и станьте ближе к тысячам людей, которые живут и работают в
-        радиусе пешей доступности.
-        <div class="banner-text"><span>Бесплатный</span> пробный период на размещение акций.</div>
-      </div>
-      <a href="/user/business">Попробовать</a>
-    </div>
-    <div class="banner-right">
-      <img src="/img/shop/banner-img.png" alt="" tabindex="1">
-    </div>
-  </div>
+	<div class="shop-banner">
+		<div class="banner-left">
+			<h1>Владелец бизнеса?</h1>
+			<div> Разместите Ваше место на платформе и станьте ближе к тысячам людей, которые живут и работают в
+				радиусе пешей доступности.
+				<div class="banner-text"><span>Бесплатный</span> пробный период на размещение акций.</div>
+			</div>
+			<a href="/user/business">Попробовать</a>
+		</div>
+		<div class="banner-right">
+			<img src="/img/shop/banner-img.png" alt="" tabindex="1">
+		</div>
+	</div>
 
 </div>

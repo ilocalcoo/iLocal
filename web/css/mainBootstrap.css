@@ -293,6 +293,17 @@ body {
     margin-top: 45px;
 }
 
+@media (max-width: 768px) {
+    .nav-bar-categories-main {
+        position: fixed;
+        z-index: 100;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        margin-bottom: 0 !important;
+        height: 40px;
+    }
+}
 .nav-bar-categories-main {
     margin-top: 23px;
     margin-bottom: 23px;
