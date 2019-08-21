@@ -160,6 +160,13 @@ class Shop extends \yii\db\ActiveRecord
     ];
   }
 
+  public function fields()
+  {
+    return ArrayHelper::merge(parent::fields(), [
+      'shopPhotos', 'events'
+    ]);
+  }
+
   public function scenarios()
   {
     return [
