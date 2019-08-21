@@ -41,6 +41,7 @@ use yii\web\UploadedFile;
  * @property Event[] $events
  * @property UserShop[] $userShops
  * @property User[] $usersFavorites
+ * @property Happening[] $happenings
  */
 class Shop extends \yii\db\ActiveRecord
 {
@@ -49,6 +50,7 @@ class Shop extends \yii\db\ActiveRecord
   const RELATION_SHOP_TYPE = 'shopType';
   const RELATION_SHOP_PHOTOS = 'shopPhotos';
   const RELATION_SHOP_EVENTS = 'events';
+  const RELATION_SHOP_HAPPENINGS = 'happenings';
 
   const SHOP_ACTIVE_TRUE = 1;
   const SHOP_ACTIVE_FALSE = 0;
@@ -177,6 +179,13 @@ class Shop extends \yii\db\ActiveRecord
     ];
   }
 
+  public function fields()
+  {
+    return ArrayHelper::merge(parent::fields(), [
+        'shopPhotos', 'events', 'shopAddress', 'happenings', 'shopRatings'
+    ]);
+  }
+  
   public function uploadShopPhoto()
   {
     if ($this->validate()) {
@@ -346,5 +355,13 @@ class Shop extends \yii\db\ActiveRecord
       $dist .= ' км';
     }
     return $dist;
+  }
+
+  /**
+   * @return \yii\db\ActiveQuery
+   */
+  public function getHappenings()
+  {
+    return $this->hasMany(Happening::className(), ['shopId' => 'shopId']);
   }
 }
