@@ -21,7 +21,7 @@ class ShopRating extends \yii\db\ActiveRecord
      */
     public static function tableName()
     {
-        return 'shoprating';
+        return 'shopRating';
     }
 
     /**

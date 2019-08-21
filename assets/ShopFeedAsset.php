@@ -17,17 +17,16 @@ use yii\web\AssetBundle;
  */
 class ShopFeedAsset extends AssetBundle
 {
-    public $basePath = '@webroot';
-    public $baseUrl = '@web';
-    public $css = [
-        'css/shop.css'
-    ];
-    public $js = [
-        'js/shop_feed.js'
-    ];
-    public $depends = [
-        'yii\web\YiiAsset',
-        'yii\bootstrap4\BootstrapAsset',
-        'app\assets\AppAsset',
-    ];
+  public $basePath = '@webroot';
+  public $baseUrl = '@web';
+  public $css = [
+    'css/shop.css'
+  ];
+  public $js = [
+    'js/shop_feed.js',
+  ];
+  public $jsOptions = ['position' => \yii\web\View::POS_HEAD];
+  public $depends = [
+    'app\assets\AppAsset',
+  ];
 }

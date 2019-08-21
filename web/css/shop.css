@@ -57,7 +57,7 @@
     font-weight: bold;
     font-size: 18px;
     color: #454545;
-    max-height: 69px;
+    /*max-height: 69px;*/
     width: 560px;
     overflow: hidden;
     transition: color 0.3s;
@@ -85,18 +85,18 @@
     /*min-width: 111%;*/
 }
 
-.text_and_like {
-    font-size: 18px;
-    color: #474747;
-    display: flex;
-    justify-content: space-between;
-    height: 115px;
-    overflow: hidden;
-}
+/*.text_and_like {*/
+/*    font-size: 18px;*/
+/*    color: #474747;*/
+/*    display: flex;*/
+/*    justify-content: space-between;*/
+/*    height: 115px;*/
+/*    overflow: hidden;*/
+/*}*/
 
-.text_and_like > span {
-    width: 559px;
-}
+/*.text_and_like > span {*/
+/*    width: 559px;*/
+/*}*/
 
 .work_time_and_category {
     margin: 5px 0 5px 0;

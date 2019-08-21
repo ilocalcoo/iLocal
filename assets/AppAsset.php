@@ -28,7 +28,6 @@ class AppAsset extends AssetBundle
         'css/style.css',
         'css/mainBootstrap.css',
         'css/slider.css',
-        'css/shop.css',
     ];
     public $js = [
         'js/imageUploaded.js',
