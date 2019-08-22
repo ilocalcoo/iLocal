@@ -109,7 +109,7 @@ class Event extends \yii\db\ActiveRecord
     public function fields()
     {
         return ArrayHelper::merge(parent::fields(), [
-            'eventPhotos'
+            'eventPhotos', 'shop'
         ]);
     }
 
