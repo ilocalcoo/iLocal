@@ -176,7 +176,7 @@ class Shop extends \yii\db\ActiveRecord
   {
     return ArrayHelper::merge(parent::fields(), [
         'shopPhotos', 'events', 'shopAddress', 'happenings',
-      'shopAvgRatings'
+      'shopAvgRating'
     ]);
   }
   
@@ -298,7 +298,7 @@ class Shop extends \yii\db\ActiveRecord
   /**
    * @return \yii\db\ActiveQuery
    */
-  public function getShopAvgRatings()
+  public function getShopAvgRating()
   {
     return $this->hasMany(ShopRating::className(), ['shopId' => 'shopId'])->average('rating');
   }
