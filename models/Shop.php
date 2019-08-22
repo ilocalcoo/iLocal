@@ -38,6 +38,7 @@ use yii\web\UploadedFile;
  * @property User $creator
  * @property ShopPhoto[] $shopPhotos
  * @property ShopRating[] $shopRatings
+ * @property ShopRating[] $shopAvgRating
  * @property Event[] $events
  * @property UserShop[] $userShops
  * @property User[] $usersFavorites

@@ -113,7 +113,8 @@ class Event extends \yii\db\ActiveRecord
       'shop' => function() {
         return ['name' => $this->eventOwner->shopShortName,
           'address' => $this->eventOwner->shopAddress,
-          'photos' => $this->eventOwner->shopPhotos];
+          'photos' => $this->eventOwner->shopPhotos,
+          'rating' => $this->eventOwner->shopAvgRating];
       }
     ]);
   }
