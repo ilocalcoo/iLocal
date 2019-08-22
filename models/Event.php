@@ -111,10 +111,10 @@ class Event extends \yii\db\ActiveRecord
     return ArrayHelper::merge(parent::fields(), [
       'eventPhotos',
       'shop' => function() {
-        return ['name' => $this->eventOwner->shopShortName,
-          'address' => $this->eventOwner->shopAddress,
-          'photos' => $this->eventOwner->shopPhotos,
-          'rating' => $this->eventOwner->shopAvgRating];
+        return ['shopShortName' => $this->eventOwner->shopShortName,
+          'shopAddress' => $this->eventOwner->shopAddress,
+          'shopPhotos' => $this->eventOwner->shopPhotos,
+          'shopAvgRating' => $this->eventOwner->shopAvgRating];
       }
     ]);
   }
