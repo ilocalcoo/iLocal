@@ -296,6 +296,14 @@ class Shop extends \yii\db\ActiveRecord
   /**
    * @return \yii\db\ActiveQuery
    */
+  public function getShopAvgRating()
+  {
+    return $this->hasMany(ShopRating::className(), ['shopId' => 'shopId'])->average('rating');
+  }
+
+  /**
+   * @return \yii\db\ActiveQuery
+   */
   public function getUserShops()
   {
     return $this->hasMany(UserShop::className(), ['shop_id' => 'shopId']);

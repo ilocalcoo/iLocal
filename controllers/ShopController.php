@@ -136,15 +136,9 @@ class ShopController extends Controller
     //TODO сортировка
     $sort = new Sort([
       'attributes' => [
-//            'age',
-//            'name' => [
-//                'asc' => ['first_name' => SORT_ASC, 'last_name' => SORT_ASC],
-//                'desc' => ['first_name' => SORT_DESC, 'last_name' => SORT_DESC],
-//                'default' => SORT_DESC,
-//                'label' => 'Name',
-//            ],
       ],
     ]);
+$sort->params = $distances;
 
     $shops = $query->offset($pages->offset)
       ->limit($pages->limit)
@@ -156,12 +150,6 @@ class ShopController extends Controller
         $shop->distance = $distances[$shop->shopId];
       }
     }
-    $ratings = (new Query)
-      ->select(['shopId', 'avg(rating) as avg'])
-      ->from('{{%shopRating}}')
-      ->groupBy('shopId')
-      ->indexBy('shopId')
-      ->all();
 
     // очищаем у всех мест поле 'isItFar'
     foreach (Shop::find()->where(['isItFar' => Shop::IS_IT_FAR_TRUE])->all() as $shop) {
@@ -175,7 +163,6 @@ class ShopController extends Controller
       'pages' => $pages,
       'shopShortName' => $shopShortName,
       'sort' => $sort,
-      'ratings' => $ratings,
     ]);
   }
 

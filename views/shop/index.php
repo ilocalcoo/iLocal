@@ -10,8 +10,8 @@ use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $shops app\models\Shop[] */
-/* @var $ratings array */
 /* @var $pages \yii\data\Pagination */
+/* @var $sort \yii\data\Sort */
 /* @var $shopType \app\models\ShopType */
 /* @var $searchModel \app\models\search\ShopSearch */
 /* @var $shopShortName \app\models\search\ShopSearch */
@@ -152,9 +152,9 @@ $this->title = $type . ' рядом с вами';
 					</div>
 					<div class="d-sm-block d-md-none col-1 mobile-rating">
 						<div class="row">
-              <?php if (array_key_exists($shop->shopId, $ratings)) { ?>
+              <?php if (!is_null($shop->shopAvgRating)) { ?>
 								<span>
-								<?= mb_substr($ratings[$shop->shopId]['avg'], 0, 3); ?>
+								<?= mb_substr($shop->shopAvgRating, 0, 3); ?>
 								</span>
               <?php } ?>
 						</div>
