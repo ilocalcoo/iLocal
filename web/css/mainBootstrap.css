@@ -302,13 +302,16 @@ body {
         left: 0;
         margin-bottom: 0 !important;
         height: 40px;
-        background-color: #FCF7F4;
+        background-color: #fff;
     }
     .item-active {
         border-radius: 15px 15px 15px 15px !important;
     }
     .nav-bar-categories-main-item {
         border: 0 !important;
+    }
+    .nav-bar-categories-main-item:hover {
+        border-radius: 15px 15px 15px 15px !important;
     }
 }
 .nav-bar-categories-main {
