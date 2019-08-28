@@ -109,7 +109,7 @@ class UserController extends ActiveController
 
         // Если пользователь с таким email не найден, то просто возвращаем сообщение. Придется отправить запрос на
         // регистрацию.
-        return json_encode(['message' => 'User not found!']);
+        return ['message' => 'User not found!'];
 
     }
 
@@ -117,7 +117,7 @@ class UserController extends ActiveController
     {
         // Проверяем нет ли такого юзера.
         if (User::findByEmail(Yii::$app->request->post('email'))) {
-            return json_encode(['message' => 'User already exists!']);
+            return ['message' => 'User already exists!'];
         }
 
         $user = new User([
@@ -148,7 +148,7 @@ class UserController extends ActiveController
                 return $user;
             }
         }
-        return json_encode(['error' => 'User is not registered']);
+        return ['error' => 'User is not registered'];
 
     }
 
