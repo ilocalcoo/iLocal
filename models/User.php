@@ -99,7 +99,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
   public function fields()
   {
     return ArrayHelper::merge(parent::fields(), [
-      'userAddress', 'eventsFavorites', 'shopsFavorites', 'happeningFavorites'
+      'userAddress', 'eventsFavorites', 'shopsFavorites', 'happeningsFavorites'
     ]);
   }
 
