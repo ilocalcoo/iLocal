@@ -11,7 +11,6 @@ use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $shops app\models\Shop[] */
 /* @var $pages \yii\data\Pagination */
-/* @var $sort \yii\data\Sort */
 /* @var $shopType \app\models\ShopType */
 /* @var $searchModel \app\models\search\ShopSearch */
 /* @var $shopShortName \app\models\search\ShopSearch */
