@@ -134,15 +134,13 @@ class ShopController extends Controller
     ]);
 
     //TODO сортировка
-    $sort = new Sort([
-      'attributes' => [
-      ],
-    ]);
-$sort->params = $distances;
+//    $sort = new Sort([
+//      'attributes' => [
+//      ],
+//    ]);
 
     $shops = $query->offset($pages->offset)
       ->limit($pages->limit)
-      ->orderBy($sort->orders)
       ->all();
 
     if ($distances !== []) {
@@ -162,7 +160,6 @@ $sort->params = $distances;
       'shops' => $shops,
       'pages' => $pages,
       'shopShortName' => $shopShortName,
-      'sort' => $sort,
     ]);
   }
 
