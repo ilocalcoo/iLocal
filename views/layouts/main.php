@@ -79,31 +79,31 @@ AppAsset::register($this);
                         <?php Modal::end(); ?>
                     </li>
                     <?php if (Yii::$app->user->isGuest) { ?>
-                    <li class="nav-item ml-auto">
-                        <?php Modal::begin([
-                            'bodyOptions' => ['id' => 'modal-enter'],
-                            'toggleButton' => [
-                                'label' => 'Вход<span class="login-ellipse"></span>',
-                                'tag' => 'a',
-                                'type' => '',
-                                'class' => 'modal-enter nav-link',
-                            ],
-                        ]);
-                        ?>
-                        <div class="modal-enter-body">
-                            <h2>ВХОД</h2>
-                            <p>Через социальные сети</p>
-                        </div>
-                        <div class="enter-icons">
-                            <?= yii\authclient\widgets\AuthChoice::widget([
-                                'baseAuthUrl' => ['site/auth'],
-                                'popupMode' => true,
-                            ]) ?>
-                        </div>
-                        <p class="enter-policy">Продолжая, Вы соглашаетесь с нашими Условиями использования и подтверждаете, что прочли
-                            <a href="/policy" target="_blank">Политику конфиденциальности</a> .</p>
-                        <?php Modal::end(); ?>
-                    </li>
+                        <li class="nav-item ml-auto">
+                            <?php Modal::begin([
+                                'bodyOptions' => ['id' => 'modal-enter'],
+                                'toggleButton' => [
+                                    'label' => 'Вход<span class="login-ellipse"></span>',
+                                    'tag' => 'a',
+                                    'type' => '',
+                                    'class' => 'modal-enter nav-link',
+                                ],
+                            ]);
+                            ?>
+                            <div class="modal-enter-body">
+                                <h2>ВХОД</h2>
+                                <p>Через социальные сети</p>
+                            </div>
+                            <div class="enter-icons">
+                                <?= yii\authclient\widgets\AuthChoice::widget([
+                                    'baseAuthUrl' => ['site/auth'],
+                                    'popupMode' => true,
+                                ]) ?>
+                            </div>
+                            <p class="enter-policy">Продолжая, Вы соглашаетесь с нашими Условиями использования и подтверждаете, что прочли
+                                <a href="/policy" target="_blank">Политику конфиденциальности</a> .</p>
+                            <?php Modal::end(); ?>
+                        </li>
                     <?php } else { ?>
                         <li class="nav-item ml-auto">
                             <a class="nav-link" href="/login">Профиль</a>
