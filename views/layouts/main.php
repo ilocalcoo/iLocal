@@ -11,9 +11,6 @@ use yii\helpers\Url;
 
 
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => Url::to(['img/main/favicon.png'])]);
-$this->registerCssFile('/css/contactForm.css');
-$this->registerJsFile('/js/contactForm.js', ['depends' => 'app\assets\AppAsset']);
-$this->registerJsFile('/js/slider.js');
 
 $currentUrl = substr(Yii::$app->request->pathInfo, 0, 4);
 
@@ -179,6 +176,7 @@ AppAsset::register($this);
                 <?php Modal::begin([
                     'toggleButton' => [
                         'label' => 'Помощь',
+                        'type' => '',
                         'tag' => 'a',
                         'class' => 'contact-form footer-link',
                     ],
