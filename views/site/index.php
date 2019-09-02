@@ -2,7 +2,7 @@
 
 /* @var $this yii\web\View */
 
-use app\assets\AppAsset;
+use app\assets\MainAsset;
 use app\assets\ProfileMapsAsset;
 use app\models\Shop;
 use yii\authclient\widgets\AuthChoice;
@@ -16,10 +16,7 @@ use yii\web\View;
 /* @var $events app\models\Event[] */
 
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => Url::to(['img/main/favicon.png'])]);
-$this->registerCssFile('/css/contactForm.css');
-$this->registerJsFile('/js/contactForm.js', ['depends' => 'app\assets\AppAsset']);
-$this->registerJsFile('/js/slider.js');
-AppAsset::register($this);
+MainAsset::register($this);
 ProfileMapsAsset::register($this);
 $this->title = "I'm Local";
 ?>
@@ -109,8 +106,12 @@ $this->title = "I'm Local";
                     <?php Modal::end(); ?>
                     </li>
                     <?php } else { ?>
-                        <a href="/login">Профиль</a>
-                        <a href="/site/logout">Выход</a>
+                        <li class="nav-item ml-auto">
+                            <a class="nav-link" href="/login">Профиль</a>
+                        </li>
+                        <li class="nav-item ml-auto">
+                            <a class="nav-link" href="/logout">Выход</a>
+                        </li>
                     <?php } ?>
                 </ul>
             </div>
@@ -120,24 +121,22 @@ $this->title = "I'm Local";
     <div class="container">
         <div class="mt-5 d-none d-md-block"></div>
         <div class="row">
-            <div class="col-md-6 offset-md-3 col-12">
-                <h1 class="h1">I’m local – ваш гид по местам в округе</h1>
-            </div>
             <div class="col-md-6 col-12 mt-3">
-                <div class="d-none d-md-block">
-                    <div class="row">
-                        <div class="col-2 list-num">1.</div>
-                        <div class="col-10 list-text">Открывайте новые места и узнавайте о том, что происходит поблизости.</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-2 list-num">2.</div>
-                        <div class="col-10 list-text">Удобный поиск и возможность сохранять.</div>
-                    </div>
-                    <div class="row">
-                        <div class="col-2 list-num">3.</div>
-                        <div class="col-10 list-text">Новое качество жизни: взгляните по-новому на свой район и не тратьте время на долгие поездки.</div>
-                    </div>
-                </div>
+                <h1 class="h1">I’m local – ваш гид по местам в округе</h1>
+<!--                <div class="d-none d-md-block">-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-2 list-num">1.</div>-->
+<!--                        <div class="col-10 list-text">Открывайте новые места и узнавайте о том, что происходит поблизости.</div>-->
+<!--                    </div>-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-2 list-num">2.</div>-->
+<!--                        <div class="col-10 list-text">Удобный поиск и возможность сохранять.</div>-->
+<!--                    </div>-->
+<!--                    <div class="row">-->
+<!--                        <div class="col-2 list-num">3.</div>-->
+<!--                        <div class="col-10 list-text">Новое качество жизни: взгляните по-новому на свой район и не тратьте время на долгие поездки.</div>-->
+<!--                    </div>-->
+<!--                </div>-->
 
                 <form action="/shops" method="get" class="text-center main-form">
                     <input type="hidden" name="coords_address" id="coords_address" value="">
@@ -154,10 +153,11 @@ $this->title = "I'm Local";
                                 </div>',
                                 'tag' => 'a',
                                 'class' => '',
+                                'type' => '',
                             ],
                             'closeButton' => [
                                 'class' => 'btn btn-coral',
-                                'label' => 'Выбрать'
+                                'label' => 'Выбрать / Закрыть'
                             ]
                         ]);
 
@@ -179,7 +179,7 @@ $this->title = "I'm Local";
 
             </div>
             <div class="col-md-6 col-12 d-none d-md-block" >
-                <img src="img/main/index-bg-img.png" alt="people" height="585px">
+                <img src="img/main/index-bg-img.png" alt="people" height="485px">
             </div>
         </div>
     </div>
@@ -201,7 +201,8 @@ $this->title = "I'm Local";
                         </div>
                         <span class="badge badge-coral">-15%</span>
                     </div>
-                    <div class="slide-text"><?= mb_substr($event->shortDesc,0,128).'...' ?></div>
+                        <div class="slide-header"><?= $event->eventOwner->shopShortName ?></div>
+                        <div class="slide-text"><?= mb_substr($event->shortDesc,0,52).'...' ?></div>
                     </a>
                 </div>
 
@@ -244,7 +245,7 @@ $this->title = "I'm Local";
                     <div class="slide col-md-3 col-8">
                         <a href="/shops/<?= $shop->shopId ?>">
                             <div class="slide-img">
-                                <img src="/img/shopPhoto/<?php
+                                <img style="height: 200px" src="/img/shopPhoto/<?php
                                 $shopPhoto = $shop->getShopPhotos()->asArray()->one()['shopPhoto'];
                                 if (is_null($shopPhoto)) {
                                     $shopPhoto = '/img/nophoto.jpg';
@@ -253,7 +254,7 @@ $this->title = "I'm Local";
                                 <div class="overlay">
                                     <a class="overlay-link event-link" href="<?= 'shops/' . $shop->shopId ?>" data-pjax="0"><?= $shop->shopShortName ?> <div class="event-date">1 км</div></a>
                                 </div>
-                                <span class="badge badge-coral"><?= $shop->shopRating ?></span>
+                                <span class="badge badge-coral"><?= number_format($shop->shopRating, 1, '.',','); ?></span>
                             </div>
                         </a>
                     </div>
@@ -275,6 +276,7 @@ $this->title = "I'm Local";
                         'label' => 'Помощь',
                         'tag' => 'a',
                         'class' => 'contact-form footer-link',
+                        'type' => '',
                     ],
                 ]);
                 ?>
