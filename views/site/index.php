@@ -2,7 +2,7 @@
 
 /* @var $this yii\web\View */
 
-use app\assets\AppAsset;
+use app\assets\MainAsset;
 use app\assets\ProfileMapsAsset;
 use app\models\Shop;
 use yii\authclient\widgets\AuthChoice;
@@ -16,10 +16,7 @@ use yii\web\View;
 /* @var $events app\models\Event[] */
 
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => Url::to(['img/main/favicon.png'])]);
-$this->registerCssFile('/css/contactForm.css');
-$this->registerJsFile('/js/contactForm.js', ['depends' => 'app\assets\AppAsset']);
-$this->registerJsFile('/js/slider.js');
-AppAsset::register($this);
+MainAsset::register($this);
 ProfileMapsAsset::register($this);
 $this->title = "I'm Local";
 ?>

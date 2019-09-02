@@ -10,28 +10,21 @@ namespace app\assets;
 use yii\web\AssetBundle;
 
 /**
- * Main application asset bundle.
- *
- * @author Qiang Xue <qiang.xue@gmail.com>
- * @since 2.0
+ * Main page application asset bundle.
  */
-class AppAsset extends AssetBundle
+class MainAsset extends AssetBundle
 {
   public $basePath = '@webroot';
   public $baseUrl = '@web';
   public $css = [
-    'https://use.fontawesome.com/releases/v5.8.2/css/all.css',
-    'css/contactForm.css',
-    'css/fonts.css',
-    'css/site.css',
-    'css/style.css',
-    'css/mainBootstrap.css',
+    'css/main.css',
+    'css/slider.css',
   ];
   public $js = [
-    'js/imageUploaded.js',
-    '/js/contactForm.js',
+    'js/slider.js',
   ];
   public $depends = [
+    'app\assets\AppAsset',
     'yii\web\YiiAsset',
     'yii\bootstrap4\BootstrapAsset',
   ];
