@@ -44,6 +44,10 @@ class ShopController extends Controller
             'actions' => ['index', 'view'],
             'roles' => ['?'],
           ],
+          [
+            'allow' => true,
+            'roles' => ['@'],
+          ],
         ],
       ],
     ];
