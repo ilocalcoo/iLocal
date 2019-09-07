@@ -157,9 +157,8 @@ class UserController extends ActiveController
 
   public function actionFavorite()
   {
-    // TODO поменять get на post
     // сохраняем тип того, что юзер хочет добавить в избранное
-    $kind = Yii::$app->request->get('kind');
+    $kind = Yii::$app->request->post('kind');
     switch ($kind) {
       case 'shop':
         $class = UserShop::class;
@@ -175,11 +174,11 @@ class UserController extends ActiveController
     }
 
     // Проверяем есть ли в пост запросе source_id и user_id
-    if (is_null(Yii::$app->request->get('source_id')) || (is_null(Yii::$app->request->get('user_id')))) {
+    if (is_null(Yii::$app->request->post('source_id')) || (is_null(Yii::$app->request->post('user_id')))) {
       return ['error' => 'Wrong request!'];
     }
-    $source_id = Yii::$app->request->get('source_id');
-    $user_id = Yii::$app->request->get('user_id');
+    $source_id = Yii::$app->request->post('source_id');
+    $user_id = Yii::$app->request->post('user_id');
 
     // Проверяем существует ли такой пользователь
     if (User::findOne(['id' => $user_id]) == '') {
@@ -194,15 +193,7 @@ class UserController extends ActiveController
 
     $user = User::findOne(['id' => $user_id]);
     $kindFavorites = $kind . 'sFavorites';
-//    // Получаем поля таблицы, чтобы найти название поля по которому необходимо будет найти Есть ли уже в избранном
-//    $tableFields = array_keys($class::getTableSchema()->columns);
-//    // Получаем необходимое поле для поиска
-//    foreach ($tableFields as $key => $field) {
-//      if (strpos($field, $kind) !== false) {
-//        $needField = $field;
-//        break;
-//      }
-//    }
+
     // Проверяем есть ли у юзера уже избранное
     foreach ($user->$kindFavorites as $item) {
       if ($item[($kind == 'shop')?'shopId':'id'] == $source_id) {
