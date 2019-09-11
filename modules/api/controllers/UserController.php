@@ -185,19 +185,32 @@ class UserController extends ActiveController
       return ['error' => 'User not found!'];
     }
 
+    $user = User::findOne(['id' => $user_id]);
+    $kindFavorites = $kind . 'sFavorites';
+
+    if (!is_null(Yii::$app->request->post('delete'))) {
+      foreach ($user->$kindFavorites as $item) {
+        if ($item[($kind == 'shop') ? 'shopId' : 'id'] == $source_id) {
+          if ($kind == 'happening') {
+            return UserHappening::findOne(['userId' => $user_id, 'happeningId' => $source_id])->delete();
+          } else {
+            return $class::findOne(['user_id' => $user_id, $kind . '_id' => $source_id])->delete();
+          }
+        }
+      }
+      return ['error' => ucfirst($kind).' is not in favorites!'];
+    }
+
     // Проверяем существует ли объект, который нужно добавить в избранное
     $sourceClass = 'app\models\\' . ucfirst($kind);
     if ($sourceClass::findOne([($kind == 'shop')?'shopId':'id' => $source_id]) == '') {
       return ['error' => ucfirst($kind) . ' not found!'];
     }
 
-    $user = User::findOne(['id' => $user_id]);
-    $kindFavorites = $kind . 'sFavorites';
-
     // Проверяем есть ли у юзера уже избранное
     foreach ($user->$kindFavorites as $item) {
       if ($item[($kind == 'shop')?'shopId':'id'] == $source_id) {
-        return ['error' => 'User already have this ' . $kind . ' in favorites!'];
+        return ['error' => 'User already has this ' . $kind . ' in favorites!'];
       }
     }
 
