@@ -31,6 +31,7 @@ use yii\helpers\ArrayHelper;
  * @property Event[] $eventsFavorites
  * @property Shop[] $shops
  * @property Shop[] $shopsFavorites
+ * @property Happening[] $happeningsFavorites
  * @property ShopRating[] $shopRatings
  * @property UserAddress $userAddress
  * @property UserEvent[] $userEvents
@@ -149,7 +150,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
    */
   public function getHappeningsFavorites()
   {
-    return $this->hasMany(Happening::className(), ['id' => 'id'])->viaTable('userHappening', ['userId' => 'id']);
+    return $this->hasMany(Happening::className(), ['id' => 'happeningId'])->viaTable('userHappening', ['userId' => 'id']);
   }
 
   /**
