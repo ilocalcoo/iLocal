@@ -239,9 +239,22 @@ a.desc:after {
     transition: 2s;
     transform: translateX(0%);
 }
+
+#close {
+    display: none;
+}
+
+#close:hover {
+    cursor: pointer;
+}
+
 @media (max-width: 768px) {
     .content-desc {
         display: none;
         transform: translateX(-100%);
+    }
+
+    #close {
+        display: block;
     }
 }

@@ -57,6 +57,7 @@ AppAsset::register($this);
 		</div>
 		<div class="content-desc" id="navbarNav">
 			<ul class="menu-list">
+				<img src="img/main/close.svg" class="nav-link" id="close" alt="close" width="32px" height="32px">
 				<li class="nav-item">
 					<a class="nav-link" href="/">Главная</a>
 				</li>
