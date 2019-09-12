@@ -313,9 +313,6 @@ body {
     .nav-bar-categories-main-item:hover {
         border-radius: 15px 15px 15px 15px !important;
     }
-    .navbar-brand {
-        order: 2;
-    }
     /*.navbar {*/
         /*justify-content: flex-start;*/
     /*}*/
@@ -333,10 +330,6 @@ body {
 .nav-bar-categories-main>div:nth-last-child(1){
     border-radius: 0 50px 50px 0;
     border-left: none;
-}
-
-.navbar-toggler {
-    color: #FE8A80;
 }
 
 .nav-bar-categories-main-item {
