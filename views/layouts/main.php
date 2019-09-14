@@ -58,22 +58,26 @@ AppAsset::register($this);
 		<div class="content-desc" id="navbarNav">
 			<ul class="menu-list">
 				<img src="img/main/close.svg" class="nav-link" id="close" alt="close" width="32px" height="32px">
-				<li class="nav-item">
+				<li class="nav-item d-none d-md-block">
 					<a class="nav-link" href="/">Главная</a>
 				</li>
         <?php if (!Yii::$app->user->isGuest) { ?>
 					<li class="nav-item">
-						<a class="nav-link" href="/user/business">Бизнесу</a>
+						<a class="nav-link" href="/user/business">
+							<img src="img/main/business.svg" alt="business">
+							Бизнесу</a>
 					</li>
 					<li class="nav-item">
-						<a class="nav-link" href="/favorites">Избранное</a>
+						<a class="nav-link" href="/favorites">
+							<img src="img/main/favor.svg" alt="favorite">
+							Избранное</a>
 					</li>
         <?php } ?>
 				<li class="nav-item">
           <?php
           Modal::begin([
             'toggleButton' => [
-              'label' => 'Помощь',
+              'label' => '<img src="img/main/help.svg" alt="help"> Помощь',
               'tag' => 'a',
               'type' => '',
               'class' => 'contact-form nav-link',
@@ -88,7 +92,7 @@ AppAsset::register($this);
             <?php Modal::begin([
               'bodyOptions' => ['id' => 'modal-enter'],
               'toggleButton' => [
-                'label' => 'Вход<span class="login-ellipse"></span>',
+                'label' => '<img src="img/main/login.svg" alt="login"> Вход<span class="login-ellipse"></span>',
                 'tag' => 'a',
                 'type' => '',
                 'class' => 'modal-enter nav-link',
