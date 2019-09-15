@@ -26,7 +26,7 @@ $this->registerCssFile('/css/event/view.css');
 $this->registerCssFile('/css/calendar.css', ['depends' => 'kartik\daterange\DateRangePickerAsset']);
 $this->registerJsFile('/js/eventsView.js', ['depends' => 'app\assets\AppAsset']);
 
-$this->title = 'Events';
+$this->title = 'Акции';
 $this->params['breadcrumbs'][] = $this->title;
 EventFeedAsset::register($this);
 ?>
@@ -127,7 +127,7 @@ EventFeedAsset::register($this);
                             <a href="/events/<?= $event->id ?>">
                                 <a href="/events/<?= $event->id ?>">
                                 <div class="slide-img">
-                                    <img src="<?= '/img/eventPhoto/'.$event->eventPhotos[0]->eventPhoto ?>" alt="<?= $event->title ?>">
+                                    <img src="<?= '/img/eventPhoto/'.$event->getEventPhotos()->asArray()->one()['eventPhoto'] ?>" alt="<?= $event->title ?>">
                                     <div class="overlay">
                                         <div class="overlay-link"><?= $event->title ?></div>
                                     </div>

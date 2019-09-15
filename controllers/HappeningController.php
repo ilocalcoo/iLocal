@@ -2,11 +2,13 @@
 
 namespace app\controllers;
 
-use app\models\search\EventSearch;
+use app\models\search\HappeningSearch;
 use app\models\Shop;
-use app\models\UserEvent;
+use app\models\User;
+use app\models\UserHappening;
+use DateTime;
 use Yii;
-use app\models\Event;
+use app\models\Happening;
 use yii\data\Pagination;
 use yii\filters\AccessControl;
 use yii\web\Controller;
@@ -15,9 +17,9 @@ use yii\filters\VerbFilter;
 use yii\web\UploadedFile;
 
 /**
- * EventController implements the CRUD actions for Event model.
+ * HappeningController implements the CRUD actions for Happening model.
  */
-class EventController extends Controller
+class HappeningController extends Controller
 {
   /**
    * {@inheritdoc}
@@ -49,30 +51,30 @@ class EventController extends Controller
   }
 
   /**
-   * Lists all Event models.
+   * Lists all Happening models.
    * @return mixed
    */
   public function actionIndex()
   {
-    if ($eventId = Yii::$app->request->get('add-event-id')) {
-      $userEvent = new UserEvent();
-      $userEvent->user_id = Yii::$app->user->id;
-      $userEvent->event_id = $eventId;
-      $userEvent->save();
+    if ($happeningId = Yii::$app->request->get('add-happening-id')) {
+      $userHappening = new UserHappening();
+      $userHappening->user_id = Yii::$app->user->id;
+      $userHappening->event_id = $happeningId;
+      $userHappening->save();
     }
 
-    if ($eventId = Yii::$app->request->get('del-event-id')) {
-      $userEvent = UserEvent::find()
-        ->where(['user_id' => Yii::$app->user->id])
-        ->andWhere(['event_id' => $eventId])
+    if ($happeningId = Yii::$app->request->get('del-happening-id')) {
+      $userHappening = UserHappening::find()
+        ->where(['userId' => Yii::$app->user->id])
+        ->andWhere(['happeningId' => $happeningId])
         ->one();
-      $userEvent->delete();
+      $userHappening->delete();
     }
 
-//        $searchModel = new EventSearch();
+//        $searchModel = new HappeningSearch();
 //        $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 //
-//        $shortDescData = Event::find()
+//        $shortDescData = Happening::find()
 //            ->select(['shortDesc as value', 'shortDesc as label', 'id as id'])
 //            ->asArray()
 //            ->all();
@@ -83,29 +85,28 @@ class EventController extends Controller
 //            'shortDescData' => $shortDescData,
 //        ]);
 
-//        $query = Shop::find()->where(['shopActive' => 1])->where(['shopId' => Event::find()->select('eventOwnerId')]);
+//        $query = Shop::find()->where(['shopActive' => 1])->where(['shopId' => Happening::find()->select('eventOwnerId')]);
 //        if (array_key_exists('eventTypeId', Yii::$app->request->queryParams)) {
 //            $query = $query->having(
 //                ['shopTypeId' => Yii::$app->request->queryParams['eventTypeId']]
 //            );
 //        }
-    $query = Event::find()->joinWith('shop');
+    $query = Happening::find()->joinWith('shop');
     $pages = new Pagination([
       'totalCount' => $query->count(),
       'pageSize' => 10,
     ]);
-    $shops = $query->offset($pages->offset)
+    $happenings = $query->offset($pages->offset)
       ->limit($pages->limit)
       ->all();
     return $this->render('index', [
-      'events' => $shops,
-//            'shops' => $shops,
+      'happenings' => $happenings,
       'pages' => $pages,
     ]);
   }
 
   /**
-   * Displays a single Event model.
+   * Displays a single Happening model.
    * @param integer $id
    * @return mixed
    * @throws NotFoundHttpException if the model cannot be found
@@ -118,18 +119,18 @@ class EventController extends Controller
   }
 
   /**
-   * Creates a new Event model.
+   * Creates a new Happening model.
    * If creation is successful, the browser will be redirected to the 'view' page.
    * @return mixed
    */
   public function actionCreate()
   {
-    $model = new Event();
+    $model = new Happening();
 
     if ($model->load(Yii::$app->request->post()) && $model->save()) {
-      $model->uploadedEventPhoto = UploadedFile::getInstances($model, 'uploadedEventPhoto');
+      $model->uploadedHappeningPhoto = UploadedFile::getInstances($model, 'uploadedHappeningPhoto');
 
-      if ($model->uploadEventPhoto()) {
+      if ($model->uploadHappeningPhoto()) {
         return $this->redirect(['view', 'id' => $model->id]);
       }
     }
@@ -151,7 +152,7 @@ class EventController extends Controller
     if (isset($id)) {
       $model = $this->findModel($id);
     } else {
-      $model = new Event();
+      $model = new Happening();
       $setFlash = true;
     }
 
@@ -161,18 +162,20 @@ class EventController extends Controller
       ->indexBy('shopId')
       ->column();
 
-    $model->setScenario(Event::SCENARIO_STEP1);
+    $model->setScenario(Happening::SCENARIO_STEP1);
 
     if ($model->load(Yii::$app->request->post()) && $model->save()) {
       if ($setFlash) {
         Yii::$app->session->setFlash('success', 'Акция успешно добавлена.
                 Вы можете продолжить заполнение информации о акции сейчас, либо позже.');
       }
-      return $this->redirect(["/events/$model->id/update/info"]);
+      return $this->redirect(["/happenings/$model->id/update/info"]);
     }
+
     return $this->render('create/step-1', [
       'model' => $model,
       'eventOwner' => $eventOwner,
+      'userId' => Yii::$app->user->id,
     ]);
   }
 
@@ -184,10 +187,10 @@ class EventController extends Controller
   public function actionCreateStep2($id)
   {
     $model = $this->findModel($id);
-    $model->setScenario(Event::SCENARIO_STEP2);
+    $model->setScenario(Happening::SCENARIO_STEP2);
 
     if ($model->load(Yii::$app->request->post()) && $model->save()) {
-      return $this->redirect(["/events/$model->id/update/photo"]);
+      return $this->redirect(["/happenings/$model->id/update/photo"]);
     }
 
     return $this->render('create/step-2', [
@@ -203,12 +206,12 @@ class EventController extends Controller
   public function actionCreateStep3($id)
   {
     $model = $this->findModel($id);
-    $model->setScenario(Event::SCENARIO_STEP3);
+    $model->setScenario(Happening::SCENARIO_STEP3);
 
     if ($model->load(Yii::$app->request->post()) && $model->save()) {
-      $model->uploadedEventPhoto = UploadedFile::getInstances($model, 'uploadedEventPhoto');
+      $model->uploadedHappeningPhoto = UploadedFile::getInstances($model, 'uploadedHappeningPhoto');
 
-      if ($model->uploadEventPhoto()) {
+      if ($model->uploadHappeningPhoto()) {
         return $this->refresh();
       }
     }
@@ -218,7 +221,7 @@ class EventController extends Controller
   }
 
   /**
-   * Updates an existing Event model.
+   * Updates an existing Happening model.
    * If update is successful, the browser will be redirected to the 'view' page.
    * @param integer $id
    * @return mixed
@@ -229,9 +232,9 @@ class EventController extends Controller
     $model = $this->findModel($id);
 
     if (Yii::$app->request->isPost) {
-      $model->uploadedEventPhoto = UploadedFile::getInstances($model, 'uploadedEventPhoto');
+      $model->uploadedHappeningPhoto = UploadedFile::getInstances($model, 'uploadedHappeningPhoto');
 
-      if ($model->uploadEventPhoto()) {
+      if ($model->uploadHappeningPhoto()) {
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
           return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -244,7 +247,7 @@ class EventController extends Controller
   }
 
   /**
-   * Disactivate an existing Event model.
+   * Disactivate an existing Happening model.
    * If disactivation is successful, the browser will be redirected to the 'index' page.
    * @param integer $id
    * @return mixed
@@ -253,8 +256,8 @@ class EventController extends Controller
   public function actionDelete($id)
   {
     $model = $this->findModel($id);
-    $model->setScenario(Event::SCENARIO_DEFAULT);
-    $model->active = Event::STATUS_DISABLE;
+    $model->setScenario(Happening::SCENARIO_DEFAULT);
+    $model->active = Happening::STATUS_DISABLE;
     if ($model->save()) {
       return $this->redirect(['view', 'id' => $model->id]);
     }
@@ -262,15 +265,15 @@ class EventController extends Controller
   }
 
   /**
-   * Finds the Event model based on its primary key value.
+   * Finds the Happening model based on its primary key value.
    * If the model is not found, a 404 HTTP exception will be thrown.
    * @param integer $id
-   * @return Event the loaded model
+   * @return Happening the loaded model
    * @throws NotFoundHttpException if the model cannot be found
    */
   protected function findModel($id)
   {
-    if (($model = Event::findOne($id)) !== null) {
+    if (($model = Happening::findOne($id)) !== null) {
       return $model;
     }
 
