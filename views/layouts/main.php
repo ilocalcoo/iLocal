@@ -62,7 +62,7 @@ AppAsset::register($this);
 					<a class="nav-link" href="/">Главная</a>
 				</li>
         <?php if (!Yii::$app->user->isGuest) { ?>
-					<li class="nav-item">
+					<li class="nav-item business">
 						<a class="nav-link" href="/user/business">
 							<img src="img/main/business.svg" alt="business">
 							Бизнесу</a>
@@ -77,7 +77,7 @@ AppAsset::register($this);
           <?php
           Modal::begin([
             'toggleButton' => [
-              'label' => '<img src="img/main/help.svg" alt="help"> Помощь',
+              'label' => '<img src="img/main/help.svg" alt="help">Помощь',
               'tag' => 'a',
               'type' => '',
               'class' => 'contact-form nav-link',
@@ -88,11 +88,11 @@ AppAsset::register($this);
           <?php Modal::end(); ?>
 				</li>
         <?php if (Yii::$app->user->isGuest) { ?>
-					<li class="nav-item">
+					<li class="nav-item login">
             <?php Modal::begin([
               'bodyOptions' => ['id' => 'modal-enter'],
               'toggleButton' => [
-                'label' => '<img src="img/main/login.svg" alt="login"> Вход<span class="login-ellipse"></span>',
+                'label' => '<img src="img/main/login.svg" alt="login">Вход<span class="login-ellipse"></span>',
                 'tag' => 'a',
                 'type' => '',
                 'class' => 'modal-enter nav-link',
@@ -115,11 +115,16 @@ AppAsset::register($this);
             <?php Modal::end(); ?>
 					</li>
         <?php } else { ?>
-					<li class="nav-item">
-						<a class="nav-link" href="/login">Профиль</a>
+					<li class="nav-item profile">
+						<a class="nav-link" href="">
+							<img src="img/main/login.svg" alt="user">
+							<?= Yii::$app->user->userName ?>
+						</a>
 					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="/logout">Выход</a>
+					<li class="nav-item logout">
+						<a class="nav-link" href="/logout">
+							<img src="img/main/logout.svg" alt="login">
+							Выход</a>
 					</li>
         <?php } ?>
 			</ul>
