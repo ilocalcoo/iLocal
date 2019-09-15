@@ -25,7 +25,7 @@ $this->title = $type . ' рядом с вами';
 <div class="shop-index">
 
 	<h1 class="main-shops-title"><?= Html::encode($this->title) ?></h1>
-	<div class="under_title d-none d-md-block">
+	<div class="under_title">
 		<span>Вы смотрите места которые находятся рядом с вами в разделе "<?= $type ?>"</span>
 		<br>
     <?php echo $this->render('_search', ['model' => $searchModel, 'shopShortName' => $shopShortName]); ?>
