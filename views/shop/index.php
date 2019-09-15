@@ -99,7 +99,7 @@ $this->title = $type . ' рядом с вами';
 						</div>
 						<div class="row text_and_like">
 							<span class="col-12"><?= $shop->shopShortDescription ?></span>
-							<div class="like offset-11">
+							<div class="like d-none d-md-block offset-11">
                 <?php if (Yii::$app->user->isGuest) { ?>
                   <?php
                   Modal::begin([

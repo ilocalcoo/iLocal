@@ -219,20 +219,59 @@
   color: #606060;
 }
 
+.shop_name {
+  margin-top: 8px;
+  font-size: 24px;
+  max-height: 69px;
+}
+
 /* desktop only parametrs */
 @media (min-width: 576px) {
   .shop_img img {
     border-radius: 7px 0 0 7px;
   }
-
-  .shop_name {
-    margin-top: 8px;
-    font-size: 24px;
-    max-height: 69px;
-  }
 }
 
 @media (max-width: 768px) {
+  .content {
+    margin-top: 5px;
+    border-radius: 5px;
+  }
+
+  .content>div {
+    padding: 0 5px;
+  }
+
+  .shop_name {
+    font-size: 16px;
+    line-height: 19px;
+    color: #454545;
+    margin-top: 5px;
+  }
+
+  .distance {
+    font-size: 14px;
+    line-height: 16px;
+    color: #8F8F8F;
+  }
+
+  .name_and_rating {
+    margin-top: 0;
+    height: auto;
+  }
+
+  .text_and_like>span {
+    font-size: 14px;
+    line-height: 16px;
+    color: #454545;
+    padding-bottom: 5px;
+  }
+
+  .shop_img img {
+    margin: 5px 0;
+    border-radius: 5px;
+  }
+
   .under_title {
     visibility: hidden;
     height: 0;
@@ -317,6 +356,7 @@
 .mobile-rating span {
   position: relative;
   top: 20px;
+  left: 10px;
   width: 32px;
   height: 24px;
 
