@@ -203,6 +203,7 @@ AppAsset::register($this);
 		</div>
 	</div>
 </footer>
+<div class="backdrop"></div>
 
 <?php $this->endBody() ?>
 

@@ -180,7 +180,6 @@ a.desc:after {
 }
 
 .enter-policy {
-  width: 436px;
   font-family: Roboto;
   font-style: normal;
   font-weight: 500;
@@ -254,6 +253,10 @@ a.desc:after {
   display: none;
 }
 
+.backdrop {
+  display: none;
+}
+
 @media (max-width: 768px) {
   .content-desc {
     display: none;
@@ -272,6 +275,27 @@ a.desc:after {
   .nav-link {
     align-items: center;
     color: #FE8A80 !important;
+  }
+
+  .backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 98;
+    opacity: 0.5;
+    width: 100vw;
+    height: 100vh;
+    background-color: #000;
+  }
+
+  .modal {
+    width: 100vh;
+    left: 20vh;
+    z-index: 1070;
+  }
+
+  .modal-backdrop {
+    z-index: auto;
   }
 
   .login {

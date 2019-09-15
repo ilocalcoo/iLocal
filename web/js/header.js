@@ -5,9 +5,11 @@ $(document).ready(function () {
     event.preventDefault();
     $('#navbarNav').toggleClass('content-active');
     $('#navbarNav').toggleClass('content-desc');
+    $('.backdrop').show();
   })
   $('#close').click(function (event) {
     event.preventDefault();
+    $('.backdrop').hide();
     $('#navbarNav').toggleClass('content-active');
     $('#navbarNav').toggleClass('content-desc');
   })
