@@ -135,8 +135,12 @@ class SiteController extends Controller
                 $modelAddress->city = $addressArray[0];
                 $modelAddress->street = $addressArray[1];
                 $modelAddress->houseNumber = $addressArray[2];
-                $modelAddress->latitude = $addressArray[3];
-                $modelAddress->longitude = $addressArray[4];
+                if (Yii::$app->request->post('coords')) {
+                    $coords = explode(',', Yii::$app->request->post('coords'));
+                    $modelAddress->latitude = $coords[0];
+                    $modelAddress->longitude = $coords[1];
+                }
+
 
                 if ($modelAddress->save()) {
                     $model->userAddressId = $modelAddress->id;
@@ -154,12 +158,12 @@ class SiteController extends Controller
                     return $this->refresh();
                 }
             }
-
+            return $this->render('login', [
+                'model' => $model,
+            ]);
         }
 
-        return $this->render('login', [
-            'model' => $model,
-        ]);
+        return $this->redirect('/');
     }
 
     /**
