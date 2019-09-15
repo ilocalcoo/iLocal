@@ -5,5 +5,9 @@ $(document).ready(function () {
     event.preventDefault();
     history.pushState('','','/shops');
     location.reload();
-  })
+  });
+  $('#small-find').click(function (event) {
+    event.preventDefault();
+    $('.shop-find').css('visibility', 'visible');
+  });
 });

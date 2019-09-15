@@ -197,3 +197,4 @@ $this->title = $type . ' рядом с вами';
 	</div>
 
 </div>
+<a href="" id="small-find" class="d-md-none d-sm-block"></a>
