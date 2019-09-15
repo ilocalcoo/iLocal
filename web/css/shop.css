@@ -258,7 +258,17 @@
     top: 20px;
     margin-right: auto;
     border: 1px solid #FE8A80;
-    box-sizing: border-box;
+    border-radius: 8px;
+  }
+
+  #loupe-tail {
+    position: absolute;
+    width: 6.34px;
+    height: 0px;
+    right: 18.41px;
+    top: 33.62px;
+    border: 2px solid #FE8A80;
+    transform: matrix(0.64, 0.77, -0.77, 0.64, 0, 0);
   }
 }
 

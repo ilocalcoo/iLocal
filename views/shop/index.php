@@ -198,3 +198,4 @@ $this->title = $type . ' рядом с вами';
 
 </div>
 <a href="" id="loupe" class="d-md-none d-sm-block"></a>
+<a id="loupe-tail" class="d-md-none d-sm-block"></a>
