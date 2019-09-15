@@ -111,7 +111,7 @@ AppAsset::register($this);
 						</div>
 						<p class="enter-policy">Продолжая, Вы соглашаетесь с нашими Условиями использования и подтверждаете, что
 							прочли
-							<a href="/policy" target="_blank">Политику конфиденциальности</a> .</p>
+							<a href="/policy" target="_blank">Политику конфиденциальности</a>.</p>
             <?php Modal::end(); ?>
 					</li>
         <?php } else { ?>
