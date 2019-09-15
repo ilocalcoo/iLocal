@@ -248,6 +248,13 @@
     background: #FFFFFF;
     box-shadow: 0 1px 5px rgba(0, 0, 0, 0.15);
     border-radius: 80px;
+    font-size: 14px;
+    line-height: 16px;
+    color: #FE8A80;
+  }
+
+  .shop-find:focus {
+    color: #FE8A80;
   }
 
   #loupe {
@@ -267,6 +274,41 @@
     height: 0px;
     right: 18.41px;
     top: 33.62px;
+    border: 2px solid #FE8A80;
+    transform: matrix(0.64, 0.77, -0.77, 0.64, 0, 0);
+  }
+
+  #find-close {
+    display: none;
+    position: absolute;
+    top: 13px;
+    right: 15px;
+    z-index: 2;
+  }
+
+  #find-placeholder {
+    display: none;
+    position: absolute;
+    z-index: 2;
+    left: 20px;
+    top: 20px;
+    color: #FE8A80;
+  }
+  
+  .loupe-img {
+    position: relative;
+    width: 16px;
+    height: 16px;
+    border: 1px solid #FE8A80;
+    border-radius: 8px;
+  }
+
+  .loupe-tail-img {
+    position: relative;
+    width: 6.34px;
+    height: 0px;
+    right: 4px;
+    top: 14px;
     border: 2px solid #FE8A80;
     transform: matrix(0.64, 0.77, -0.77, 0.64, 0, 0);
   }

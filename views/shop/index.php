@@ -199,3 +199,11 @@ $this->title = $type . ' рядом с вами';
 </div>
 <a href="" id="loupe" class="d-md-none d-sm-block"></a>
 <a id="loupe-tail" class="d-md-none d-sm-block"></a>
+<?php if (!array_key_exists('shopShortName', $_GET)) { ?>
+	<div id="find-placeholder">
+		<div class="loupe-img"></div>
+		<div class="loupe-tail-img"></div>
+		<span>Поиск...</span>
+	</div>
+<?php } ?>
+<img src="img/main/close.svg" class="nav-link" id="find-close" alt="find-close" width="32px" height="32px">
