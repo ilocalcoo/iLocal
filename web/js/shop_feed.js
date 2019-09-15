@@ -6,7 +6,7 @@ $(document).ready(function () {
     history.pushState('','','/shops');
     location.reload();
   });
-  $('#small-find').click(function (event) {
+  $('#loupe').click(function (event) {
     event.preventDefault();
     $('.shop-find').css('visibility', 'visible');
   });
