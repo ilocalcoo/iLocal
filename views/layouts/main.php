@@ -182,14 +182,15 @@ AppAsset::register($this);
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-12">
-				<a class="footer-link" href="/about">О проекте</a>&nbsp;
-				<a class="footer-link" href="/policy" target="_blank">Политика конфиденциальности</a>&nbsp;
+<!--				Показать ссылку "О проекте", когда сделаем страницу -->
+<!--				<a class="footer-link d-md-none d-sm-block" href="/about">О проекте</a>&nbsp;-->
+				<a class="small-text" href="/policy" target="_blank">Политика конфиденциальности</a>&nbsp;
         <?php Modal::begin([
           'toggleButton' => [
             'label' => 'Помощь',
             'tag' => 'a',
             'type' => '',
-            'class' => 'contact-form footer-link',
+            'class' => 'contact-form footer-link d-md-none d-sm-block',
           ],
         ]);
         ?>
