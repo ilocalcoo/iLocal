@@ -188,6 +188,7 @@ AppAsset::register($this);
           'toggleButton' => [
             'label' => 'Помощь',
             'tag' => 'a',
+            'type' => '',
             'class' => 'contact-form footer-link',
           ],
         ]);
