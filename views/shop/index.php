@@ -164,6 +164,20 @@ $this->title = $type . ' рядом с вами';
 	</div>
   <?php Pjax::end(); ?>
 
+	<div class="shop-banner">
+		<div class="banner-left">
+			<h1>Владелец бизнеса?</h1>
+			<div> Разместите Ваше место на платформе и станьте ближе к тысячам людей, которые живут и работают в
+				радиусе пешей доступности.
+				<div class="banner-text"><span>Бесплатный</span> пробный период на размещение акций.</div>
+			</div>
+			<a href="/user/business">Попробовать</a>
+		</div>
+		<div class="banner-right">
+			<img src="/img/shop/banner-img.png" alt="" tabindex="1">
+		</div>
+	</div>
+
 	<div class="row">
 		<div class="col-12">
 			<nav class="pagination">
@@ -181,21 +195,6 @@ $this->title = $type . ' рядом с вами';
 		</div>
 	</div>
 
-
-	<div class="shop-banner">
-		<div class="banner-left">
-			<h1>Владелец бизнеса?</h1>
-			<div> Разместите Ваше место на платформе и станьте ближе к тысячам людей, которые живут и работают в
-				радиусе пешей доступности.
-				<div class="banner-text"><span>Бесплатный</span> пробный период на размещение акций.</div>
-			</div>
-			<a href="/user/business">Попробовать</a>
-		</div>
-		<div class="banner-right">
-			<img src="/img/shop/banner-img.png" alt="" tabindex="1">
-		</div>
-	</div>
-
 </div>
 <a href="" id="loupe" class="d-md-none d-sm-block"></a>
 <a id="loupe-tail" class="d-md-none d-sm-block"></a>
@@ -206,4 +205,5 @@ $this->title = $type . ' рядом с вами';
 		<span>Поиск...</span>
 	</div>
 <?php } ?>
-<img src="img/main/close.svg" class="nav-link" id="find-close" alt="find-close" width="32px" height="32px">
+<img src="img/main/close.svg" class="nav-link" id="find-close" alt="find-close" width="32px"
+		 height="32px">
