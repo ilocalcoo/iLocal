@@ -140,7 +140,7 @@
   background: white url("/img/shop/banner-bg.png") right no-repeat;
   display: flex;
   align-items: center;
-  height: 376px;
+  min-height: 376px;
   border-radius: 7px;
   margin-top: 50px;
 }
@@ -376,4 +376,33 @@
 
 #find-close {
   display: none;
+}
+
+@media (max-width: 768px) {
+  .shop-banner {
+    background: inherit;
+  }
+
+  .banner-left {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .banner-left>h1 {
+    color: #FE8A80;
+  }
+
+  .banner-left>div {
+    font-size: 14px;
+    line-height: 16px;
+    color: #454545;
+  }
+
+  .img-mobile {
+    width: 220px;
+    height: 157px;
+    margin-bottom: 10px;
+  }
 }

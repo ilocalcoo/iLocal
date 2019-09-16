@@ -167,13 +167,14 @@ $this->title = $type . ' рядом с вами';
 	<div class="shop-banner">
 		<div class="banner-left">
 			<h1>Владелец бизнеса?</h1>
+			<img src="/img/shop/banner-mobile.png" alt="" class="img-mobile d-sm-block d-md-none">
 			<div> Разместите Ваше место на платформе и станьте ближе к тысячам людей, которые живут и работают в
 				радиусе пешей доступности.
 				<div class="banner-text"><span>Бесплатный</span> пробный период на размещение акций.</div>
 			</div>
 			<a href="/user/business">Попробовать</a>
 		</div>
-		<div class="banner-right">
+		<div class="banner-right d-none d-md-block">
 			<img src="/img/shop/banner-img.png" alt="" tabindex="1">
 		</div>
 	</div>
