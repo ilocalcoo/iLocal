@@ -89,15 +89,15 @@ class SiteController extends Controller
     $shops = $query->limit(10)->all();
     $query = Event::find()->where(['active' => 1]);
     $events = $query->limit(10)->all();
-    if (!Yii::$app->user->isGuest) {
-      $user = Yii::$app->user->identity;
-      $latitude = $user->userAddress->latitude;
-      $longitude = $user->userAddress->longitude;
-      $userCoords = $latitude . ', ' . $longitude;
-      if ($userCoords == ', ') {$userCoords = null;}
-    } else {
+//    if (!Yii::$app->user->isGuest) {
+//      $user = Yii::$app->user->identity;
+//      $latitude = $user->userAddress->latitude;
+//      $longitude = $user->userAddress->longitude;
+//      $userCoords = $latitude . ', ' . $longitude;
+//      if ($userCoords == ', ') {$userCoords = null;}
+//    } else {
       $userCoords = null;
-    }
+//    }
 
     return $this->render('index', [
       'events' => $events,
