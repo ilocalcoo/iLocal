@@ -20,47 +20,47 @@ use app\models\ContactForm;
 
 class SiteController extends Controller
 {
-  /**
-   * {@inheritdoc}
-   */
-  public function behaviors()
-  {
-    return [
-      'access' => [
-        'class' => AccessControl::className(),
-        'only' => ['logout'],
-        'rules' => [
-          [
-            'actions' => ['logout'],
-            'allow' => true,
-            'roles' => ['@'],
-          ],
-        ],
-      ],
-      'verbs' => [
-        'class' => VerbFilter::className(),
-        'actions' => [
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            'access' => [
+                'class' => AccessControl::className(),
+                'only' => ['logout'],
+                'rules' => [
+                    [
+                        'actions' => ['logout'],
+                        'allow' => true,
+                        'roles' => ['@'],
+                    ],
+                ],
+            ],
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
 //                    'logout' => ['post'],
-        ],
-      ],
-    ];
-  }
+                ],
+            ],
+        ];
+    }
 
-  /**
-   * {@inheritdoc}
-   */
-  public function actions()
-  {
-    return [
-      'error' => [
-        'class' => 'yii\web\ErrorAction',
-      ],
-      'captcha' => [
-        'class' => 'yii\captcha\CaptchaAction',
-        'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
-      ],
-      // Добавляем действие для аутентификации через соцсети.
-      'auth' => [
+    /**
+     * {@inheritdoc}
+     */
+    public function actions()
+    {
+        return [
+            'error' => [
+                'class' => 'yii\web\ErrorAction',
+            ],
+            'captcha' => [
+                'class' => 'yii\captcha\CaptchaAction',
+                'fixedVerifyCode' => YII_ENV_TEST ? 'testme' : null,
+            ],
+            // Добавляем действие для аутентификации через соцсети.
+            'auth' => [
 //                'class' => 'app\components\ExtendedAuthAction',
         'class' => 'yii\authclient\AuthAction',
         'successCallback' => [$this, 'onAuthSuccess'],
@@ -129,147 +129,146 @@ class SiteController extends Controller
           Yii::$app->getSession()->setFlash('error', 'Не выбран дом');
           return $this->refresh();
         }
+                if ($model->userAddress) {
+                    $modelAddress = $model->userAddress;
+                } else {
+                    $modelAddress = new UserAddress();
+                }
 
-        if ($model->userAddress) {
-          $modelAddress = $model->userAddress;
-        } else {
-          $modelAddress = new UserAddress();
+
+                $modelAddress->city = $addressArray[0];
+                $modelAddress->street = $addressArray[1];
+                $modelAddress->houseNumber = $addressArray[2];
+                $modelAddress->latitude = $addressArray[3];
+                $modelAddress->longitude = $addressArray[4];
+
+                if ($modelAddress->save()) {
+                    $model->userAddressId = $modelAddress->id;
+                    $model->save();
+                    Yii::$app->getSession()->setFlash('success', 'Адрес сохранен');
+                    return $this->refresh();
+                }
+
+            }
+
+
+            if (Yii::$app->request->post('user')) {
+                if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                    Yii::$app->getSession()->setFlash('success', 'Изменения сохранены');
+                    return $this->refresh();
+                }
+            }
+
         }
 
+        return $this->render('login', [
+            'model' => $model,
+        ]);
+    }
 
-        $modelAddress->city = $addressArray[0];
-        $modelAddress->street = $addressArray[1];
-        $modelAddress->houseNumber = $addressArray[2];
-        $modelAddress->latitude = $addressArray[3];
-        $modelAddress->longitude = $addressArray[4];
+    /**
+     * Logout action.
+     *
+     * @return Response
+     */
+    public function actionLogout()
+    {
+        Yii::$app->user->logout();
 
-        if ($modelAddress->save()) {
-          $model->userAddressId = $modelAddress->id;
-          $model->save();
-          Yii::$app->getSession()->setFlash('success', 'Адрес сохранен');
-          return $this->refresh();
+        return $this->goHome();
+    }
+
+
+    public function actionContact()
+    {
+        $model = new ContactForm();
+        return $this->render('contact', [
+            'model' => $model,
+        ]);
+    }
+
+
+    /**
+     * Displays contact page.
+     *
+     * @return Response|string
+     */
+    public function actionContactsend()
+    {
+        $model = new ContactForm();
+        if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
+            $success = true;
+            return json_encode($success);
+        }
+        return $this->render('contact', [
+            'model' => $model,
+        ]);
+    }
+
+    /**
+     * Displays about page.
+     *
+     * @return string
+     */
+    public function actionAbout()
+    {
+        return $this->render('about');
+    }
+
+    /**
+     * Displays policy page.
+     *
+     * @return string
+     */
+    public function actionPolicy()
+    {
+        return $this->render('policy');
+    }
+
+    /**
+     * Displays favorites page.
+     *
+     * @return string
+     */
+    public function actionFavorites()
+    {
+        if ($shopId = Yii::$app->request->get('add-shop-id')) {
+            $userShop = new UserShop();
+            $userShop->user_id = Yii::$app->user->id;
+            $userShop->shop_id = $shopId;
+            $userShop->save();
         }
 
-      }
-
-
-      if (Yii::$app->request->post('user')) {
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-          Yii::$app->getSession()->setFlash('success', 'Изменения сохранены');
-          return $this->refresh();
+        if ($shopId = Yii::$app->request->get('del-shop-id')) {
+            $userShop = UserShop::find()
+                ->where(['user_id' => Yii::$app->user->id])
+                ->andWhere(['shop_id' => $shopId])
+                ->one();
+            $userShop->delete();
         }
-      }
 
+        if ($eventId = Yii::$app->request->get('add-event-id')) {
+            $userEvent = new UserEvent();
+            $userEvent->user_id = Yii::$app->user->id;
+            $userEvent->event_id = $eventId;
+            $userEvent->save();
+        }
+
+        if ($eventId = Yii::$app->request->get('del-event-id')) {
+            $userEvent = UserEvent::find()
+                ->where(['user_id' => Yii::$app->user->id])
+                ->andWhere(['event_id' => $eventId])
+                ->one();
+            $userEvent->delete();
+        }
+
+        $userShops = User::findOne(Yii::$app->user->id)->shopsFavorites;
+        $userEvents = User::findOne(Yii::$app->user->id)->eventsFavorites;
+
+        return $this->render('favorites', [
+            'userShops' => $userShops,
+            'userEvents' => $userEvents
+        ]);
     }
-
-    return $this->render('login', [
-      'model' => $model,
-    ]);
-  }
-
-  /**
-   * Logout action.
-   *
-   * @return Response
-   */
-  public function actionLogout()
-  {
-    Yii::$app->user->logout();
-
-    return $this->goHome();
-  }
-
-
-  public function actionContact()
-  {
-    $model = new ContactForm();
-    return $this->render('contact', [
-      'model' => $model,
-    ]);
-  }
-
-
-  /**
-   * Displays contact page.
-   *
-   * @return Response|string
-   */
-  public function actionContactsend()
-  {
-    $model = new ContactForm();
-    if ($model->load(Yii::$app->request->post()) && $model->contact(Yii::$app->params['adminEmail'])) {
-      $success = true;
-      return json_encode($success);
-    }
-    return $this->render('contact', [
-      'model' => $model,
-    ]);
-  }
-
-  /**
-   * Displays about page.
-   *
-   * @return string
-   */
-  public function actionAbout()
-  {
-    return $this->render('about');
-  }
-
-  /**
-   * Displays policy page.
-   *
-   * @return string
-   */
-  public function actionPolicy()
-  {
-    return $this->render('policy');
-  }
-
-  /**
-   * Displays favorites page.
-   *
-   * @return string
-   */
-  public function actionFavorites()
-  {
-    if ($shopId = Yii::$app->request->get('add-shop-id')) {
-      $userShop = new UserShop();
-      $userShop->user_id = Yii::$app->user->id;
-      $userShop->shop_id = $shopId;
-      $userShop->save();
-    }
-
-    if ($shopId = Yii::$app->request->get('del-shop-id')) {
-      $userShop = UserShop::find()
-        ->where(['user_id' => Yii::$app->user->id])
-        ->andWhere(['shop_id' => $shopId])
-        ->one();
-      $userShop->delete();
-    }
-
-    if ($eventId = Yii::$app->request->get('add-event-id')) {
-      $userEvent = new UserEvent();
-      $userEvent->user_id = Yii::$app->user->id;
-      $userEvent->event_id = $eventId;
-      $userEvent->save();
-    }
-
-    if ($eventId = Yii::$app->request->get('del-event-id')) {
-      $userEvent = UserEvent::find()
-        ->where(['user_id' => Yii::$app->user->id])
-        ->andWhere(['event_id' => $eventId])
-        ->one();
-      $userEvent->delete();
-    }
-
-    $userShops = User::findOne(Yii::$app->user->id)->shopsFavorites;
-    $userEvents = User::findOne(Yii::$app->user->id)->eventsFavorites;
-
-    return $this->render('favorites', [
-      'userShops' => $userShops,
-      'userEvents' => $userEvents
-    ]);
-  }
 
 }
