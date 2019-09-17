@@ -53,7 +53,7 @@ class UserController extends ActiveController
         // Если токен правильный, то возвращаем данные юзера.
         return $user;
 
-      } else { // Если токен не совпадает, то запрашиваем соцсеть и затем проверяем полученные данные.
+      } else { // Если токен не совпадает, до запрашиваем соцсеть и затем проверяем полученные данные.
         $id = null; // id пользователя, который получим от соцсети.
 
         // У каждой соцсети разные запросы.
@@ -73,8 +73,7 @@ class UserController extends ActiveController
             'oauth_token' => $accessToken,
           );
           $get_params = http_build_query($request_params);
-//          $result = json_decode(file_get_contents('https://www.googleapis.com/oauth2/v2/userinfo?' . $get_params));
-            $result = json_decode(file_get_contents('https://www.googleapis.com/auth/userinfo.profile?' . $get_params));
+          $result = json_decode(file_get_contents('https://www.googleapis.com/oauth2/v2/userinfo?' . $get_params));
           $id = $result->id;
         }
 
