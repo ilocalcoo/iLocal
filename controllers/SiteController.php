@@ -62,69 +62,73 @@ class SiteController extends Controller
             // Добавляем действие для аутентификации через соцсети.
             'auth' => [
 //                'class' => 'app\components\ExtendedAuthAction',
-                'class' => 'yii\authclient\AuthAction',
-                'successCallback' => [$this, 'onAuthSuccess'],
-            ],
-        ];
-    }
+        'class' => 'yii\authclient\AuthAction',
+        'successCallback' => [$this, 'onAuthSuccess'],
+      ],
+    ];
+  }
 
-    /**
-     * Метод вызывается когда пользователь был успешно аутентифицирован через внешний сервис.
-     * @param $client - Через экземпляр $client мы можем извлечь полученную информацию.
-     */
-    public function onAuthSuccess($client)
-    {
-        (new AuthHandler($client))->handle();
-    }
+  /**
+   * Метод вызывается когда пользователь был успешно аутентифицирован через внешний сервис.
+   * @param $client - Через экземпляр $client мы можем извлечь полученную информацию.
+   */
+  public function onAuthSuccess($client)
+  {
+    (new AuthHandler($client))->handle();
+  }
 
-    /**
-     * Displays homepage.
-     *
-     * @return string
-     */
-    public function actionIndex()
-    {
-        $this->layout = false;
-        $query = Shop::find()->where(['shopActive' => 1]);
-        $shops = $query->limit(10)->all();
-        $query = Event::find()->where(['active' => 1]);
-        $events = $query->limit(10)->all();
-        return $this->render('index', [
-            'events' => $events,
-            'shops' => $shops,
-            'happenings' => [],
-        ]);
-    }
+  /**
+   * Displays homepage.
+   *
+   * @return string
+   */
+  public function actionIndex()
+  {
+    $this->layout = false;
+    $query = Shop::find()->where(['shopActive' => 1]);
+    $shops = $query->limit(10)->all();
+    $query = Event::find()->where(['active' => 1]);
+    $events = $query->limit(10)->all();
+    $userCoords = null;
+//      !Yii::$app->user->isGuest ?
+//      Yii::$app->user->userAddress->latitude . ', ' . Yii::$app->user->userAddress->longtitude
+//      : null;
+    return $this->render('index', [
+      'events' => $events,
+      'shops' => $shops,
+      'happenings' => [],
+      'userCoords' => $userCoords,
+    ]);
+  }
 
-    /**
-     * Login action.
-     *
-     * @return Response|string
-     */
-    public function actionLogin()
-    {
-        $model = null;
+  /**
+   * Login action.
+   *
+   * @return Response|string
+   */
+  public function actionLogin()
+  {
+    $model = null;
 
-        if (!Yii::$app->user->isGuest) {
-            /** @var User $model */
-            $model = Yii::$app->user->getIdentity();
+    if (!Yii::$app->user->isGuest) {
+      /** @var User $model */
+      $model = Yii::$app->user->getIdentity();
 
-            if (Yii::$app->request->post('address')) {
-                $addressArray = explode(',', Yii::$app->request->post('address'));
+      if (Yii::$app->request->post('address')) {
+        $addressArray = explode(',', Yii::$app->request->post('address'));
 
-                if (!$addressArray[0]) {
-                    Yii::$app->getSession()->setFlash('error', 'Не выбран город');
-                    return $this->refresh();
-                }
-                if (!$addressArray[1]) {
-                    Yii::$app->getSession()->setFlash('error', 'Не выбрана улица');
-                    return $this->refresh();
-                }
-                if (!$addressArray[2]) {
-                    Yii::$app->getSession()->setFlash('error', 'Не выбран дом');
-                    return $this->refresh();
-                }
-
+        if (!$addressArray[0]) {
+          Yii::$app->getSession()->setFlash('error', 'Не выбран город');
+          return $this->refresh();
+        }
+        if (!$addressArray[1]) {
+          Yii::$app->getSession()->setFlash('error', 'Не выбрана улица');
+          return $this->refresh();
+        }
+        if (!$addressArray[2]) {
+          Yii::$app->getSession()->setFlash('error', 'Не выбран дом');
+          return $this->refresh();
+        }
                 if ($model->userAddress) {
                     $modelAddress = $model->userAddress;
                 } else {
