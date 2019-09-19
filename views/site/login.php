@@ -6,77 +6,109 @@
 
 /* @var $title string */
 
+use app\assets\AppAsset;
 use app\widgets\Alert;
+use yii\bootstrap4\Modal;
 use yii\helpers\Html;
 use yii\helpers\ArrayHelper;
 use yii\bootstrap\ActiveForm;
 
 \app\assets\ProfileMapsAsset::register($this);
-$this->registerCssFile('/css/login.css');
+AppAsset::register($this);
+//$this->registerCssFile('/css/login.css');
 
 $this->title = 'Профиль';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 
 <div class="site-login">
-    <?php if (!Yii::$app->user->isGuest): ?>
-        <?= Alert::widget() ?>
-
-        <h1><?= Html::encode($this->title) ?></h1>
-        <h2>Логин: <?= Yii::$app->user->identity->username ?></h2>
-
-
-        <?php
-    $form = ActiveForm::begin([
-        'id' => 'user-form',
-        'options' => ['class' => 'form-horizontal'],
-    ]) ?>
-        <?= $form->field($model, 'lastName') ?>
-        <?= $form->field($model, 'firstName') ?>
-        <?= $form->field($model, 'middleName') ?>
-        <div class="form-group">
-            <div class="col-lg-offset-1 col-lg-11">
-                <?= Html::submitButton('Сохранить данные', ['class' => 'btn btn-primary']) ?>
+    <h1 class="profile-title"><?= Html::encode($this->title) ?></h1>
+    <div class="edit_per"><h2>Логин: <?= Yii::$app->user->identity->username ?></h2></div>
+    <div class="row">
+        <div class="col-md-6 col-12">
+            <?php if (!Yii::$app->user->isGuest): ?>
+            <?= Alert::widget() ?>
+            <div class="edit_per">
+                <div class="formed">
+                    <?php
+                    $form = ActiveForm::begin([
+                        'id' => 'user-form',
+                        'options' => ['class' => 'form-horizontal'],
+                    ]) ?>
+                    <?= $form->field($model, 'lastName') ?>
+                    <?= $form->field($model, 'firstName') ?>
+                    <?= $form->field($model, 'middleName') ?>
+                    <div class="form-group">
+                        <div class="col-lg-offset-1 col-lg-11">
+                            <?= Html::submitButton('Сохранить данные', ['class' => 'btn btn-outline-coral']) ?>
+                        </div>
+                    </div>
+                    <?php ActiveForm::end() ?>
+                </div>
             </div>
+
         </div>
-        <?php ActiveForm::end() ?>
-        <hr>
+        <div class="col-md-6 col-12 formed edit_per">
+            <label>Адрес:</label>
+            <?= Html::beginForm(); ?>
+            <?= Html::hiddenInput('address', '', ['id' => 'input_address']); ?>
+            <?= Html::hiddenInput('coords', '', ['id' => 'coords_address']); ?>
+            <div class="form-group main-group">
+                <?php
+                $comma = [];
+                foreach (ArrayHelper::toArray($model->userAddress) as $key => $item) {
+                    if ($key == 'id' || $item == '') {
+                        continue;
+                    }
+                    if ($key == 'latitude') {
+//                    $comma = '. Координаты: <span id="user_coordinates">';
+                        continue;
+                    }
 
+                    if ($key == 'longitude') {
+                        //echo '</span>';
+                        continue;
+                    }
+                    //echo $comma . $item;
+                    $comma[] = $item;
+                }
+                ?>
+                <?php
+                Modal::begin([
+                    'size' => 'modal-lg',
+                    'toggleButton' => [
+                        'label' => '<div class="form-control" data-toggle="modal" data-target="#exampleModal">
+                                    <span class="place-text" id="view_address">'.implode(', ',$comma).'</span>
+                                <span class="input-label-right"><i class="fas fa-chevron-right"></i></span>
+                                </div>',
+                        'tag' => 'a',
+                        'class' => '',
+                        'type' => '',
+                    ],
+                    'closeButton' => [
+                        'class' => 'btn btn-coral',
+                        'label' => 'Выбрать / Закрыть'
+                    ]
+                ]);
 
-        <b>Адрес:</b>
-        <?php
-        $comma = '';
-        foreach (ArrayHelper::toArray($model->userAddress) as $key => $item) {
-            if ($key == 'id' || $item == '') {
-                continue;
-            }
-            if ($key == 'latitude') {
-                $comma = '. Координаты: <span id="user_coordinates">';
-            }
-            echo $comma . $item;
-            if ($key == 'longitude') {
-                echo '</span>';
-            }
-            $comma = ', ';
-        }
-        ?>
-        <br><br>
-
-        <i>Укажите на карте свой адрес, на основании него будут выдаваться предложения в Вашем микрорайоне</i>
-        <div id="profile_map"></div>
-
-        <?= Html::beginForm(); ?>
-        <?= Html::hiddenInput('address', '', ['id' => 'profile_address']); ?>
-        <div class="form-group text-center">
-            <div>
-<!--            <div class="col-lg-offset-1 col-lg-11">-->
-                <?= Html::submitButton('Сохранить адрес', ['class' => 'btn btn-primary']) ?>
+                ?>
+                <div class="modal-body">
+                    <div id="profile_map"></div>
+                </div>
+                <?php Modal::end(); ?>
             </div>
+
+            <br><br>
+            <div class="form-group text-center">
+                <div>
+                    <!--            <div class="col-lg-offset-1 col-lg-11">-->
+                    <?= Html::submitButton('Сохранить адрес', ['class' => 'btn btn-outline-coral']) ?>
+                </div>
+            </div>
+            <?= Html::endForm(); ?>
         </div>
-        <?= Html::endForm(); ?>
+    </div>
 
-
-        <br>
         <hr>
         <h2 class="enter-other">Привязать другой аккаунт</h2>
     <?php else: ?>

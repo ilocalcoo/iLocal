@@ -107,80 +107,84 @@ class SiteController extends Controller
     ]);
   }
 
-  /**
-   * Login action.
-   *
-   * @return Response|string
-   */
-  public function actionLogin()
-  {
-    $model = null;
+    /**
+     * Login action.
+     *
+     * @return Response|string
+     */
+    public function actionLogin()
+    {
+        $model = null;
 
-    if (!Yii::$app->user->isGuest) {
-      /** @var User $model */
-      $model = Yii::$app->user->getIdentity();
+        if (!Yii::$app->user->isGuest) {
+            /** @var User $model */
+            $model = Yii::$app->user->getIdentity();
 
-      if (Yii::$app->request->post('address')) {
-        $addressArray = explode(',', Yii::$app->request->post('address'));
+            if (Yii::$app->request->post('address')) {
+                $addressArray = explode(',', Yii::$app->request->post('address'));
 
-        if (!$addressArray[0]) {
-          Yii::$app->getSession()->setFlash('error', 'Не выбран город');
-          return $this->refresh();
+                if (!$addressArray[0]) {
+                    Yii::$app->getSession()->setFlash('error', 'Не выбран город');
+                    return $this->refresh();
+                }
+                if (!$addressArray[1]) {
+                    Yii::$app->getSession()->setFlash('error', 'Не выбрана улица');
+                    return $this->refresh();
+                }
+                if (!$addressArray[2]) {
+                    Yii::$app->getSession()->setFlash('error', 'Не выбран дом');
+                    return $this->refresh();
+                }
+
+                if ($model->userAddress) {
+                    $modelAddress = $model->userAddress;
+                } else {
+                    $modelAddress = new UserAddress();
+                }
+
+
+                $modelAddress->city = $addressArray[0];
+                $modelAddress->street = $addressArray[1];
+                $modelAddress->houseNumber = $addressArray[2];
+                if (Yii::$app->request->post('coords')) {
+                    $coords = explode(',', Yii::$app->request->post('coords'));
+                    $modelAddress->latitude = $coords[0];
+                    $modelAddress->longitude = $coords[1];
+                }
+
+
+                if ($modelAddress->save()) {
+                    $model->userAddressId = $modelAddress->id;
+                    $model->save();
+                    Yii::$app->getSession()->setFlash('success', 'Адрес сохранен');
+                    return $this->refresh();
+                }
+
+            }
+
+
+            if (Yii::$app->request->post('user')) {
+                if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                    Yii::$app->getSession()->setFlash('success', 'Изменения сохранены');
+                    return $this->refresh();
+                }
+            }
+            return $this->render('login', [
+                'model' => $model,
+            ]);
         }
-        if (!$addressArray[1]) {
-          Yii::$app->getSession()->setFlash('error', 'Не выбрана улица');
-          return $this->refresh();
-        }
-        if (!$addressArray[2]) {
-          Yii::$app->getSession()->setFlash('error', 'Не выбран дом');
-          return $this->refresh();
-        }
-        if ($model->userAddress) {
-          $modelAddress = $model->userAddress;
-        } else {
-          $modelAddress = new UserAddress();
-        }
 
-
-        $modelAddress->city = $addressArray[0];
-        $modelAddress->street = $addressArray[1];
-        $modelAddress->houseNumber = $addressArray[2];
-        $modelAddress->latitude = $addressArray[3];
-        $modelAddress->longitude = $addressArray[4];
-
-        if ($modelAddress->save()) {
-          $model->userAddressId = $modelAddress->id;
-          $model->save();
-          Yii::$app->getSession()->setFlash('success', 'Адрес сохранен');
-          return $this->refresh();
-        }
-
-      }
-
-
-      if (Yii::$app->request->post('user')) {
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-          Yii::$app->getSession()->setFlash('success', 'Изменения сохранены');
-          return $this->refresh();
-        }
-      }
-
+        return $this->redirect('/');
     }
 
-    return $this->render('login', [
-      'model' => $model,
-    ]);
-  }
-
-  /**
-   * Logout action.
-   *
-   * @return Response
-   */
-  public function actionLogout()
-  {
-    Yii::$app->user->logout();
-
+    /**
+     * Logout action.
+     *
+     * @return Response
+     */
+    public function actionLogout()
+    {
+        Yii::$app->user->logout();
     return $this->goHome();
   }
 
