@@ -13,10 +13,11 @@ BusinessAsset::register($this);
 ?>
 <a href="/events" style="float: right;"><button  class="btn btn-outline-coral">Все акции</button></a>
 <h1 class="business-header">Ваши акции</h1>
+<?php if (empty($userEvents)) { ?>
+    <p class="no-item">У вас еще нет акций</p>
+<?php } ?>
 <div class="row">
-    <?php if (empty($userEvents)) { ?>
-        <p class="no-item">У вас еще нет акций</p>
-    <?php } ?>
+
     <?php foreach ($userEvents as $event) { ?>
         <div class="col-md-4 col-6">
             <div class="common-card">
@@ -49,7 +50,7 @@ BusinessAsset::register($this);
                         'method' => 'post'
                     ],
                 ]) ?>
-                <div class="description text-center"><?= $event['shortDesc'] ?></div>
+                <div class="description text-center"><?= strlen($event['shortDesc']) > 52 ? mb_substr($event['shortDesc'],0,52).'...' : $event['shortDesc'] ?></div>
             </div>
         </div>
     <?php } ?>
@@ -65,11 +66,11 @@ BusinessAsset::register($this);
 <div class="business-line"></div>
 <a href="/happenings" style="float: right;"><button  class="btn btn-outline-coral">Все события</button></a>
 <h1 class="business-header">Ваши события</h1>
-
+<?php if (empty($userHappenings)) { ?>
+    <p class="no-item">У вас еще нет событий</p>
+<?php } ?>
 <div class="row">
-    <?php if (empty($userHappenings)) { ?>
-        <p class="no-item">У вас еще нет событий</p>
-    <?php } ?>
+
     <?php foreach ($userHappenings as $happening) { ?>
         <div class="col-md-6 col-12">
             <div class="common-card" style="height: 150px; overflow: hidden;">
@@ -119,10 +120,10 @@ BusinessAsset::register($this);
 <div class="business-line"></div>
 <a href="/shops" style="float: right;"><button  class="btn btn-outline-coral">Все места</button></a>
 <h1 class="business-header">Ваши места</h1>
+<?php if (empty($userShops)) { ?>
+    <p class="no-item">У вас еще нет мест</p>
+<?php } ?>
 <div class="row">
-    <?php if (empty($userShops)) { ?>
-        <p class="no-item">У вас еще нет мест</p>
-    <?php } ?>
     <?php foreach ($userShops as $shop) { ?>
         <div class="col-md-4 col-6">
             <div class="common-card">
