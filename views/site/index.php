@@ -232,7 +232,7 @@ $this->title = "I'm Local";
             </div>
             <?php } ?>
         </div>
-        <a href="/iLocal/events.html"><button  class="btn btn-outline-coral w-100">Все события</button></a>
+        <a href="/happenings"><button  class="btn btn-outline-coral w-100">Все события</button></a>
     </div>
 </section>
 <?php } ?>

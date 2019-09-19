@@ -136,7 +136,7 @@ a.disabled {
 
 .text {
     color: white;
-    font-size: 12px;
+    font-size: 14px;
     padding: 16px 32px;
 }
 
@@ -147,9 +147,21 @@ a.disabled {
     padding: 5px;
 }
 
+.no-item {
+    font-size: 14px;
+    line-height: 16px;
+    color: #454545;
+    padding-left: 10px;
+    padding-top: 10px;
+}
+
 /* desktop only parametrs */
 @media (min-width: 576px) {
     .text {
+        font-size: 16px;
+    }
+
+    .no-item {
         font-size: 16px;
     }
 
