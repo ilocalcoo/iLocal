@@ -193,14 +193,13 @@ $this->title = "I'm Local";
 		</div>
 	</div>
 
-	<section id="actions">
-		<div class="container mt-5">
-			<div class="w-100 mb-3"><span class="h3">Акции</span><span style="float: right"><a href="#"><button
-							class="btn btn-outline-coral">Все акции</button></a></span></div>
-			<div class="row">
-				<div class="col-12 scrolls" id="scrolls">
-          <?php foreach ($events as $event) { ?>
 
+<section id="actions">
+    <div class="container mt-5">
+        <div class="w-100 mb-3"><span class="h3">Акции</span><span style="float: right"><a href="/events"><button  class="btn btn-outline-coral">Все акции</button></a></span></div>
+        <div class="row">
+            <div class="col-12 scrolls" id="scrolls">
+                <?php foreach ($events as $event) { ?>
 						<div class="slide col-md-3 col-8 align-top">
 							<a href="/events/<?= $event->id ?>">
 								<div class="slide-img">
