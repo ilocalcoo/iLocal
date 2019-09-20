@@ -36,7 +36,7 @@ $this->title = $type . ' рядом с вами';
       <?php
       Pjax::begin();
       foreach ($shops as $key => $shop) { ?>
-				<div class="row content">
+				<div class="row content mobile-block">
 					<div class="d-flex col-4 align-items-center">
 						<a class="shop_img" href="<?= 'shops/' . $shop->shopId ?>" data-pjax="0">
 							<img src="/img/shopPhoto/<?php

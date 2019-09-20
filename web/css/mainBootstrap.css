@@ -294,6 +294,10 @@ body {
 }
 
 @media (max-width: 768px) {
+    .mobile-block {
+        min-height: 130px;
+    }
+
     .nav-bar-categories-main {
         position: fixed;
         z-index: 100;
