@@ -155,7 +155,10 @@ $this->title = $type . ' рядом с вами';
 								<span>
 								<?= mb_substr($shop->shopAvgRating, 0, 3); ?>
 								</span>
-              <?php } ?>
+              <?php } else { ?>
+								<span class="rating-empty">0
+								</span>
+							<?php } ?>
 						</div>
 					</div>
 				</div>

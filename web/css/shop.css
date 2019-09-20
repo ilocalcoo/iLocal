@@ -354,6 +354,10 @@
   }
 }
 
+.rating-empty {
+  background: #C4C4C4 !important;
+}
+
 .mobile-rating span {
   position: relative;
   top: 20px;
