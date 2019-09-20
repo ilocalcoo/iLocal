@@ -31,6 +31,7 @@ class AppAsset extends AssetBundle
   public $js = [
     'js/imageUploaded.js',
     '/js/contactForm.js',
+    '/js/header.js',
   ];
   public $depends = [
     'yii\web\YiiAsset',
