@@ -148,14 +148,14 @@ class Happening extends ActiveRecord
     public function uploadHappeningPhoto()
     {
         if ($this->validate()) {
-            $baseDir = 'img/happeningPhoto';
+            $baseDir = 'img/happeningPhoto/';
             foreach ($this->uploadedHappeningPhoto as $file) {
                 if (!is_dir($baseDir)) {
                     mkdir($baseDir, 0755, true);
                 }
                 $fileName = $baseDir . $file->baseName . '.' . $file->extension;
                 $file->saveAs($fileName);
-                ThumbGenerator::generate($fileName, $this->shopId);
+                ThumbGenerator::generate($fileName, $this->id);
                 $model = new HappeningPhoto();
                 $model->happeningPhoto = $file->baseName . '.' . $file->extension;
                 $model->happeningId = $this->id;

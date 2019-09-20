@@ -55,7 +55,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         </div>
                         <div class="col-6">
                             <i class="fas fa-globe"></i><br>
-                            <i class="fas fa-ruble-sign"></i> <?= $happening->price ?? 'Free'?>
+                            <i class="fas fa-ruble-sign"></i> <?= $model->price ?? 'Free'?>
                         </div>
                     </div>
                 </div>

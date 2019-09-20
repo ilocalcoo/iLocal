@@ -212,7 +212,7 @@ class HappeningController extends Controller
       $model->uploadedHappeningPhoto = UploadedFile::getInstances($model, 'uploadedHappeningPhoto');
 
       if ($model->uploadHappeningPhoto()) {
-        return $this->refresh();
+          return $this->refresh();
       }
     }
     return $this->render('create/step-3', [
