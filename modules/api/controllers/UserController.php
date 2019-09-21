@@ -87,6 +87,7 @@ class UserController extends ActiveController
 //                        'oauth_token' => $accessToken,
                     );
                     $get_params = http_build_query($request_params);
+                    // Чтобы не вываливал ошибку php в ответе
                     try {
                         $result = json_decode(file_get_contents('https://oauth2.googleapis.com/tokeninfo?' . $get_params));
 //                    $result = json_decode(file_get_contents('https://www.googleapis.com/oauth2/v2/userinfo?' . $get_params));
