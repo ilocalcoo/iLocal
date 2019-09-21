@@ -31,9 +31,9 @@
 
 .small-text {
     font-family: Roboto;
-    font-size: 14px;
-    color: #8f8f8f;
-    font-weight: 400;
+    font-size: 18px;
+    line-height: 40px;
+    color: #9B9B9B;
 }
 
 .micro-text {
