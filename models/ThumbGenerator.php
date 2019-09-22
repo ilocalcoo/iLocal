@@ -80,4 +80,15 @@ class ThumbGenerator
 
         return $result;
     }
+
+    public static function regenerateShopPhotos() {
+        $result = false;
+
+        $photos = ShopPhoto::find()->asArray();
+        foreach ($photos as $photo) {
+            self::generate('img/shopPhoto/'.$photo['shopPhoto'], $photo['shopId']);
+        }
+
+        return $result;
+    }
 }
