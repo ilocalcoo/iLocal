@@ -139,7 +139,7 @@ AppAsset::register($this);
 				<div class="col-4 nav-bar-categories-main-item <?php echo $currentUrl == 'even' ? 'item-active' : ''; ?>">
 					<a href="/events" class="category-link">Акции</a>
 				</div>
-				<div class="col-4 nav-bar-categories-main-item <?php echo $currentUrl == 'happening' ? 'item-active' : ''; ?>">
+				<div class="col-4 nav-bar-categories-main-item <?php echo $currentUrl == 'happ' ? 'item-active' : ''; ?>">
 					<a href="/happenings" class="category-link">События</a></div>
 			</div>
 
