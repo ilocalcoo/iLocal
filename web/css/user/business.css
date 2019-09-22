@@ -154,6 +154,10 @@ a.disabled {
     padding-top: 10px;
 }
 
+a:visited {
+    color: white;
+}
+
 /* desktop only parametrs */
 @media (min-width: 576px) {
     .text {

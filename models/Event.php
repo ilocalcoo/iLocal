@@ -119,15 +119,15 @@ class Event extends \yii\db\ActiveRecord
     ]);
   }
 
-  public function scenarios()
-  {
-    return [
-      self::SCENARIO_DEFAULT => ['*'],
-      self::SCENARIO_STEP1 => ['eventOwnerId', 'eventTypeId'],
-      self::SCENARIO_STEP2 => ['title', 'shortDesc', 'fullDesc', 'begin', 'end'],
-      self::SCENARIO_STEP3 => ['uploadedEventPhoto'],
-    ];
-  }
+//  public function scenarios()
+//  {
+//    return [
+//      self::SCENARIO_DEFAULT => ['*'],
+//      self::SCENARIO_STEP1 => ['eventOwnerId', 'eventTypeId'],
+//      self::SCENARIO_STEP2 => ['title', 'shortDesc', 'fullDesc', 'begin', 'end'],
+//      self::SCENARIO_STEP3 => ['uploadedEventPhoto'],
+//    ];
+//  }
 
   public function uploadEventPhoto()
   {
