@@ -115,7 +115,7 @@ AppAsset::register($this);
 					<li class="nav-item profile">
 						<a class="nav-link" href="">
 							<img src="img/main/login.svg" alt="user">
-							<?= Yii::$app->user->getIdentity()->userName ?>
+							<?= Yii::$app->user->getIdentity()->username ?>
 						</a>
 					</li>
 					<li class="nav-item logout">
