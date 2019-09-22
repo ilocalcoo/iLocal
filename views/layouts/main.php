@@ -36,10 +36,10 @@ AppAsset::register($this);
 	<title><?= Html::encode($this->title) ?></title>
   <?php $this->head() ?>
 </head>
-<body style="background: #FCF7F4">
+<body class="elipse">
 <?php $this->beginBody() ?>
 
-<div class="container">
+<div class="container header-mobile">
 	<nav class="my-header">
 		<div class="left-header">
 			<a class="d-md-none d-sm-block menu-toggler" href="">
@@ -128,7 +128,7 @@ AppAsset::register($this);
 		</div>
 	</nav>
 </div>
-<div class="container">
+<div class="container header-mobile">
 	<div class="mt-3 d-none d-md-block"></div>
 	<div class="row">
 		<div class="col-md-4 col-12">
