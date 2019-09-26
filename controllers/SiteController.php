@@ -90,10 +90,10 @@ class SiteController extends Controller
     $query = Event::find()->where(['active' => 1]);
     $events = $query->limit(10)->all();
     if (!Yii::$app->user->isGuest) {
-      $user = Yii::$app->user->getIdentity();
-      $latitude = $user->userAddress;
-      echo \yii\helpers\VarDumper::dumpAsString($latitude, 5, true);
+      $user = Yii::$app->user->identity;
+      echo \yii\helpers\VarDumper::dumpAsString($user, 5, true);
       exit();
+      $latitude = $user->userAddress;
       $longitude = $user->getUserAddress()->longitude;
       $userCoords = $latitude . ', ' . $longitude;
     } else {
