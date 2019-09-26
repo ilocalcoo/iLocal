@@ -14,6 +14,7 @@ use yii\web\View;
 /* @var $this yii\web\View */
 /* @var $shops app\models\Shop[] */
 /* @var $events app\models\Event[] */
+/* @var $userCoords string */
 
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => Url::to(['img/main/favicon.png'])]);
 MainAsset::register($this);
@@ -149,6 +150,9 @@ $this->title = "I'm Local";
 					<form action="/shops" method="get" class="text-center main-form">
 						<input type="hidden" name="coords_address" id="coords_address" value="">
 						<input type="hidden" id="input_address" value="">
+            <?php if (!is_null($userCoords)) { ?>
+							<span id="user_coordinates" style="display: none"><?= $userCoords ?></span>
+            <?php } ?>
 						<div class="form-group main-group">
               <?php
               Modal::begin([
@@ -168,7 +172,6 @@ $this->title = "I'm Local";
                   'label' => 'Выбрать / Закрыть'
                 ]
               ]);
-
               ?>
 							<div class="modal-body">
 								<div id="profile_map"></div>
