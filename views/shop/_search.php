@@ -13,36 +13,36 @@ use yii\widgets\Pjax;
 
 <div class="shop-search">
 
-    <?php $form = ActiveForm::begin([
-        'action' => ['index'],
-        'method' => 'get',
-        'options' => [
-            'data-pjax' => 1
-        ],
-    ]); ?>
+  <?php $form = ActiveForm::begin([
+    'action' => ['index'],
+    'method' => 'get',
+    'options' => [
+      'data-pjax' => 1
+    ],
+  ]); ?>
 
-    <?= $form->field($model, 'shopShortName')
-		->widget(
-        AutoComplete::className(), [
-        'clientOptions' => [
-            'source' => $shopShortName,
-            'minLength' => '2',
-        ],
-        'options'=>[
-            'class'=>'form-control',
-        	'value' => Yii::$app->request->get('shopShortName'),
-		]
+  <?= $form->field($model, 'shopShortName')
+    ->widget(
+      AutoComplete::className(), [
+      'clientOptions' => [
+        'source' => $shopShortName,
+        'minLength' => '2',
+      ],
+      'options' => [
+        'class' => 'form-control shop-find',
+        'value' => Yii::$app->request->get('shopShortName'),
+      ]
     ])->label('Поиск по названию места'); ?>
 
-    <?php Pjax::begin(); ?>
-    <div class="form-group">
-        <?= Html::submitButton('Искать', ['class' => 'btn btn-coral']) ?>
-        <?= Html::resetButton('Сбросить', [
-        	'class' => 'btn btn-outline-coral',
-			'id' => 'reset_button',
-			]) ?>
-    </div>
-    <?php Pjax::end(); ?>
-    <?php ActiveForm::end(); ?>
+  <?php Pjax::begin(); ?>
+	<div class="form-group">
+    <?= Html::submitButton('Искать', ['class' => 'btn btn-coral']) ?>
+    <?= Html::resetButton('Сбросить', [
+      'class' => 'btn btn-outline-coral',
+      'id' => 'reset_button',
+    ]) ?>
+	</div>
+  <?php Pjax::end(); ?>
+  <?php ActiveForm::end(); ?>
 
 </div>
