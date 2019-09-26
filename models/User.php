@@ -43,6 +43,23 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
   const RELATION_SHOPS = 'shops';
 
+  static private $currentAuthUser = null;
+
+  /**
+   * статичный метод, возвращающий экземпляр текущего пользователя
+   * @return User|null|\yii\db\ActiveRecord
+   */
+  static public function current() {
+    if (Yii::$app->user->isGuest) {
+      return new self();
+    }
+    if (is_null(self::$currentAuthUser)) {
+      self::$currentAuthUser = self::find()->where([
+        'id' => Yii::$app->user->id,
+      ])->one();
+    }
+    return self::$currentAuthUser;
+  }
   /**
    * {@inheritdoc}
    */
