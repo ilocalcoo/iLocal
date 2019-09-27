@@ -6,6 +6,7 @@ use kartik\datetime\DateTimePicker;
 use kartik\time\TimePicker;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
+use yii\bootstrap4\Modal;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Event */
@@ -27,10 +28,33 @@ array_unshift($eventOwner, '— Не выбрано —');
     <div class="row">
         <div class="col-md-6 col-12">
 
-            <label class="control-label">Место <span class="text-gray">— опционально</span></label>
-            <?= $form->field($model, 'shopId', ['options' => ['class' => 'shop-create-form select']])->dropDownList($eventOwner)
+            <label class="control-label">Место <span class="text-gray"> — опционально</span></label>
+            <?= $form->field($model, 'shopId', ['options' => ['class' => 'shop-create-form select']])
+                ->dropDownList($eventOwner)
                 ->label(false) ?>
-            <?= $form->field($model, 'address')->textInput(['maxlength' => true, 'placeholder'=>'Введите, если адрес не совпадает с местом']) ?>
+            <?php
+            Modal::begin([
+                'size' => 'modal-lg',
+                'toggleButton' => [
+                    'label' => $form->field($model, 'address')
+                        ->textInput(['maxlength' => true, 'placeholder'=>'Введите, если адрес не совпадает с местом']),
+                    'tag' => 'a',
+                    'class' => '',
+                    'type' => '',
+                ],
+                'closeButton' => [
+                    'class' => 'btn btn-coral',
+                    'label' => 'Выбрать / Закрыть'
+                ]
+            ]);
+            ?>
+            <div class="modal-body">
+                <div id="profile_map"></div>
+            </div>
+            <?php Modal::end(); ?>
+
+            <input type="hidden" name="coords_address" id="coords_address" value="">
+            <input type="hidden" id="input_address" value="">
 
             <?= $form->field($model, 'happeningTypeId', ['options' => ['class' => 'shop-create-form']])->radioList(
                 app\models\HappeningType::getNames(),

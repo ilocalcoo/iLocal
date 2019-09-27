@@ -1,11 +1,13 @@
 <?php
 
 use app\assets\CreateAsset;
+use \app\assets\ProfileMapsAsset;
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Event */
 CreateAsset::register($this);
+ProfileMapsAsset::register($this);
 $this->title = 'Добавить событие - I\'m Local';
 $this->params['breadcrumbs'][] = ['label' => 'Happenings', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
