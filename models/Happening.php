@@ -155,7 +155,7 @@ class Happening extends ActiveRecord
                 }
                 $fileName = $baseDir . $file->baseName . '.' . $file->extension;
                 $file->saveAs($fileName);
-                ThumbGenerator::generate($fileName, $this->shopId);
+                ThumbGenerator::generate($fileName, $this->id);
                 $model = new HappeningPhoto();
                 $model->happeningPhoto = $file->baseName . '.' . $file->extension;
                 $model->happeningId = $this->id;

@@ -26,7 +26,6 @@
 }
 
 .enter-policy {
-    width: 436px;
     font-family: Roboto;
     font-style: normal;
     font-weight: 500;
@@ -86,10 +85,7 @@
 }
 
 .place-text {
-    left: 5px!important;
-    top: 10px!important;
 }
 
 .input-label-right {
-    top: 6px!important;
 }
