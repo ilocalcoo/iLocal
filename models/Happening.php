@@ -132,15 +132,15 @@ class Happening extends ActiveRecord
     /**
      * @return array
      */
-    public function scenarios()
-    {
-        return [
-            self::SCENARIO_DEFAULT => ['*'],
-            self::SCENARIO_STEP1 => ['shopId', 'happeningTypeId'],
-            self::SCENARIO_STEP2 => ['title', 'description', 'begin'],
-            self::SCENARIO_STEP3 => ['uploadedHappeningPhoto'],
-        ];
-    }
+//    public function scenarios()
+//    {
+//        return [
+//            self::SCENARIO_DEFAULT => ['*'],
+//            self::SCENARIO_STEP1 => ['shopId', 'happeningTypeId'],
+//            self::SCENARIO_STEP2 => ['title', 'description', 'begin'],
+//            self::SCENARIO_STEP3 => ['uploadedHappeningPhoto'],
+//        ];
+//    }
 
     /**
      * @return bool
@@ -148,7 +148,7 @@ class Happening extends ActiveRecord
     public function uploadHappeningPhoto()
     {
         if ($this->validate()) {
-            $baseDir = 'img/happeningPhoto';
+            $baseDir = 'img/happeningPhoto/';
             foreach ($this->uploadedHappeningPhoto as $file) {
                 if (!is_dir($baseDir)) {
                     mkdir($baseDir, 0755, true);

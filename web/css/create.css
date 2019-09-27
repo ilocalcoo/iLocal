@@ -56,6 +56,10 @@ input[type=radio] {
     transition: background-color 0.7s, color 0.3s;
 }
 
+.text-gray {
+    color: #C4C4C4;
+}
+
 @media (min-width: 576px) {
     h1 {
         font-size: 28px;

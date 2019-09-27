@@ -150,12 +150,13 @@ body {
 
 .footer-link {
     font-size: 18px;
-    color: #8f8f8f;
+    color: #8f8f8f!important;
     text-decoration: none;
     transition: color 0.3s;
 }
 .footer-link:hover {
-    color: #454545;
+    color: #454545!important;
+    text-decoration: underline!important;
 }
 
 /* map modal */

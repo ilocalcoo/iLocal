@@ -1,37 +1,80 @@
 <?php
 
+use app\models\Shop;
+use kartik\date\DatePicker;
+use kartik\datetime\DateTimePicker;
+use kartik\time\TimePicker;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Event */
 /* @var $form yii\widgets\ActiveForm */
+$eventOwner = Shop::find()
+    ->select('shopShortName')
+    ->where(['=', 'creatorId', Yii::$app->user->id])
+    ->indexBy('shopId')
+    ->column();
+array_unshift($eventOwner, '— Не выбрано —');
 ?>
 
 <div class="event-form">
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'active')->textInput() ?>
+    <?= $form->field($model, 'creatorId')->hiddenInput(['value'=>Yii::$app->user->id])->label(false) ?>
 
-    <?= $form->field($model, 'isEventTop')->checkbox() ?>
+    <div class="row">
+        <div class="col-md-6 col-12">
 
-    <?= $form->field($model, 'eventOwnerId')->textInput() ?>
+            <label class="control-label">Место <span class="text-gray">— опционально</span></label>
+            <?= $form->field($model, 'shopId', ['options' => ['class' => 'shop-create-form select']])->dropDownList($eventOwner)
+                ->label(false) ?>
+            <?= $form->field($model, 'address')->textInput(['maxlength' => true, 'placeholder'=>'Введите, если адрес не совпадает с местом']) ?>
 
-    <?= $form->field($model, 'eventTypeId')->textInput() ?>
+            <?= $form->field($model, 'happeningTypeId', ['options' => ['class' => 'shop-create-form']])->radioList(
+                app\models\HappeningType::getNames(),
+                [
+                    'item' => function ($index, $label, $name, $checked, $value) {
+                        $check = $checked ? ' checked="checked"' : '';
+                        $return = '<label class="shop-create_type-radio-btn-wrap" style="padding:0;">';
+                        $return .= '<input type="radio" name="' . $name . '" value="' . $value . '" tabindex="3" ' .$check. '>';
+                        $return .= '<span class="shop-create_type-radio-btn">' . ucwords($label) . '</span>';
+                        $return .= '</label>';
+                        return $return;
+                    }
+                ]
+            )->label('Категория') ?>
 
-    <?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'uploadedHappeningPhoto[]')->fileInput(['multiple' => true, 'accept' => 'image/*'])->label('Изображение')
+                ->hint('Прикрепите от 1 до 3 файлов') ?>
+        </div>
+        <div class="col-md-6 col-12">
+            <?= $form->field($model, 'begin', ['options' => ['class' => 'shop-create-form']])->widget(DateTimePicker::classname(),[
+                'name' => 'dp_1',
+                'type' => DateTimePicker::TYPE_INPUT,
+                'value' => date('d.m.Y'),
+                'pluginOptions' => [
+                    'autoclose'=>true,
+                    'format' => 'dd.mm.yyyy H:i'
+                ]
+            ])->textInput(['placeholder' => date('d.m.Y H:i')]) ?>
+            <?= $form->field($model, 'price')->textInput(['maxlength' => true, 'placeholder'=>'Оставьте пустым, если вход свободный']) ?>
 
-    <?= $form->field($model, 'shortDesc')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'title')->textInput([
+                'maxlength' => true,
+                'placeholder' => 'Введите название события (не более 30 симв.)',
+            ]) ?>
 
-    <?= $form->field($model, 'fullDesc')->textarea(['rows' => 6]) ?>
+            <?= $form->field($model, 'description')->textarea(['rows' => 6, 'placeholder'=>'Полное описание события']) ?>
 
-    <?= $form->field($model, 'begin')->textInput() ?>
-
-    <?= $form->field($model, 'end')->textInput() ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-coral']) ?>
+            <div class="row">
+                <div class="col-md-3 col-12 offset-md-4">
+                    <div class="form-group text-center">
+                        <?= Html::submitButton('Сохранить', ['class' => 'btn btn-outline-coral w-100']) ?>
+                    </div>
+                </div>
+            </div></div>
     </div>
 
     <?php ActiveForm::end(); ?>
