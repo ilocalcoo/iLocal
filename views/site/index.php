@@ -2,14 +2,9 @@
 
 /* @var $this yii\web\View */
 
-use app\assets\MainAsset;
 use app\assets\ProfileMapsAsset;
-use app\models\Shop;
-use yii\authclient\widgets\AuthChoice;
+use app\assets\SliderAsset;
 use yii\bootstrap4\Modal;
-use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\web\View;
 
 /* @var $this yii\web\View */
 /* @var $shops app\models\Shop[] */
@@ -17,6 +12,7 @@ use yii\web\View;
 /* @var $userCoords string */
 
 ProfileMapsAsset::register($this);
+SliderAsset::register($this);
 ?>
 
 <div class="row">
