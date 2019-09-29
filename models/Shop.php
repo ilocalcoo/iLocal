@@ -368,4 +368,14 @@ class Shop extends \yii\db\ActiveRecord
   {
     return $this->hasMany(Happening::className(), ['shopId' => 'shopId']);
   }
+
+  /**
+   * Method cleans isItFar field in shop table
+   */
+  public static function cleanIsItFar() {
+    foreach (self::find()->where(['isItFar' => self::IS_IT_FAR_TRUE])->all() as $shop) {
+      $shop->isItFar = self::IS_IT_FAR_FALSE;
+      $shop->save(false);
+    }
+  }
 }
