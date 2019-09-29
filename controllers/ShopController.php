@@ -111,7 +111,7 @@ class ShopController extends Controller
       (array_key_exists('round_range', Yii::$app->request->queryParams))) {
       if ((Yii::$app->request->queryParams['coords_address'] !== '') &&
         (Yii::$app->request->queryParams['round_range'] !== '')) {
-        $userPoint = Yii::$app->request->queryParams['coords_address'];
+        $userPoint = explode(',', Yii::$app->request->queryParams['coords_address']);
         $range = Yii::$app->request->queryParams['round_range'] * 1000; // в метры
 //      $query = $query->where(
 //          ['shopId' => ShopAddress::find([])->all()]
@@ -119,12 +119,12 @@ class ShopController extends Controller
 
         foreach ($query->all() as $shop) {
           $shopCoords = [$shop->shopAddress->latitude, $shop->shopAddress->longitude];
-          $distance = Shop::getDistance(explode(',', $userPoint), $shopCoords);
+          $distance = Shop::getDistance($userPoint, $shopCoords);
           if ($distance > $range) {
             $shop->isItFar = Shop::IS_IT_FAR_TRUE;
             $shop->save(false);
           } else {
-            array_push($distances, $distance);
+            $distances += [$shop->shopId => $distance];
           }
         }
 
@@ -154,10 +154,7 @@ class ShopController extends Controller
     }
 
     // очищаем у всех мест поле 'isItFar'
-    foreach (Shop::find()->where(['isItFar' => Shop::IS_IT_FAR_TRUE])->all() as $shop) {
-      $shop->isItFar = Shop::IS_IT_FAR_FALSE;
-      $shop->save(false);
-    }
+    Shop::cleanIsItFar();
 
     return $this->render('index', [
       'searchModel' => $searchModel,
