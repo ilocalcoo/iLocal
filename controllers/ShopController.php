@@ -215,6 +215,26 @@ class ShopController extends Controller
     ]);
   }
 
+    /**
+     * Creates a new Shop model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionCreate()
+    {
+        $model = new Shop();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $model->uploadedShopPhoto = UploadedFile::getInstances($model, 'uploadedShopPhoto');
+
+            return $this->redirect(['view', 'id' => $model->shopId]);
+        }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
+    }
+
   /**
    * @return string|\yii\web\Response
    * @throws NotFoundHttpException

@@ -98,7 +98,8 @@ array_unshift($eventOwner, '— Не выбрано —');
                         <?= Html::submitButton('Сохранить', ['class' => 'btn btn-outline-coral w-100']) ?>
                     </div>
                 </div>
-            </div></div>
+            </div>
+        </div>
     </div>
 
     <?php ActiveForm::end(); ?>

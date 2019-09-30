@@ -162,17 +162,17 @@ class Shop extends \yii\db\ActiveRecord
     ];
   }
 
-  public function scenarios()
-  {
-    return [
-      self::SCENARIO_DEFAULT => ['*'],
-      self::SCENARIO_STEP1 => ['creatorId', 'shopTypeId', 'shopShortName', 'shopShortDescription', 'shopFullDescription'],
-      self::SCENARIO_STEP2 => ['uploadedShopPhoto'],
-      self::SCENARIO_STEP3 => ['shopAddressId', 'shopPhone', 'shopWeb', 'shopWorkTime'],
-      self::SCENARIO_STEP4 => ['shopCostMin', 'shopCostMax', 'shopMiddleCost', 'shopLinkPdf'],
-      self::SCENARIO_RATING => ['shopRating'],
-    ];
-  }
+//  public function scenarios()
+//  {
+//    return [
+//      self::SCENARIO_DEFAULT => ['*'],
+//      self::SCENARIO_STEP1 => ['creatorId', 'shopTypeId', 'shopShortName', 'shopShortDescription', 'shopFullDescription'],
+//      self::SCENARIO_STEP2 => ['uploadedShopPhoto'],
+//      self::SCENARIO_STEP3 => ['shopAddressId', 'shopPhone', 'shopWeb', 'shopWorkTime'],
+//      self::SCENARIO_STEP4 => ['shopCostMin', 'shopCostMax', 'shopMiddleCost', 'shopLinkPdf'],
+//      self::SCENARIO_RATING => ['shopRating'],
+//    ];
+//  }
 
   public function fields()
   {
