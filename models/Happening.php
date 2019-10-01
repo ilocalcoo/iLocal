@@ -42,10 +42,10 @@ class Happening extends ActiveRecord
     const RELATION_HAPPENING_TYPE = 'happeningType';
     const RELATION_HAPPENING_PHOTOS = 'happeningPhotos';
 
-    const SCENARIO_DEFAULT = 'delete';
-    const SCENARIO_STEP1 = 'step1';
-    const SCENARIO_STEP2 = 'step2';
-    const SCENARIO_STEP3 = 'step3';
+//    const SCENARIO_DEFAULT = 'delete';
+//    const SCENARIO_STEP1 = 'step1';
+//    const SCENARIO_STEP2 = 'step2';
+//    const SCENARIO_STEP3 = 'step3';
 
     /**
      * @var UploadedFile[]
@@ -77,7 +77,7 @@ class Happening extends ActiveRecord
     public function rules()
     {
         return [
-            [['shopId', 'creatorId'], 'required'],
+            [['creatorId'], 'required'],
             [['shopId', 'creatorId'], 'integer'],
             [['description'], 'string'],
             [['price'], 'number'],

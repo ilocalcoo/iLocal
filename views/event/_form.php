@@ -1,6 +1,7 @@
 <?php
 
 use app\models\Shop;
+use app\models\ThumbGenerator;
 use kartik\date\DatePicker;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -41,7 +42,23 @@ $eventOwner = Shop::find()
                 ]
             )->label('Категория') ?>
 
-            <?= $form->field($model, 'uploadedEventPhoto[]')->fileInput(['multiple' => true, 'accept' => 'image/*'])->label('Изображение')
+            <?php foreach ($model->eventPhotos as $photo) { ?>
+                <div class="shop-form_shop-photos">
+                    <?= Html::img('/img/eventPhoto/'
+                        . $model->id . '/'
+                        . ThumbGenerator::getSizeDir('small') .'/'
+                        . ($photo['eventPhoto']), ['class' => 'shop-form_photo']) ?>
+                    <?= Html::a(Html::img('/img/shop/photo_delete.svg'), ['/event-photo/delete', 'id' => $photo['id']], [
+                        'class' => 'shop-form_photo-delete',
+                        'data' => [
+                            'confirm' => 'Вы уверены что хотите удалить фотографию?'
+                        ],
+                    ]) ?>
+                </div>
+            <?php } ?>
+
+            <?= $form->field($model, 'uploadedEventPhoto[]')
+                ->fileInput(['multiple' => true, 'accept' => 'image/*'])->label('Изображение')
                 ->hint('Прикрепите от 1 до 3 файлов') ?>
 
             <?= $form->field($model, 'begin', ['options' => ['class' => 'shop-create-form']])->widget(DatePicker::classname(),[

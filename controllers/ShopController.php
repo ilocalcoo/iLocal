@@ -226,6 +226,7 @@ class ShopController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $model->uploadedShopPhoto = UploadedFile::getInstances($model, 'uploadedShopPhoto');
+            $model->uploadShopPhoto();
 
             return $this->redirect(['view', 'id' => $model->shopId]);
         }

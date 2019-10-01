@@ -128,7 +128,8 @@ class HappeningController extends Controller
     $model = new Happening();
 
     if ($model->load(Yii::$app->request->post()) && $model->save()) {
-      $model->uploadedHappeningPhoto = UploadedFile::getInstances($model, 'uploadedHappeningPhoto');
+        $model->uploadedHappeningPhoto = UploadedFile::getInstances($model, 'uploadedHappeningPhoto');
+        $model->uploadHappeningPhoto();
 
         return $this->redirect(['view', 'id' => $model->id]);
     }

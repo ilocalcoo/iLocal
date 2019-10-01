@@ -77,12 +77,12 @@ class Shop extends \yii\db\ActiveRecord
     self::SHOP_MIDDLE_COST_5 => '₽₽₽₽₽',
   ];
 
-  const SCENARIO_STEP1 = 'step1';
-  const SCENARIO_STEP2 = 'step2';
-  const SCENARIO_STEP3 = 'step3';
-  const SCENARIO_STEP4 = 'step4';
-  const SCENARIO_DEFAULT = 'delete';
-  const SCENARIO_RATING = 'rating';
+//  const SCENARIO_STEP1 = 'step1';
+//  const SCENARIO_STEP2 = 'step2';
+//  const SCENARIO_STEP3 = 'step3';
+//  const SCENARIO_STEP4 = 'step4';
+//  const SCENARIO_DEFAULT = 'delete';
+//  const SCENARIO_RATING = 'rating';
 
   /**
    * @var UploadedFile[]
