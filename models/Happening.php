@@ -134,12 +134,12 @@ class Happening extends ActiveRecord
      */
     public function scenarios()
     {
-        return [
-            self::SCENARIO_DEFAULT => ['*'],
-            self::SCENARIO_STEP1 => ['shopId', 'happeningTypeId'],
-            self::SCENARIO_STEP2 => ['title', 'description', 'begin'],
-            self::SCENARIO_STEP3 => ['uploadedHappeningPhoto'],
-        ];
+        $scenarios = parent::scenarios();
+        $scenarios[self::SCENARIO_DEFAULT] = ['*'];
+        $scenarios[self::SCENARIO_STEP1] = ['shopId', 'happeningTypeId'];
+        $scenarios[self::SCENARIO_STEP2] = ['title', 'description', 'begin'];
+        $scenarios[self::SCENARIO_STEP3] = ['uploadedHappeningPhoto'];
+        return $scenarios;
     }
 
     /**
