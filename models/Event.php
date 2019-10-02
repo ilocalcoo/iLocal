@@ -121,12 +121,12 @@ class Event extends \yii\db\ActiveRecord
 
   public function scenarios()
   {
-    return [
-      self::SCENARIO_DEFAULT => ['*'],
-      self::SCENARIO_STEP1 => ['eventOwnerId', 'eventTypeId'],
-      self::SCENARIO_STEP2 => ['title', 'shortDesc', 'fullDesc', 'begin', 'end'],
-      self::SCENARIO_STEP3 => ['uploadedEventPhoto'],
-    ];
+      $scenarios = parent::scenarios();
+      $scenarios[self::SCENARIO_DEFAULT] = ['*'];
+      $scenarios[self::SCENARIO_STEP1] = ['eventOwnerId', 'eventTypeId'];
+      $scenarios[self::SCENARIO_STEP2] = ['title', 'shortDesc', 'fullDesc', 'begin', 'end'];
+      $scenarios[self::SCENARIO_STEP3] = ['uploadedEventPhoto'];
+      return $scenarios;
   }
 
   public function uploadEventPhoto()

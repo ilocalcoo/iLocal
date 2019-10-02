@@ -164,14 +164,14 @@ class Shop extends \yii\db\ActiveRecord
 
   public function scenarios()
   {
-    return [
-      self::SCENARIO_DEFAULT => ['*'],
-      self::SCENARIO_STEP1 => ['creatorId', 'shopTypeId', 'shopShortName', 'shopShortDescription', 'shopFullDescription'],
-      self::SCENARIO_STEP2 => ['uploadedShopPhoto'],
-      self::SCENARIO_STEP3 => ['shopAddressId', 'shopPhone', 'shopWeb', 'shopWorkTime'],
-      self::SCENARIO_STEP4 => ['shopCostMin', 'shopCostMax', 'shopMiddleCost', 'shopLinkPdf'],
-      self::SCENARIO_RATING => ['shopRating'],
-    ];
+      $scenarios = parent::scenarios();
+      $scenarios[self::SCENARIO_DEFAULT] = ['*'];
+      $scenarios[self::SCENARIO_STEP1] = ['creatorId', 'shopTypeId', 'shopShortName', 'shopShortDescription', 'shopFullDescription'];
+      $scenarios[self::SCENARIO_STEP2] = ['uploadedShopPhoto'];
+      $scenarios[self::SCENARIO_STEP3] = ['shopAddressId', 'shopPhone', 'shopWeb', 'shopWorkTime'];
+      $scenarios[self::SCENARIO_STEP4] = ['shopCostMin', 'shopCostMax', 'shopMiddleCost', 'shopLinkPdf'];
+      $scenarios[self::SCENARIO_RATING] = ['shopRating'];
+      return $scenarios;
   }
 
   public function fields()
