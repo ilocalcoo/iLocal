@@ -16,7 +16,9 @@ $eventOwner = Shop::find()
     ->where(['=', 'creatorId', Yii::$app->user->id])
     ->indexBy('shopId')
     ->column();
-array_unshift($eventOwner, '— Не выбрано —');
+//array_unshift($eventOwner, '— Не выбрано —');
+$eventOwner[42000000] = '— Не выбрано —';
+krsort($eventOwner);
 ?>
 
 <div class="event-form">
@@ -54,7 +56,6 @@ array_unshift($eventOwner, '— Не выбрано —');
             <?php Modal::end(); ?>
 
             <input type="hidden" name="coords_address" id="coords_address" value="">
-            <input type="hidden" id="input_address" value="">
 
             <?= $form->field($model, 'happeningTypeId', ['options' => ['class' => 'shop-create-form']])->radioList(
                 app\models\HappeningType::getNames(),
@@ -77,12 +78,12 @@ array_unshift($eventOwner, '— Не выбрано —');
             <?= $form->field($model, 'begin', ['options' => ['class' => 'shop-create-form']])->widget(DateTimePicker::classname(),[
                 'name' => 'dp_1',
                 'type' => DateTimePicker::TYPE_INPUT,
-                'value' => date('d.m.Y'),
+                'value' => date('Y-m-d H:i'),
                 'pluginOptions' => [
                     'autoclose'=>true,
-                    'format' => 'dd.mm.yyyy H:i'
+                    'format' => 'yyyy-mm-dd H:i'
                 ]
-            ])->textInput(['placeholder' => date('d.m.Y H:i')]) ?>
+            ])->textInput(['placeholder' => date('Y-m-d H:i')]) ?>
             <?= $form->field($model, 'price')->textInput(['maxlength' => true, 'placeholder'=>'Оставьте пустым, если вход свободный']) ?>
 
             <?= $form->field($model, 'title')->textInput([

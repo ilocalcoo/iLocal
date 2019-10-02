@@ -17,6 +17,8 @@ use yii\web\UploadedFile;
  * @property string $title
  * @property string $description
  * @property string $address
+ * @property string $latitude
+ * @property string $longitude
  * @property string $price
  * @property string $begin
  * @property string $createdOn
@@ -77,14 +79,14 @@ class Happening extends ActiveRecord
     public function rules()
     {
         return [
-            [['creatorId'], 'required'],
+            [['creatorId','happeningTypeId'], 'required'],
             [['shopId', 'creatorId'], 'integer'],
             [['description'], 'string'],
             [['price'], 'number'],
             [['begin', 'createdOn', 'updatedOn'], 'safe'],
             [['title'], 'string', 'max' => 150],
             [['address'], 'string', 'max' => 256],
-            [['shopId'], 'exist', 'skipOnError' => true, 'targetClass' => Shop::className(), 'targetAttribute' => ['shopId' => 'shopId']],
+//            [['shopId'], 'exist', 'skipOnError' => true, 'targetClass' => Shop::className(), 'targetAttribute' => ['shopId' => 'shopId']],
             [['creatorId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['creatorId' => 'id']],
             [['uploadedHappeningPhoto'], 'file', 'extensions' => 'png, jpg, jpeg', 'maxFiles' => 3],
         ];
