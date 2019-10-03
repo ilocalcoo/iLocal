@@ -7,10 +7,12 @@
 .notebook {
   width: 300px;
   height: 185px;
+  margin: 50px 0 40px 0;
 }
 
 .phone {
-  position: relative;  
+  position: relative;
+  margin-top: 40px;
 }
 
 .phone-screen {
