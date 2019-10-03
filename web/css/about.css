@@ -1,0 +1,47 @@
+.logo-text {
+  color: white;
+}
+.pol {
+  background-color: white;
+}
+.pink {
+  background: linear-gradient(0deg, rgba(254, 138, 128, 0.9), rgba(254, 138, 128, 0.9)),
+  linear-gradient(270deg, #FF22E9 0%, #FF3898 23.96%, #FE8A80 100%);
+}
+.notebook {
+  width: 300px;
+  height: 185px;
+}
+
+.phone {
+  position: relative;  
+}
+
+.phone-screen {
+  position: absolute;
+  left: 59px;
+  top: 22px;
+}
+
+.thanks {
+  width: 100vh;
+  background: linear-gradient(0deg, rgba(254, 138, 128, 0.9), rgba(254, 138, 128, 0.9)),
+  linear-gradient(270deg, #FF22E9 0%, #FF3898 23.96%, #FE8A80 100%);
+}
+
+@media (min-width: 768px) {
+  .elipse {
+    background: linear-gradient(0deg, rgba(254, 138, 128, 0.9), rgba(254, 138, 128, 0.9)),
+    linear-gradient(270deg, #FF22E9 0%, #FF3898 23.96%, #FE8A80 100%);
+  }
+  .nav-link {
+    color: white !important;
+  }
+  .login-ellipse {
+    background-color: #fff;
+  }
+  .notebook {
+    width: 880px;
+    height: 488px;
+  }
+}

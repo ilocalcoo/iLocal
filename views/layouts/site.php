@@ -1,30 +1,20 @@
 <?php
 
 /* @var $this \yii\web\View */
-
 /* @var $content string */
 
+use app\assets\MainAsset;
+use app\assets\ProfileMapsAsset;
 use yii\bootstrap4\Modal;
-use yii\helpers\Html;
-use app\assets\AppAsset;
 use yii\helpers\Url;
-
+use yii\helpers\Html;
 
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => Url::to(['img/main/favicon.png'])]);
+$this->title = "I'm Local";
 
-$currentUrl = substr(Yii::$app->request->pathInfo, 0, 4);
+MainAsset::register($this);
 
-function active($value)
-{
-  if (substr(Yii::$app->request->url, -8) == $value) {
-    return true;
-  }
-  return false;
-}
-
-AppAsset::register($this);
-?>
-<?php $this->beginPage() ?>
+$this->beginPage() ?>
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>">
 <head>
@@ -39,7 +29,7 @@ AppAsset::register($this);
 <body class="elipse">
 <?php $this->beginBody() ?>
 
-<div class="container header-mobile">
+<div class="container">
 	<nav class="my-header">
 		<div class="left-header">
 			<a class="d-md-none d-sm-block menu-toggler" href="">
@@ -115,7 +105,7 @@ AppAsset::register($this);
 					<li class="nav-item profile">
 						<a class="nav-link" href="">
 							<img src="img/main/login.svg" alt="user">
-							<?= Yii::$app->user->getIdentity()->username ?>
+              <?= Yii::$app->user->getIdentity()->username ?>
 						</a>
 					</li>
 					<li class="nav-item logout">
@@ -127,49 +117,6 @@ AppAsset::register($this);
 			</ul>
 		</div>
 	</nav>
-</div>
-<div class="container header-mobile">
-	<div class="mt-3 d-none d-md-block"></div>
-	<div class="row">
-		<div class="col-md-4 col-12">
-			<div class="row nav-bar-categories-main">
-				<div class="col-4 nav-bar-categories-main-item <?php echo $currentUrl == 'shop' ? 'item-active' : ''; ?>">
-					<a href="/shops" class="category-link">Места</a>
-				</div>
-				<div class="col-4 nav-bar-categories-main-item <?php echo $currentUrl == 'even' ? 'item-active' : ''; ?>">
-					<a href="/events" class="category-link">Акции</a>
-				</div>
-				<div class="col-4 nav-bar-categories-main-item <?php echo $currentUrl == 'happ' ? 'item-active' : ''; ?>">
-					<a href="/happenings" class="category-link">События</a></div>
-			</div>
-
-		</div>
-		<div class="col-md-8 col-12 scrolls">
-			<div class="nav-bar-categories" style="margin-bottom: 23px; margin-top: 23px;">
-        <?php if ($currentUrl == 'even') { ?>
-					<a
-						href="/events?eventTypeId=1" <?php if (active('TypeId=1')) echo 'class="nav-bar-categories-active"' ?>>Еда</a>
-					<a
-						href="/events?eventTypeId=2" <?php if (active('TypeId=2')) echo 'class="nav-bar-categories-active"' ?>>Дети</a>
-					<a href="/events?eventTypeId=3" <?php if (active('TypeId=3')) echo 'class="nav-bar-categories-active"' ?>>Спорт</a>
-					<a href="/events?eventTypeId=4" <?php if (active('TypeId=4')) echo 'class="nav-bar-categories-active"' ?>>Красота</a>
-					<a href="/events?eventTypeId=5" <?php if (active('TypeId=5')) echo 'class="nav-bar-categories-active"' ?>>Покупки</a>
-					<a href="/events">Все</a>
-        <?php } elseif ($currentUrl == 'shop') { ?>
-					<a
-						href="/shops?shopTypeId=1" <?php if (active('TypeId=1')) echo 'class="nav-bar-categories-active"' ?>>Еда</a>
-					<a
-						href="/shops?shopTypeId=2" <?php if (active('TypeId=2')) echo 'class="nav-bar-categories-active"' ?>>Дети</a>
-					<a
-						href="/shops?shopTypeId=3" <?php if (active('TypeId=3')) echo 'class="nav-bar-categories-active"' ?>>Спорт</a>
-					<a href="/shops?shopTypeId=4" <?php if (active('TypeId=4')) echo 'class="nav-bar-categories-active"' ?>>Красота</a>
-					<a href="/shops?shopTypeId=5" <?php if (active('TypeId=5')) echo 'class="nav-bar-categories-active"' ?>>Покупки</a>
-					<a href="/shops">Все</a>
-        <?php } ?>
-			</div>
-		</div>
-	</div>
-
 </div>
 
 <div class="wrap">
@@ -203,8 +150,6 @@ AppAsset::register($this);
 <div class="backdrop"></div>
 
 <?php $this->endBody() ?>
-
-
 </body>
 </html>
 <?php $this->endPage() ?>
