@@ -38,7 +38,12 @@ $this->beginPage() ?>
 				<div class="pol"></div>
 			</a>
 			<a href="/">
-				<img src="img/main/logo.png" width="30" height="30" class="d-inline-block logo-img" alt="i’m local">
+				<img <?php if(strstr(Yii::$app->controller->route, 'about')) { ?>
+					src="img/about/white-logo.png"
+					<?php } else { ?>
+					src="img/main/logo.png"
+					<?php } ?>
+					width="30" height="30" class="d-inline-block logo-img" alt="i’m local">
 				<span class="logo-text">i’m local</span>
 			</a>
 		</div>

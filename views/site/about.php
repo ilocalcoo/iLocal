@@ -7,7 +7,6 @@ use app\assets\AboutAsset;
 AboutAsset::register($this);
 ?>
 
-<div class="container">
 	<div class="pink">
 		<div class="row justify-content-center">
 			<h3>Места, акции и события рядом с тобой</h3>
@@ -75,4 +74,3 @@ AboutAsset::register($this);
 		<div>Есть, что сказать или возникли вопросы? Будем рады!</div>
 		<div>hello@imlocal.ru</div>
 	</div>
-</div>
