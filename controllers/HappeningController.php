@@ -129,8 +129,8 @@ class HappeningController extends Controller
     if (Yii::$app->request->get('id')) {
       $model = $this->findModel((Yii::$app->request->get('id')));
     }
-    if (Yii::$app->request->get('input_address')) {
-      $model->address = Yii::$app->request->get('input_address');
+    if (Yii::$app->request->post('input_address')) {
+      $model->address = Yii::$app->request->post('input_address');
     }
 
     if ($model->load(Yii::$app->request->post())) {

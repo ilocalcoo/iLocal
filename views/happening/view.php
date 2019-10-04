@@ -34,7 +34,9 @@ $this->params['breadcrumbs'][] = $this->title;
                 <div class="overlay">
                     <div class="overlay-link event-link">
                         <div class="event-title"><?= $model->title ?></div>
+                        <?php if ($shop) { ?>
                         <div class="org-name">Организатор: <?= $shop['shopFullName'] ?? $shop['shopShortName'] ?></div>
+                        <?php } ?>
                         <div class="event-date"><?php date('H:i d.m.Y', strtotime($model->begin)) ?></div>
                     </div>
                 </div>

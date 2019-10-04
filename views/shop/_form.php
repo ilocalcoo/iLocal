@@ -19,8 +19,12 @@ use yii\widgets\ActiveForm;
     <div class="row">
         <div class="col-md-6 col-12">
             <?= $form->field($model, 'shopShortName', ['options' => ['class' => 'shop-create-form']])
-                ->textInput(['maxlength' => true, 'placeholder' => 'Введите название места (не более 38 симв.)'])
-                ->label('Название') ?>
+                ->textInput(['maxlength' => true, 'placeholder' => 'Введите короткое название места (не более 38 симв.)'])
+                ->label('Короткое название') ?>
+
+            <?= $form->field($model, 'shopFullName', ['options' => ['class' => 'shop-create-form']])
+                ->textInput(['maxlength' => true, 'placeholder' => 'Введите полное название места (не более 186 симв.)'])
+                ->label('Полное название') ?>
 
             <?= $form->field($model, 'shopShortDescription', ['options' => ['class' => 'shop-create-form']])
                 ->textInput(['maxlength' => true, 'placeholder' => 'Краткое описание места (не более 186 симв.)'])
@@ -43,17 +47,21 @@ use yii\widgets\ActiveForm;
                     }
                 ]
             )->label('Категория') ?>
-
-            <?= $form->field($model, 'uploadedShopPhoto[]')->fileInput(['multiple' => true, 'accept' => 'image/*'])->label('Изображение')
-                ->hint('Прикрепите от 1 до 10 файлов') ?>
         </div>
         <div class="col-md-6 col-12">
+            <?= $form->field($model, 'uploadedShopPhoto[]')
+                ->fileInput(['multiple' => true, 'accept' => 'image/*'])
+                ->label('Изображение')
+                ->hint('Прикрепите от 1 до 10 файлов') ?>
             <?php
             Modal::begin([
                 'size' => 'modal-lg',
                 'toggleButton' => [
-                    'label' => $form->field($model, 'shopAddressId')
-                        ->textInput(['maxlength' => true, 'placeholder'=>'Введите адрес']),
+                    'label' => '<div class="shop-create-form has-success">
+                                    <label class="control-label" for="input_address">Адрес</label>
+                                    <input type="text" id="input_address" name="input_address" class="form-control" value="" placeholder="Введите адрес" aria-invalid="false">
+                                    <div class="help-block"></div>
+                                </div>',
                     'tag' => 'a',
                     'class' => '',
                     'type' => '',
@@ -68,9 +76,7 @@ use yii\widgets\ActiveForm;
                 <div id="profile_map"></div>
             </div>
             <?php Modal::end(); ?>
-            <?= $form->field($model, 'shopAddressId')->textInput() ?>
             <input type="hidden" name="coords_address" id="coords_address" value="">
-            <input type="hidden" id="input_address" value="">
 
             <?= $form->field($model, 'shopPhone', ['options' => ['class' => 'shop-create-form']])
                 ->textInput(['maxlength' => true, 'placeholder' => '+7(000)000 00 00'])
