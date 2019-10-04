@@ -4,6 +4,11 @@
 .pol {
   background-color: white;
 }
+.elipse {
+  font-family: Yeseva One;
+  color: white;
+}
+
 .notebook {
   width: 300px;
   height: 185px;
@@ -21,13 +26,18 @@
   top: 22px;
 }
 
+.back {
+  display: none;
+}
+
 .thanks {
-  width: 100vh;
-  background: linear-gradient(0deg, rgba(254, 138, 128, 0.9), rgba(254, 138, 128, 0.9)),
-  linear-gradient(270deg, #FF22E9 0%, #FF3898 23.96%, #FE8A80 100%);
+  color: #454545;
 }
 
 @media (min-width: 768px) {
+  .back {
+    display: block;
+  }
   .elipse {
     background: linear-gradient(0deg, rgba(254, 138, 128, 0.9), rgba(254, 138, 128, 0.9)),
     linear-gradient(270deg, #FF22E9 0%, #FF3898 23.96%, #FE8A80 100%);
@@ -42,6 +52,48 @@
     width: 880px;
     height: 488px;
   }
+  h2 {
+    font-size: 48px;
+  }
+  h3 {
+    font-size: 36px;
+  }
+  p {
+    font-size: 24px;
+  }
+  .text-ellipse {
+    color: #454545;
+  }
+  .spot {
+    position: absolute;
+    z-index: -1;
+  }
+  .spot1 {
+    top: 884px;
+  }
+  .spot2 {
+    top: 1617px;
+  }
+  .spot3 {
+    top: 2280px;
+  }
+  .spot4 {
+    top: 3160px;
+  }
+  .text-column {
+    margin-top: 170px;
+  }
+  .button {
+    margin-bottom: 150px;
+  }
+  footer {
+    background-color: #FCF7F4;
+    color: #9B9B9B;
+    font-family: Roboto;
+  }
+  footer a:hover {
+    color: #454545;
+  }
 }
 
 @media (max-width: 768px) {
@@ -53,5 +105,10 @@
     width: 174px;
     left: 42px;
     top: 13px;
+  }
+
+  .thanks {
+    background: linear-gradient(0deg, rgba(254, 138, 128, 0.9), rgba(254, 138, 128, 0.9)),
+    linear-gradient(270deg, #FF22E9 0%, #FF3898 23.96%, #FE8A80 100%);
   }
 }
