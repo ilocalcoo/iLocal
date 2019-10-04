@@ -76,7 +76,7 @@ class ShopController extends Controller
           $userShop->delete();
         }
 
-        $query = Shop::find()->where(['shopActive' => 1]);
+        $query = Shop::find()->where(['shopActive' => 1])->cache(10);
         if (array_key_exists('shopTypeId', Yii::$app->request->queryParams)) {
           $query->where(
             ['shopTypeId' => Yii::$app->request->queryParams['shopTypeId']]
@@ -89,7 +89,7 @@ class ShopController extends Controller
     }
 
     $searchModel = new ShopSearch();
-    $shopShortName = Shop::find()
+    $shopShortName = Shop::find()->cache(10)
       ->select(['shopShortName as value', 'shopShortName as label', 'shopId as id'])
       ->asArray()
       ->all();

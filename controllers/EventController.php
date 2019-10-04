@@ -89,7 +89,7 @@ class EventController extends Controller
 //                ['shopTypeId' => Yii::$app->request->queryParams['eventTypeId']]
 //            );
 //        }
-    $query = Event::find()->joinWith('shop');
+    $query = Event::find()->joinWith('shop')->cache(10);
     $pages = new Pagination([
       'totalCount' => $query->count(),
       'pageSize' => 10,
