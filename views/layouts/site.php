@@ -38,7 +38,12 @@ $this->beginPage() ?>
 				<div class="pol"></div>
 			</a>
 			<a href="/">
-				<img src="img/main/logo.png" width="30" height="30" class="d-inline-block logo-img" alt="i’m local">
+				<img <?php if(strstr(Yii::$app->controller->route, 'about')) { ?>
+					src="img/about/white-logo.png"
+					<?php } else { ?>
+					src="img/main/logo.png"
+					<?php } ?>
+					width="30" height="30" class="d-inline-block logo-img" alt="i’m local">
 				<span class="logo-text">i’m local</span>
 			</a>
 		</div>
@@ -129,7 +134,7 @@ $this->beginPage() ?>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-12">
-				<a class="footer-link d-md-none d-sm-block" href="/about">О проекте</a>&nbsp;
+				<a class="footer-link" href="/about">О проекте</a>&nbsp;
 				<a class="small-text" href="/policy" target="_blank">Политика конфиденциальности</a>&nbsp;
         <?php Modal::begin([
           'toggleButton' => [
