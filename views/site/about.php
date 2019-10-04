@@ -31,7 +31,7 @@ AboutAsset::register($this);
 <div class="row">
 	<div class="col-md-6 col-12 phone">
 		<img src="img/about/body.png" alt="body" class="phone-body">
-		<img src="img/about/screen2.png" alt="screen" class="phone-screen">
+		<img src="img/about/screen3.png" alt="screen" class="phone-screen">
 	</div>
 	<div class="col-md-6 col-12 text-ellipse text-column">
 		<h2 class="text-center">Загляни в афишу событий</h2>
@@ -54,7 +54,7 @@ AboutAsset::register($this);
 	</div>
 	<div class="col-md-6 col-12 phone">
 		<img src="img/about/body.png" alt="body" class="phone-body">
-		<img src="img/about/screen3.png" alt="screen" class="phone-screen">
+		<img src="img/about/screen2.png" alt="screen" class="phone-screen">
 	</div>
 </div>
 <div class="row justify-content-center">
@@ -97,5 +97,6 @@ AboutAsset::register($this);
 	<img src="img/about/ellipse3.svg" alt="ellipse3" class="spot spot3">
 	<img src="img/about/ellipse4.svg" alt="ellipse4" class="spot spot4">
 </div>
+<div class="back-mobile"></div>
 
 
