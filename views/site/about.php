@@ -7,7 +7,7 @@ use app\assets\AboutAsset;
 AboutAsset::register($this);
 ?>
 
-<div class="row justify-content-center">
+<div class="row justify-content-center text-center">
 	<h3>Места, акции и события рядом с тобой</h3>
 </div>
 <div class="row justify-content-center">
@@ -29,7 +29,7 @@ AboutAsset::register($this);
 	</div>
 </div>
 <div class="row">
-	<div class="col-md-6 col-12 phone">
+	<div class="col-md-6 col-12 phone mobile-order">
 		<img src="img/about/body.png" alt="body" class="phone-body">
 		<img src="img/about/screen3.png" alt="screen" class="phone-screen">
 	</div>
@@ -72,7 +72,7 @@ AboutAsset::register($this);
 	<h3>Пройди опрос!</h3>
 	<a class="typeform-share button text-center" href="https://ekaterina565236.typeform.com/to/XMTLLM" data-mode="popup"
 		 style="display:inline-block;text-decoration:none;background-color:rgba(254, 138, 128, 0.9);color:white;
-		 cursor:pointer;font-family:Helvetica,Arial,sans-serif;font-size:20px;line-height:50px;text-align:center;
+		 cursor:pointer;font-family:Helvetica,Arial,sans-serif;font-size:20px;line-height:20px;text-align:center;
 		 height:50px;padding:0px 33px;border-radius:25px;max-width:100%;white-space:nowrap;overflow:hidden;
 		 text-overflow:ellipsis;font-weight:bold;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;"
 		 target="_blank">НАЧАТЬ</a>
