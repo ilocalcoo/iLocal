@@ -25,7 +25,8 @@
         "ext-exif": "*",
         "andkon/yii2kladr": "^1.0",
         "yiisoft/yii2-bootstrap4": "^2.0",
-        "kartik-v/yii2-date-range": "dev-master"
+        "kartik-v/yii2-date-range": "dev-master",
+        "ext-json": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

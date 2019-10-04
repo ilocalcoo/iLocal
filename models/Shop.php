@@ -162,6 +162,7 @@ class Shop extends \yii\db\ActiveRecord
     ];
   }
 
+
 //  public function scenarios()
 //  {
 //    return [
@@ -173,6 +174,7 @@ class Shop extends \yii\db\ActiveRecord
 //      self::SCENARIO_RATING => ['shopRating'],
 //    ];
 //  }
+
 
   public function fields()
   {

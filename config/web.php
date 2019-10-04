@@ -95,6 +95,7 @@ $config = [
                 '<action:(logout)>' => 'site/logout',
                 '<action:(favorites)>' => 'site/favorites',
                 '<action:(policy)>' => 'site/policy',
+                '<action:(about)>' => 'site/about',
                 '<controller:(shop)>s' => '<controller>/index',
                 '<controller:(shop)>s/<id:\d+>' => '<controller>/view',
                 '<controller:(shop)>s/<id:\d+>/<action:(view|update|delete)>' => '<controller>/<action>',
