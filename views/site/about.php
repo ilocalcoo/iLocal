@@ -24,14 +24,16 @@ AboutAsset::register($this);
 		<p class="text-center">Открывается рядом магазин, детский центр или аптека? Ты узнаешь об этом первым!</p>
 	</div>
 	<div class="col-md-6 col-12 phone">
-		<img src="img/about/body.png" alt="body" class="phone-body">
-		<img src="img/about/screen1.png" alt="screen" class="phone-screen">
+		<div class="phone-body">
+			<img src="img/about/screen1.png" alt="screen" class="phone-screen">
+		</div>
 	</div>
 </div>
 <div class="row">
 	<div class="col-md-6 col-12 phone mobile-order">
-		<img src="img/about/body.png" alt="body" class="phone-body">
-		<img src="img/about/screen3.png" alt="screen" class="phone-screen">
+		<div class="phone-body">
+			<img src="img/about/screen1.png" alt="screen" class="phone-screen">
+		</div>
 	</div>
 	<div class="col-md-6 col-12 text-ellipse text-column">
 		<h2 class="text-center">Загляни в афишу событий</h2>
@@ -53,12 +55,13 @@ AboutAsset::register($this);
 		</p>
 	</div>
 	<div class="col-md-6 col-12 phone">
-		<img src="img/about/body.png" alt="body" class="phone-body">
-		<img src="img/about/screen2.png" alt="screen" class="phone-screen">
+		<div class="phone-body">
+			<img src="img/about/screen1.png" alt="screen" class="phone-screen">
+		</div>
 	</div>
 </div>
 <div class="row justify-content-center">
-	<div class="col-md-8 col-12 text-ellipse mt-5">
+	<div class="col-md-8 col-12 text-ellipse">
 		<h2 class="text-center">И ехать никуда не надо!</h2>
 		<br>
 		<p class="text-center">Задача платформы – сделать время, проведенное рядом с домом, комфортным и насыщенным,
