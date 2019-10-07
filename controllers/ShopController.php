@@ -106,6 +106,13 @@ class ShopController extends Controller
       );
     }
 
+    $pages = new Pagination([
+      'totalCount' => $query->count(),
+      'pageSize' => Shop::NUMBER_OF_DISPLAYED_PAGES,
+    ]);
+    $query = $query->offset($pages->offset)
+      ->limit($pages->limit);
+
     $distances = [];
     if ((array_key_exists('coords_address', Yii::$app->request->queryParams)) &&
       (array_key_exists('round_range', Yii::$app->request->queryParams))) {
@@ -132,20 +139,12 @@ class ShopController extends Controller
         $query = $query->where(['isItFar' => Shop::IS_IT_FAR_FALSE]);
       }
     }
-    $pages = new Pagination([
-      'totalCount' => $query->count(),
-      'pageSize' => Shop::NUMBER_OF_DISPLAYED_PAGES,
-    ]);
 
     //TODO сортировка
 //    $sort = new Sort([
 //      'attributes' => [
 //      ],
 //    ]);
-
-    $shops = $query->offset($pages->offset)
-      ->limit($pages->limit)
-      ->all();
 
     if ($distances !== []) {
       foreach ($shops as $shop) {

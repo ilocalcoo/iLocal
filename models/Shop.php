@@ -378,4 +378,18 @@ class Shop extends \yii\db\ActiveRecord
       $shop->save(false);
     }
   }
+
+  public static function getShopsInRange($query, $userPoint, $range) {
+    $shops = $query->all();
+    foreach ($shops as $shop) {
+      $shopCoords = [$shop->shopAddress->latitude, $shop->shopAddress->longitude];
+      $distance = Shop::getDistance($userPoint, $shopCoords);
+      if ($distance > $range) {
+        unset($shops, $shop->id);
+      } else {
+        $shop->distance = $distance;
+      }
+    }
+    return $shops;
+  }
 }
