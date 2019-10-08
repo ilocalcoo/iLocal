@@ -401,4 +401,17 @@ class Shop extends \yii\db\ActiveRecord
     }
     return $shops;
   }
+
+  /**
+   * @param $userPoint array координаты точки юзера, пример [1.3, 2.5]
+   * @return bool проверяет валидность данных
+   */
+  public static function isUserPointValid($userPoint) {
+    $c1 = array_shift($userPoint);
+    $c2 = array_shift($userPoint);
+    if (!is_numeric($c1) || !is_numeric($c2) || ($c1 < 0) || ($c2 < 0)) {
+      return false;
+    }
+    return true;
+  }
 }
