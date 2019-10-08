@@ -113,7 +113,6 @@ class ShopController extends Controller
     $query = $query->offset($pages->offset)
       ->limit($pages->limit);
 
-    $distances = [];
     if ((array_key_exists('coords_address', Yii::$app->request->queryParams)) &&
       (array_key_exists('round_range', Yii::$app->request->queryParams))) {
       if ((Yii::$app->request->queryParams['coords_address'] !== '') &&
@@ -124,19 +123,7 @@ class ShopController extends Controller
 //          ['shopId' => ShopAddress::find([])->all()]
 //      );
 
-        foreach ($query->all() as $shop) {
-          $shopCoords = [$shop->shopAddress->latitude, $shop->shopAddress->longitude];
-          $distance = Shop::getDistance($userPoint, $shopCoords);
-          if ($distance > $range) {
-            $shop->isItFar = Shop::IS_IT_FAR_TRUE;
-            $shop->save(false);
-          } else {
-            $distances += [$shop->shopId => $distance];
-          }
-        }
-
-        // в представление попадают только те места, поле 'isItFar' которых не тронуто, то есть они не далеко
-        $query = $query->where(['isItFar' => Shop::IS_IT_FAR_FALSE]);
+        $shops = Shop::getShopsInRange($query, $userPoint, $range);
       }
     }
 
@@ -146,14 +133,8 @@ class ShopController extends Controller
 //      ],
 //    ]);
 
-    if ($distances !== []) {
-      foreach ($shops as $shop) {
-        $shop->distance = $distances[$shop->shopId];
-      }
-    }
-
     // очищаем у всех мест поле 'isItFar'
-    Shop::cleanIsItFar();
+    // Shop::cleanIsItFar();
 
     return $this->render('index', [
       'searchModel' => $searchModel,

@@ -5,6 +5,7 @@ namespace app\models;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 
@@ -372,20 +373,28 @@ class Shop extends \yii\db\ActiveRecord
   /**
    * Method cleans isItFar field in shop table
    */
-  public static function cleanIsItFar() {
+  // этот метод неактуален, как и поле isItFar в таблице shop
+  private static function cleanIsItFar() {
     foreach (self::find()->where(['isItFar' => self::IS_IT_FAR_TRUE])->all() as $shop) {
       $shop->isItFar = self::IS_IT_FAR_FALSE;
       $shop->save(false);
     }
   }
 
+  /**
+   * @param $query ActiveQuery запрос к местам
+   * @param $userPoint array точка выбранная юзером
+   * @param $range integer радиус в метрах
+   * @return mixed массив мест, которые входят в радиус поиска
+   */
   public static function getShopsInRange($query, $userPoint, $range) {
+    /** @var Shop[] $shops */
     $shops = $query->all();
-    foreach ($shops as $shop) {
+    foreach ($shops as $key => $shop) {
       $shopCoords = [$shop->shopAddress->latitude, $shop->shopAddress->longitude];
-      $distance = Shop::getDistance($userPoint, $shopCoords);
+      $distance = self::getDistance($userPoint, $shopCoords);
       if ($distance > $range) {
-        unset($shops, $shop->id);
+        unset($shops[$key]);
       } else {
         $shop->distance = $distance;
       }
