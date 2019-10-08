@@ -111,7 +111,7 @@ $this->title = "I'm Local";
 						</li>
           <?php } else { ?>
 						<li class="nav-item profile">
-							<a class="nav-link" href="">
+							<a class="nav-link" href="/user/profile">
 								<img src="img/main/login.svg" alt="user">
                 <?= Yii::$app->user->getIdentity()->username ?>
 							</a>
