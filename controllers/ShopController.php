@@ -114,8 +114,8 @@ class ShopController extends Controller
       ->limit($pages->limit);
 
     if ((array_key_exists('coords_address', Yii::$app->request->queryParams)) &&
-      (array_key_exists('round_range', Yii::$app->request->queryParams))) {
-      if ((Yii::$app->request->queryParams['coords_address'] !== '') &&
+      (array_key_exists('round_range', Yii::$app->request->queryParams)) &&
+       (Yii::$app->request->queryParams['coords_address'] !== '') &&
         (Yii::$app->request->queryParams['round_range'] !== '')) {
         $userPoint = explode(',', Yii::$app->request->queryParams['coords_address']);
         $range = Yii::$app->request->queryParams['round_range'] * 1000; // в метры
@@ -124,7 +124,8 @@ class ShopController extends Controller
 //      );
 
         $shops = Shop::getShopsInRange($query, $userPoint, $range);
-      }
+    } else {
+      $shops = $query->all();
     }
 
     //TODO сортировка
