@@ -83,7 +83,7 @@ class Happening extends ActiveRecord
             [['shopId', 'creatorId'], 'integer'],
             [['description'], 'string'],
             [['price'], 'number'],
-            [['begin', 'createdOn', 'updatedOn'], 'safe'],
+            [['begin', 'end', 'createdOn', 'updatedOn'], 'safe'],
             [['title'], 'string', 'max' => 150],
             [['address'], 'string', 'max' => 256],
 //            [['shopId'], 'exist', 'skipOnError' => true, 'targetClass' => Shop::className(), 'targetAttribute' => ['shopId' => 'shopId']],
@@ -116,6 +116,7 @@ class Happening extends ActiveRecord
             'address' => 'Адрес',
             'price' => 'Цена',
             'begin' => 'Дата и время начала',
+            'end' => 'Дата и время окончания',
             'createdOn' => 'Создано',
             'updatedOn' => 'Обновлено',
         ];
