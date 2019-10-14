@@ -7,7 +7,9 @@ use app\models\Shop;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\auth\HttpBasicAuth;
+use yii\helpers\Url;
 use yii\rest\ActiveController;
+use yii\web\ServerErrorHttpException;
 use yii\web\UploadedFile;
 
 class ShopController extends ActiveController
@@ -34,20 +36,22 @@ class ShopController extends ActiveController
     }
 
     /**
-     * @return ActiveDataProvider
+     * @return Shop
      * @var $model Shop
      */
     public function actionCreate()
     {
-        $model = new $this->modelClass;
-        if ($model->load ( Yii::$app->request->post () )) {
+        $model = new Shop();
+
+        if ($model->load(Yii::$app->getRequest()->getBodyParams(), '')) {
             $model->uploadedShopPhoto = UploadedFile::getInstances($model, 'uploadedShopPhoto');
             $model->uploadShopPhoto();
-            return new ActiveDataProvider([
-                'query' => Shop::find()->where(['id' => $model->shopId ])
-            ]);
-        } else return $model;
-
+            if ($model->save()) {
+                return $model;
+            } elseif (!$model->hasErrors()) {
+                throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
+            }
+        }
     }
 
 }
