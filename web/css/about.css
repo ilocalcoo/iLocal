@@ -43,6 +43,10 @@ a.button {
   padding-top: 15px !important;
 }
 
+.text-ellipse>p {
+  font-family: Roboto;
+}
+
 @media (min-width: 768px) {
   .back {
     display: block;
