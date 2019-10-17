@@ -42,13 +42,15 @@ class ThumbGenerator
 
             list($width, $height) = explode('x', $sizes);
             // уменьшаем и ужимаем картинку, оптимизируем для быстрой загрузки
-            $imagick->resizeImage($width, $height, imagick::FILTER_LANCZOS, 1, false);
+            $imagick->setCompression(Imagick::COMPRESSION_JPEG);
+            $imagick->setCompressionQuality(85);
+            $imagick->setImageFormat('jpeg');
             $imagick->stripImage();
-            $imagick->setImageCompressionQuality(85);
+            $imagick->despeckleImage();
+            $imagick->sharpenImage(0.5, 1);
             $imagick->setInterlaceScheme(Imagick::INTERLACE_JPEG);
             $imagick->transformImageColorspace(Imagick::COLORSPACE_SRGB);
-            $imagick->setImageFormat("jpeg");
-
+            $imagick->resizeImage($width, $height, imagick::FILTER_LANCZOS, 1, false);
             /**
              * Это нужно для сохранения совместимости с текущим способом хранения картинок
              * Чтобы сжать основную картинку.

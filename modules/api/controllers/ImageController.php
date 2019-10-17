@@ -24,6 +24,7 @@ class ImageController extends ActiveController
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::className(),
             // Отключаем аутентификацию при запросе магазинов через GET.
+//            'except' => ['index', 'view','regenerate'],
             'except' => ['index', 'view'],
         ];
         return $behaviors;
