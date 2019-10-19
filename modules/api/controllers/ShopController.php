@@ -38,7 +38,7 @@ class ShopController extends ActiveController
 
     $pages = new Pagination([
       'totalCount' => $query->count(),
-      'pageSize' => Shop::NUMBER_OF_DISPLAYED_PAGES,
+      'pageSize' => Yii::$app->request->get('per-page'),
     ]);
     $query = $query->offset($pages->offset)
       ->limit($pages->limit);
