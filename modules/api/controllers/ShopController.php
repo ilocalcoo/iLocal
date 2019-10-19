@@ -5,6 +5,7 @@ namespace app\modules\api\controllers;
 
 use app\models\Shop;
 use Yii;
+use yii\data\Pagination;
 use yii\filters\auth\HttpBasicAuth;
 use yii\rest\ActiveController;
 
@@ -26,38 +27,22 @@ class ShopController extends ActiveController
 
   public function actions()
   {
-    return [
-      'view' => [
-        'class' => 'yii\rest\ViewAction',
-        'modelClass' => $this->modelClass,
-        'checkAccess' => [$this, 'checkAccess'],
-      ],
-      'create' => [
-        'class' => 'yii\rest\CreateAction',
-        'modelClass' => $this->modelClass,
-        'checkAccess' => [$this, 'checkAccess'],
-        'scenario' => $this->createScenario,
-      ],
-      'update' => [
-        'class' => 'yii\rest\UpdateAction',
-        'modelClass' => $this->modelClass,
-        'checkAccess' => [$this, 'checkAccess'],
-        'scenario' => $this->updateScenario,
-      ],
-      'delete' => [
-        'class' => 'yii\rest\DeleteAction',
-        'modelClass' => $this->modelClass,
-        'checkAccess' => [$this, 'checkAccess'],
-      ],
-      'options' => [
-        'class' => 'yii\rest\OptionsAction',
-      ],
-    ];
+    $actions = parent::actions();
+    unset($actions['index']);
+    return $actions;
   }
 
   public function actionIndex()
   {
     $query = Shop::find()->where(['shopActive' => 1]);
+
+    $pages = new Pagination([
+      'totalCount' => $query->count(),
+      'pageSize' => Shop::NUMBER_OF_DISPLAYED_PAGES,
+    ]);
+    $query = $query->offset($pages->offset)
+      ->limit($pages->limit);
+
     $userPoint = explode(',', Yii::$app->request->get('userPoint'));
     $range = Yii::$app->request->get('range')*1;
     $shops = '';
