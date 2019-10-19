@@ -43,6 +43,10 @@ a.button {
   padding-top: 15px !important;
 }
 
+.text-ellipse>p {
+  font-family: Roboto;
+}
+
 @media (min-width: 768px) {
   .back {
     display: block;
@@ -137,7 +141,7 @@ a.button {
     z-index: -1;
     background: linear-gradient(0deg, rgba(254, 138, 128, 0.9), rgba(254, 138, 128, 0.9)),
       linear-gradient(270deg, #FF22E9 0%, #FF3898 23.96%, #FE8A80 100%);
-    height: 480px;
+    height: 200px;
   }
   .text-ellipse {
     color: #454545;
@@ -152,9 +156,8 @@ a.button {
   footer a:hover {
     color: #454545;
   }
-}
-@media (max-width: 350px) {
-  .back-mobile {
-    height: 500px;
+  .pink {
+    background: linear-gradient(0deg, rgba(254, 138, 128, 0.9), rgba(254, 138, 128, 0.9)),
+    linear-gradient(270deg, #FF22E9 0%, #FF3898 23.96%, #FE8A80 100%);
   }
 }
