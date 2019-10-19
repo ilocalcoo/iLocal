@@ -5,6 +5,7 @@ namespace app\models;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveQuery;
 use yii\helpers\ArrayHelper;
 use yii\web\UploadedFile;
 
@@ -367,5 +368,50 @@ class Shop extends \yii\db\ActiveRecord
   public function getHappenings()
   {
     return $this->hasMany(Happening::className(), ['shopId' => 'shopId']);
+  }
+
+  /**
+   * Method cleans isItFar field in shop table
+   */
+  // этот метод неактуален, как и поле isItFar в таблице shop
+  private static function cleanIsItFar() {
+    foreach (self::find()->where(['isItFar' => self::IS_IT_FAR_TRUE])->all() as $shop) {
+      $shop->isItFar = self::IS_IT_FAR_FALSE;
+      $shop->save(false);
+    }
+  }
+
+  /**
+   * @param $query ActiveQuery запрос к местам
+   * @param $userPoint array точка выбранная юзером
+   * @param $range integer радиус в метрах
+   * @return mixed массив мест, которые входят в радиус поиска
+   */
+  public static function getShopsInRange($query, $userPoint, $range) {
+    /** @var Shop[] $shops */
+    $shops = $query->all();
+    foreach ($shops as $key => $shop) {
+      $shopCoords = [$shop->shopAddress->latitude, $shop->shopAddress->longitude];
+      $distance = self::getDistance($userPoint, $shopCoords);
+      if ($distance > $range) {
+        unset($shops[$key]);
+      } else {
+        $shop->distance = $distance;
+      }
+    }
+    return $shops;
+  }
+
+  /**
+   * @param $userPoint array координаты точки юзера, пример [1.3, 2.5]
+   * @return bool проверяет валидность данных
+   */
+  public static function isUserPointValid($userPoint) {
+    $c1 = array_shift($userPoint);
+    $c2 = array_shift($userPoint);
+    if (!is_numeric($c1) || !is_numeric($c2) || ($c1 < 0) || ($c2 < 0)) {
+      return false;
+    }
+    return true;
   }
 }
