@@ -8,13 +8,13 @@ AboutAsset::register($this);
 ?>
 
 <div class="row pink justify-content-center">
-	<div class="col text-center">
+	<div class="col-12 text-center">
 		<h3>Места, акции и события рядом с тобой</h3>
 	</div>
-	<div class="col">
+	<div class="col-12 text-center">
 		<img src="img/about/notebook.png" alt="notebook" class="notebook">
 	</div>
-	<p class="col text-center">
+	<p class="col-12 text-center">
 		I’m Local помогает узнавать о местах, акциях и событиях поблизости напрямую от местного малого бизнеса и
 		организаторов мероприятий. Это сервис для коммуникации между локальным бизнесом и людьми поблизости.
 	</p>
