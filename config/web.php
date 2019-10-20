@@ -120,6 +120,7 @@ $config = [
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'api/event'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'api/happening'],
                 ['class' => 'yii\rest\UrlRule', 'controller' => 'api/user'],
+                ['class' => 'yii\rest\UrlRule', 'controller' => 'api/shop-rating'],
             ],
         ],
     ],
