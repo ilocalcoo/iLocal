@@ -42,11 +42,10 @@ class ShopController extends ActiveController
     public function actionCreate()
     {
         $model = new Shop();
-
         if ($model->load(Yii::$app->getRequest()->getBodyParams(), '')) {
-            $model->uploadedShopPhoto = UploadedFile::getInstances($model, 'uploadedShopPhoto');
-            $model->uploadShopPhoto();
             if ($model->save()) {
+                $model->uploadedShopPhoto = UploadedFile::getInstancesByName('files');
+                $model->uploadShopPhoto();
                 return $model;
             } elseif (!$model->hasErrors()) {
                 throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
