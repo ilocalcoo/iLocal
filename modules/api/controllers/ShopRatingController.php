@@ -8,24 +8,24 @@ use yii\rest\ActiveController;
 
 class ShopRatingController extends ActiveController
 {
-    public $modelClass = 'app\models\ShopRating';
+  public $modelClass = 'app\models\ShopRating';
 
-    public function behaviors()
-    {
-        $behaviors = parent::behaviors();
-        // Добавляем атунтификацию через BasicAuth. Токен доступа отправляется как имя пользователя.
-        $behaviors['authenticator'] = [
-            'class' => HttpBasicAuth::className(),
-            // Отключаем аутентификацию при запросе магазинов через GET.
-            'except' => ['index', 'view'],
-        ];
-        return $behaviors;
-    }
+  public function behaviors()
+  {
+    $behaviors = parent::behaviors();
+    // Добавляем атунтификацию через BasicAuth. Токен доступа отправляется как имя пользователя.
+    $behaviors['authenticator'] = [
+      'class' => HttpBasicAuth::className(),
+      // Отключаем аутентификацию при запросе магазинов через GET.
+      'except' => ['index', 'view', 'create'],
+    ];
+    return $behaviors;
+  }
 
-    public function actions()
-    {
-      $actions = parent::actions();
-      unset($actions['index'], $actions['view']);
-      return $actions;
-    }
+  public function actions()
+  {
+    $actions = parent::actions();
+    unset($actions['index'], $actions['view']);
+    return $actions;
+  }
 }
