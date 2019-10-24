@@ -247,9 +247,9 @@ $this->title = "I'm Local";
                     } ?>"
                             alt="<?= $happening->title ?>">
                     <div class="overlay">
-                        <a class="overlay-link event-link" href="#">Мастер-класс для детей “Построй свой замок” <div class="event-date">13:00 18.07.19</div></a>
+                        <a class="overlay-link event-link" href="#"><?= $happening->title ?> <div class="event-date"><?= $happening->begin ?></div></a>
                     </div>
-                    <span class="badge badge-coral">Free</span>
+                    <span class="badge badge-coral"><?= $happening->price ?></span>
                 </div>
             </div>
             <?php } ?>

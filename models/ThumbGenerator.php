@@ -46,8 +46,8 @@ class ThumbGenerator
             $imagick->setCompressionQuality(85);
             $imagick->setImageFormat('jpeg');
             $imagick->stripImage();
-            $imagick->despeckleImage();
-            $imagick->sharpenImage(0.5, 1);
+//            $imagick->despeckleImage();
+//            $imagick->sharpenImage(0.5, 1);
             $imagick->setInterlaceScheme(Imagick::INTERLACE_JPEG);
             $imagick->transformImageColorspace(Imagick::COLORSPACE_SRGB);
             $imagick->resizeImage($width, $height, imagick::FILTER_LANCZOS, 1, false);
