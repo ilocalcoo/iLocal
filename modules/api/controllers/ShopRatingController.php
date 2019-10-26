@@ -16,7 +16,6 @@ class ShopRatingController extends ActiveController
     // Добавляем атунтификацию через BasicAuth. Токен доступа отправляется как имя пользователя.
     $behaviors['authenticator'] = [
       'class' => HttpBasicAuth::className(),
-      'except' => ['update'],
     ];
     return $behaviors;
   }
