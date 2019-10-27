@@ -16,6 +16,7 @@ class ShopRatingController extends ActiveController
     // Добавляем атунтификацию через BasicAuth. Токен доступа отправляется как имя пользователя.
     $behaviors['authenticator'] = [
       'class' => HttpBasicAuth::className(),
+      'except' => ['view'],
     ];
     return $behaviors;
   }
@@ -23,7 +24,7 @@ class ShopRatingController extends ActiveController
   public function actions()
   {
     $actions = parent::actions();
-    unset($actions['index'], $actions['view']);
+    unset($actions['index']);
     return $actions;
   }
 }
