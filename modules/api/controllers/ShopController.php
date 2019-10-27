@@ -64,7 +64,6 @@ class ShopController extends ActiveController
     if (!is_null($userPoint) && !is_null($range) && ($userPoint !== '') && ($range !== '')) {
       if (is_int($range) && ($range > 0) && Shop::isUserPointValid($userPoint)) {
         $shops = Shop::getShopsInRange($query, $userPoint, $range);
-        return $shops;
       }
     }
     return $shops;
