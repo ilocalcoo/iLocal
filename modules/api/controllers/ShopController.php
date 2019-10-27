@@ -45,10 +45,11 @@ class ShopController extends ActiveController
 
     $userPoint = explode(',', Yii::$app->request->get('userPoint'));
     $range = Yii::$app->request->get('range')*1;
-    $shops = '';
+    $shops = [];
     if (!is_null($userPoint) && !is_null($range) && ($userPoint !== '') && ($range !== '')) {
       if (is_int($range) && ($range > 0) && Shop::isUserPointValid($userPoint)) {
         $shops = Shop::getShopsInRange($query, $userPoint, $range);
+        return $shops;
       }
     }
     return $shops;
