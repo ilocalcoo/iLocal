@@ -41,6 +41,17 @@ class ThumbGenerator
             }
 
             list($width, $height) = explode('x', $sizes);
+            $w = $imagick->getImageWidth();
+            $h = $imagick->getImageHeight();
+
+            if ($w > $h) {
+                $resize_w = $w * $height / $h;
+                $resize_h = $height;
+            }
+            else {
+                $resize_w = $width;
+                $resize_h = $h * $width / $w;
+            }
             // уменьшаем и ужимаем картинку, оптимизируем для быстрой загрузки
             $imagick->setCompression(Imagick::COMPRESSION_JPEG);
             $imagick->setCompressionQuality(85);
@@ -50,7 +61,8 @@ class ThumbGenerator
 //            $imagick->sharpenImage(0.5, 1);
             $imagick->setInterlaceScheme(Imagick::INTERLACE_JPEG);
             $imagick->transformImageColorspace(Imagick::COLORSPACE_SRGB);
-            $imagick->resizeImage($width, $height, imagick::FILTER_LANCZOS, 1, false);
+            $imagick->resizeImage($resize_w, $resize_h, imagick::FILTER_LANCZOS, 1);
+            $imagick->cropImage($width, $height, ($resize_w - $width) / 2, ($resize_h - $height) / 2);
             /**
              * Это нужно для сохранения совместимости с текущим способом хранения картинок
              * Чтобы сжать основную картинку.
