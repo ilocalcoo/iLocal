@@ -17,6 +17,8 @@ use yii\web\UploadedFile;
  * @property string $title
  * @property string $description
  * @property string $address
+ * @property string $latitude
+ * @property string $longitude
  * @property string $price
  * @property string $begin
  * @property string $createdOn
@@ -42,10 +44,10 @@ class Happening extends ActiveRecord
     const RELATION_HAPPENING_TYPE = 'happeningType';
     const RELATION_HAPPENING_PHOTOS = 'happeningPhotos';
 
-    const SCENARIO_DEFAULT = 'delete';
-    const SCENARIO_STEP1 = 'step1';
-    const SCENARIO_STEP2 = 'step2';
-    const SCENARIO_STEP3 = 'step3';
+//    const SCENARIO_DEFAULT = 'delete';
+//    const SCENARIO_STEP1 = 'step1';
+//    const SCENARIO_STEP2 = 'step2';
+//    const SCENARIO_STEP3 = 'step3';
 
     /**
      * @var UploadedFile[]
@@ -77,14 +79,14 @@ class Happening extends ActiveRecord
     public function rules()
     {
         return [
-            [['shopId', 'creatorId'], 'required'],
+            [['creatorId','happeningTypeId'], 'required'],
             [['shopId', 'creatorId'], 'integer'],
             [['description'], 'string'],
             [['price'], 'number'],
             [['begin', 'createdOn', 'updatedOn'], 'safe'],
             [['title'], 'string', 'max' => 150],
             [['address'], 'string', 'max' => 256],
-            [['shopId'], 'exist', 'skipOnError' => true, 'targetClass' => Shop::className(), 'targetAttribute' => ['shopId' => 'shopId']],
+//            [['shopId'], 'exist', 'skipOnError' => true, 'targetClass' => Shop::className(), 'targetAttribute' => ['shopId' => 'shopId']],
             [['creatorId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['creatorId' => 'id']],
             [['uploadedHappeningPhoto'], 'file', 'extensions' => 'png, jpg, jpeg', 'maxFiles' => 3],
         ];
@@ -132,15 +134,17 @@ class Happening extends ActiveRecord
     /**
      * @return array
      */
-    public function scenarios()
-    {
-        $scenarios = parent::scenarios();
-        $scenarios[self::SCENARIO_DEFAULT] = ['*'];
-        $scenarios[self::SCENARIO_STEP1] = ['shopId', 'happeningTypeId'];
-        $scenarios[self::SCENARIO_STEP2] = ['title', 'description', 'begin'];
-        $scenarios[self::SCENARIO_STEP3] = ['uploadedHappeningPhoto'];
-        return $scenarios;
-    }
+
+//    public function scenarios()
+//    {
+//        return [
+//            self::SCENARIO_DEFAULT => ['*'],
+//            self::SCENARIO_STEP1 => ['shopId', 'happeningTypeId'],
+//            self::SCENARIO_STEP2 => ['title', 'description', 'begin'],
+//            self::SCENARIO_STEP3 => ['uploadedHappeningPhoto'],
+//        ];
+//    }
+
 
     /**
      * @return bool

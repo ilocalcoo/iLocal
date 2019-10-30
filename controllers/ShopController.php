@@ -193,6 +193,63 @@ class ShopController extends Controller
     ]);
   }
 
+    /**
+     * Creates a new Shop model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionCreate()
+    {
+        $model = new Shop();
+        if (Yii::$app->request->get('id')) {
+            $model = $this->findModel((Yii::$app->request->get('id')));
+        }
+//        print_r(Yii::$app->request->post());
+//        Yii::$app->end(0);
+        if (Yii::$app->request->post('input_address') && Yii::$app->request->post('coords_address')) {
+            $shopAddress = ShopAddress::findOne($model->shopAddressId);
+            if (($shopAddress) === null) {
+                $shopAddress = new ShopAddress();
+            }
+            $addressArray = explode(',', Yii::$app->request->post('input_address'));
+
+            if (!$addressArray[0]) {
+                Yii::$app->getSession()->setFlash('error', 'Не выбран город');
+                return $this->refresh();
+            }
+            if (!$addressArray[1]) {
+                Yii::$app->getSession()->setFlash('error', 'Не выбрана улица');
+                return $this->refresh();
+            }
+            if (!$addressArray[2]) {
+                Yii::$app->getSession()->setFlash('error', 'Не выбран дом');
+                return $this->refresh();
+            }
+
+            $coordsArray = explode(',', Yii::$app->request->post('coords_address'));
+
+            $shopAddress->city = $addressArray[0];
+            $shopAddress->street = $addressArray[1];
+            $shopAddress->houseNumber = $addressArray[2];
+            $shopAddress->latitude = $coordsArray[0] ?? '';
+            $shopAddress->longitude = $coordsArray[1] ?? '';
+            if ($shopAddress->save()) {
+                $model->shopAddressId = $shopAddress->id;
+            }
+        }
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $model->uploadedShopPhoto = UploadedFile::getInstances($model, 'uploadedShopPhoto');
+            $model->uploadShopPhoto();
+
+            return $this->redirect(['view', 'id' => $model->shopId]);
+        }
+
+        return $this->render('create', [
+            'model' => $model,
+        ]);
+    }
+
   /**
    * @return string|\yii\web\Response
    * @throws NotFoundHttpException
