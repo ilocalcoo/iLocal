@@ -20,7 +20,7 @@ class EventPhotoController extends Controller
     {
         $eventPhoto = $this->findModel($id);
         $eventPhoto->delete();
-        return $this->redirect(["/events/$eventPhoto->eventId/update"]);
+        return $this->redirect(["/events/$eventPhoto->eventId/update/photo"]);
     }
 
     /**

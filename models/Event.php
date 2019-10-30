@@ -119,25 +119,21 @@ class Event extends \yii\db\ActiveRecord
     ]);
   }
 
-
-//  public function scenarios()
-//  {
-//    return [
-//      self::SCENARIO_DEFAULT => ['*'],
-//      self::SCENARIO_STEP1 => ['eventOwnerId', 'eventTypeId'],
-//      self::SCENARIO_STEP2 => ['title', 'shortDesc', 'fullDesc', 'begin', 'end'],
-//      self::SCENARIO_STEP3 => ['uploadedEventPhoto'],
-//    ];
-//  }
-
+  public function scenarios()
+  {
+      $scenarios = parent::scenarios();
+      $scenarios[self::SCENARIO_DEFAULT] = ['*'];
+      $scenarios[self::SCENARIO_STEP1] = ['eventOwnerId', 'eventTypeId'];
+      $scenarios[self::SCENARIO_STEP2] = ['title', 'shortDesc', 'fullDesc', 'begin', 'end'];
+      $scenarios[self::SCENARIO_STEP3] = ['uploadedEventPhoto'];
+      return $scenarios;
+  }
 
   public function uploadEventPhoto()
   {
     if ($this->validate()) {
       foreach ($this->uploadedEventPhoto as $file) {
-          $fileName = 'img/eventPhoto/' . $file->baseName . '.' . $file->extension;
-          $file->saveAs($fileName);
-          ThumbGenerator::generate($fileName, $this->id);
+        $file->saveAs('img/eventPhoto/' . $file->baseName . '.' . $file->extension);
         $model = new EventPhoto();
         $model->eventPhoto = $file->baseName . '.' . $file->extension;
         $model->eventId = $this->id;

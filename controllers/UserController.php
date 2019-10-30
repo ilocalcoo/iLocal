@@ -62,7 +62,6 @@ class UserController extends Controller
       'userShops' => $userShops,
       'userEvents' => $userEvents,
       'userHappenings' => $userHappenings,
-        'title' => 'I\'m Local - Бизнесу'
     ]);
   }
 }

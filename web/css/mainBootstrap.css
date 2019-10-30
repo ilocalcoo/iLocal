@@ -43,6 +43,8 @@ body {
     -webkit-text-fill-color: transparent;
 }
 
+
+
 /*main page list*/
 .list-num {
     font-family: Yeseva One, sans-serif;
@@ -141,13 +143,12 @@ body {
 
 .footer-link {
     font-size: 18px;
-    color: #8f8f8f!important;
+    color: #8f8f8f;
     text-decoration: none;
     transition: color 0.3s;
 }
 .footer-link:hover {
-    color: #454545!important;
-    text-decoration: underline!important;
+    color: #454545;
 }
 
 /* map modal */
