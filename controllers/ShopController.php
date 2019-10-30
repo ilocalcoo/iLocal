@@ -107,36 +107,27 @@ class ShopController extends Controller
       );
     }
 
-    $distances = [];
+    $pages = new Pagination([
+      'totalCount' => $query->count(),
+      'pageSize' => Shop::NUMBER_OF_DISPLAYED_PAGES,
+    ]);
+    $query = $query->offset($pages->offset)
+      ->limit($pages->limit);
+
     if ((array_key_exists('coords_address', Yii::$app->request->queryParams)) &&
-      (array_key_exists('round_range', Yii::$app->request->queryParams))) {
-      if ((Yii::$app->request->queryParams['coords_address'] !== '') &&
+      (array_key_exists('round_range', Yii::$app->request->queryParams)) &&
+       (Yii::$app->request->queryParams['coords_address'] !== '') &&
         (Yii::$app->request->queryParams['round_range'] !== '')) {
-        $userPoint = Yii::$app->request->queryParams['coords_address'];
+        $userPoint = explode(',', Yii::$app->request->queryParams['coords_address']);
         $range = Yii::$app->request->queryParams['round_range'] * 1000; // в метры
 //      $query = $query->where(
 //          ['shopId' => ShopAddress::find([])->all()]
 //      );
 
-        foreach ($query->all() as $shop) {
-          $shopCoords = [$shop->shopAddress->latitude, $shop->shopAddress->longitude];
-          $distance = Shop::getDistance(explode(',', $userPoint), $shopCoords);
-          if ($distance > $range) {
-            $shop->isItFar = Shop::IS_IT_FAR_TRUE;
-            $shop->save(false);
-          } else {
-            array_push($distances, $distance);
-          }
-        }
-
-        // в представление попадают только те места, поле 'isItFar' которых не тронуто, то есть они не далеко
-        $query = $query->where(['isItFar' => Shop::IS_IT_FAR_FALSE]);
-      }
+        $shops = Shop::getShopsInRange($query, $userPoint, $range);
+    } else {
+      $shops = $query->all();
     }
-    $pages = new Pagination([
-      'totalCount' => $query->count(),
-      'pageSize' => Shop::NUMBER_OF_DISPLAYED_PAGES,
-    ]);
 
     //TODO сортировка
 //    $sort = new Sort([
@@ -144,21 +135,8 @@ class ShopController extends Controller
 //      ],
 //    ]);
 
-    $shops = $query->offset($pages->offset)
-      ->limit($pages->limit)
-      ->all();
-
-    if ($distances !== []) {
-      foreach ($shops as $shop) {
-        $shop->distance = $distances[$shop->shopId];
-      }
-    }
-
     // очищаем у всех мест поле 'isItFar'
-    foreach (Shop::find()->where(['isItFar' => Shop::IS_IT_FAR_TRUE])->all() as $shop) {
-      $shop->isItFar = Shop::IS_IT_FAR_FALSE;
-      $shop->save(false);
-    }
+    // Shop::cleanIsItFar();
 
     return $this->render('index', [
       'searchModel' => $searchModel,

@@ -135,6 +135,7 @@ class Happening extends ActiveRecord
     /**
      * @return array
      */
+
 //    public function scenarios()
 //    {
 //        return [
@@ -144,6 +145,7 @@ class Happening extends ActiveRecord
 //            self::SCENARIO_STEP3 => ['uploadedHappeningPhoto'],
 //        ];
 //    }
+
 
     /**
      * @return bool

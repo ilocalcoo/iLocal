@@ -2,15 +2,12 @@
 
 /* @var $this yii\web\View */
 
-use app\assets\MainAsset;
 use app\assets\ProfileMapsAsset;
 use app\models\Shop;
 use app\models\ThumbGenerator;
 use yii\authclient\widgets\AuthChoice;
+use app\assets\SliderAsset;
 use yii\bootstrap4\Modal;
-use yii\helpers\Html;
-use yii\helpers\Url;
-use yii\web\View;
 
 /* @var $this yii\web\View */
 /* @var $shops app\models\Shop[] */
@@ -18,26 +15,27 @@ use yii\web\View;
 /* @var $happenings app\models\Happening[] */
 /* @var $userCoords string */
 
-$this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => Url::to(['img/main/favicon.png'])]);
-MainAsset::register($this);
 ProfileMapsAsset::register($this);
-$this->title = "I'm Local";
+SliderAsset::register($this);
 ?>
 
-<?php $this->beginPage() ?>
-	<!DOCTYPE html>
-	<html lang="<?= Yii::$app->language ?>">
-	<head>
-		<base href="<?= Url::base(true) ?>">
-		<meta charset="<?= Yii::$app->charset ?>">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-    <?php $this->registerCsrfMetaTags() ?>
-		<title><?= Html::encode($this->title) ?></title>
-    <?php $this->head() ?>
-	</head>
-	<body class="elipse">
-  <?php $this->beginBody() ?>
+<div class="row">
+	<div class="col-md-6 col-12 mt-3">
+		<h1 class="h1">I’m local – ваш гид по местам в округе</h1>
+		<!--                <div class="d-none d-md-block">-->
+		<!--                    <div class="row">-->
+		<!--                        <div class="col-2 list-num">1.</div>-->
+		<!--                        <div class="col-10 list-text">Открывайте новые места и узнавайте о том, что происходит поблизости.</div>-->
+		<!--                    </div>-->
+		<!--                    <div class="row">-->
+		<!--                        <div class="col-2 list-num">2.</div>-->
+		<!--                        <div class="col-10 list-text">Удобный поиск и возможность сохранять.</div>-->
+		<!--                    </div>-->
+		<!--                    <div class="row">-->
+		<!--                        <div class="col-2 list-num">3.</div>-->
+		<!--                        <div class="col-10 list-text">Новое качество жизни: взгляните по-новому на свой район и не тратьте время на долгие поездки.</div>-->
+		<!--                    </div>-->
+		<!--                </div>-->
 
 	<div class="container">
 		<nav class="my-header">
@@ -165,39 +163,36 @@ $this->title = "I'm Local";
                                     <span class="input-label"><img src="img/main/building.png" alt="Выберите место"></span>
                                 <span class="input-label-right"><i class="fas fa-chevron-right"></i></span>
                                 </div>',
-                  'tag' => 'a',
-                  'class' => '',
-                  'type' => '',
-                ],
-                'closeButton' => [
-                  'class' => 'btn btn-coral',
-                  'label' => 'Выбрать / Закрыть'
-                ]
-              ]);
-              ?>
-							<div class="modal-body">
-								<div id="profile_map"></div>
-							</div>
-              <?php Modal::end(); ?>
-						</div>
-						<div class="form-group main-group">
-							<div class="slidecontainer input form-control bg-white">
-								<input type="range" min="1" max="11" value="5" class="slider" id="round_range" name="round_range">
-							</div>
-							<span class="range-text">На расстоянии <span id="range_text" class="range-value">1 км</span></span>
-							<span class="input-label"><img src="img/main/aim.png" alt="Выберите место"></span>
-						</div>
-						<button class="btn btn-coral w-100">Начать</button>
-					</form>
-
+            'tag' => 'a',
+            'class' => '',
+            'type' => '',
+          ],
+          'closeButton' => [
+            'class' => 'btn btn-coral',
+            'label' => 'Выбрать / Закрыть'
+          ]
+        ]);
+        ?>
+				<div class="modal-body">
+					<div id="profile_map"></div>
 				</div>
-				<div class="col-md-6 col-12 d-none d-md-block">
-					<img src="img/main/index-bg-img.png" alt="people" height="485px">
-				</div>
+        <?php Modal::end(); ?>
 			</div>
-		</div>
-	</div>
+			<div class="form-group main-group">
+				<div class="slidecontainer input form-control bg-white">
+					<input type="range" min="1" max="11" value="5" class="slider" id="round_range" name="round_range">
+				</div>
+				<span class="range-text">На расстоянии <span id="range_text" class="range-value">1 км</span></span>
+				<span class="input-label"><img src="img/main/aim.png" alt="Выберите место"></span>
+			</div>
+			<button class="btn btn-coral w-100">Начать</button>
+		</form>
 
+	</div>
+	<div class="col-md-6 col-12 d-none d-md-block">
+		<img src="img/main/index-bg-img.png" alt="people" height="485px">
+	</div>
+</div>
 
 <section id="actions">
     <div class="container mt-5">
@@ -283,35 +278,41 @@ $this->title = "I'm Local";
                 <?php } ?>
             </div>
 			</div>
+			<a href="/iLocal/events.html">
+				<button class="btn btn-outline-coral w-100">Все события</button>
+			</a>
 		</div>
 	</section>
-
-	<footer class="footer text-gray pt-2 mt-3">
-		<div class="container">
-			<div class="row">
-				<div class="col-md-6 col-12">
-					<!--				Показать ссылку "О проекте", когда сделаем страницу -->
-					<!--				<a class="footer-link d-md-none d-sm-block" href="/about">О проекте</a>&nbsp;-->
-					<a class="small-text" href="/policy" target="_blank">Политика конфиденциальности</a>&nbsp;
-          <?php Modal::begin([
-            'toggleButton' => [
-              'label' => 'Помощь',
-              'tag' => 'a',
-              'type' => '',
-              'class' => 'contact-form footer-link d-md-none d-sm-block',
-            ],
-          ]);
-          ?>
-					<div class="modal-body contact-modal-body"></div>
-          <?php Modal::end(); ?>
-				</div>
-				<div class="col-md-6 col-12 small-text">© 2019, i’m local</div>
+<?php } ?>
+<section id="shops">
+	<div class="container mt-5">
+		<div class="w-100 mb-3"><span class="h3">Места</span><span style="float: right"><a href="/shops"><button
+						class="btn btn-outline-coral">Все места</button></a></span></div>
+		<div class="row">
+			<div class="col-12 scrolls" id="scrolls">
+        <?php foreach ($shops as $shop) { ?>
+					<div class="slide col-md-3 col-8">
+						<a href="/shops/<?= $shop->shopId ?>">
+							<div class="slide-img">
+								<img style="height: 200px" src="/img/shopPhoto/<?php
+                $shopPhoto = $shop->getShopPhotos()->asArray()->one()['shopPhoto'];
+                if (is_null($shopPhoto)) {
+                  $shopPhoto = '/img/nophoto.jpg';
+                }
+                echo $shopPhoto ?>" alt="<?= $shop->shopShortName ?>" data-pjax="0">
+								<div class="overlay">
+									<a class="overlay-link event-link" href="<?= 'shops/' . $shop->shopId ?>"
+										 data-pjax="0"><?= $shop->shopShortName ?>
+										<div class="event-date">1 км</div>
+									</a>
+								</div>
+								<span class="badge badge-coral"><?= number_format($shop->shopRating, 1, '.', ','); ?></span>
+							</div>
+						</a>
+					</div>
+        <?php } ?>
 			</div>
-		</div>
-	</footer>
-	<div class="backdrop"></div>
 
-  <?php $this->endBody() ?>
-	</body>
-	</html>
-<?php $this->endPage() ?>
+		</div>
+	</div>
+</section>
