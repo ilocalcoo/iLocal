@@ -84,7 +84,7 @@ class SiteController extends Controller
    */
   public function actionIndex()
   {
-    $this->layout = false;
+    $this->layout = 'site';
     $query = Shop::find()->where(['shopActive' => 1])->cache(10);
     $shops = $query->limit(10)->all();
     $query = Event::find()->where(['active' => 1])->cache(10);
@@ -234,7 +234,8 @@ class SiteController extends Controller
    */
   public function actionPolicy()
   {
-    return $this->render('policy');
+      $this->layout = 'site';
+      return $this->render('policy');
   }
 
   /**
