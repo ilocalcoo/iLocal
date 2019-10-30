@@ -75,14 +75,12 @@ if (count($carousel) == 1) {
 		<span class="shop-type"><?= $model->shopType::TYPES_LABELS[$model->shopType->id] ?></span>
 		<span class="shop-cost"><?= $model::SHOP_MIDDLE_COST_LABELS[$model->shopMiddleCost] ?></span>
 		<div class="shop-contacts">
-            <?php if ($model->shopAddress) { ?>
 			<div class="shop-location"><img src="/img/shop/Location.svg" alt="Location">
 				<a type="button" id="link-map" data-toggle="modal"
 				   data-coords="<?php
-
-                       if ($model->shopAddress->latitude && $model->shopAddress->longitude) {
-                           echo $model->shopAddress->latitude . ',' . $model->shopAddress->longitude;
-                       }
+                   if ($model->shopAddress->latitude && $model->shopAddress->longitude) {
+                       echo $model->shopAddress->latitude . ',' . $model->shopAddress->longitude;
+                   }
                    ?>"
 				   data-target="#modal-map" href="#"><?php
                     $comma = '';
@@ -98,7 +96,6 @@ if (count($carousel) == 1) {
                     }
                 ?></a>
             </div>
-            <?php } ?>
             <div class="shop-location"><img src="/img/shop/Phone.svg"
                                             alt="Phone"><?= $model->shopPhone ? $model->shopPhone : '' ?></div>
             <div class="shop-location"><img src="/img/shop/Url.svg"

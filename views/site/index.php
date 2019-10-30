@@ -81,94 +81,56 @@ SliderAsset::register($this);
 </div>
 
 <section id="actions">
-    <div class="container mt-5">
-        <div class="w-100 mb-3"><span class="h3">Акции</span><span style="float: right"><a href="/events"><button  class="btn btn-outline-coral">Все акции</button></a></span></div>
-        <div class="row">
-            <div class="col-12 scrolls" id="scrolls">
-                <?php foreach ($events as $event) { ?>
-						<div class="slide col-md-3 col-8 align-top">
-							<a href="/events/<?= $event->id ?>">
-								<div class="slide-img">
-									<img width="277px"
-											 src="<?= '/img/eventPhoto/' . ($event->eventPhotos ? $event->eventPhotos[0]->eventPhoto : 'nofoto') ?>"
-											 alt="<?= $event->title ?>">
-									<div class="overlay">
-										<a class="overlay-link" href="/events/<?= $event->id ?>"><?= $event->title ?></a>
-									</div>
-									<span class="badge badge-coral">-15%</span>
+	<div class="container mt-5">
+		<div class="w-100 mb-3"><span class="h3">Акции</span><span style="float: right"><a href="/events"><button
+						class="btn btn-outline-coral">Все акции</button></a></span></div>
+		<div class="row">
+			<div class="col-12 scrolls" id="scrolls">
+        <?php foreach ($events as $event) { ?>
+					<div class="slide col-md-3 col-8 align-top">
+						<a href="/events/<?= $event->id ?>">
+							<div class="slide-img">
+								<img width="277px"
+										 src="<?= '/img/eventPhoto/' . ($event->eventPhotos ? $event->eventPhotos[0]->eventPhoto : 'nofoto') ?>"
+										 alt="<?= $event->title ?>">
+								<div class="overlay">
+									<a class="overlay-link" href="/events/<?= $event->id ?>"><?= $event->title ?></a>
 								</div>
-								<div class="slide-header"><?= $event->eventOwner->shopShortName ?></div>
-								<div class="slide-text"><?= mb_substr($event->shortDesc, 0, 52) . '...' ?></div>
-							</a>
-						</div>
-                <div class="slide col-md-3 col-8 align-top">
-                    <a href="/events/<?= $event->id ?>">
-                    <div class="slide-img">
-                        <img width="277px" src="<?= '/img/eventPhoto/'.($event->eventPhotos ? $event->eventPhotos[0]->eventPhoto : 'nofoto') ?>" alt="<?= $event->title ?>">
-                        <div class="overlay">
-                            <a class="overlay-link" href="/events/<?= $event->id ?>"><?= $event->title ?></a>
-                        </div>
-                        <span class="badge badge-coral">-15%</span>
-                    </div>
-                        <div class="slide-header"><?= $event->eventOwner->shopShortName ?></div>
-                        <div class="slide-text"><?= mb_substr($event->shortDesc,0,52).'...' ?></div>
-                    </a>
-                </div>
+								<span class="badge badge-coral">-15%</span>
+							</div>
+							<div class="slide-header"><?= $event->eventOwner->shopShortName ?></div>
+							<div class="slide-text"><?= mb_substr($event->shortDesc, 0, 52) . '...' ?></div>
+						</a>
+					</div>
 
-                <?php } ?>
-            </div>
-        </div>
-    </div>
+        <?php } ?>
+			</div>
+		</div>
+	</div>
 </section>
-<?php if (!empty($happenings)) {?>
-<section id="happening">
-    <div class="container mt-5">
-        <div class="w-100 mb-3"><span class="h3">События рядом с вами</span></div>
-        <div class="row">
-            <?php foreach ($happenings as $happening) { ?>
-            <div class="event-item col-md-4 col-12">
-                <div class="slide-img happening-img">
-                    <img src="/img/happeningPhoto/<?php $happeningPhoto = $happening->getPhotos()->asArray()->one()['happeningPhoto'];
-                    if (is_null($happeningPhoto)) {
-                        $happeningPhoto = '/img/nophoto.jpg';
-                    }
-                    echo $happeningPhoto ?>" alt="<?= $happening->title ?>">
-                    <div class="overlay">
-                        <a class="overlay-link event-link" href="#">Мастер-класс для детей “Построй свой замок” <div class="event-date">13:00 18.07.19</div></a>
-                    </div>
-                    <span class="badge badge-coral">Free</span>
-                </div>
-            </div>
-            <?php } ?>
-        </div>
-        <a href="/happenings"><button  class="btn btn-outline-coral w-100">Все события</button></a>
-    </div>
-</section>
-<?php } ?>
-<section id="shops">
-    <div class="container mt-5">
-        <div class="w-100 mb-3"><span class="h3">Места</span><span style="float: right"><a href="/shops"><button  class="btn btn-outline-coral">Все места</button></a></span></div>
-        <div class="row">
-            <div class="col-12 scrolls" id="scrolls">
-                <?php foreach ($shops as $shop) { ?>
-                    <div class="slide col-md-3 col-8">
-                        <a href="/shops/<?= $shop->shopId ?>">
-                            <div class="slide-img">
-                                <img style="height: 200px" src="/img/shopPhoto/<?php
-                                $shopPhoto = $shop->getShopPhotos()->asArray()->one()['shopPhoto'];
-                                if (is_null($shopPhoto)) {
-                                    $shopPhoto = '/img/nophoto.jpg';
-                                }
-                                echo $shopPhoto ?>" alt="<?= $shop->shopShortName ?>" data-pjax="0">
-                                <div class="overlay">
-                                    <a class="overlay-link event-link" href="<?= 'shops/' . $shop->shopId ?>" data-pjax="0"><?= $shop->shopShortName ?> <div class="event-date">1 км</div></a>
-                                </div>
-                                <span class="badge badge-coral"><?= number_format($shop->shopRating, 1, '.',','); ?></span>
-                            </div>
-                        </a>
-                    </div>
-                <?php } ?>
-            </div>
+<?php if (!empty($happenings)) { ?>
+	<section id="happening">
+		<div class="container mt-5">
+			<div class="w-100 mb-3"><span class="h3">События рядом с вами</span></div>
+			<div class="row">
+        <?php foreach ($happenings as $happening) { ?>
+					<div class="event-item col-md-4 col-12">
+						<div class="slide-img happening-img">
+							<img
+								src="/img/happeningPhoto/<?php $happeningPhoto = $happening->getPhotos()->asArray()->one()['happeningPhoto'];
+                if (is_null($happeningPhoto)) {
+                  $happeningPhoto = '/img/nophoto.jpg';
+                }
+                echo $happeningPhoto ?>" alt="<?= $happening->title ?>">
+							<div class="overlay">
+								<a class="overlay-link event-link" href="#">Мастер-класс для детей “Построй свой замок”
+									<div class="event-date">13:00 18.07.19</div>
+								</a>
+							</div>
+							<span class="badge badge-coral">Free</span>
+						</div>
+					</div>
+        <?php } ?>
 			</div>
 			<a href="/iLocal/events.html">
 				<button class="btn btn-outline-coral w-100">Все события</button>
