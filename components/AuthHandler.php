@@ -33,7 +33,7 @@ class AuthHandler
         // Через экземпляр $client мы можем извлечь полученную информацию.
         $attributes = $this->client->getUserAttributes();
 
-        // Это для тестов, чтобы получить обновленный токен от соцсети.
+        // Это для тестов, чтобы получить обновленный токен от соцсети (с гуглом теперь не работает, там надо получать id_token).
 //        $accessToken = $this->client->getAccessToken()->getToken();
 //        var_dump($attributes, $accessToken);exit;
 

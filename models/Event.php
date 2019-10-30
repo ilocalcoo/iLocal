@@ -119,6 +119,7 @@ class Event extends \yii\db\ActiveRecord
     ]);
   }
 
+
 //  public function scenarios()
 //  {
 //    return [
@@ -128,6 +129,7 @@ class Event extends \yii\db\ActiveRecord
 //      self::SCENARIO_STEP3 => ['uploadedEventPhoto'],
 //    ];
 //  }
+
 
   public function uploadEventPhoto()
   {

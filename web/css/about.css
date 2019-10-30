@@ -1,0 +1,163 @@
+.logo-text {
+  color: white;
+}
+.pol {
+  background-color: white;
+}
+.elipse {
+  font-family: Yeseva One;
+  color: white;
+}
+
+.notebook {
+  width: 300px;
+  height: 185px;
+}
+
+.phone {
+  display: flex;
+  justify-content: center;
+}
+
+.phone-screen {
+  position: absolute;
+  left: 41px;
+  top: 21px;
+}
+
+.phone-body {
+  background: url("/img/about/body.png") no-repeat;
+  background-size: contain;
+  position: relative;
+}
+
+.back {
+  display: none;
+}
+
+.thanks {
+  color: #454545;
+}
+
+a.button {
+  padding-top: 15px !important;
+}
+
+.text-ellipse>p {
+  font-family: Roboto;
+}
+
+@media (min-width: 768px) {
+  .back {
+    display: block;
+  }
+  .elipse {
+    background: linear-gradient(0deg, rgba(254, 138, 128, 0.9), rgba(254, 138, 128, 0.9)),
+    linear-gradient(270deg, #FF22E9 0%, #FF3898 23.96%, #FE8A80 100%);
+  }
+  .phone {
+    margin-top: 40px;
+  }
+  .phone-body {
+    height: 730px;
+    width: 390px;
+  }
+  .nav-link {
+    color: white !important;
+  }
+  .login-ellipse {
+    background-color: #fff;
+  }
+  .notebook {
+    width: 880px;
+    height: 488px;
+    margin: 50px 0 40px 0;
+  }
+  h2 {
+    font-size: 48px;
+  }
+  h3 {
+    font-size: 36px;
+  }
+  p {
+    font-size: 24px;
+  }
+  .text-ellipse {
+    color: #454545;
+  }
+  .spot {
+    position: absolute;
+    z-index: -1;
+  }
+  .spot1 {
+    top: 884px;
+  }
+  .spot2 {
+    top: 1617px;
+  }
+  .spot3 {
+    top: 2280px;
+  }
+  .spot4 {
+    top: 3160px;
+  }
+  .text-column {
+    margin-top: 170px;
+  }
+  .button {
+    margin-bottom: 150px;
+  }
+  footer {
+    background-color: #FCF7F4;
+    color: #9B9B9B;
+    font-family: Roboto;
+  }
+  footer a:hover {
+    color: #454545;
+  }
+}
+
+@media (max-width: 768px) {
+  .phone-body {
+    height: 445px;
+    width: 238px;
+  }
+  .phone-screen {
+    width: 174px;
+    left: 27px;
+    top: 13px;
+  }
+  .phone {
+    margin-left: auto;
+  }
+  .elipse {
+    background-color: #FCF7F4;
+  }
+  .back-mobile {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: -1;
+    background: linear-gradient(0deg, rgba(254, 138, 128, 0.9), rgba(254, 138, 128, 0.9)),
+      linear-gradient(270deg, #FF22E9 0%, #FF3898 23.96%, #FE8A80 100%);
+    height: 200px;
+  }
+  .text-ellipse {
+    color: #454545;
+  }
+  .mobile-order {
+    order: 1;
+  }
+  footer {
+    color: #8F8F8F;
+    font-family: Roboto;
+  }
+  footer a:hover {
+    color: #454545;
+  }
+  .pink {
+    background: linear-gradient(0deg, rgba(254, 138, 128, 0.9), rgba(254, 138, 128, 0.9)),
+    linear-gradient(270deg, #FF22E9 0%, #FF3898 23.96%, #FE8A80 100%);
+  }
+}

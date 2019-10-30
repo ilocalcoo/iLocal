@@ -295,8 +295,7 @@ a.desc:after {
   }
 
   .modal {
-    width: 100vh;
-    left: 20vh;
+    width: 50vh;
     z-index: 1070;
   }
 
