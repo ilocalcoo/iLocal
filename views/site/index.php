@@ -20,6 +20,113 @@ SliderAsset::register($this);
 ?>
 
 <div class="row">
+	<div class="col-md-6 col-12 mt-3">
+		<h1 class="h1">I’m local – ваш гид по местам в округе</h1>
+		<!--                <div class="d-none d-md-block">-->
+		<!--                    <div class="row">-->
+		<!--                        <div class="col-2 list-num">1.</div>-->
+		<!--                        <div class="col-10 list-text">Открывайте новые места и узнавайте о том, что происходит поблизости.</div>-->
+		<!--                    </div>-->
+		<!--                    <div class="row">-->
+		<!--                        <div class="col-2 list-num">2.</div>-->
+		<!--                        <div class="col-10 list-text">Удобный поиск и возможность сохранять.</div>-->
+		<!--                    </div>-->
+		<!--                    <div class="row">-->
+		<!--                        <div class="col-2 list-num">3.</div>-->
+		<!--                        <div class="col-10 list-text">Новое качество жизни: взгляните по-новому на свой район и не тратьте время на долгие поездки.</div>-->
+		<!--                    </div>-->
+		<!--                </div>-->
+
+	<div class="container">
+		<nav class="my-header">
+			<div class="left-header">
+				<a class="d-md-none d-sm-block menu-toggler" href="">
+					<div class="pol"></div>
+					<div class="pol"></div>
+					<div class="pol"></div>
+				</a>
+				<a href="/">
+					<img src="img/main/logo.png" width="30" height="30" class="d-inline-block logo-img" alt="i’m local">
+					<span class="logo-text">i’m local</span>
+				</a>
+			</div>
+			<div class="content-desc" id="navbarNav">
+				<ul class="menu-list">
+					<img src="img/main/close.svg" class="nav-link" id="close" alt="close" width="32px" height="32px">
+					<li class="nav-item d-none d-md-block">
+						<a class="nav-link" href="/">Главная</a>
+					</li>
+          <?php if (!Yii::$app->user->isGuest) { ?>
+						<li class="nav-item business">
+							<a class="nav-link" href="/user/business">
+								<img src="img/main/business.svg" alt="business">
+								Бизнесу</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="/favorites">
+								<img src="img/main/favor.svg" alt="favorite">
+								Избранное</a>
+						</li>
+          <?php } ?>
+					<li class="nav-item">
+            <?php
+            Modal::begin([
+              'toggleButton' => [
+                'label' => '<img src="img/main/help.svg" alt="help">Помощь',
+                'tag' => 'a',
+                'type' => '',
+                'class' => 'contact-form nav-link',
+              ],
+            ]);
+            ?>
+						<div class="modal-body contact-modal-body"></div>
+            <?php Modal::end(); ?>
+					</li>
+          <?php if (Yii::$app->user->isGuest) { ?>
+						<li class="nav-item login">
+              <?php Modal::begin([
+                'bodyOptions' => ['id' => 'modal-enter'],
+                'toggleButton' => [
+                  'label' => '<img src="img/main/login.svg" alt="login">Вход<span class="login-ellipse"></span>',
+                  'tag' => 'a',
+                  'type' => '',
+                  'class' => 'modal-enter nav-link',
+                ],
+              ]);
+              ?>
+							<div class="modal-enter-body">
+								<h2>ВХОД</h2>
+								<p>Через социальные сети</p>
+							</div>
+							<div class="enter-icons">
+                <?= yii\authclient\widgets\AuthChoice::widget([
+                  'baseAuthUrl' => ['site/auth'],
+                  'popupMode' => true,
+                ]) ?>
+							</div>
+							<p class="enter-policy">Продолжая, Вы соглашаетесь с нашими Условиями использования и подтверждаете, что
+								прочли
+								<a href="/policy" target="_blank">Политику конфиденциальности</a>.</p>
+              <?php Modal::end(); ?>
+						</li>
+          <?php } else { ?>
+						<li class="nav-item profile">
+							<a class="nav-link" href="/user/profile">
+								<img src="img/main/login.svg" alt="user">
+                <?= Yii::$app->user->getIdentity()->username ?>
+							</a>
+						</li>
+						<li class="nav-item logout">
+							<a class="nav-link" href="/logout">
+								<img src="img/main/logout.svg" alt="login">
+								Выход</a>
+						</li>
+          <?php } ?>
+				</ul>
+			</div>
+		</nav>
+	</div>
+
 		<div class="container">
 			<div class="mt-5 d-none d-md-block"></div>
 			<div class="row">
@@ -145,6 +252,37 @@ SliderAsset::register($this);
         <a href="/happenings"><button  class="btn btn-outline-coral w-100">Все события</button></a>
     </div>
 </section>
+<?php } ?>
+<section id="shops">
+    <div class="container mt-5">
+        <div class="w-100 mb-3"><span class="h3">Места</span><span style="float: right"><a href="/shops"><button  class="btn btn-outline-coral">Все места</button></a></span></div>
+        <div class="row">
+            <div class="col-12 scrolls" id="scrolls">
+                <?php foreach ($shops as $shop) { ?>
+                    <div class="slide col-md-3 col-8">
+                        <a href="/shops/<?= $shop->shopId ?>">
+                            <div class="slide-img">
+                                <img style="height: 200px" src="<?php $photo = $shop->getShopPhotos()->asArray()->one()['shopPhoto'];
+                                if (is_null($photo)) {
+                                    echo '/img/nophoto.jpg';
+                                } else {
+                                    echo '/img/shopPhoto/' . ThumbGenerator::getGallery($shop->shopId, 'img/shopPhoto')['medium'][0];
+                                } ?>" alt="<?= $shop->shopShortName ?>" data-pjax="0">
+                                <div class="overlay">
+                                    <a class="overlay-link event-link" href="<?= 'shops/' . $shop->shopId ?>" data-pjax="0"><?= $shop->shopShortName ?> <div class="event-date">1 км</div></a>
+                                </div>
+                                <span class="badge badge-coral"><?= number_format($shop->shopRating, 1, '.',','); ?></span>
+                            </div>
+                        </a>
+                    </div>
+                <?php } ?>
+            </div>
+			</div>
+			<a href="/iLocal/events.html">
+				<button class="btn btn-outline-coral w-100">Все события</button>
+			</a>
+		</div>
+	</section>
 <?php } ?>
 <section id="shops">
 	<div class="container mt-5">
