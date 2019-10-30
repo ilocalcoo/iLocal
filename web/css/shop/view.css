@@ -43,7 +43,6 @@
     font-size: 16px;
     line-height: 19px;
     color: #454545;
-    margin-right: 30px;
 }
 
 .shop-location-work-time {
@@ -84,8 +83,8 @@
 }
 
 .carousel {
-    width: 757px;
-    height: 567px;
+    max-width: 757px;
+    max-height: 567px;
     overflow: hidden;
     display: flex;
     justify-content: center;
