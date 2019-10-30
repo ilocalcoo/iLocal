@@ -91,7 +91,7 @@ class HappeningController extends Controller
 //                ['shopTypeId' => Yii::$app->request->queryParams['eventTypeId']]
 //            );
 //        }
-    $query = Happening::find()->joinWith('shop');
+    $query = Happening::find()->joinWith('shop')->cache(10);
     $pages = new Pagination([
       'totalCount' => $query->count(),
       'pageSize' => 10,

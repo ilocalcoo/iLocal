@@ -169,7 +169,7 @@ body {
 
 
 .btn-coral {
-    color: #fff;
+    color: #fff!important;
     background: #FE8A80;
     border-color: #FE8A80;
 }

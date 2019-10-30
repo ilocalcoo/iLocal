@@ -155,7 +155,7 @@ a.disabled {
 }
 
 a:visited {
-    color: white;
+    /*color: #FE8A80;*/
 }
 
 /* desktop only parametrs */

@@ -84,10 +84,10 @@ class SiteController extends Controller
    */
   public function actionIndex()
   {
-    $this->layout = 'site';
-    $query = Shop::find()->where(['shopActive' => 1]);
+    $this->layout = false;
+    $query = Shop::find()->where(['shopActive' => 1])->cache(10);
     $shops = $query->limit(10)->all();
-    $query = Event::find()->where(['active' => 1]);
+    $query = Event::find()->where(['active' => 1])->cache(10);
     $events = $query->limit(10)->all();
     if (!Yii::$app->user->isGuest) {
       $user = User::current();
