@@ -113,7 +113,7 @@ AppAsset::register($this);
 					</li>
         <?php } else { ?>
 					<li class="nav-item profile">
-						<a class="nav-link" href="/user/profile">
+						<a class="nav-link" href="">
 							<img src="img/main/login.svg" alt="user">
 							<?= Yii::$app->user->getIdentity()->username ?>
 						</a>

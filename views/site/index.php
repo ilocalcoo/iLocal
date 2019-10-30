@@ -33,128 +33,18 @@ SliderAsset::register($this);
 		<!--                    </div>-->
 		<!--                </div>-->
 
-	<div class="container">
-		<nav class="my-header">
-			<div class="left-header">
-				<a class="d-md-none d-sm-block menu-toggler" href="">
-					<div class="pol"></div>
-					<div class="pol"></div>
-					<div class="pol"></div>
-				</a>
-				<a href="/">
-					<img src="img/main/logo.png" width="30" height="30" class="d-inline-block logo-img" alt="i’m local">
-					<span class="logo-text">i’m local</span>
-				</a>
-			</div>
-			<div class="content-desc" id="navbarNav">
-				<ul class="menu-list">
-					<img src="img/main/close.svg" class="nav-link" id="close" alt="close" width="32px" height="32px">
-					<li class="nav-item d-none d-md-block">
-						<a class="nav-link" href="/">Главная</a>
-					</li>
-          <?php if (!Yii::$app->user->isGuest) { ?>
-						<li class="nav-item business">
-							<a class="nav-link" href="/user/business">
-								<img src="img/main/business.svg" alt="business">
-								Бизнесу</a>
-						</li>
-						<li class="nav-item">
-							<a class="nav-link" href="/favorites">
-								<img src="img/main/favor.svg" alt="favorite">
-								Избранное</a>
-						</li>
-          <?php } ?>
-					<li class="nav-item">
-            <?php
-            Modal::begin([
-              'toggleButton' => [
-                'label' => '<img src="img/main/help.svg" alt="help">Помощь',
-                'tag' => 'a',
-                'type' => '',
-                'class' => 'contact-form nav-link',
-              ],
-            ]);
-            ?>
-						<div class="modal-body contact-modal-body"></div>
-            <?php Modal::end(); ?>
-					</li>
-          <?php if (Yii::$app->user->isGuest) { ?>
-						<li class="nav-item login">
-              <?php Modal::begin([
-                'bodyOptions' => ['id' => 'modal-enter'],
-                'toggleButton' => [
-                  'label' => '<img src="img/main/login.svg" alt="login">Вход<span class="login-ellipse"></span>',
-                  'tag' => 'a',
-                  'type' => '',
-                  'class' => 'modal-enter nav-link',
-                ],
-              ]);
-              ?>
-							<div class="modal-enter-body">
-								<h2>ВХОД</h2>
-								<p>Через социальные сети</p>
-							</div>
-							<div class="enter-icons">
-                <?= yii\authclient\widgets\AuthChoice::widget([
-                  'baseAuthUrl' => ['site/auth'],
-                  'popupMode' => true,
-                ]) ?>
-							</div>
-							<p class="enter-policy">Продолжая, Вы соглашаетесь с нашими Условиями использования и подтверждаете, что
-								прочли
-								<a href="/policy" target="_blank">Политику конфиденциальности</a>.</p>
-              <?php Modal::end(); ?>
-						</li>
-          <?php } else { ?>
-						<li class="nav-item profile">
-							<a class="nav-link" href="/user/profile">
-								<img src="img/main/login.svg" alt="user">
-                <?= Yii::$app->user->getIdentity()->username ?>
-							</a>
-						</li>
-						<li class="nav-item logout">
-							<a class="nav-link" href="/logout">
-								<img src="img/main/logout.svg" alt="login">
-								Выход</a>
-						</li>
-          <?php } ?>
-				</ul>
-			</div>
-		</nav>
-	</div>
-
-		<div class="container">
-			<div class="mt-5 d-none d-md-block"></div>
-			<div class="row">
-				<div class="col-md-6 col-12 mt-3">
-					<h1 class="h1">I’m local – ваш гид по местам в округе</h1>
-					<!--                <div class="d-none d-md-block">-->
-					<!--                    <div class="row">-->
-					<!--                        <div class="col-2 list-num">1.</div>-->
-					<!--                        <div class="col-10 list-text">Открывайте новые места и узнавайте о том, что происходит поблизости.</div>-->
-					<!--                    </div>-->
-					<!--                    <div class="row">-->
-					<!--                        <div class="col-2 list-num">2.</div>-->
-					<!--                        <div class="col-10 list-text">Удобный поиск и возможность сохранять.</div>-->
-					<!--                    </div>-->
-					<!--                    <div class="row">-->
-					<!--                        <div class="col-2 list-num">3.</div>-->
-					<!--                        <div class="col-10 list-text">Новое качество жизни: взгляните по-новому на свой район и не тратьте время на долгие поездки.</div>-->
-					<!--                    </div>-->
-					<!--                </div>-->
-
-					<form action="/shops" method="get" class="text-center main-form">
-						<input type="hidden" name="coords_address" id="coords_address" value="">
-						<input type="hidden" id="input_address" value="">
-            <?php if (!is_null($userCoords)) { ?>
-							<span id="user_coordinates" style="display: none"><?= $userCoords ?></span>
-            <?php } ?>
-						<div class="form-group main-group">
-              <?php
-              Modal::begin([
-                'size' => 'modal-lg',
-                'toggleButton' => [
-                  'label' => '<div class="form-control input input-place" data-toggle="modal" data-target="#exampleModal">
+		<form action="/shops" method="get" class="text-center main-form">
+			<input type="hidden" name="coords_address" id="coords_address" value="">
+			<input type="hidden" id="input_address" value="">
+      <?php if (!is_null($userCoords)) { ?>
+				<span id="user_coordinates" style="display: none"><?= $userCoords ?></span>
+      <?php } ?>
+			<div class="form-group main-group">
+        <?php
+        Modal::begin([
+          'size' => 'modal-lg',
+          'toggleButton' => [
+            'label' => '<div class="form-control input input-place" data-toggle="modal" data-target="#exampleModal">
                                     <span class="place-text" id="view_address">Выберите местоположение</span>
                                     <span class="input-label"><img src="img/main/building.png" alt="Выберите место"></span>
                                 <span class="input-label-right"><i class="fas fa-chevron-right"></i></span>
