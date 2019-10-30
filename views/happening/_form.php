@@ -84,15 +84,6 @@ krsort($eventOwner);
                     'format' => 'yyyy-mm-dd H:i'
                 ]
             ])->textInput(['placeholder' => date('Y-m-d H:i')]) ?>
-            <?= $form->field($model, 'end', ['options' => ['class' => 'shop-create-form']])->widget(DateTimePicker::classname(),[
-                'name' => 'dp_1',
-                'type' => DateTimePicker::TYPE_INPUT,
-                'value' => date('Y-m-d H:i'),
-                'pluginOptions' => [
-                    'autoclose'=>true,
-                    'format' => 'yyyy-mm-dd H:i'
-                ]
-            ])->textInput(['placeholder' => date('Y-m-d H:i')]) ?>
             <?= $form->field($model, 'price')->textInput(['maxlength' => true, 'placeholder'=>'Оставьте пустым, если вход свободный']) ?>
 
             <?= $form->field($model, 'title')->textInput([
