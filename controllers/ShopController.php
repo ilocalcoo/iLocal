@@ -3,7 +3,6 @@
 namespace app\controllers;
 
 use app\models\Event;
-use app\models\Happening;
 use app\models\ShopAddress;
 use app\models\ShopRating;
 use app\models\UserEvent;
@@ -187,14 +186,10 @@ class ShopController extends Controller
     $shopEvents = Event::find()
       ->where(['eventOwnerId' => $id])
       ->all();
-    $shopHappenings = Happening::find()
-        ->where(['shopId' => $id])
-        ->all();
 
     return $this->render('view', [
       'model' => $this->findModel($id),
       'shopEvents' => $shopEvents,
-      'shopHappenings' => $shopHappenings,
     ]);
   }
 

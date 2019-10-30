@@ -5,13 +5,9 @@ namespace app\modules\api\controllers;
 
 use app\models\Shop;
 use Yii;
-use yii\data\ActiveDataProvider;
 use yii\data\Pagination;
 use yii\filters\auth\HttpBasicAuth;
-use yii\helpers\Url;
 use yii\rest\ActiveController;
-use yii\web\ServerErrorHttpException;
-use yii\web\UploadedFile;
 
 class ShopController extends ActiveController
 {
@@ -57,30 +53,5 @@ class ShopController extends ActiveController
     }
     return $shops;
   }
-
-    public function actions()
-    {
-        $actions = parent::actions();
-        unset($actions['create']);
-        return $actions;
-    }
-
-    /**
-     * @return Shop
-     * @var $model Shop
-     */
-    public function actionCreate()
-    {
-        $model = new Shop();
-        if ($model->load(Yii::$app->getRequest()->getBodyParams(), '')) {
-            if ($model->save()) {
-                $model->uploadedShopPhoto = UploadedFile::getInstancesByName('files');
-                $model->uploadShopPhoto();
-                return $model;
-            } elseif (!$model->hasErrors()) {
-                throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
-            }
-        }
-    }
 
 }
