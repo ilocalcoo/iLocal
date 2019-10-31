@@ -33,37 +33,35 @@ class ShopController extends ActiveController
   {
     $actions = parent::actions();
     unset($actions['index']);
+    unset($actions['create']);
     return $actions;
   }
 
   public function actionIndex()
   {
-    $query = Shop::find()->where(['shopActive' => 1]);
+      $query = Shop::find()->where(['shopActive' => 1]);
+      $pages = new Pagination([
+          'totalCount' => $query->count(),
+          'pageSize' => Yii::$app->request->get('per-page') ?? 3,
+      ]);
+      $query = $query->offset($pages->offset)
+          ->limit($pages->limit);
 
-    $pages = new Pagination([
-      'totalCount' => $query->count(),
-      'pageSize' => Yii::$app->request->get('per-page'),
-    ]);
-    $query = $query->offset($pages->offset)
-      ->limit($pages->limit);
-
-    $userPoint = explode(',', Yii::$app->request->get('userPoint'));
-    $range = Yii::$app->request->get('range')*1;
-    $shops = [];
-    if (!is_null($userPoint) && !is_null($range) && ($userPoint !== '') && ($range !== '')) {
-      if (is_int($range) && ($range > 0) && Shop::isUserPointValid($userPoint)) {
-        $shops = Shop::getShopsInRange($query, $userPoint, $range);
+      $userPoint = explode(',', Yii::$app->request->get('userPoint'));
+      $range = Yii::$app->request->get('range')*1;
+      $shops = [];
+      if (!is_null($userPoint) && !is_null($range) && ($userPoint !== '') && ($range !== '')) {
+          if (is_int($range) && ($range > 0) && Shop::isUserPointValid($userPoint)) {
+              $shops = Shop::getShopsInRange($query, $userPoint, $range);
+          }
       }
-    }
-    return $shops;
-  }
 
-    public function actions()
-    {
-        $actions = parent::actions();
-        unset($actions['create']);
-        return $actions;
-    }
+      if (empty($shops)) {
+          $shops = $query->all();
+      }
+
+      return $shops;
+  }
 
     /**
      * @return Shop

@@ -71,7 +71,7 @@ $this->title = $title ?? 'I\'m Local';
                 <div id="profile_map"></div>
             </div>
             <?php Modal::end(); ?>
-            <input type="hidden" name="coords_address" id="coords_address" value="<?= $model->userAddress->latitude . ',' . $model->userAddress->longitude ?>">
+            <input type="hidden" name="coords_address" id="coords_address" value="<?= ($model->userAddress->latitude ?? '') . ',' . ($model->userAddress->longitude ?? '') ?>">
             <br>
             <div class="form-group text-center">
                 <?= Html::submitButton('Сохранить', ['class' => 'btn btn-outline-coral w-50']) ?>
