@@ -91,7 +91,7 @@ class HappeningController extends Controller
 //                ['shopTypeId' => Yii::$app->request->queryParams['eventTypeId']]
 //            );
 //        }
-    $query = Happening::find()->joinWith('shop')->cache(10);
+    $query = Happening::find()->joinWith('shop');
     $pages = new Pagination([
       'totalCount' => $query->count(),
       'pageSize' => 10,
@@ -126,25 +126,13 @@ class HappeningController extends Controller
   public function actionCreate()
   {
     $model = new Happening();
-    if (Yii::$app->request->get('id')) {
-      $model = $this->findModel((Yii::$app->request->get('id')));
-    }
-    if (Yii::$app->request->post('input_address')) {
-      $model->address = Yii::$app->request->post('input_address');
-    }
 
-    if ($model->load(Yii::$app->request->post())) {
-        if (Yii::$app->request->post('coords_address')) {
-            $coords = explode(',',Yii::$app->request->post('coords_address'));
-            $model->latitude = $coords[0] ?? '';
-            $model->longitude = $coords[1] ?? '';
-        }
-        if ($model->save()) {
-            $model->uploadedHappeningPhoto = UploadedFile::getInstances($model, 'uploadedHappeningPhoto');
-            $model->uploadHappeningPhoto();
+    if ($model->load(Yii::$app->request->post()) && $model->save()) {
+      $model->uploadedHappeningPhoto = UploadedFile::getInstances($model, 'uploadedHappeningPhoto');
 
-            return $this->redirect(['view', 'id' => $model->id]);
-        }
+      if ($model->uploadHappeningPhoto()) {
+        return $this->redirect(['view', 'id' => $model->id]);
+      }
     }
 
     return $this->render('create', [

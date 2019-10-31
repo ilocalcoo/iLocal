@@ -85,9 +85,9 @@ class SiteController extends Controller
   public function actionIndex()
   {
     $this->layout = 'site';
-    $query = Shop::find()->where(['shopActive' => 1])->cache(10);
+    $query = Shop::find()->where(['shopActive' => 1]);
     $shops = $query->limit(10)->all();
-    $query = Event::find()->where(['active' => 1])->cache(10);
+    $query = Event::find()->where(['active' => 1]);
     $events = $query->limit(10)->all();
     if (!Yii::$app->user->isGuest) {
       $user = User::current();
@@ -234,8 +234,7 @@ class SiteController extends Controller
    */
   public function actionPolicy()
   {
-      $this->layout = 'site';
-      return $this->render('policy');
+    return $this->render('policy');
   }
 
   /**

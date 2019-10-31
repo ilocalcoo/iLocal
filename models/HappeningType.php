@@ -9,14 +9,11 @@ use Yii;
  *
  * @property int $id
  * @property string $type
- * @property string $name
  *
  * @property Happening[] $happenings
  */
 class HappeningType extends \yii\db\ActiveRecord
 {
-    /* константы заменены на getNames.
-     * оставлены для обратной совместимости ---> */
     const TYPE_FOOD = 1;
     const TYPE_CHILD = 2;
     const TYPE_SPORT = 3;
@@ -30,7 +27,6 @@ class HappeningType extends \yii\db\ActiveRecord
         self::TYPE_BEAUTY => 'Красота',
         self::TYPE_BUY => 'Покупки',
     ];
-    /* ---> для обратной совместимости*/
 
     /**
      * {@inheritdoc}
@@ -68,14 +64,5 @@ class HappeningType extends \yii\db\ActiveRecord
     public function getHappenings()
     {
         return $this->hasMany(Happening::className(), ['happeningTypeId' => 'id']);
-    }
-
-    public static function getNames() {
-        $result = [];
-        foreach (self::find()->all() as $value) {
-            $result[$value->id] = $value->name;
-        }
-
-        return $result;
     }
 }

@@ -3,13 +3,13 @@ $(document).ready(function() {
     const eventFormId = '#event-uploadedeventphoto';
     const happeningFormId = '#happening-uploadedhappeningphoto';
 
-    // $(shopFormId).change(function () {
-    //     $(shopFormId).submit();
-    // });
-    // $(eventFormId).change(function () {
-    //     $(eventFormId).submit();
-    // });
-    // $(happeningFormId).change(function () {
-    //     $(happeningFormId).submit();
-    // });
+    $(shopFormId).change(function () {
+        $(shopFormId).submit();
+    });
+    $(eventFormId).change(function () {
+        $(eventFormId).submit();
+    });
+    $(happeningFormId).change(function () {
+        $(happeningFormId).submit();
+    });
 });

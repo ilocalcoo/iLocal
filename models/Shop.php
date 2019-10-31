@@ -78,12 +78,12 @@ class Shop extends \yii\db\ActiveRecord
     self::SHOP_MIDDLE_COST_5 => '₽₽₽₽₽',
   ];
 
-//  const SCENARIO_STEP1 = 'step1';
-//  const SCENARIO_STEP2 = 'step2';
-//  const SCENARIO_STEP3 = 'step3';
-//  const SCENARIO_STEP4 = 'step4';
-//  const SCENARIO_DEFAULT = 'delete';
-//  const SCENARIO_RATING = 'rating';
+  const SCENARIO_STEP1 = 'step1';
+  const SCENARIO_STEP2 = 'step2';
+  const SCENARIO_STEP3 = 'step3';
+  const SCENARIO_STEP4 = 'step4';
+  const SCENARIO_DEFAULT = 'delete';
+  const SCENARIO_RATING = 'rating';
 
   /**
    * @var UploadedFile[]
@@ -163,19 +163,17 @@ class Shop extends \yii\db\ActiveRecord
     ];
   }
 
-
-//  public function scenarios()
-//  {
-//    return [
-//      self::SCENARIO_DEFAULT => ['*'],
-//      self::SCENARIO_STEP1 => ['creatorId', 'shopTypeId', 'shopShortName', 'shopShortDescription', 'shopFullDescription'],
-//      self::SCENARIO_STEP2 => ['uploadedShopPhoto'],
-//      self::SCENARIO_STEP3 => ['shopAddressId', 'shopPhone', 'shopWeb', 'shopWorkTime'],
-//      self::SCENARIO_STEP4 => ['shopCostMin', 'shopCostMax', 'shopMiddleCost', 'shopLinkPdf'],
-//      self::SCENARIO_RATING => ['shopRating'],
-//    ];
-//  }
-
+  public function scenarios()
+  {
+      $scenarios = parent::scenarios();
+      $scenarios[self::SCENARIO_DEFAULT] = ['*'];
+      $scenarios[self::SCENARIO_STEP1] = ['creatorId', 'shopTypeId', 'shopShortName', 'shopShortDescription', 'shopFullDescription'];
+      $scenarios[self::SCENARIO_STEP2] = ['uploadedShopPhoto'];
+      $scenarios[self::SCENARIO_STEP3] = ['shopAddressId', 'shopPhone', 'shopWeb', 'shopWorkTime'];
+      $scenarios[self::SCENARIO_STEP4] = ['shopCostMin', 'shopCostMax', 'shopMiddleCost', 'shopLinkPdf'];
+      $scenarios[self::SCENARIO_RATING] = ['shopRating'];
+      return $scenarios;
+  }
 
   public function fields()
   {

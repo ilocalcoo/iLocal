@@ -26,9 +26,6 @@
         "andkon/yii2kladr": "^1.0",
         "yiisoft/yii2-bootstrap4": "^2.0",
         "kartik-v/yii2-date-range": "dev-master",
-        "kartik-v/yii2-widget-datetimepicker": "dev-master",
-        "kartik-v/yii2-widget-datepicker": "dev-master",
-        "kartik-v/yii2-widget-timepicker": "dev-master",
         "ext-json": "*"
     },
     "require-dev": {
