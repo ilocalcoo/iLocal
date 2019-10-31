@@ -1,5 +1,6 @@
 <?php
 
+use yii\bootstrap4\Modal;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -11,43 +12,91 @@ use yii\widgets\ActiveForm;
 <div class="shop-form">
 
     <?php $form = ActiveForm::begin(); ?>
+    <?= $form->field($model, 'creatorId')
+        ->hiddenInput(['value'=>Yii::$app->user->id])
+        ->label(false) ?>
 
-    <?= $form->field($model, 'shopActive')->textInput() ?>
+    <div class="row">
+        <div class="col-md-6 col-12">
+            <?= $form->field($model, 'shopShortName', ['options' => ['class' => 'shop-create-form']])
+                ->textInput(['maxlength' => true, 'placeholder' => 'Введите короткое название места (не более 38 симв.)'])
+                ->label('Короткое название') ?>
 
-    <?= $form->field($model, 'shopShortName')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'shopFullName', ['options' => ['class' => 'shop-create-form']])
+                ->textInput(['maxlength' => true, 'placeholder' => 'Введите полное название места (не более 186 симв.)'])
+                ->label('Полное название') ?>
 
-    <?= $form->field($model, 'creatorId')->textInput() ?>
+            <?= $form->field($model, 'shopShortDescription', ['options' => ['class' => 'shop-create-form']])
+                ->textInput(['maxlength' => true, 'placeholder' => 'Краткое описание места (не более 186 симв.)'])
+                ->label('Подзаголовок') ?>
 
-    <?= $form->field($model, 'shopFullName')->textInput(['maxlength' => true]) ?>
+            <?= $form->field($model, 'shopFullDescription', ['options' => ['class' => 'shop-create-form']])
+                ->textInput(['maxlength' => true, 'placeholder' => 'Полное описание места'])
+                ->label('Описание') ?>
 
-    <?= $form->field($model, 'uploadedShopPhoto[]')->fileInput(['multiple' => true]) ?>
+            <?= $form->field($model, 'shopTypeId', ['options' => ['class' => 'shop-create-form']])
+                ->radioList(app\models\ShopType::TYPES_LABELS,
+                [
+                    'item' => function ($index, $label, $name, $checked, $value) {
+                        $check = $checked ? ' checked="checked"' : '';
+                        $return = '<label class="shop-create_type-radio-btn-wrap">';
+                        $return .= '<input type="radio" name="' . $name . '" value="' . $value . '" tabindex="3" ' .$check. '>';
+                        $return .= '<span class="shop-create_type-radio-btn">' . ucwords($label) . '</span>';
+                        $return .= '</label>';
+                        return $return;
+                    }
+                ]
+            )->label('Категория') ?>
+        </div>
+        <div class="col-md-6 col-12">
+            <?= $form->field($model, 'uploadedShopPhoto[]')
+                ->fileInput(['multiple' => true, 'accept' => 'image/*'])
+                ->label('Изображение')
+                ->hint('Прикрепите от 1 до 10 файлов') ?>
+            <?php
+            Modal::begin([
+                'size' => 'modal-lg',
+                'toggleButton' => [
+                    'label' => '<div class="shop-create-form has-success">
+                                    <label class="control-label" for="input_address">Адрес</label>
+                                    <input type="text" id="input_address" name="input_address" class="form-control" value="" placeholder="Введите адрес" aria-invalid="false">
+                                    <div class="help-block"></div>
+                                </div>',
+                    'tag' => 'a',
+                    'class' => '',
+                    'type' => '',
+                ],
+                'closeButton' => [
+                    'class' => 'btn btn-coral',
+                    'label' => 'Выбрать / Закрыть'
+                ]
+            ]);
+            ?>
+            <div class="modal-body">
+                <div id="profile_map"></div>
+            </div>
+            <?php Modal::end(); ?>
+            <input type="hidden" name="coords_address" id="coords_address" value="">
 
-    <?= $form->field($model, 'shopTypeId')->textInput() ?>
+            <?= $form->field($model, 'shopPhone', ['options' => ['class' => 'shop-create-form']])
+                ->textInput(['maxlength' => true, 'placeholder' => '+7(000)000 00 00'])
+                ->label('Телефон') ?>
+            <?= $form->field($model, 'shopWeb', ['options' => ['class' => 'shop-create-form']])
+                ->textInput(['maxlength' => true, 'placeholder' => 'www.example.ru'])
+                ->label('Сайт') ?>
 
-    <?= $form->field($model, 'shopPhone')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'shopWeb')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'shopAddressId')->textInput() ?>
-
-    <?= $form->field($model, 'shopCostMin')->textInput() ?>
-
-    <?= $form->field($model, 'shopCostMax')->textInput() ?>
-
-    <?= $form->field($model, 'shopMiddleCost')->dropDownList([ 1 => '1', 2 => '2', 3 => '3', 4 => '4', 5 => '5', ], ['prompt' => '']) ?>
-
-    <?= $form->field($model, 'shopWorkTime')->textInput() ?>
-
-    <?= $form->field($model, 'shopAgregator')->textInput(['maxlength' => true]) ?>
-
-    <?= $form->field($model, 'shopShortDescription')->textInput() ?>
-
-    <?= $form->field($model, 'shopFullDescription')->textInput() ?>
-
-    <?= $form->field($model, 'shopStatusId')->textInput() ?>
-
-    <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+            <?= $form->field($model, 'shopMiddleCost', ['options' => ['class' => 'shop-create-form']])
+                ->dropDownList([ 1 => '1', 2 => '2', 3 => '3', 4 => '4', 5 => '5', ], ['prompt' => ''])
+                ->label('Средний чек') ?>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-3 col-12 offset-md-4">
+            <div class="form-group text-center">
+                <?= Html::submitButton('Сохранить', ['class' => 'btn btn-outline-coral w-100']) ?>
+            </div>
+        </div>
     </div>
 
     <?php ActiveForm::end(); ?>

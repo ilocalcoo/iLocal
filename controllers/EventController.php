@@ -89,7 +89,7 @@ class EventController extends Controller
 //                ['shopTypeId' => Yii::$app->request->queryParams['eventTypeId']]
 //            );
 //        }
-    $query = Event::find()->joinWith('shop');
+    $query = Event::find()->joinWith('shop')->cache(10);
     $pages = new Pagination([
       'totalCount' => $query->count(),
       'pageSize' => 10,
@@ -124,14 +124,16 @@ class EventController extends Controller
    */
   public function actionCreate()
   {
-    $model = new Event();
+      $model = new Event();
+      if (Yii::$app->request->get('id')) {
+          $model = $this->findModel((Yii::$app->request->get('id')));
+      }
 
     if ($model->load(Yii::$app->request->post()) && $model->save()) {
-      $model->uploadedEventPhoto = UploadedFile::getInstances($model, 'uploadedEventPhoto');
+        $model->uploadedEventPhoto = UploadedFile::getInstances($model, 'uploadedEventPhoto');
+        $model->uploadEventPhoto();
 
-      if ($model->uploadEventPhoto()) {
         return $this->redirect(['view', 'id' => $model->id]);
-      }
     }
 
     return $this->render('create', [
@@ -253,12 +255,13 @@ class EventController extends Controller
   public function actionDelete($id)
   {
     $model = $this->findModel($id);
-    $model->setScenario(Event::SCENARIO_DEFAULT);
+//    $model->setScenario(Event::SCENARIO_DEFAULT);
     $model->active = Event::STATUS_DISABLE;
     if ($model->save()) {
-      return $this->redirect(['view', 'id' => $model->id]);
+        return $this->redirect(['user/business']);
     }
-    return $this->redirect(['index']);
+
+    return $this->redirect(['user/business']);
   }
 
   /**

@@ -105,6 +105,9 @@ function init() {
                 addressInput.setAttribute('value', addressOnlyArray);
                 addressInput.style.color = '#FE8A80';
             }
+            if (addressInput = document.getElementById('happening-address')) {
+                addressInput.setAttribute('value', addressOnlyArray);
+            }
             if (addressView = document.getElementById('view_address')) {
                 addressView.innerHTML = addressOnlyArray;
                 addressView.style.color = '#FE8A80';
