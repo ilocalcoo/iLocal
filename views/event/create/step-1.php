@@ -17,7 +17,7 @@ $this->registerCssFile('/css/event/create/form.css');
         <div class="step_form-rectangle"></div>
     </div>
 
-    <h1 class="step_name">Шаг 1: Выберите владельца и категорию акции</h1>
+    <h1 class="step_name">Добавить акцию</h1>
 
     <?php $form = ActiveForm::begin(); ?>
 
