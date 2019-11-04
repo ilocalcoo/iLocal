@@ -55,12 +55,7 @@ class ShopController extends ActiveController
               $shops = Shop::getShopsInRange($query, $userPoint, $range);
           }
       }
-
-      if (empty($shops)) {
-          $shops = $query->all();
-      }
-
-      return $shops;
+      return array_values($shops);
   }
 
     /**
