@@ -1,5 +1,6 @@
 <?php
 
+use app\models\ThumbGenerator;
 use yii\bootstrap4\Modal;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
@@ -49,6 +50,25 @@ use yii\widgets\ActiveForm;
             )->label('Категория') ?>
         </div>
         <div class="col-md-6 col-12">
+            <div class="shop-form_shop-photos-wrap">
+                <?php if (empty($model->shopPhotos)) {
+                    echo 'Нет загруженных фотографий';
+                }?>
+                <?php foreach ($model->shopPhotos as $photo) { ?>
+                    <div class="shop-form_shop-photos">
+                        <?= Html::img('/img/shopPhoto/'
+                            . $model->shopId . '/'
+                            . ThumbGenerator::getSizeDir('small') .'/'
+                            . ($photo['shopPhoto']), ['class' => 'shop-form_photo']) ?>
+                        <?= Html::a(Html::img('/img/shop/photo_delete.svg'), ['/shop-photo/delete', 'id' => $photo['id']], [
+                            'class' => 'shop-form_photo-delete',
+                            'data' => [
+                                'confirm' => 'Вы уверены что хотите удалить фотографию?'
+                            ],
+                        ]) ?>
+                    </div>
+                <?php } ?>
+            </div>
             <?= $form->field($model, 'uploadedShopPhoto[]')
                 ->fileInput(['multiple' => true, 'accept' => 'image/*'])
                 ->label('Изображение')
@@ -59,7 +79,9 @@ use yii\widgets\ActiveForm;
                 'toggleButton' => [
                     'label' => '<div class="shop-create-form has-success">
                                     <label class="control-label" for="input_address">Адрес</label>
-                                    <input type="text" id="input_address" name="input_address" class="form-control" value="" placeholder="Введите адрес" aria-invalid="false">
+                                    <input type="text" id="input_address" name="input_address" class="form-control" 
+                                    value="'.$model->shopAddress->city.','.$model->shopAddress->street.','.$model->shopAddress->houseNumber.'" 
+                                    placeholder="Введите адрес" aria-invalid="false" style="color: rgb(254, 138, 128);">
                                     <div class="help-block"></div>
                                 </div>',
                     'tag' => 'a',
@@ -76,7 +98,7 @@ use yii\widgets\ActiveForm;
                 <div id="profile_map"></div>
             </div>
             <?php Modal::end(); ?>
-            <input type="hidden" name="coords_address" id="coords_address" value="">
+            <input type="hidden" name="coords_address" id="coords_address" value="<?= $model->shopAddress->latitude.','.$model->shopAddress->longitude ?>">
 
             <?= $form->field($model, 'shopPhone', ['options' => ['class' => 'shop-create-form']])
                 ->textInput(['maxlength' => true, 'placeholder' => '+7(000)000 00 00'])

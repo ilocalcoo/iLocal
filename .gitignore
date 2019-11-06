@@ -32,4 +32,13 @@ tests/_support/_generated
 #vagrant folder
 /.vagrant
 
+#local db config
 /config/db_local.php
+
+#tmp assets files
+/assets
+
+#photos and images
+/web/img/eventPhoto
+/web/img/shopPhoto
+/web/img/happeningPhoto

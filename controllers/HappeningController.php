@@ -2,7 +2,7 @@
 
 namespace app\controllers;
 
-use app\models\search\HappeningSearch;
+//use app\models\search\HappeningSearch;
 use app\models\Shop;
 use app\models\User;
 use app\models\UserHappening;
