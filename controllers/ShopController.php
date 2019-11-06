@@ -464,4 +464,30 @@ class ShopController extends Controller
 
     throw new NotFoundHttpException('The requested page does not exist.');
   }
+
+    /**
+     * Updates an existing Shop model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionUpdate($id)
+    {
+        $model = $this->findModel($id);
+
+        if (Yii::$app->request->isPost) {
+            $model->uploadedShopPhoto = UploadedFile::getInstances($model, 'uploadedShopPhoto');
+
+            if ($model->uploadShopPhoto()) {
+                if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            }
+        }
+
+        return $this->render('update', [
+            'model' => $model,
+        ]);
+    }
 }

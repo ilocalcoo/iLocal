@@ -1,6 +1,7 @@
 <?php
 
 use app\models\Shop;
+use app\models\ThumbGenerator;
 use kartik\date\DatePicker;
 use kartik\datetime\DateTimePicker;
 use kartik\time\TimePicker;
@@ -55,7 +56,7 @@ krsort($eventOwner);
             </div>
             <?php Modal::end(); ?>
 
-            <input type="hidden" name="coords_address" id="coords_address" value="">
+            <input type="hidden" name="coords_address" id="coords_address" value="<?= $model->latitude . ',' . $model->longitude ?>">
 
             <?= $form->field($model, 'happeningTypeId', ['options' => ['class' => 'shop-create-form']])->radioList(
                 app\models\HappeningType::getNames(),
@@ -71,6 +72,25 @@ krsort($eventOwner);
                 ]
             )->label('Категория') ?>
 
+            <div class="shop-form_shop-photos-wrap">
+                <?php if (empty($model->happeningPhotos)) {
+                    echo 'Нет загруженных фотографий';
+                }?>
+                <?php foreach ($model->happeningPhotos as $photo) { ?>
+                    <div class="shop-form_shop-photos">
+                        <?= Html::img('/img/happeningPhoto/'
+                            . $model->id . '/'
+                            . ThumbGenerator::getSizeDir('small') .'/'
+                            . ($photo['happeningPhoto']), ['class' => 'shop-form_photo']) ?>
+                        <?= Html::a(Html::img('/img/shop/photo_delete.svg'), ['/happening-photo/delete', 'id' => $photo['id']], [
+                            'class' => 'shop-form_photo-delete',
+                            'data' => [
+                                'confirm' => 'Вы уверены что хотите удалить фотографию?'
+                            ],
+                        ]) ?>
+                    </div>
+                <?php } ?>
+            </div>
             <?= $form->field($model, 'uploadedHappeningPhoto[]')->fileInput(['multiple' => true, 'accept' => 'image/*'])->label('Изображение')
                 ->hint('Прикрепите от 1 до 3 файлов') ?>
         </div>

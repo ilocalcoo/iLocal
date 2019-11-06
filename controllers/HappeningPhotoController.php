@@ -2,11 +2,12 @@
 
 namespace app\controllers;
 
-use app\models\ShopPhoto;
+use app\models\EventPhoto;
+use app\models\HappeningPhoto;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 
-class ShopPhotoController extends Controller
+class HappeningPhotoController extends Controller
 {
 
     /**
@@ -18,19 +19,19 @@ class ShopPhotoController extends Controller
      */
     public function actionDelete($id)
     {
-        $shopPhoto = $this->findModel($id);
-        $shopPhoto->delete();
-        return $this->redirect(["/shops/$shopPhoto->shopId/update"]);
+        $happeningPhoto = $this->findModel($id);
+        $happeningPhoto->delete();
+        return $this->redirect(["/happenings/$happeningPhoto->happeningId/update"]);
     }
 
     /**
      * @param $id
-     * @return ShopPhoto|null
+     * @return HappeningPhoto|null
      * @throws NotFoundHttpException
      */
     protected function findModel($id)
     {
-        if (($model = ShopPhoto::findOne($id)) !== null) {
+        if (($model = HappeningPhoto::findOne($id)) !== null) {
             return $model;
         }
 

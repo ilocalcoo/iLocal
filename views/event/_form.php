@@ -42,6 +42,10 @@ $eventOwner = Shop::find()
                 ]
             )->label('Категория') ?>
 
+            <div class="shop-form_shop-photos-wrap">
+                <?php if (empty($model->eventPhotos)) {
+                   echo 'Нет загруженных фотографий';
+                }?>
             <?php foreach ($model->eventPhotos as $photo) { ?>
                 <div class="shop-form_shop-photos">
                     <?= Html::img('/img/eventPhoto/'
@@ -56,6 +60,7 @@ $eventOwner = Shop::find()
                     ]) ?>
                 </div>
             <?php } ?>
+            </div>
 
             <?= $form->field($model, 'uploadedEventPhoto[]')
                 ->fileInput(['multiple' => true, 'accept' => 'image/*'])->label('Изображение')
