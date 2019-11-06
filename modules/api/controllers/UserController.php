@@ -15,17 +15,17 @@ class UserController extends ActiveController
 {
   public $modelClass = 'app\models\User';
 
-//    public function behaviors()
-//    {
-//        $behaviors = parent::behaviors();
-//        // Добавляем атунтификацию через BasicAuth. Токен доступа отправляется как имя пользователя.
-//        $behaviors['authenticator'] = [
-//            'class' => HttpBasicAuth::className(),
-//            // Отключаем аутентификацию при запросе токена.
-//            'except' => ['login', 'register'],
-//        ];
-//        return $behaviors;
-//    }
+    public function behaviors()
+    {
+        $behaviors = parent::behaviors();
+        // Добавляем атунтификацию через BasicAuth. Токен доступа отправляется как имя пользователя.
+        $behaviors['authenticator'] = [
+            'class' => HttpBasicAuth::className(),
+            // Отключаем аутентификацию при запросе токена.
+            'except' => ['login', 'register'],
+        ];
+        return $behaviors;
+    }
 
   public function actions()
   {
