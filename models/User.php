@@ -119,13 +119,13 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
   {
     return [
       'id', 'lastName', 'firstName', 'middleName', 'username',
-      'userAddress', 'eventsFavorites', 'shopsFavorites', 'happeningsFavorites'
+      'userAddress',
     ];
   }
 
   public function extraFields()
   {
-    return ['shops', 'events', 'happenings'];
+    return ['shops', 'events', 'happenings', 'eventsFavorites', 'shopsFavorites', 'happeningsFavorites'];
   }
 
 
