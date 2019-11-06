@@ -117,10 +117,17 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
 
   public function fields()
   {
-    return ArrayHelper::merge(parent::fields(), [
+    return [
+      'id', 'lastName', 'firstName', 'middleName', 'username',
       'userAddress', 'eventsFavorites', 'shopsFavorites', 'happeningsFavorites'
-    ]);
+    ];
   }
+
+  public function extraFields()
+  {
+    return ['shops', 'events', 'happenings'];
+  }
+
 
   /**
    * @return \yii\db\ActiveQuery
@@ -192,6 +199,14 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
   public function getEvents()
   {
     return $this->hasMany(Event::className(), ['creatorId' => 'id']);
+  }
+
+  /**
+   * @return \yii\db\ActiveQuery
+   */
+  public function getHappenings()
+  {
+    return $this->hasMany(Happening::className(), ['creatorId' => 'id']);
   }
 
   /**
