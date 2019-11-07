@@ -13,4 +13,10 @@ $(document).ready(function () {
     $('#navbarNav').toggleClass('content-active');
     $('#navbarNav').toggleClass('content-desc');
   })
+  $('.backdrop').click(function (event) {
+    event.preventDefault();
+    $('.backdrop').hide();
+    $('#navbarNav').toggleClass('content-active');
+    $('#navbarNav').toggleClass('content-desc');
+  })
 });
