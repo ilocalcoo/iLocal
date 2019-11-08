@@ -35,6 +35,7 @@ class ShopController extends ActiveController
     $actions = parent::actions();
     unset($actions['index']);
     unset($actions['create']);
+    unset($actions['update']);
     return $actions;
   }
 
@@ -77,5 +78,25 @@ class ShopController extends ActiveController
       }
     }
   }
+
+    /**
+     * @return Shop
+     * @var $model Shop
+     */
+    public function actionUpdate($id)
+    {
+        $model = Shop::findOne(['id' => $id]);
+        if ($model->load(Yii::$app->getRequest()->getBodyParams(), '')) {
+            if ($model->save()) {
+                $model->uploadedShopPhoto = UploadedFile::getInstancesByName('files');
+                $model->uploadShopPhoto();
+                return $model;
+            } elseif (!$model->hasErrors()) {
+                throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
+            }
+        }
+
+        return $model;
+    }
 
 }

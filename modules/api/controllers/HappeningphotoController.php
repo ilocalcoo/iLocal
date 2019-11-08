@@ -4,6 +4,8 @@
 namespace app\modules\api\controllers;
 
 
+use app\models\HappeningPhoto;
+use Yii;
 use yii\filters\auth\HttpBasicAuth;
 use yii\rest\ActiveController;
 
@@ -27,7 +29,18 @@ class HappeningphotoController extends ActiveController
     {
         $actions = parent::actions();
         unset($actions['create']);
+        unset($actions['update']);
+        unset($actions['delete']);
         return $actions;
+    }
+
+    public function actionDelete($id) {
+        $model = HappeningPhoto::findOne(['id' => $id]);
+        if ($model->delete() === false) {
+            throw new ServerErrorHttpException('Failed to delete the object for unknown reason.');
+        }
+
+        Yii::$app->getResponse()->setStatusCode(204);
     }
 
 }

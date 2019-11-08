@@ -30,6 +30,7 @@ class EventController extends ActiveController
     {
         $actions = parent::actions();
         unset($actions['create']);
+        unset($actions['update']);
         return $actions;
     }
 
@@ -49,6 +50,26 @@ class EventController extends ActiveController
                 throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
             }
         }
+    }
+
+    /**
+     * @return Event
+     * @var $model Event
+     */
+    public function actionUpdate($id)
+    {
+        $model = Event::findOne(['id' => $id]);
+        if ($model->load(Yii::$app->getRequest()->getBodyParams(), '')) {
+            if ($model->save()) {
+                $model->uploadedEventPhoto = UploadedFile::getInstancesByName('files');
+                $model->uploadEventPhoto();
+                return $model;
+            } elseif (!$model->hasErrors()) {
+                throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
+            }
+        }
+
+        return $model;
     }
 
 }
