@@ -5,6 +5,7 @@ namespace app\modules\api\controllers;
 
 
 use app\models\EventPhoto;
+use app\models\ThumbGenerator;
 use Yii;
 use yii\filters\auth\HttpBasicAuth;
 use yii\rest\ActiveController;
@@ -36,9 +37,12 @@ class EventphotoController extends ActiveController
 
     public function actionDelete($id) {
         $model = EventPhoto::findOne(['id' => $id]);
+        $fileName = $model->eventPhoto;
+        $itemId = $model->eventId;
         if ($model->delete() === false) {
             throw new ServerErrorHttpException('Failed to delete the object for unknown reason.');
         }
+        ThumbGenerator::deleteFile('event', $itemId, $fileName);
 
         Yii::$app->getResponse()->setStatusCode(204);
     }

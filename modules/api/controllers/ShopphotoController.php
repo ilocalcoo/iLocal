@@ -5,6 +5,7 @@ namespace app\modules\api\controllers;
 
 
 use app\models\ShopPhoto;
+use app\models\ThumbGenerator;
 use Yii;
 use yii\filters\auth\HttpBasicAuth;
 use yii\rest\ActiveController;
@@ -37,9 +38,12 @@ class ShopphotoController extends ActiveController
 
     public function actionDelete($id) {
         $model = ShopPhoto::findOne(['id' => $id]);
+        $fileName = $model->shopPhoto;
+        $itemId = $model->shopId;
         if ($model->delete() === false) {
             throw new ServerErrorHttpException('Failed to delete the object for unknown reason.');
         }
+        ThumbGenerator::deleteFile('shop', $itemId, $fileName);
 
         Yii::$app->getResponse()->setStatusCode(204);
     }
