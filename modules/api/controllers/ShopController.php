@@ -72,6 +72,8 @@ class ShopController extends ActiveController
       if ($model->save()) {
         $model->uploadedShopPhoto = UploadedFile::getInstancesByName('files');
         $model->uploadShopPhoto();
+        $model->uploadedPdf = UploadedFile::getInstancesByName('pdf');
+        $model->uploadPdf();
         return $model;
       } elseif (!$model->hasErrors()) {
         throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
@@ -90,6 +92,8 @@ class ShopController extends ActiveController
             if ($model->save()) {
                 $model->uploadedShopPhoto = UploadedFile::getInstancesByName('files');
                 $model->uploadShopPhoto();
+                $model->uploadedPdf = UploadedFile::getInstancesByName('pdf');
+                $model->uploadPdf();
                 return $model;
             } elseif (!$model->hasErrors()) {
                 throw new ServerErrorHttpException('Failed to create the object for unknown reason.');

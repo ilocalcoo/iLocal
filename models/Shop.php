@@ -89,6 +89,10 @@ class Shop extends \yii\db\ActiveRecord
    * @var UploadedFile[]
    */
   public $uploadedShopPhoto;
+    /**
+     * @var UploadedFile[]
+     */
+  public $uploadedPdf;
   public $distance;
 
 
@@ -131,7 +135,8 @@ class Shop extends \yii\db\ActiveRecord
       [['shopTypeId'], 'exist', 'skipOnError' => true, 'targetClass' => ShopType::className(), 'targetAttribute' => ['shopTypeId' => 'id']],
       [['creatorId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute'
       => ['creatorId' => 'id']],
-      [['uploadedShopPhoto'], 'file', 'extensions' => 'jpeg, jpg, png', 'maxFiles' => 10]
+      [['uploadedShopPhoto'], 'file', 'extensions' => 'jpeg, jpg, png', 'maxFiles' => 10],
+      [['uploadedPdf'], 'file', 'extensions' => 'pdf', 'maxFiles' => 1]
     ];
   }
 
@@ -202,6 +207,23 @@ class Shop extends \yii\db\ActiveRecord
       return false;
     }
   }
+
+    public function uploadPdf()
+    {
+        if ($this->validate()) {
+            if (!is_dir('pdf')) {
+                mkdir('pdf', 0755, true);
+            }
+            foreach ($this->uploadedPdf as $file) {
+                $this->shopLinkPdf = 'pdf/'.$this->shopId.'description.' . $file->extension;
+                $file->saveAs($this->shopLinkPdf);
+            }
+        } else {
+            return false;
+        }
+
+        return $this->save();
+    }
 
   public function shopRating()
   {
