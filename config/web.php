@@ -130,6 +130,7 @@ $config = [
         ['class' => 'yii\rest\UrlRule', 'controller' => 'api/shopphoto'],
         ['class' => 'yii\rest\UrlRule', 'controller' => 'api/eventphoto'],
         ['class' => 'yii\rest\UrlRule', 'controller' => 'api/image'],
+        ['class' => 'yii\rest\UrlRule', 'controller' => 'api/userAddress'],
         'api/<controller:(user)>s/<id:\d+>/<action:(view|update|delete)>' => '<controller>/<action>',
       ],
     ],
