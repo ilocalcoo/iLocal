@@ -97,14 +97,12 @@ SliderAsset::register($this);
 							<a href="/events/<?= $event->id ?>">
 								<div class="slide-img">
 									<img width="277px"
-											 src="
-											 <?php $photo = $event->getEventPhotos()->asArray()->one()['eventPhoto'];
+											 src="<?php $photo = $event->getEventPhotos()->asArray()->one()['eventPhoto'];
                                              if (is_null($photo)) {
                                                  echo '/img/nophoto.jpg';
                                              } else {
                                                  echo '/img/eventPhoto/' . ThumbGenerator::getGallery($event->id, 'img/eventPhoto')['medium'][0];
-                                             } ?>"
-											 alt="<?= $event->title ?>">
+                                             } ?>" alt="<?= $event->title ?>">
 									<div class="overlay">
 										<a class="overlay-link" href="/events/<?= $event->id ?>"><?= $event->title ?></a>
 									</div>

@@ -87,7 +87,7 @@ class ShopController extends ActiveController
      */
     public function actionUpdate($id)
     {
-        $model = Shop::findOne(['id' => $id]);
+        $model = Shop::findOne(['shopId' => $id]);
         if ($model->load(Yii::$app->getRequest()->getBodyParams(), '')) {
             $model->uploadShopFiles(UploadedFile::getInstanceByName('pdf'));
             if ($model->save()) {
