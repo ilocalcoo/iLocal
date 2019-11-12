@@ -51,6 +51,7 @@ $config = [
       // Для того чтобы API мог принимать данные в формате JSON
       'parsers' => [
         'application/json' => 'yii\web\JsonParser',
+          'multipart/form-data' => 'yii\web\MultipartFormDataParser'
       ]
     ],
     'cache' => [

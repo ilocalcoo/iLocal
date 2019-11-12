@@ -220,6 +220,9 @@ class Shop extends \yii\db\ActiveRecord
      */
     public function uploadShopFiles($file)
     {
+        if (!is_object($file)) {
+            return false;
+        }
         FileHelper::createDirectory('pdf');
         if (($file->extension == 'pdf') || ($file->extension == 'PDF')) {
             $fileName = 'pdf/'.$this->uuid().'.pdf';
