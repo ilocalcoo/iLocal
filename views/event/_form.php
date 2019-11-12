@@ -88,8 +88,6 @@ $eventOwner = Shop::find()
         </div>
         <div class="col-md-6 col-12"><?= $form->field($model, 'title')->textInput(['maxlength' => true]) ?>
 
-            <?= $form->field($model, 'shortDesc')->textInput(['maxlength' => true]) ?>
-
             <?= $form->field($model, 'fullDesc')->textarea(['rows' => 6]) ?>
 
             <div class="row">

@@ -481,7 +481,7 @@ class ShopController extends Controller
 
             if ($model->uploadShopPhoto()) {
                 if ($model->load(Yii::$app->request->post()) && $model->save()) {
-                    return $this->redirect(['view', 'id' => $model->id]);
+                    return $this->redirect(['view', 'id' => $model->shopId]);
                 }
             }
         }

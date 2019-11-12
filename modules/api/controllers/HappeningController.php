@@ -30,6 +30,7 @@ class HappeningController extends ActiveController
     {
         $actions = parent::actions();
         unset($actions['create']);
+        unset($actions['update']);
         return $actions;
     }
 
@@ -49,6 +50,28 @@ class HappeningController extends ActiveController
                 throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
             }
         }
+
+        return $model;
+    }
+
+    /**
+     * @return Happening
+     * @var $model Happening
+     */
+    public function actionUpdate($id)
+    {
+        $model = Happening::findOne(['id' => $id]);
+        if ($model->load(Yii::$app->getRequest()->getBodyParams(), '')) {
+            if ($model->save()) {
+                $model->uploadedHappeningPhoto = UploadedFile::getInstancesByName('files');
+                $model->uploadHappeningPhoto();
+                return $model;
+            } elseif (!$model->hasErrors()) {
+                throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
+            }
+        }
+
+        return $model;
     }
 
 }

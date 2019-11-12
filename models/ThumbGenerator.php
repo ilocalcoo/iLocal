@@ -3,7 +3,6 @@
 
 namespace app\models;
 
-
 use function array_diff;
 use function explode;
 use Imagick;
@@ -101,6 +100,23 @@ class ThumbGenerator
         $photos = ShopPhoto::find()->asArray();
         foreach ($photos as $photo) {
             self::generate('img/shopPhoto/'.$photo['shopPhoto'], $photo['shopId']);
+        }
+
+        return $result;
+    }
+
+    /**
+     * @param $item String
+     * @param $id
+     * @param $fileName String
+     * @return bool
+     */
+    public static function deleteFile($item, $id, $fileName) {
+        $path = 'img/'.$item.'Photo';
+        if (unlink($path.'/'.$fileName)) {
+            foreach (self::SIZES as $size) {
+                $result = unlink($path.'/'.$id.'/'.$size.'/'.$fileName);
+            }
         }
 
         return $result;
