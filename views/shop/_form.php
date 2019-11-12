@@ -80,7 +80,11 @@ use yii\widgets\ActiveForm;
                     'label' => '<div class="shop-create-form has-success">
                                     <label class="control-label" for="input_address">Адрес</label>
                                     <input type="text" id="input_address" name="input_address" class="form-control" 
-                                    value="'.$model->shopAddress->city.','.$model->shopAddress->street.','.$model->shopAddress->houseNumber.'" 
+                                    value="'.
+                        (is_object($model->shopAddress) ?
+                        ($model->shopAddress->city.','.$model->shopAddress->street.','.$model->shopAddress->houseNumber)
+                        : '')
+                            .'" 
                                     placeholder="Введите адрес" aria-invalid="false" style="color: rgb(254, 138, 128);">
                                     <div class="help-block"></div>
                                 </div>',
@@ -98,7 +102,7 @@ use yii\widgets\ActiveForm;
                 <div id="profile_map"></div>
             </div>
             <?php Modal::end(); ?>
-            <input type="hidden" name="coords_address" id="coords_address" value="<?= $model->shopAddress->latitude.','.$model->shopAddress->longitude ?>">
+            <input type="hidden" name="coords_address" id="coords_address" value="<?=(is_object($model->shopAddress) ? ($model->shopAddress->latitude.','.$model->shopAddress->longitude) : '') ?>">
 
             <?= $form->field($model, 'shopPhone', ['options' => ['class' => 'shop-create-form']])
                 ->textInput(['maxlength' => true, 'placeholder' => '+7(000)000 00 00'])
