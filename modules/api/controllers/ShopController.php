@@ -69,16 +69,16 @@ class ShopController extends ActiveController
   {
     $model = new Shop();
     if ($model->load(Yii::$app->getRequest()->getBodyParams(), '')) {
+        $model->uploadShopFiles(UploadedFile::getInstanceByName('pdf'));
       if ($model->save()) {
-        $model->uploadedShopPhoto = UploadedFile::getInstancesByName('files');
-        $model->uploadShopPhoto();
-        $model->uploadedPdf = UploadedFile::getInstancesByName('pdf');
-        $model->uploadPdf();
-        return $model;
+          $model->uploadedShopPhoto = UploadedFile::getInstancesByName('files');
+          $model->uploadShopPhoto();
       } elseif (!$model->hasErrors()) {
         throw new ServerErrorHttpException('Failed to create the object for unknown reason.');
       }
     }
+
+      return $model;
   }
 
     /**
@@ -89,11 +89,10 @@ class ShopController extends ActiveController
     {
         $model = Shop::findOne(['id' => $id]);
         if ($model->load(Yii::$app->getRequest()->getBodyParams(), '')) {
+            $model->uploadShopFiles(UploadedFile::getInstanceByName('pdf'));
             if ($model->save()) {
                 $model->uploadedShopPhoto = UploadedFile::getInstancesByName('files');
                 $model->uploadShopPhoto();
-                $model->uploadedPdf = UploadedFile::getInstancesByName('pdf');
-                $model->uploadPdf();
                 return $model;
             } elseif (!$model->hasErrors()) {
                 throw new ServerErrorHttpException('Failed to create the object for unknown reason.');

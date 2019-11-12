@@ -2,11 +2,13 @@
 
 namespace app\models;
 
+use Cassandra\Uuid;
 use Yii;
 use yii\behaviors\BlameableBehavior;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveQuery;
 use yii\helpers\ArrayHelper;
+use yii\helpers\FileHelper;
 use yii\web\UploadedFile;
 
 /**
@@ -38,6 +40,7 @@ use yii\web\UploadedFile;
  * @property ShopType $shopType
  * @property User $creator
  * @property ShopPhoto[] $shopPhotos
+ * @property ShopFiles[] $shopFiles
  * @property ShopRating[] $shopRatings
  * @property ShopRating[] $shopAvgRating
  * @property Event[] $events
@@ -85,14 +88,12 @@ class Shop extends \yii\db\ActiveRecord
 //  const SCENARIO_DEFAULT = 'delete';
 //  const SCENARIO_RATING = 'rating';
 
-  /**
+    /**
    * @var UploadedFile[]
    */
   public $uploadedShopPhoto;
-    /**
-     * @var UploadedFile[]
-     */
-  public $uploadedPdf;
+
+
   public $distance;
 
 
@@ -135,8 +136,9 @@ class Shop extends \yii\db\ActiveRecord
       [['shopTypeId'], 'exist', 'skipOnError' => true, 'targetClass' => ShopType::className(), 'targetAttribute' => ['shopTypeId' => 'id']],
       [['creatorId'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute'
       => ['creatorId' => 'id']],
-      [['uploadedShopPhoto'], 'file', 'extensions' => 'jpeg, jpg, png', 'maxFiles' => 10],
-      [['uploadedPdf'], 'file', 'extensions' => 'pdf', 'maxFiles' => 1]
+        //[['uploadedShopFile'], 'file', 'extensions' => 'pdf,PDF', 'checkExtensionByMimeType' => false],
+        [['uploadedShopPhoto'], 'file', 'extensions' => 'jpeg, jpg, png', 'maxFiles' => 10],
+
     ];
   }
 
@@ -194,6 +196,9 @@ class Shop extends \yii\db\ActiveRecord
   {
     if ($this->validate()) {
       foreach ($this->uploadedShopPhoto as $file) {
+          if ($file->extension == 'pdf') {
+              continue;
+          }
         $fileName = 'img/shopPhoto/' . $file->baseName . '.' . $file->extension;
         $file->saveAs($fileName);
         ThumbGenerator::generate($fileName, $this->shopId);
@@ -208,21 +213,28 @@ class Shop extends \yii\db\ActiveRecord
     }
   }
 
-    public function uploadPdf()
+    /**
+     * @param $file UploadedFile
+     * @return bool
+     * @throws \yii\base\Exception
+     */
+    public function uploadShopFiles($file)
     {
-        if ($this->validate()) {
-            if (!is_dir('pdf')) {
-                mkdir('pdf', 0755, true);
-            }
-            foreach ($this->uploadedPdf as $file) {
-                $this->shopLinkPdf = 'pdf/'.$this->shopId.'description.' . $file->extension;
-                $file->saveAs($this->shopLinkPdf);
-            }
-        } else {
-            return false;
+        FileHelper::createDirectory('pdf');
+        if (($file->extension == 'pdf') || ($file->extension == 'PDF')) {
+            $fileName = 'pdf/'.$this->uuid().'.pdf';
+            $file->saveAs($fileName);
+//        print_r($file->extension);
+//        Yii::$app->end(0);
+//        $model = new ShopFiles();
+//        $model->shopFile = $fileName;
+//        $model->shopId = $this->shopId;
+//        $model->save();
+            $this->shopLinkPdf = $fileName;
+            return true;
         }
 
-        return $this->save();
+        return false;
     }
 
   public function shopRating()
@@ -346,6 +358,14 @@ class Shop extends \yii\db\ActiveRecord
     return $this->hasMany(User::className(), ['id' => 'user_id'])->viaTable('user_shop', ['shop_id' => 'shopId']);
   }
 
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getShopFiles()
+    {
+        return $this->hasOne(ShopFiles::className(), ['shopId' => 'shopId']);
+    }
+
   /**
    * @param array $c1 first coordinate
    * @param array $c2 second coordinate
@@ -438,4 +458,17 @@ class Shop extends \yii\db\ActiveRecord
     }
     return true;
   }
+
+    private function uuid($prefix = '')
+    {
+        $chars = md5(uniqid(mt_rand(), true));
+        $uuid  = substr($chars,0,8) . '-';
+        $uuid .= substr($chars,8,4) . '-';
+        $uuid .= substr($chars,12,4) . '-';
+        $uuid .= substr($chars,16,4) . '-';
+        $uuid .= substr($chars,20,12);
+
+        return $prefix . $uuid;
+    }
+
 }
