@@ -136,7 +136,9 @@ class Event extends \yii\db\ActiveRecord
     if ($this->validate()) {
       foreach ($this->uploadedEventPhoto as $file) {
           $fileName = 'img/eventPhoto/' . $file->baseName . '.' . $file->extension;
-          $file->saveAs($fileName);
+          is_uploaded_file($file->tempName) ?
+              $file->saveAs($fileName) :
+              rename($file->tempName,$fileName);
           ThumbGenerator::generate($fileName, $this->id);
         $model = new EventPhoto();
         $model->eventPhoto = $file->baseName . '.' . $file->extension;
