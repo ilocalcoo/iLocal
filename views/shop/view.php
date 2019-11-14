@@ -72,7 +72,7 @@ if (count($carousel) == 1) {
             </div>
         </div>
     </div>
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1 class="shop-title"><?= Html::encode($this->title) ?></h1>
     <span class="shop-type"><?= $model->shopType::TYPES_LABELS[$model->shopType->id] ?></span>
     <span class="shop-cost"><?= $model::SHOP_MIDDLE_COST_LABELS[$model->shopMiddleCost] ?></span>
     <div class="row shop-contacts">
