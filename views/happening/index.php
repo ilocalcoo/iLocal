@@ -13,7 +13,7 @@ use yii\widgets\Pjax;
 
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
-/* @var \app\models\search\HappeningSearch $searchModel */
+/* @var $pages \yii\data\Pagination */
 /* @var \app\models\Happening $shortDescData */
 /* @var \app\models\Happening $happening */
 /* @var \app\models\Happening[] $happenings */
@@ -89,7 +89,7 @@ HappeningFeedAsset::register($this);
                 <div class="col-6 text-right">
                     <div class="custom-switch-label">Бесплатные</div>
                     <div class="custom-control custom-switch" style="display: inline-block">
-                        <input type="checkbox" class="custom-control-input" id="customSwitches" checked>
+                        <input type="checkbox" class="custom-control-input" id="customSwitches">
                         <label class="custom-control-label" for="customSwitches"></label>
                     </div>
                 </div>
@@ -109,18 +109,20 @@ HappeningFeedAsset::register($this);
                     //$happenings = $shop->gethappenings()->all();
                     if (count($happenings) != 0) { ?>
                         <div class="event-item col-md-6 col-12">
+                            <a href="/happenings/<?= $happening->id ?>">
                             <div class="slide-img">
                                 <img src="<?= '/img/happeningPhoto/'.($happening->happeningPhotos ? $happening->happeningPhotos[0]->happeningPhoto : 'nofoto') ?>" alt="<?= $happening->title ?>">
                                 <div class="overlay">
-                                    <a class="overlay-link event-link" href="/happenings/<?= $happening->id ?>">
+                                    <div class="overlay-link event-link" href="/happenings/<?= $happening->id ?>">
                                         <?= mb_strlen($happening->title) > 70 ? mb_substr($happening->title,0,70).'...' : $happening->title ?>
                                         <div class="event-date">
                                             <?= date('H:i d.m.Y', strtotime($happening->begin)) ?>
                                         </div>
-                                    </a>
+                                    </div>
                                 </div>
                                 <span class="badge badge-coral"><?= $happening->price ?? 'Free'?></span>
                             </div>
+                            </a>
                         </div>
                     <?php }
                 } ?>

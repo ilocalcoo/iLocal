@@ -4,6 +4,8 @@
 
 /* @var $content string */
 
+use app\models\Happening;
+use app\models\HappeningType;
 use yii\bootstrap4\Modal;
 use yii\helpers\Html;
 use app\assets\AppAsset;
@@ -165,7 +167,15 @@ AppAsset::register($this);
 					<a href="/shops?shopTypeId=4" <?php if (active('TypeId=4')) echo 'class="nav-bar-categories-active"' ?>>Красота</a>
 					<a href="/shops?shopTypeId=5" <?php if (active('TypeId=5')) echo 'class="nav-bar-categories-active"' ?>>Покупки</a>
 					<a href="/shops">Все</a>
-        <?php } ?>
+        <?php } elseif ($currentUrl == 'happ') {
+            $types = HappeningType::getNames();
+            foreach ($types as $key=>$type) {
+                echo '<a href="/happenings?happeningTypeId='.($key+1).'"';
+                if (active('TypeId='.($key+1).'')) { echo ' class="nav-bar-categories-active" '; }
+                echo '>'.$type.'</a>';
+            }
+            echo '<a href="/happenings">Все</a>';
+        } ?>
 			</div>
 		</div>
 	</div>
