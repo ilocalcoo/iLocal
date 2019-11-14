@@ -200,7 +200,9 @@ class Shop extends \yii\db\ActiveRecord
               continue;
           }
         $fileName = 'img/shopPhoto/' . $file->baseName . '.' . $file->extension;
-        $file->saveAs($fileName);
+          is_uploaded_file($file->tempName) ?
+              $file->saveAs($fileName) :
+              rename($file->tempName,$fileName);
         ThumbGenerator::generate($fileName, $this->shopId);
         $model = new ShopPhoto();
         $model->shopPhoto = $file->baseName . '.' . $file->extension;
