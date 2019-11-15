@@ -33,6 +33,7 @@
 
 .thanks {
   color: #454545;
+  margin-top: 30px;
 }
 
 a.button {
@@ -71,6 +72,9 @@ a.button {
     margin-top: 40px;
   }
   .pink {
+    width: 102vw;
+    position: relative;
+    left: calc(-50vw + 50%);
   }
   .phone-body {
     height: 730px;
@@ -103,7 +107,7 @@ a.button {
     margin-top: 170px;
   }
   .button {
-    margin-bottom: 150px;
+    margin: 30px 0;
   }
   footer {
     background-color: #FCF7F4;
@@ -112,6 +116,9 @@ a.button {
   }
   footer a:hover {
     color: #454545;
+  }
+  .city {
+    width: 100%;
   }
 }
 
@@ -143,5 +150,8 @@ a.button {
   }
   footer a:hover {
     color: #454545;
+  }
+  .line {
+    height: 6px;
   }
 }
