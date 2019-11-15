@@ -39,7 +39,7 @@ class EventController extends ActiveController
     public function actionIndex()
     {
         $query = Event::find()->where(['active' => 1]);
-        return $query->all();
+        return array_values($query->all());
     }
 
     /**

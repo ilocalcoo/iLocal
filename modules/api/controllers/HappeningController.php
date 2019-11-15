@@ -39,7 +39,7 @@ class HappeningController extends ActiveController
     public function actionIndex()
     {
         $query = Happening::find()->where(['active' => 1]);
-        return $query->all();
+        return array_values($query->all());
     }
 
     /**
