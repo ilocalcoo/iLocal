@@ -24,6 +24,7 @@ AboutAsset::register($this);
 		<h2 class="text-center">Узнавай первым!</h2>
 		<br>
 		<p class="text-center">Открывается рядом магазин, детский центр или аптека? Ты узнаешь об этом первым!</p>
+		<div class="line"></div>
 	</div>
 	<div class="col-md-6 col-12 phone">
 		<div class="phone-body">
@@ -45,6 +46,7 @@ AboutAsset::register($this);
 			вида
 			спорта или экскурсия с биологом в парке - следи за событиями для всей семьи.
 		</p>
+		<div class="line"></div>
 	</div>
 </div>
 <div class="row">
@@ -55,6 +57,7 @@ AboutAsset::register($this);
 			предложениями
 			в винотеке поблизости? Акции подскажут, как с пользой распорядиться временем и деньгами.
 		</p>
+		<div class="line"></div>
 	</div>
 	<div class="col-md-6 col-12 phone">
 		<div class="phone-body">
@@ -95,12 +98,6 @@ AboutAsset::register($this);
 	<h3>Спасибо!</h3>
 	<p>Есть, что сказать или возникли вопросы? Будем рады!</p>
 	<div>hello@imlocal.ru</div>
-</div>
-<div class="back">
-	<img src="img/about/ellipse1.svg" alt="ellipse1" class="spot spot1">
-	<img src="img/about/ellipse2.svg" alt="ellipse2" class="spot spot2">
-	<img src="img/about/ellipse3.svg" alt="ellipse3" class="spot spot3">
-	<img src="img/about/ellipse4.svg" alt="ellipse4" class="spot spot4">
 </div>
 <div class="back-mobile"></div>
 
