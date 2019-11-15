@@ -31,12 +31,9 @@
   position: relative;
 }
 
-.back {
-  display: none;
-}
-
 .thanks {
   color: #454545;
+  margin-top: 30px;
 }
 
 a.button {
@@ -47,16 +44,37 @@ a.button {
   font-family: Roboto;
 }
 
+.line {
+  margin-top: 95px;
+  background: #454545;
+  height: 15px;
+  width: 100%;
+}
+
+.pink {
+  background: linear-gradient(0deg, rgba(254, 138, 128, 0.9), rgba(254, 138, 128, 0.9)),
+  linear-gradient(270deg, #FF22E9 0%, #FF3898 23.96%, #FE8A80 100%);
+}
+
+.back-mobile {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: -1;
+  background: linear-gradient(0deg, rgba(254, 138, 128, 0.9), rgba(254, 138, 128, 0.9)),
+  linear-gradient(270deg, #FF22E9 0%, #FF3898 23.96%, #FE8A80 100%);
+  height: 200px;
+}
+
 @media (min-width: 768px) {
-  .back {
-    display: block;
-  }
-  .elipse {
-    background: linear-gradient(0deg, rgba(254, 138, 128, 0.9), rgba(254, 138, 128, 0.9)),
-    linear-gradient(270deg, #FF22E9 0%, #FF3898 23.96%, #FE8A80 100%);
-  }
   .phone {
     margin-top: 40px;
+  }
+  .pink {
+    width: 102vw;
+    position: relative;
+    left: calc(-50vw + 50%);
   }
   .phone-body {
     height: 730px;
@@ -85,27 +103,11 @@ a.button {
   .text-ellipse {
     color: #454545;
   }
-  .spot {
-    position: absolute;
-    z-index: -1;
-  }
-  .spot1 {
-    top: 884px;
-  }
-  .spot2 {
-    top: 1617px;
-  }
-  .spot3 {
-    top: 2280px;
-  }
-  .spot4 {
-    top: 3160px;
-  }
   .text-column {
     margin-top: 170px;
   }
   .button {
-    margin-bottom: 150px;
+    margin: 30px 0;
   }
   footer {
     background-color: #FCF7F4;
@@ -114,6 +116,9 @@ a.button {
   }
   footer a:hover {
     color: #454545;
+  }
+  .city {
+    width: 100%;
   }
 }
 
@@ -133,16 +138,6 @@ a.button {
   .elipse {
     background-color: #FCF7F4;
   }
-  .back-mobile {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: -1;
-    background: linear-gradient(0deg, rgba(254, 138, 128, 0.9), rgba(254, 138, 128, 0.9)),
-      linear-gradient(270deg, #FF22E9 0%, #FF3898 23.96%, #FE8A80 100%);
-    height: 200px;
-  }
   .text-ellipse {
     color: #454545;
   }
@@ -156,8 +151,7 @@ a.button {
   footer a:hover {
     color: #454545;
   }
-  .pink {
-    background: linear-gradient(0deg, rgba(254, 138, 128, 0.9), rgba(254, 138, 128, 0.9)),
-    linear-gradient(270deg, #FF22E9 0%, #FF3898 23.96%, #FE8A80 100%);
+  .line {
+    height: 6px;
   }
 }
