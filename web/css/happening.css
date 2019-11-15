@@ -10,10 +10,13 @@
   position: relative;
   width: 100%;
   display: block;
-  overflow: hidden;
+  max-height:270px;
+  overflow:hidden;
+
 }
 .slide-img img {
   width: inherit;
+  max-height: 100%;
 }
 
 .slide-text {
@@ -32,6 +35,7 @@
   -ms-transform: translate(-50%,-50%);
   background: linear-gradient(to top, black, transparent);
   z-index: 2;
+  top: 270px;
 }
 
 .overlay-link {

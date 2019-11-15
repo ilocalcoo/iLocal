@@ -29,9 +29,17 @@ class HappeningController extends ActiveController
     public function actions()
     {
         $actions = parent::actions();
+        unset($actions['index']);
         unset($actions['create']);
         unset($actions['update']);
+        unset($actions['delete']);
         return $actions;
+    }
+
+    public function actionIndex()
+    {
+        $query = Happening::find()->where(['active' => 1]);
+        return $query->all();
     }
 
     /**
@@ -55,8 +63,10 @@ class HappeningController extends ActiveController
     }
 
     /**
-     * @return Happening
-     * @var $model Happening
+     * @param $id
+     * @return Happening|null
+     * @throws ServerErrorHttpException
+     * @throws \yii\base\InvalidConfigException
      */
     public function actionUpdate($id)
     {
@@ -72,6 +82,26 @@ class HappeningController extends ActiveController
         }
 
         return $model;
+    }
+
+    /**
+     * @param $id
+     * @return bool
+     * @throws ServerErrorHttpException
+     */
+    public function actionDelete($id)
+    {
+        $model = Happening::findOne(['id' => $id]);
+        if ($model) {
+            $model->active = 0;
+            if ($model->save()) {
+                return true;
+            } elseif (!$model->hasErrors()) {
+                throw new ServerErrorHttpException('Failed to delete the object for unknown reason.');
+            }
+        }
+
+        return false;
     }
 
 }

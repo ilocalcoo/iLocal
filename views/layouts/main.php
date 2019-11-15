@@ -4,6 +4,8 @@
 
 /* @var $content string */
 
+use app\models\Happening;
+use app\models\HappeningType;
 use yii\bootstrap4\Modal;
 use yii\helpers\Html;
 use app\assets\AppAsset;
@@ -165,7 +167,15 @@ AppAsset::register($this);
 					<a href="/shops?shopTypeId=4" <?php if (active('TypeId=4')) echo 'class="nav-bar-categories-active"' ?>>Красота</a>
 					<a href="/shops?shopTypeId=5" <?php if (active('TypeId=5')) echo 'class="nav-bar-categories-active"' ?>>Покупки</a>
 					<a href="/shops">Все</a>
-        <?php } ?>
+        <?php } elseif ($currentUrl == 'happ') {
+            $types = HappeningType::getNames();
+            foreach ($types as $key=>$type) {
+                echo '<a href="/happenings?happeningTypeId='.($key+1).'"';
+                if (active('TypeId='.($key+1).'')) { echo ' class="nav-bar-categories-active" '; }
+                echo '>'.$type.'</a>';
+            }
+            echo '<a href="/happenings">Все</a>';
+        } ?>
 			</div>
 		</div>
 	</div>
@@ -201,6 +211,22 @@ AppAsset::register($this);
 	</div>
 </footer>
 <div class="backdrop"></div>
+
+<!-- Yandex.Metrika counter -->
+<script type="text/javascript" >
+    (function(m,e,t,r,i,k,a){m[i]=m[i]||function(){(m[i].a=m[i].a||[]).push(arguments)};
+        m[i].l=1*new Date();k=e.createElement(t),a=e.getElementsByTagName(t)[0],k.async=1,k.src=r,a.parentNode.insertBefore(k,a)})
+    (window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+    ym(56240335, "init", {
+        clickmap:true,
+        trackLinks:true,
+        accurateTrackBounce:true,
+        webvisor:true
+    });
+</script>
+<noscript><div><img src="https://mc.yandex.ru/watch/56240335" style="position:absolute; left:-9999px;" alt="" /></div></noscript>
+<!-- /Yandex.Metrika counter -->
 
 <?php $this->endBody() ?>
 

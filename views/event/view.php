@@ -16,19 +16,19 @@ $this->registerCssFile('/css/event.css',['depends' => '\app\assets\AppAsset']);
 $eventPhoto = $model->getEventPhotos()->asArray()->one()["eventPhoto"];
 $shopAddress = \app\models\ShopAddress::findOne($model->eventOwner["shopAddressId"]);
 $shopPhoto = \app\models\ShopPhoto::find()->where(['=', 'shopId', $model->eventOwner["shopId"]])->asArray()->one();
-
+$this->title = $model->title.' - Акции';
 //\yii\web\YiiAsset::register($this);
 ?>
 <div class="event-view" id="event-view-content">
     <div class="container">
         <div class="row align-items-center mb-3">
-            <div class="col-md-2 col-12 mx-auto text-center">
-                <a class="shop_img" href="<?= 'shops/' . $model->eventOwner["shopId"] ?>" data-pjax="0">
-                    <img src="/img/shopPhoto/<?= $shopPhoto["shopPhoto"] ?>" alt="">
+            <div class="col-12 mx-auto text-md-left text-center">
+                <a class="shop-link mr-md-3 mr-1" href="<?= 'shops/' . $model->eventOwner["shopId"] ?>" data-pjax="0">
+                    <img src="/img/shopPhoto/<?= $shopPhoto["shopPhoto"] ?>" alt="" class="shop-img">
                 </a>
-            </div>
-            <div class="col-md-10 col-12 mx-auto text-md-left text-center">
-                <h5 class="card-title"><?= $model->eventOwner["shopShortName"] ?></h5>
+                <a href="<?= 'shops/' . $model->eventOwner["shopId"] ?>" data-pjax="0">
+                    <h5 class="card-title mt-md-2"><?= $model->eventOwner["shopShortName"] ?></h5>
+                </a>
                 <div class="event-view-shop-address"><?php
                     $comma = '';
                     foreach (ArrayHelper::toArray($shopAddress) as $key => $item) {
@@ -41,7 +41,11 @@ $shopPhoto = \app\models\ShopPhoto::find()->where(['=', 'shopId', $model->eventO
                         echo $comma . $item;
                         $comma = ', ';
                     }
-                    ?></div>
+                    ?>
+                </div>
+            </div>
+            <div class="col-md-10 col-12 mx-auto text-md-left text-center">
+
             </div>
         </div>
         <div class="row">

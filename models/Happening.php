@@ -23,6 +23,7 @@ use yii\web\UploadedFile;
  * @property string $begin
  * @property string $createdOn
  * @property string $updatedOn
+ * @property int $active
  *
  * @property Shop $shop
  * @property User $creator
@@ -119,6 +120,7 @@ class Happening extends ActiveRecord
             'end' => 'Дата и время окончания',
             'createdOn' => 'Создано',
             'updatedOn' => 'Обновлено',
+            'active' => 'Активно',
         ];
     }
 

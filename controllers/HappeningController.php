@@ -92,6 +92,11 @@ class HappeningController extends Controller
 //            );
 //        }
     $query = Happening::find()->joinWith('shop')->cache(10);
+      if (array_key_exists('happeningTypeId', Yii::$app->request->queryParams)) {
+          $query = $query->where(
+              ['happeningTypeId' => Yii::$app->request->queryParams['happeningTypeId']]
+          );
+      }
     $pages = new Pagination([
       'totalCount' => $query->count(),
       'pageSize' => 10,

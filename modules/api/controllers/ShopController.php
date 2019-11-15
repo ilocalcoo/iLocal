@@ -36,6 +36,7 @@ class ShopController extends ActiveController
     unset($actions['index']);
     unset($actions['create']);
     unset($actions['update']);
+    unset($actions['delete']);
     return $actions;
   }
 
@@ -100,6 +101,21 @@ class ShopController extends ActiveController
         }
 
         return $model;
+    }
+
+    public function actionDelete($id)
+    {
+        $model = Shop::findOne(['id' => $id]);
+        if ($model) {
+            $model->shopActive = 0;
+            if ($model->save()) {
+                return true;
+            } elseif (!$model->hasErrors()) {
+                throw new ServerErrorHttpException('Failed to delete the object for unknown reason.');
+            }
+        }
+
+        return false;
     }
 
 }
