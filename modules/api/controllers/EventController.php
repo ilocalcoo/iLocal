@@ -3,8 +3,10 @@
 
 namespace app\modules\api\controllers;
 
+use app\components\traits\HeaderHelper;
 use app\models\Event;
 use Yii;
+use yii\data\Pagination;
 use yii\filters\auth\HttpBasicAuth;
 use yii\rest\ActiveController;
 use yii\web\ServerErrorHttpException;
@@ -12,6 +14,7 @@ use yii\web\UploadedFile;
 
 class EventController extends ActiveController
 {
+    use HeaderHelper;
     public $modelClass = 'app\models\Event';
 
     public function behaviors()
@@ -39,6 +42,14 @@ class EventController extends ActiveController
     public function actionIndex()
     {
         $query = Event::find()->where(['active' => 1]);
+        $pages = new Pagination([
+            'totalCount' => $query->count(),
+            'pageSize' => Yii::$app->request->get('per-page') ?? 3,
+        ]);
+        $this->setPaginationHeaders($pages);
+        $query = $query->offset($pages->offset)
+            ->limit($pages->limit);
+
         return array_values($query->all());
     }
 
