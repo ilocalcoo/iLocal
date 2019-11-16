@@ -37,7 +37,7 @@ AboutAsset::register($this);
 <div class="row">
 	<div class="col-md-6 col-12 phone mobile-order">
 		<div class="phone-body">
-			<img src="img/about/screen1.png" alt="screen" class="phone-screen">
+			<img src="img/about/screen2.png" alt="screen" class="phone-screen">
 		</div>
 	</div>
 	<div class="col-md-6 col-12 text-ellipse text-column">
@@ -63,7 +63,7 @@ AboutAsset::register($this);
 	</div>
 	<div class="col-md-6 col-12 phone">
 		<div class="phone-body">
-			<img src="img/about/screen1.png" alt="screen" class="phone-screen">
+			<img src="img/about/screen3.png" alt="screen" class="phone-screen">
 		</div>
 	</div>
 </div>
