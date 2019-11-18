@@ -228,7 +228,9 @@ class Shop extends \yii\db\ActiveRecord
         FileHelper::createDirectory('pdf');
         if (($file->extension == 'pdf') || ($file->extension == 'PDF')) {
             $fileName = 'pdf/'.$this->uuid().'.pdf';
-            $file->saveAs($fileName);
+            is_uploaded_file($file->tempName) ?
+                $file->saveAs($fileName) :
+                rename($file->tempName,$fileName);
 //        print_r($file->extension);
 //        Yii::$app->end(0);
 //        $model = new ShopFiles();

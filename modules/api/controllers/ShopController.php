@@ -83,8 +83,11 @@ class ShopController extends ActiveController
   }
 
     /**
-     * @return Shop
-     * @var $model Shop
+     * @param $id
+     * @return Shop|null
+     * @throws ServerErrorHttpException
+     * @throws \yii\base\Exception
+     * @throws \yii\base\InvalidConfigException
      */
     public function actionUpdate($id)
     {
@@ -105,7 +108,7 @@ class ShopController extends ActiveController
 
     public function actionDelete($id)
     {
-        $model = Shop::findOne(['id' => $id]);
+        $model = Shop::findOne(['shopId' => $id]);
         if ($model) {
             $model->shopActive = 0;
             if ($model->save()) {
