@@ -23,7 +23,7 @@ use yii\widgets\Pjax;
 
 $this->registerCssFile('/css/happening/view.css');
 $this->registerCssFile('/css/calendar.css', ['depends' => 'kartik\daterange\DateRangePickerAsset']);
-$this->registerJsFile('/js/happeningsView.js', ['depends' => 'app\assets\AppAsset']);
+//$this->registerJsFile('/js/happeningsView.js', ['depends' => 'app\assets\AppAsset']);
 
 $this->title = 'События';
 $this->params['breadcrumbs'][] = $this->title;
@@ -97,7 +97,7 @@ HappeningFeedAsset::register($this);
         </div>
     </div>
 
-    <?php Pjax::begin(); ?>
+    <?php //Pjax::begin(); ?>
     <section id="events">
         <div class="container mt-5">
             <div class="w-100 mb-3"><h1 class="h3">
@@ -156,7 +156,7 @@ HappeningFeedAsset::register($this);
     </div>
 
 </div>
-<?php Pjax::end(); ?>
+<?php //Pjax::end(); ?>
 
 
 

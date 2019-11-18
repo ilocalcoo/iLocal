@@ -56,14 +56,14 @@ class HappeningController extends Controller
    */
   public function actionIndex()
   {
-    if ($happeningId = Yii::$app->request->get('add-happening-id')) {
+    if ($happeningId = Yii::$app->request->get('add-id')) {
       $userHappening = new UserHappening();
-      $userHappening->user_id = Yii::$app->user->id;
-      $userHappening->event_id = $happeningId;
+      $userHappening->userId = Yii::$app->user->id;
+      $userHappening->userId = $happeningId;
       $userHappening->save();
     }
 
-    if ($happeningId = Yii::$app->request->get('del-happening-id')) {
+    if ($happeningId = Yii::$app->request->get('del-id')) {
       $userHappening = UserHappening::find()
         ->where(['userId' => Yii::$app->user->id])
         ->andWhere(['happeningId' => $happeningId])
@@ -118,9 +118,26 @@ class HappeningController extends Controller
    */
   public function actionView($id)
   {
-    return $this->render('view', [
-      'model' => $this->findModel($id),
-    ]);
+      if (!Yii::$app->user->isGuest) {
+          if ($happeningId = Yii::$app->request->get('add-id')) {
+              $userHappening = new UserHappening();
+              $userHappening->userId = Yii::$app->user->id;
+              $userHappening->userId = $happeningId;
+              $userHappening->save();
+          }
+
+          if ($happeningId = Yii::$app->request->get('del-id')) {
+              $userHappening = UserHappening::find()
+                  ->where(['userId' => Yii::$app->user->id])
+                  ->andWhere(['happeningId' => $happeningId])
+                  ->one();
+              $userHappening->delete();
+          }
+      }
+
+      return $this->render('view', [
+          'model' => $this->findModel($id),
+      ]);
   }
 
   /**

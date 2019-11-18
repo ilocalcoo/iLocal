@@ -33,12 +33,14 @@ tests/_support/_generated
 /.vagrant
 
 #local db config
-/config/db_local.php
+config/db_local.php
 
 #tmp assets files
 /assets
 
 #photos and images
-/web/img/eventPhoto
-/web/img/shopPhoto
-/web/img/happeningPhoto
+web/img/eventPhoto/*
+web/img/shopPhoto/*
+web/img/happeningPhoto/*
+
+web/pdf/*
