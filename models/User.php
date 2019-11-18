@@ -150,7 +150,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
    */
   public function getEventsFavorites()
   {
-    return $this->hasMany(Event::className(), ['id' => 'event_id'])->viaTable('user_event', ['user_id' => 'id']);
+    return $this->hasMany(Event::className(), ['id' => 'event_id'])->where(['active' => 1])->viaTable('user_event', ['user_id' => 'id']);
   }
 
   /**
@@ -166,7 +166,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
    */
   public function getShopsFavorites()
   {
-    return $this->hasMany(Shop::className(), ['shopId' => 'shop_id'])->viaTable('user_shop', ['user_id' => 'id']);
+    return $this->hasMany(Shop::className(), ['shopId' => 'shop_id'])->where(['shopActive' => 1])->viaTable('user_shop', ['user_id' => 'id']);
   }
 
   /**
@@ -174,7 +174,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
    */
   public function getHappeningsFavorites()
   {
-    return $this->hasMany(Happening::className(), ['id' => 'happeningId'])->viaTable('userHappening', ['userId' => 'id']);
+    return $this->hasMany(Happening::className(), ['id' => 'happeningId'])->where(['active' => 1])->viaTable('userHappening', ['userId' => 'id']);
   }
 
   /**
@@ -182,7 +182,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
    */
   public function getShops()
   {
-    return $this->hasMany(Shop::className(), ['creatorId' => 'id']);
+    return $this->hasMany(Shop::className(), ['creatorId' => 'id'])->where(['shopActive' => 1]);
   }
 
   /**
@@ -198,7 +198,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
    */
   public function getEvents()
   {
-    return $this->hasMany(Event::className(), ['creatorId' => 'id']);
+    return $this->hasMany(Event::className(), ['creatorId' => 'id'])->where(['active' => 1]);
   }
 
   /**
@@ -206,7 +206,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
    */
   public function getHappenings()
   {
-    return $this->hasMany(Happening::className(), ['creatorId' => 'id']);
+    return $this->hasMany(Happening::className(), ['creatorId' => 'id'])->where(['active' => 1]);
   }
 
   /**

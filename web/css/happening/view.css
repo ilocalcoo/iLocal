@@ -60,7 +60,8 @@
 
 .event-view-full-desc {
     font-size: 14px;
-    color: #747474;
+    color: #454545;
+    line-height: 16px;
 }
 
 .event-view-date-wrap {
@@ -108,7 +109,12 @@
 
 .overlay-link {
     margin-bottom: 20px;
+}
 
+.social-icons {
+    position: absolute;
+    right: 14.35%;
+    top: 2.5%;
 }
 
 /* desktop only parametrs */
@@ -116,6 +122,12 @@
     .event-view-title {
         display: block;
     }
+    .event-view-full-desc {
+        font-size: 18px;
+        color: #454545;
+        line-height: 24px;
+    }
+
 
     .event-item {
         padding: 15px !important;
