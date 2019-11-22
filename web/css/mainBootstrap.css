@@ -305,7 +305,7 @@ body {
         left: 0;
         margin-bottom: 0 !important;
         height: 40px;
-        background-color: #FCF7F4;
+        background-color: #FE8A80;
     }
 
     .header-mobile {
@@ -317,7 +317,11 @@ body {
     }
     .nav-bar-categories-main-item {
         border: 0 !important;
+        border-radius: 15px 15px 15px 15px !important;
+        background: #FE8A80;
+        color: #fff;
     }
+
     .nav-bar-categories-main-item:hover {
         border-radius: 15px 15px 15px 15px !important;
     }
@@ -333,13 +337,6 @@ body {
         text-decoration: none;
         transition: color 0.3s, background-color 0.3s;
     }
-
-    .nav-bar-categories-main-item {
-        background: #FCF7F4;
-    }
-        /*.navbar {*/
-        /*justify-content: flex-start;*/
-    /*}*/
 }
 .nav-bar-categories-main {
     margin-top: 23px;
@@ -358,24 +355,25 @@ body {
 
 .nav-bar-categories-main-item {
     border: 1px solid #FE8A80;
+    background: #FE8A80;
     text-align: center;
     padding: 10px 0;
     box-sizing: border-box;
     font-size: 14px;
     line-height: 16px;
-    color: #FE8A80;
+    color: #fff;
     transition: color 0.3s, background-color 0.3s;
 }
 
 .nav-bar-categories-main-item:hover {
-    background: #FE8A80;
-    color: white;
+    background: #FCF7F4;
+    color: #FE8A80;
     transition: color 0.3s, background-color 0.3s;
 }
 
 .item-active {
-    background: #FE8A80;
-    color: white;
+    background: #FCF7F4!important;
+    color: #FE8A80;
 }
 
 .category-link, .category-link:hover {

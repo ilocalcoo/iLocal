@@ -15,6 +15,7 @@ use yii\widgets\Pjax;
 /* @var $this yii\web\View */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 /* @var \app\models\search\EventSearch $searchModel */
+/* @var $pages \yii\data\Pagination */
 /* @var \app\models\Event $shortDescData */
 /* @var \app\models\Event $event */
 /* @var \app\models\Event[] $events */
@@ -100,7 +101,7 @@ EventFeedAsset::register($this);
 
 
     <?php Pjax::begin(); ?>
-    <div class="row">
+    <div class="row mt-3">
     <?php
     foreach ($events as $event) {
         //$events = $shop->getEvents()->all();
