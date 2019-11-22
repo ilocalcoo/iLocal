@@ -188,12 +188,18 @@ $this->title = $type . ' рядом с вами';
         <?= \yii\widgets\LinkPager::widget([
           'pagination' => $pages,
           'nextPageCssClass' => 'page-item',
+          'lastPageCssClass' => 'page-item',
+          'firstPageCssClass' => 'page-item',
           'disabledListItemSubTagOptions' => ['tag' => 'span', 'class' => 'page-link'],
           'prevPageCssClass' => 'page-item',
           'pageCssClass' => 'page-item',
           'linkOptions' => ['class' => 'page-link'],
           'nextPageLabel' => '>',
           'prevPageLabel' => '<',
+          'maxButtonCount' => '3',
+          'lastPageLabel' => '>>',
+          'firstPageLabel' => '<<',
+          'disableCurrentPageButton' => 'true',
         ]); ?>
 			</nav>
 		</div>

@@ -46,6 +46,7 @@ class AuthHandler
                 $firstName = ArrayHelper::getValue($attributes, 'given_name');
                 $middleName = null;
                 $lastName = ArrayHelper::getValue($attributes, 'family_name');
+                $picture = ArrayHelper::getValue($attributes, 'picture');
                 break;
             case 'facebook':
                 $email = ArrayHelper::getValue($attributes, 'email');
@@ -58,6 +59,7 @@ class AuthHandler
                 $firstName = ArrayHelper::getValue($attributes, 'first_name');
                 $middleName = ArrayHelper::getValue($attributes, 'middle_name');
                 $lastName = ArrayHelper::getValue($attributes, 'last_name');
+                $picture = ArrayHelper::getValue($attributes, 'picture');
                 break;
             case 'vkontakte':
                 $email = ArrayHelper::getValue($attributes, 'email');
@@ -66,6 +68,7 @@ class AuthHandler
                 $firstName = ArrayHelper::getValue($attributes, 'first_name');
                 $middleName = null;
                 $lastName = ArrayHelper::getValue($attributes, 'last_name');
+                $picture = ArrayHelper::getValue($attributes, 'photo');
                 break;
             default:
                 $email = ArrayHelper::getValue($attributes, 'email');
@@ -74,6 +77,7 @@ class AuthHandler
                 $firstName = ArrayHelper::getValue($attributes, 'given_name');
                 $middleName = null;
                 $lastName = ArrayHelper::getValue($attributes, 'family_name');
+                $picture = ArrayHelper::getValue($attributes, 'picture');
         }
 
         /* @var Auth $auth */
@@ -94,6 +98,8 @@ class AuthHandler
                 $user = $auth->user;
                 // Обновляем username.
                 $this->updateUserInfo($user, $nickname);
+                // Обновляем аватарку.
+                $this->updateUserField($user, 'picture', $picture);
                 // Авторизуем пользователя (можно в конфиге задать время сессии)
                 Yii::$app->user->returnUrl = Yii::$app->request->getReferrer();
                 Yii::$app->user->login($user);
@@ -123,6 +129,7 @@ class AuthHandler
 //                        'github' => $nickname,
                         'email' => $email,
                         'password' => $password,
+                        'picture' => $picture,
 //                        'accessToken' => $accessToken,
                     ]);
                     // Тоже старый функционал. AuthKey нужен для галочки "Remember me"
@@ -210,6 +217,17 @@ class AuthHandler
             $user->username = $username;
             $user->save();
         }
+    }
+
+    /**
+     * @param User $user
+     * @param string $fieldName
+     * @param $value
+     */
+    private function updateUserField(User $user, $fieldName, $value)
+    {
+        $user->$fieldName = $value;
+        $user->save();
     }
 
 }

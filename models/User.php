@@ -22,6 +22,7 @@ use yii\helpers\ArrayHelper;
  * @property string $vk
  * @property string $accessToken
  * @property string $username
+ * @property string $picture
  * @property string $auth_key
  * @property string $password_reset_token
  * @property string $password write-only password
@@ -110,6 +111,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
       'vk' => 'Vk',
       'accessToken' => 'Access Token',
       'username' => 'Логин',
+      'picture' => 'Картинка',
       'auth_key' => 'Auth Key',
       'password_reset_token' => 'Password Reset Token',
     ];
@@ -118,7 +120,7 @@ class User extends \yii\db\ActiveRecord implements \yii\web\IdentityInterface
   public function fields()
   {
     return [
-      'id', 'lastName', 'firstName', 'middleName', 'username',
+      'id', 'lastName', 'firstName', 'middleName', 'username', 'picture',
       'userAddress', 'eventsFavorites', 'shopsFavorites', 'happeningsFavorites'
     ];
   }

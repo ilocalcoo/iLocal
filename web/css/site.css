@@ -247,8 +247,14 @@ a.desc:after {
   cursor: pointer;
 }
 
-.nav-link > img {
+.hidden-img {
   display: none;
+}
+
+.user-img {
+  width: 24px;
+  height: 24px;
+  border-radius: 12px;
 }
 
 .backdrop {
