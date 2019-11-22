@@ -63,12 +63,12 @@ AppAsset::register($this);
         <?php if (!Yii::$app->user->isGuest) { ?>
 					<li class="nav-item business">
 						<a class="nav-link" href="/user/business">
-							<img src="img/main/business.svg" alt="business">
+							<img class="hidden-img" src="img/main/business.svg" alt="business">
 							Бизнесу</a>
 					</li>
 					<li class="nav-item">
 						<a class="nav-link" href="/favorites">
-							<img src="img/main/favor.svg" alt="favorite">
+							<img class="hidden-img" src="img/main/favor.svg" alt="favorite">
 							Избранное</a>
 					</li>
         <?php } ?>
@@ -76,7 +76,7 @@ AppAsset::register($this);
           <?php
           Modal::begin([
             'toggleButton' => [
-              'label' => '<img src="img/main/help.svg" alt="help">Помощь',
+              'label' => '<img class="hidden-img" src="img/main/help.svg" alt="help">Помощь',
               'tag' => 'a',
               'type' => '',
               'class' => 'contact-form nav-link',
@@ -91,7 +91,7 @@ AppAsset::register($this);
             <?php Modal::begin([
               'bodyOptions' => ['id' => 'modal-enter'],
               'toggleButton' => [
-                'label' => '<img src="img/main/login.svg" alt="login">Вход<span class="login-ellipse"></span>',
+                'label' => '<img class="hidden-img" src="img/main/login.svg" alt="login">Вход<span class="login-ellipse"></span>',
                 'tag' => 'a',
                 'type' => '',
                 'class' => 'modal-enter nav-link',
@@ -116,13 +116,13 @@ AppAsset::register($this);
         <?php } else { ?>
 					<li class="nav-item profile">
 						<a class="nav-link" href="/user/profile">
-							<img src="img/main/login.svg" alt="user">
-							<?= Yii::$app->user->getIdentity()->username ?>
+							<img class="user-img" src="<?= Yii::$app->user->getIdentity()->picture ?>" alt="user">
+							<?= Yii::$app->user->getIdentity()->firstName.' '.Yii::$app->user->getIdentity()->lastName ?>
 						</a>
 					</li>
 					<li class="nav-item logout">
 						<a class="nav-link" href="/logout">
-							<img src="img/main/logout.svg" alt="login">
+							<img class="hidden-img" src="img/main/logout.svg" alt="login">
 							Выход</a>
 					</li>
         <?php } ?>
