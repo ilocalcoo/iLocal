@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\components\AuthHandler;
 use app\models\Event;
+use app\models\Happening;
 use app\models\Shop;
 use app\models\User;
 use app\models\UserAddress;
@@ -89,6 +90,8 @@ class SiteController extends Controller
     $shops = $query->limit(10)->all();
     $query = Event::find()->where(['active' => 1])->cache(10);
     $events = $query->limit(10)->all();
+      $query = Happening::find()->where(['active' => 1])->cache(10);
+      $happenings = $query->limit(10)->all();
     if (!Yii::$app->user->isGuest) {
       $user = User::current();
       if (!is_null($user->userAddress)) {
@@ -103,7 +106,7 @@ class SiteController extends Controller
     return $this->render('index', [
       'events' => $events,
       'shops' => $shops,
-      'happenings' => [],
+      'happenings' => $happenings,
       'userCoords' => $userCoords,
     ]);
   }

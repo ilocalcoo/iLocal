@@ -22,7 +22,7 @@ $this->title = $model->title.' - Акции';
 <div class="event-view" id="event-view-content">
     <div class="container">
         <div class="row align-items-center mb-3">
-            <div class="col-12 mx-auto text-md-left text-center">
+            <div class="col-12 mx-auto">
                 <a class="shop-link mr-md-3 mr-1" href="<?= 'shops/' . $model->eventOwner["shopId"] ?>" data-pjax="0">
                     <img src="/img/shopPhoto/<?= $shopPhoto["shopPhoto"] ?>" alt="" class="shop-img">
                 </a>
@@ -58,9 +58,15 @@ $this->title = $model->title.' - Акции';
                 <div class="event-view-full-desc"><?= $model->fullDesc ?></div>
 
                 <div class="event-view-date-wrap">
-                    <div>
-                        <img src="/img/user/Favor_rounded.svg" alt="">
-                    </div>
+                    <?php if (!Yii::$app->user->isGuest) {
+                        if (UserEvent::findOne(['event_id'=>$model->id, 'user_id' => Yii::$app->user->id])) {
+                            echo '<a href="/events/'.$model->id.'?del-event-id='.$model->id.'"><img src="/img/user/hart-dislike.png" alt=""></a>';
+                        } else {
+                            echo '<a href="/events/'.$model->id.'?add-event-id='.$model->id.'"><img src="/img/user/Favor_rounded.svg" alt=""></a>';
+                        }
+                    }
+                    ?>
+
                     <div><?= $model->begin ?> - <?= $model->end ?></div>
                 </div>
             </div>

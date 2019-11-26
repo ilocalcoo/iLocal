@@ -83,7 +83,7 @@ SliderAsset::register($this);
 
 	</div>
 	<div class="col-md-6 col-12 d-none d-md-block">
-		<img src="img/main/index-bg-img.png" alt="people" height="485px">
+		<img src="img/main/bg-img-1.png" alt="people" height="485px">
 	</div>
 </div>
 
@@ -120,10 +120,11 @@ SliderAsset::register($this);
 <?php if (!empty($happenings)) {?>
 <section id="happening">
     <div class="container mt-5">
-        <div class="w-100 mb-3"><span class="h3">События рядом с вами</span></div>
+        <div class="w-100 mb-3"><span class="h3">События рядом с вами</span><span style="float: right"><a href="/happenings"><button  class="btn btn-outline-coral w-100">Все события</button></a></span></div>
         <div class="row">
+            <div class="col-12 scrolls">
             <?php foreach ($happenings as $happening) { ?>
-            <div class="event-item col-md-4 col-12">
+            <div class="slide event-item col-md-4 col-12">
                 <div class="slide-img happening-img">
                     <img src="<?php $photo = $happening->getHappeningPhotos()->asArray()->one()['happeningPhoto'];
                     if (is_null($photo)) {
@@ -133,14 +134,13 @@ SliderAsset::register($this);
                     } ?>"
                             alt="<?= $happening->title ?>">
                     <div class="overlay">
-                        <a class="overlay-link event-link" href="#"><?= $happening->title ?> <div class="event-date"><?= $happening->begin ?></div></a>
+                        <a class="overlay-link event-link" href="/happenings/<?= $happening->id ?>"><?= $happening->title ?> <div class="event-date"><?= $happening->begin ?></div></a>
                     </div>
                     <span class="badge badge-coral"><?= $happening->price ?></span>
                 </div>
             </div>
             <?php } ?>
         </div>
-        <a href="/happenings"><button  class="btn btn-outline-coral w-100">Все события</button></a>
     </div>
 </section>
 <?php } ?>
