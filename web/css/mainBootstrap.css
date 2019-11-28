@@ -225,7 +225,7 @@ body {
     overflow: hidden;
 }
 .slide-img img {
-    max-height: 270px;
+    /*max-height: 270px;*/
     border-radius: 5px;
     width: 100%
 }

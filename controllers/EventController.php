@@ -66,7 +66,9 @@ class EventController extends Controller
         ->where(['user_id' => Yii::$app->user->id])
         ->andWhere(['event_id' => $eventId])
         ->one();
-      $userEvent->delete();
+      if ($userEvent) {
+          $userEvent->delete();
+      }
     }
 
 //        $searchModel = new EventSearch();

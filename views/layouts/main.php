@@ -15,7 +15,7 @@ use yii\helpers\Url;
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => Url::to(['img/main/favicon.png'])]);
 
 $currentUrl = substr(Yii::$app->request->pathInfo, 0, 4);
-$currentAction = explode('/', Yii::$app->request->pathInfo)[1];
+$currentAction = explode('/', Yii::$app->request->pathInfo)[1] ?? '';
 
 function active($value)
 {

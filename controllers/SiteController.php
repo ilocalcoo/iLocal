@@ -260,7 +260,9 @@ class SiteController extends Controller
         ->where(['user_id' => Yii::$app->user->id])
         ->andWhere(['shop_id' => $shopId])
         ->one();
-      $userShop->delete();
+      if ($userShop) {
+          $userShop->delete();
+      }
     }
 
     if ($eventId = Yii::$app->request->get('add-event-id')) {
@@ -275,7 +277,9 @@ class SiteController extends Controller
         ->where(['user_id' => Yii::$app->user->id])
         ->andWhere(['event_id' => $eventId])
         ->one();
-      $userEvent->delete();
+        if ($userEvent) {
+            $userEvent->delete();
+        }
     }
 
     $userShops = User::findOne(Yii::$app->user->id)->shopsFavorites;
