@@ -64,7 +64,7 @@ $eventOwner = Shop::find()
 
             <?= $form->field($model, 'uploadedEventPhoto[]')
                 ->fileInput(['multiple' => true, 'accept' => 'image/*'])->label('Изображение')
-                ->hint('Прикрепите от 1 до 3 файлов') ?>
+                ->hint('Прикрепите фото') ?>
 
             <?= $form->field($model, 'begin', ['options' => ['class' => 'shop-create-form']])->widget(DatePicker::classname(),[
                 'name' => 'dp_1',

@@ -50,35 +50,41 @@ $this->beginPage() ?>
 		<div class="content-desc" id="navbarNav">
 			<ul class="menu-list">
 				<img src="img/main/close.svg" class="nav-link" id="close" alt="close" width="32px" height="32px">
-				<li class="nav-item d-none d-md-block">
-					<a class="nav-link" href="/">Главная</a>
-				</li>
-        <?php if (!Yii::$app->user->isGuest) { ?>
-					<li class="nav-item business">
-						<a class="nav-link" href="/user/business">
-							<img class="hidden-img" src="img/main/business.svg" alt="business">
-							Бизнесу</a>
-					</li>
-					<li class="nav-item">
-						<a class="nav-link" href="/favorites">
-							<img class="hidden-img" src="img/main/favor.svg" alt="favorite">
-							Избранное</a>
-					</li>
-        <?php } ?>
-				<li class="nav-item">
-          <?php
-          Modal::begin([
-            'toggleButton' => [
-              'label' => '<img class="hidden-img" src="img/main/help.svg" alt="help">Помощь',
-              'tag' => 'a',
-              'type' => '',
-              'class' => 'contact-form nav-link',
-            ],
-          ]);
-          ?>
-					<div class="modal-body contact-modal-body"></div>
-          <?php Modal::end(); ?>
-				</li>
+                <?php if (!Yii::$app->user->isGuest) { ?>
+                    <li class="nav-item profile">
+                        <a class="nav-link" href="">
+                            <img class="user-img" src="<?= Yii::$app->user->getIdentity()->picture ?>" alt="user">
+                            <?= Yii::$app->user->getIdentity()->firstName.' '.Yii::$app->user->getIdentity()->lastName ?>
+                        </a>
+                    </li>
+                    <li class="nav-item business">
+                        <a class="nav-link" href="/user/business">
+                            <img class="hidden-img" src="img/main/business.svg" alt="business">
+                            Бизнесу</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/favorites">
+                            <img class="hidden-img" src="img/main/favor.svg" alt="favorite">
+                            Избранное</a>
+                    </li>
+                <?php } ?>
+                <li class="nav-item">
+                    <a class="nav-link" href="/about">О проекте</a>
+                </li>
+                <li class="nav-item">
+                    <?php
+                    Modal::begin([
+                        'toggleButton' => [
+                            'label' => '<img class="hidden-img" src="img/main/help.svg" alt="help">Помощь',
+                            'tag' => 'a',
+                            'type' => '',
+                            'class' => 'contact-form nav-link',
+                        ],
+                    ]);
+                    ?>
+                    <div class="modal-body contact-modal-body"></div>
+                    <?php Modal::end(); ?>
+                </li>
         <?php if (Yii::$app->user->isGuest) { ?>
 					<li class="nav-item login">
             <?php Modal::begin([
@@ -107,12 +113,6 @@ $this->beginPage() ?>
             <?php Modal::end(); ?>
 					</li>
         <?php } else { ?>
-					<li class="nav-item profile">
-						<a class="nav-link" href="">
-                            <img class="user-img" src="<?= Yii::$app->user->getIdentity()->picture ?>" alt="user">
-                            <?= Yii::$app->user->getIdentity()->firstName.' '.Yii::$app->user->getIdentity()->lastName ?>
-						</a>
-					</li>
 					<li class="nav-item logout">
 						<a class="nav-link" href="/logout">
 							<img class="hidden-img" src="img/main/logout.svg" alt="login">
@@ -134,19 +134,18 @@ $this->beginPage() ?>
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-12">
-				<a class="footer-link" href="/site/about">О проекте</a>&nbsp;
 				<a class="small-text" href="/policy" target="_blank">Политика конфиденциальности</a>&nbsp;
-        <?php Modal::begin([
-          'toggleButton' => [
-            'label' => 'Помощь',
-            'tag' => 'a',
-            'type' => '',
-            'class' => 'contact-form footer-link d-md-none d-sm-block',
-          ],
-        ]);
-        ?>
-				<div class="modal-body contact-modal-body"></div>
-        <?php Modal::end(); ?>
+                <?php Modal::begin([
+                  'toggleButton' => [
+                    'label' => 'Помощь',
+                    'tag' => 'a',
+                    'type' => '',
+                    'class' => 'contact-form footer-link',
+                  ],
+                ]);
+                ?>
+                        <div class="modal-body contact-modal-body"></div>
+                <?php Modal::end(); ?>
 			</div>
 			<div class="col-md-6 col-12 small-text">© 2019, i’m local</div>
 		</div>

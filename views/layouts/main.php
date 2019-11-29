@@ -59,8 +59,22 @@ AppAsset::register($this);
 			<ul class="menu-list">
 				<img src="img/main/close.svg" class="nav-link" id="close" alt="close" width="32px" height="32px">
 				<li class="nav-item d-none d-md-block">
-					<a class="nav-link" href="/">Главная</a>
+					<a class="nav-link" href="/about">О проекте</a>
 				</li>
+                <li class="nav-item">
+                    <?php
+                    Modal::begin([
+                        'toggleButton' => [
+                            'label' => '<img class="hidden-img" src="img/main/help.svg" alt="help">Помощь',
+                            'tag' => 'a',
+                            'type' => '',
+                            'class' => 'contact-form nav-link',
+                        ],
+                    ]);
+                    ?>
+                    <div class="modal-body contact-modal-body"></div>
+                    <?php Modal::end(); ?>
+                </li>
         <?php if (!Yii::$app->user->isGuest) { ?>
 					<li class="nav-item business">
 						<a class="nav-link" href="/user/business">
@@ -73,20 +87,7 @@ AppAsset::register($this);
 							Избранное</a>
 					</li>
         <?php } ?>
-				<li class="nav-item">
-          <?php
-          Modal::begin([
-            'toggleButton' => [
-              'label' => '<img class="hidden-img" src="img/main/help.svg" alt="help">Помощь',
-              'tag' => 'a',
-              'type' => '',
-              'class' => 'contact-form nav-link',
-            ],
-          ]);
-          ?>
-					<div class="modal-body contact-modal-body"></div>
-          <?php Modal::end(); ?>
-				</li>
+
         <?php if (Yii::$app->user->isGuest) { ?>
 					<li class="nav-item login">
             <?php Modal::begin([
@@ -195,7 +196,6 @@ AppAsset::register($this);
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-12">
-				<a class="footer-link d-md-none d-sm-block" href="/about">О проекте</a>&nbsp;
 				<a class="small-text" href="/policy" target="_blank">Политика конфиденциальности</a>&nbsp;
         <?php Modal::begin([
           'toggleButton' => [
