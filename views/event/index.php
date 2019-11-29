@@ -132,7 +132,6 @@ EventFeedAsset::register($this);
                                     <div class="overlay">
                                         <div class="overlay-link"><?= $event->title ?></div>
                                     </div>
-                                    <span class="badge badge-coral">-15%</span>
                                 </div>
                                 </a>
                                 <div class="slide-text"><?= mb_substr($event->shortDesc,0,70).'...' ?></div>
@@ -170,10 +169,10 @@ EventFeedAsset::register($this);
                                         <?php } else { ?>
                                             <?php \yii\widgets\Pjax::begin() ?>
                                             <?php if (\app\models\UserEvent::find()->where(['user_id' => Yii::$app->user->id])->andWhere(['event_id' => $event->id])->one()) {
-                                                $favorite = 'favorite_border_24px_rounded.svg';
+                                                $favorite = 'hart-dislike.png';
                                                 $shopId = 'add-event-id';
                                             } else {
-                                                $favorite = 'Favor_rounded.svg';
+                                                $favorite = 'hart-like-2.png';
                                                 $shopId = 'add-event-id';
                                             } ?>
                                             <a href="/events?<?= $shopId ?>=<?= $event->id ?>" title="Добавить в избранное"
