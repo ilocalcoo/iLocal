@@ -106,7 +106,7 @@ EventFeedAsset::register($this);
     foreach ($events as $event) {
         //$events = $shop->getEvents()->all();
         if (count($events) != 0) { ?>
-            <div class="col-md-4 col-12">
+            <div class="col-md-4 col-12 mb-3">
                 <div class="content card p-3">
                     <div class="row align-items-center h-100">
                         <div class="col-12">
@@ -132,7 +132,6 @@ EventFeedAsset::register($this);
                                     <div class="overlay">
                                         <div class="overlay-link"><?= $event->title ?></div>
                                     </div>
-                                    <span class="badge badge-coral">-15%</span>
                                 </div>
                                 </a>
                                 <div class="slide-text"><?= mb_substr($event->shortDesc,0,70).'...' ?></div>
@@ -169,14 +168,14 @@ EventFeedAsset::register($this);
                                             <?php Modal::end(); ?>
                                         <?php } else { ?>
                                             <?php \yii\widgets\Pjax::begin() ?>
-                                            <?php if (\app\models\UserShop::find()->where(['user_id' => Yii::$app->user->id])->andWhere(['shop_id' => $event->shop->shopId])->one()) {
-                                                $favorite = 'favorite_border_24px_rounded.svg';
-                                                $shopId = 'del-shop-id';
+                                            <?php if (\app\models\UserEvent::find()->where(['user_id' => Yii::$app->user->id])->andWhere(['event_id' => $event->id])->one()) {
+                                                $favorite = 'hart-dislike.png';
+                                                $shopId = 'add-event-id';
                                             } else {
-                                                $favorite = 'Favor_rounded.svg';
-                                                $shopId = 'add-shop-id';
+                                                $favorite = 'hart-like-2.png';
+                                                $shopId = 'add-event-id';
                                             } ?>
-                                            <a href="/shops?<?= $shopId ?>=<?= $event->shop->shopId ?>" title="Добавить в избранное"
+                                            <a href="/events?<?= $shopId ?>=<?= $event->id ?>" title="Добавить в избранное"
                                                     class="favorite">
                                                 <img src="/img/user/<?= $favorite ?>" alt=""></a>
                                             <?php \yii\widgets\Pjax::end() ?>

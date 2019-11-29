@@ -13,3 +13,10 @@ $(document).ready(function () {
         });
     });
 });
+
+$(document).on('click', '#del-event', function (e) {
+    $.pjax.reload({container: '#event-list'});
+});
+$(document).on('click', '#del-shop', function (e) {
+    $.pjax.reload({container: '#shop-list'});
+});

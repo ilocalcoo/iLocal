@@ -15,6 +15,7 @@ use yii\helpers\Url;
 $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/png', 'href' => Url::to(['img/main/favicon.png'])]);
 
 $currentUrl = substr(Yii::$app->request->pathInfo, 0, 4);
+$currentAction = explode('/', Yii::$app->request->pathInfo)[1] ?? '';
 
 function active($value)
 {
@@ -146,7 +147,8 @@ AppAsset::register($this);
 			</div>
 
 		</div>
-		<div class="col-md-8 col-12 scrolls">
+        <?php if($currentAction != 'create') { ?>
+        <div class="col-md-8 col-12 scrolls">
 			<div class="nav-bar-categories" style="margin-bottom: 23px; margin-top: 23px;">
         <?php if ($currentUrl == 'even') { ?>
 					<a
@@ -178,6 +180,7 @@ AppAsset::register($this);
         } ?>
 			</div>
 		</div>
+        <?php } ?>
 	</div>
 
 </div>

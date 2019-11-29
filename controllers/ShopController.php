@@ -74,7 +74,9 @@ class ShopController extends Controller
             ->where(['user_id' => Yii::$app->user->id])
             ->andWhere(['shop_id' => $shopId])
             ->one();
-          $userShop->delete();
+            if ($userShop) {
+                $userShop->delete();
+            }
         }
 
         $query = Shop::find()->where(['shopActive' => 1])->cache(10);

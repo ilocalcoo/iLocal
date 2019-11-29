@@ -104,7 +104,7 @@ $this->title = $type . ' рядом с вами';
                   <?php
                   Modal::begin([
                     'toggleButton' => [
-                      'label' => '<img src="/img/user/Favor_rounded.svg" alt="">',
+                      'label' => '<img src="/img/user/hart-like-2.png" alt="">',
                       'tag' => 'a',
                       'class' => 'modal-enter',
                     ],
@@ -127,10 +127,10 @@ $this->title = $type . ' рядом с вами';
                 <?php } else { ?>
                   <?php \yii\widgets\Pjax::begin() ?>
                   <?php if (\app\models\UserShop::find()->where(['user_id' => Yii::$app->user->id])->andWhere(['shop_id' => $shop->shopId])->one()) {
-                    $favorite = 'favorite_border_24px_rounded.svg';
+                    $favorite = 'hart-dislike.png';
                     $shopId = 'del-shop-id';
                   } else {
-                    $favorite = 'Favor_rounded.svg';
+                    $favorite = 'hart-like-2.png';
                     $shopId = 'add-shop-id';
                   } ?>
 									<a href="/shops?<?= $shopId ?>=<?= $shop['shopId'] ?>" title="Добавить в избранное"

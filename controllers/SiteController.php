@@ -4,6 +4,7 @@ namespace app\controllers;
 
 use app\components\AuthHandler;
 use app\models\Event;
+use app\models\Happening;
 use app\models\Shop;
 use app\models\User;
 use app\models\UserAddress;
@@ -89,6 +90,8 @@ class SiteController extends Controller
     $shops = $query->limit(10)->all();
     $query = Event::find()->where(['active' => 1])->cache(10);
     $events = $query->limit(10)->all();
+      $query = Happening::find()->where(['active' => 1])->cache(10);
+      $happenings = $query->limit(10)->all();
     if (!Yii::$app->user->isGuest) {
       $user = User::current();
       if (!is_null($user->userAddress)) {
@@ -103,7 +106,7 @@ class SiteController extends Controller
     return $this->render('index', [
       'events' => $events,
       'shops' => $shops,
-      'happenings' => [],
+      'happenings' => $happenings,
       'userCoords' => $userCoords,
     ]);
   }
@@ -257,7 +260,9 @@ class SiteController extends Controller
         ->where(['user_id' => Yii::$app->user->id])
         ->andWhere(['shop_id' => $shopId])
         ->one();
-      $userShop->delete();
+      if ($userShop) {
+          $userShop->delete();
+      }
     }
 
     if ($eventId = Yii::$app->request->get('add-event-id')) {
@@ -272,7 +277,9 @@ class SiteController extends Controller
         ->where(['user_id' => Yii::$app->user->id])
         ->andWhere(['event_id' => $eventId])
         ->one();
-      $userEvent->delete();
+        if ($userEvent) {
+            $userEvent->delete();
+        }
     }
 
     $userShops = User::findOne(Yii::$app->user->id)->shopsFavorites;

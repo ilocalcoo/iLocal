@@ -89,7 +89,7 @@ HappeningFeedAsset::register($this);
                 <div class="col-6 text-right">
                     <div class="custom-switch-label">Бесплатные</div>
                     <div class="custom-control custom-switch" style="display: inline-block">
-                        <input type="checkbox" class="custom-control-input" id="customSwitches">
+                        <input type="checkbox" class="custom-control-input" checked id="customSwitches">
                         <label class="custom-control-label" for="customSwitches"></label>
                     </div>
                 </div>
@@ -111,7 +111,10 @@ HappeningFeedAsset::register($this);
                         <div class="event-item col-md-6 col-12">
                             <a href="/happenings/<?= $happening->id ?>">
                             <div class="slide-img">
-                                <img src="<?= '/img/happeningPhoto/'.($happening->happeningPhotos ? $happening->happeningPhotos[0]->happeningPhoto : 'nofoto') ?>" alt="<?= $happening->title ?>">
+                                <div style="overflow: hidden;">
+                                    <img src="<?= '/img/happeningPhoto/'.($happening->happeningPhotos ? $happening->happeningPhotos[0]->happeningPhoto : 'nofoto') ?>" alt="<?= $happening->title ?>">
+                                </div>
+
                                 <div class="overlay">
                                     <div class="overlay-link event-link" href="/happenings/<?= $happening->id ?>">
                                         <?= mb_strlen($happening->title) > 70 ? mb_substr($happening->title,0,70).'...' : $happening->title ?>
