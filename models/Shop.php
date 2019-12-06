@@ -441,16 +441,17 @@ class Shop extends \yii\db\ActiveRecord
   public static function getShopsInRange($query, $userPoint, $range) {
     /** @var Shop[] $shops */
     $shops = $query->all();
-    foreach ($shops as $key => $shop) {
+    $result = [];
+    foreach ($shops as $shop) {
       $shopCoords = [$shop->shopAddress->latitude, $shop->shopAddress->longitude];
       $distance = self::getDistance($userPoint, $shopCoords);
-      if ($distance > $range) {
-        unset($shops[$key]);
-      } else {
-        $shop->distance = $distance;
+      if ($distance <= $range) {
+          $result[] = array_merge($shop->toArray(), ['distance' => $distance]);
       }
     }
-    return $shops;
+      usort($result, function($a, $b) {return ($a['distance'] < $b['distance']) ? -1 : 1;});
+
+    return $result;
   }
 
   /**

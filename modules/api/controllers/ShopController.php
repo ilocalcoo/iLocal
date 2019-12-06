@@ -59,7 +59,8 @@ class ShopController extends ActiveController
         $shops = Shop::getShopsInRange($query, $userPoint, $range);
       }
     }
-    return array_values($shops);
+    return $shops;
+//    return array_values($shops);
   }
 
   /**
